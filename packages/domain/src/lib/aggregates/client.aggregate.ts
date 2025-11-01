@@ -3,6 +3,7 @@ import { DomainEvent } from '../base/domain-event';
 import { ClientCreatedDomainEvent, ClientStatus } from '../events/client-created.domain-event';
 
 export class ClientAggregate extends EventSourcedAggregate {
+  private id?: string;
   private companyName?: string;
   private email?: string;
   private phone?: string | null;
@@ -65,6 +66,10 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   // Getters for accessing aggregate state
+  getId(): string | undefined {
+    return this.id;
+  }
+
   getCompanyName(): string | undefined {
     return this.companyName;
   }

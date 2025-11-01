@@ -11,8 +11,8 @@ import { CommonModule } from '@angular/common';
 export class App implements OnInit {
   private http = inject(HttpClient);
 
-  backendStatus: string = 'Checking...';
-  backendResponse: any = null;
+  backendStatus = 'Checking...';
+  backendResponse: unknown = null;
 
   ngOnInit() {
     this.http.get('http://localhost:3000/api/health').subscribe({

@@ -1,3 +1,5 @@
+import { DomainEvent } from './domain-event';
+
 /**
  * Base class for all event-sourced aggregates.
  * Aggregates rebuild their state by replaying domain events.
@@ -18,7 +20,7 @@ export abstract class EventSourcedAggregate {
   /**
    * Gets all uncommitted events that need to be persisted.
    */
-  getUncommittedEvents(): ReadonlyArray<DomainEvent> {
+  getUncommittedEvents(): DomainEvent[] {
     return this.uncommittedEvents;
   }
 
@@ -64,15 +66,4 @@ export abstract class EventSourcedAggregate {
     }
     this.version++;
   }
-}
-
-/**
- * Base interface for all domain events.
- * Domain events are immutable facts that represent something that happened.
- */
-export interface DomainEvent {
-  readonly eventType: string;
-  readonly aggregateId: string;
-  readonly occurredAt: Date;
-  readonly version: number;
 }

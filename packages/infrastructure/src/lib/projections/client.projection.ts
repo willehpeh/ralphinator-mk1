@@ -1,7 +1,7 @@
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Injectable, Inject } from '@nestjs/common';
+import { ClientCreatedDomainEvent } from '@angular-nest-starter/domain';
 import {
-  ClientCreatedDomainEvent,
   IClientReadRepository,
   ClientReadModel
 } from '@angular-nest-starter/application';
