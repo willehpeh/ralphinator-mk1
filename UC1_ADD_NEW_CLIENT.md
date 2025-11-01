@@ -436,38 +436,125 @@ The `CreateClientHandler` persists domain events to the event store (line 38-42)
 
 **Verification**: Linting passed successfully
 
+### Task 21: Verify Projection Fix with End-to-End API Testing ✅
+**Completed**: 2025-11-01
+**Files**:
+- N/A (Testing task)
+
+**Description**: Verified that the projection fix (Task 20) resolves the issue by performing end-to-end testing of the API endpoints. Testing results:
+
+**Server Startup**: ✅ SUCCESS
+- NestJS application started successfully on http://localhost:3000/api
+- All modules initialized correctly (AppModule, CqrsModule, ClientsModule)
+- Routes properly mapped: POST /api/clients, GET /api/clients/:id, GET /api/health
+
+**POST /api/clients Endpoint**: ✅ SUCCESS
+- Created test client "Acme Corporation" with all fields populated
+- Response: `{"id":"63de418d-e525-489a-892c-1b805aeeb1a9"}`
+- Status: Command executed successfully, client ID returned
+
+**GET /api/clients/:id Endpoint**: ✅ SUCCESS
+- Retrieved client by ID `63de418d-e525-489a-892c-1b805aeeb1a9`
+- Response: Full client data including all fields
+  ```json
+  {
+    "id": "63de418d-e525-489a-892c-1b805aeeb1a9",
+    "companyName": "Acme Corporation",
+    "email": "contact@acme.com",
+    "phone": "+1-555-0123",
+    "address": "123 Main St, Springfield, IL 62701",
+    "status": "Active",
+    "notes": "New client onboarded today",
+    "createdAt": "2025-11-01T23:44:41.669Z"
+  }
+  ```
+- Status: **Projection is now working correctly!**
+
+**Verified Flow**:
+1. POST /api/clients → CreateClientHandler creates aggregate
+2. Command handler persists events to InMemoryEventStore
+3. Command handler publishes domain events to EventBus ✅ (This was the fix!)
+4. ClientProjection receives ClientCreatedDomainEvent from EventBus
+5. ClientProjection saves client read model to InMemoryClientReadRepository
+6. GET /api/clients/:id → GetClientByIdQueryHandler queries read repository
+7. Query handler returns ClientReadModel with all data
+
+**Conclusion**: The backend API implementation is now complete and working end-to-end. The CQRS/Event Sourcing architecture is functioning correctly.
+
+**Next Steps**: The backend is complete. For full use case completion, frontend implementation is needed.
+
 ---
 
 ## Technical Design
 
-(To be populated during implementation)
+**Architecture**: Clean Architecture + CQRS + Event Sourcing
+
+**Layers**:
+- **Domain**: `ClientAggregate`, `ClientCreatedDomainEvent`, `EventSourcedAggregate`, `DomainEvent`
+- **Application**: `CreateClientCommand`, `CreateClientHandler`, `GetClientByIdQuery`, `GetClientByIdQueryHandler`, `ClientReadModel`, `IEventStore`, `IClientReadRepository`
+- **Infrastructure**: `InMemoryEventStore`, `InMemoryClientReadRepository`, `ClientProjection`
+- **API**: `ClientsController` (POST /clients, GET /clients/:id)
+
+**CQRS Flow**:
+- **Write Side**: Commands → Aggregates → Domain Events → Event Store → EventBus → Projections → Read Models
+- **Read Side**: Queries → Read Repositories → Read Models
 
 ---
 
 ## Testing Notes
 
-(To be populated during implementation)
+**Test Framework**: Vitest
+**Test Location**: `packages/testing/src/tests/`
+**Test Files**: `create-client.handler.spec.ts`, `get-client-by-id.handler.spec.ts`
+**Test Count**: 8 tests, all passing
+
+**Test Coverage**:
+- CreateClientHandler: Creates aggregate, persists events, publishes events, handles optional fields, supports all status types
+- GetClientByIdQueryHandler: Retrieves client by ID, handles non-existent clients, supports all status types
+
+**End-to-End Testing**:
+- Manual API testing performed using curl
+- Verified POST and GET endpoints work correctly
+- Verified projection updates read models after command execution
 
 ---
 
 ## Challenges & Solutions
 
-(To be populated during implementation)
+**Challenge 1: TypeScript Compilation Errors (Task 18)**
+- **Issue**: Two separate DomainEvent definitions (interface vs class) caused type incompatibility
+- **Solution**: Removed interface definition, used class-based DomainEvent with eventVersion and occurredOn properties
+
+**Challenge 2: Projection Not Triggered (Task 19)**
+- **Issue**: GET endpoint returned null after POST because ClientProjection never received domain events
+- **Root Cause**: CreateClientHandler persisted events to event store but didn't publish them to EventBus
+- **Solution**: Added `events.forEach(event => this.eventBus.publish(event))` to CreateClientHandler after persisting events (Task 20)
+- **Result**: Projection now receives events and updates read models successfully (Task 21)
 
 ---
 
 ## Completion Checklist
 
-- [ ] Domain layer implementation
-- [ ] Application layer (CQRS handlers)
-- [ ] Infrastructure layer (projections, repositories)
-- [ ] API endpoints
+- [x] Domain layer implementation
+- [x] Application layer (CQRS handlers)
+- [x] Infrastructure layer (projections, repositories)
+- [x] API endpoints
 - [ ] Frontend components
-- [ ] Integration tests
-- [ ] End-to-end verification
+- [ ] Integration tests (unit tests complete, integration tests not needed for in-memory impl)
+- [x] End-to-end verification (backend API tested successfully)
 
 ---
 
 ## Notes
 
-(To be populated during implementation)
+**Backend Status**: ✅ COMPLETE - All API endpoints working correctly with CQRS/Event Sourcing architecture
+
+**Event Store**: Using InMemoryEventStore (suitable for development/testing, data lost on restart)
+
+**Read Repository**: Using InMemoryClientReadRepository (suitable for development/testing, data lost on restart)
+
+**API Endpoints**:
+- POST /api/clients - Create new client (returns client ID)
+- GET /api/clients/:id - Retrieve client by ID (returns ClientReadModel or null)
+
+**For Production**: Replace InMemoryEventStore with PostgreSQL-based event store, replace InMemoryClientReadRepository with PostgreSQL-based read repository
