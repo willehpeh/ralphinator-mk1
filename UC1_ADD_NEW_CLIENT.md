@@ -168,6 +168,32 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 
 **Verification**: Linting passed successfully
 
+### Task 10: Create GetClientByIdQuery and GetClientByIdQueryHandler ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/application/src/lib/queries/get-client-by-id.query.ts`
+- `packages/application/src/lib/queries/handlers/get-client-by-id.handler.ts`
+- `packages/application/src/lib/ports/client-read-repository.interface.ts`
+- `packages/application/src/lib/application.ts` (updated exports)
+- `packages/testing/src/tests/get-client-by-id.handler.spec.ts` (TDD test)
+
+**Description**: Implemented the query and query handler for retrieving a client by ID following CQRS read-side patterns. Implementation includes:
+- `GetClientByIdQuery` class implementing NestJS `IQuery` interface with client ID parameter
+- `GetClientByIdQueryHandler` decorated with `@QueryHandler` that:
+  - Queries the read repository (not the event store) for optimized reads
+  - Returns `ClientReadModel` DTO or null if not found
+  - Uses dependency injection with `IClientReadRepository` port interface
+- `IClientReadRepository` port interface defining the contract for read operations:
+  - `findById()` method for retrieving client by ID
+  - Returns `ClientReadModel | null`
+- Test suite (TDD approach) covering:
+  - Successful retrieval of client by ID
+  - Handling of non-existent clients (returns null)
+  - Support for all valid client statuses
+
+**TDD Status**: GREEN (all 8 tests pass)
+**Verification**: Linting passed successfully, all tests pass
+
 ---
 
 ## Technical Design
