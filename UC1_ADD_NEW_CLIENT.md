@@ -136,6 +136,22 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 - ✅ CreateClientHandler publishes integration event after creating client
 - ✅ CreateClientHandler handles all valid client statuses
 
+### Task 8: Create ClientCreatedEvent Integration Event ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/application/src/lib/events/client-created.event.ts`
+- `packages/application/src/lib/application.ts` (updated exports)
+
+**Description**: Created the `ClientCreatedEvent` integration event that is published to the event bus after a client is created. This event:
+- Implements NestJS `IEvent` interface for event bus integration
+- Contains all client data (id, companyName, email, phone, address, status, notes, occurredOn)
+- Is separate from `ClientCreatedDomainEvent` (domain events are persisted, integration events are published)
+- Enables side effects and system-wide notifications about client creation
+- Uses readonly properties for immutability
+- Includes timestamp (occurredOn) for event tracking
+
+**Verification**: Linting passed successfully, all tests still pass (5 tests)
+
 ---
 
 ## Technical Design
