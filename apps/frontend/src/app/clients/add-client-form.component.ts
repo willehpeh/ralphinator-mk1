@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ClientsService } from './clients.service';
+import { ClientsService, CreateClientDto } from './clients.service';
 
 interface AddClientForm {
   companyName: FormControl<string>;
@@ -234,13 +234,13 @@ export class AddClientFormComponent {
       this.submitError.set(null);
 
       const formValue = this.form.getRawValue();
-      const dto = {
+      const dto: CreateClientDto = {
         companyName: formValue.companyName,
         email: formValue.email,
-        phone: formValue.phone || null,
-        address: formValue.address || null,
+        phone: formValue.phone ? formValue.phone : undefined,
+        address: formValue.address ? formValue.address : undefined,
         status: formValue.status,
-        notes: formValue.notes || null
+        notes: formValue.notes ? formValue.notes : undefined
       };
 
       this.clientsService.createClient(dto).subscribe({
