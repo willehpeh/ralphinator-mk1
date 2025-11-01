@@ -152,6 +152,22 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 
 **Verification**: Linting passed successfully, all tests still pass (5 tests)
 
+### Task 9: Create ClientReadModel DTO ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/application/src/lib/read-models/client.read-model.ts`
+- `packages/application/src/lib/application.ts` (updated exports)
+
+**Description**: Created the `ClientReadModel` read model DTO for client queries. This read model:
+- Provides an optimized data structure for read operations (CQRS read side)
+- Contains all client fields (id, companyName, email, phone, address, status, notes, createdAt)
+- Uses readonly properties for immutability
+- Imports `ClientStatus` type from domain layer for consistency
+- Supports nullable fields (phone, address, notes) matching domain model
+- Will be used by query handlers to return client data to consumers
+
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design
