@@ -31,6 +31,21 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 
 **Verification**: Linting passed successfully
 
+### Task 2: Create Base DomainEvent Class ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/domain/src/lib/base/domain-event.ts`
+- `packages/domain/src/index.ts`
+
+**Description**: Created the foundational `DomainEvent` base class that all domain events will extend. This class provides:
+- Aggregate ID tracking
+- Event versioning support for schema evolution
+- Automatic timestamp capture (occurredOn)
+- Automatic event type identification
+- Immutable event properties (readonly)
+
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design
