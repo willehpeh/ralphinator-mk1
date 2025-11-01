@@ -2,7 +2,9 @@
   "name": "@angular-nest-starter/source",
   "version": "0.0.0",
   "license": "GPL-3.0-or-later",
-  "scripts": {},
+  "scripts": {
+    "dev": "nx run-many --target=serve --projects=api,frontend --parallel=2"
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "~20.3.0",

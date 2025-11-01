@@ -19,7 +19,11 @@
    - Watch mode enabled for development
    - Bundle generation completes in under 1 second
 
+3. **Create startup script for development environment** (2025-11-01)
+   - Added `npm run dev` script to package.json
+   - Uses NX run-many to start both api and frontend in parallel
+   - Simplifies development workflow to single command
+
 ### Next Tasks
 
-- Create startup documentation/scripts
 - Test full-stack integration
