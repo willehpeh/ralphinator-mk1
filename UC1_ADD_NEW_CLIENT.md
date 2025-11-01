@@ -217,6 +217,24 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 
 **Verification**: Linting passed successfully for both infrastructure and application packages
 
+### Task 12: Create ClientsModule with CQRS Registration ✅
+**Completed**: 2025-11-01
+**Files**:
+- `apps/api/src/app/clients/clients.module.ts`
+- `apps/api/src/app/app.module.ts` (updated imports)
+
+**Description**: Created the NestJS module that wires up all CQRS components for the clients feature. This module:
+- Imports `CqrsModule` from `@nestjs/cqrs` for CQRS infrastructure
+- Registers `CreateClientHandler` command handler for write operations
+- Registers `GetClientByIdQueryHandler` query handler for read operations
+- Registers `ClientProjection` event handler for building read models
+- Organizes handlers into semantic arrays (CommandHandlers, QueryHandlers, EventHandlers)
+- Integrated into main `AppModule` for application-wide availability
+
+**Architecture**: This completes the NestJS CQRS module registration pattern described in CLAUDE.md
+**Next Steps**: Create controller with API endpoints for client operations
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design
