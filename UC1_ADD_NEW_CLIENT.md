@@ -282,6 +282,32 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 **Next Steps**: Implement infrastructure layer (EventStore, ReadRepository implementations)
 **Verification**: Linting passed successfully
 
+### Task 15: Implement InMemoryEventStore ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/infrastructure/src/lib/event-store/in-memory-event-store.ts` (created)
+- `packages/infrastructure/src/lib/infrastructure.ts` (updated exports)
+
+**Description**: Implemented in-memory event store that provides IEventStore port implementation. This implementation:
+- Implements `IEventStore` interface from application layer
+- Stores events in memory using a Map<aggregateId, DomainEvent[]>
+- Provides `appendEvents()` method with optimistic concurrency control
+- Provides `getEvents()` method to load aggregate event history
+- Validates expected version matches actual version before appending events
+- Throws clear error messages on concurrency conflicts
+- Decorated with `@Injectable()` for NestJS dependency injection
+- Includes comprehensive documentation about in-memory limitations
+- Suitable for development and testing (note: data is lost on restart)
+
+**Concurrency Control**: Implements optimistic concurrency by:
+- Tracking actual version as (number of existing events - 1)
+- Comparing expected version with actual version before append
+- Throwing error if versions don't match to prevent lost updates
+
+**Architecture**: This completes the write-side event persistence for CQRS/ES
+**Next Steps**: Implement InMemoryClientReadRepository for read-side persistence
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design
