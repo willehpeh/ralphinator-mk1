@@ -516,6 +516,32 @@ The `CreateClientHandler` persists domain events to the event store (line 38-42)
 
 **Verification**: Linting passed successfully
 
+### Task 23: Create ClientsService for API Communication ✅
+**Completed**: 2025-11-01
+**Files**:
+- `apps/frontend/src/app/clients/clients.service.ts` (created)
+
+**Description**: Created the ClientsService to handle HTTP communication with the backend API. This service:
+- Uses modern Angular patterns with `inject()` function instead of constructor injection
+- Decorated with `@Injectable({ providedIn: 'root' })` for singleton service
+- Provides `createClient()` method that returns Observable<CreateClientResponse>
+- Defines `CreateClientDto` interface matching backend API contract
+- Defines `CreateClientResponse` interface for typed responses
+- Makes POST requests to `/api/clients` endpoint
+- Uses HttpClient for HTTP communication
+- Properly typed with TypeScript for type safety
+
+**Service Methods**:
+- `createClient(dto: CreateClientDto)`: Observable<CreateClientResponse> - Creates a new client via POST /api/clients
+
+**DTOs**:
+- `CreateClientDto`: { companyName, email, phone?, address?, status, notes? }
+- `CreateClientResponse`: { id: string }
+
+**Next Steps**: Wire up the service in AddClientFormComponent to call createClient on form submission
+
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design
