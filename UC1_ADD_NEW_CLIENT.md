@@ -373,6 +373,44 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 
 **Next Steps**: Start the API server and test endpoints end-to-end
 
+### Task 19: Test API Endpoints End-to-End ✅
+**Completed**: 2025-11-01
+**Files**:
+- N/A (Testing task)
+
+**Description**: Started the NestJS API server and tested the client management endpoints end-to-end. Testing results:
+
+**Server Startup**: ✅ SUCCESS
+- Webpack compilation successful
+- NestJS application started without errors
+- All modules initialized correctly (AppModule, CqrsModule, ClientsModule)
+- Routes properly mapped:
+  - POST /api/clients
+  - GET /api/clients/:id
+  - GET /api/health
+- Server running on http://localhost:3000/api
+
+**POST /api/clients Endpoint**: ✅ SUCCESS
+- Request: Created test client "Acme Corp" with all fields
+- Response: `{"id":"4bb8bb13-8978-4440-9faa-98e90c523f5e"}`
+- Status: Command executed successfully, client ID returned
+
+**GET /api/clients/:id Endpoint**: ❌ FAILED
+- Request: Retrieved client by ID `4bb8bb13-8978-4440-9faa-98e90c523f5e`
+- Response: Empty (null)
+- **Issue Identified**: Projection not being triggered
+
+**Root Cause Analysis**:
+The `CreateClientHandler` persists domain events to the event store (line 38-42), but the projection (`ClientProjection`) is never notified because:
+1. Domain events are stored in `InMemoryEventStore`
+2. Integration events are published to EventBus (line 46-50)
+3. However, the **domain events themselves** are not published to EventBus
+4. `ClientProjection` subscribes to `ClientCreatedDomainEvent` but never receives it
+5. Read model is never updated in `InMemoryClientReadRepository`
+6. Query returns null because read model doesn't exist
+
+**Next Steps**: Fix `CreateClientHandler` to publish domain events to EventBus after persisting them to event store
+
 ---
 
 ## Technical Design
