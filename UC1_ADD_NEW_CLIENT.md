@@ -259,6 +259,29 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 **Next Steps**: Add GET endpoint for retrieving clients
 **Verification**: Linting passed successfully
 
+### Task 14: Add GET /clients/:id Endpoint ✅
+**Completed**: 2025-11-01
+**Files**:
+- `apps/api/src/app/clients/clients.controller.ts` (updated)
+
+**Description**: Added GET endpoint for retrieving a client by ID. This endpoint:
+- Exposes GET `/clients/:id` endpoint for retrieving client details
+- Uses NestJS `QueryBus` to execute `GetClientByIdQuery`
+- Returns `ClientReadModel` or null if client not found
+- Follows REST conventions with `@Get(':id')` and `@Param('id')` decorators
+- Properly typed query execution with generic types
+- Completes the CQRS read flow: API → QueryBus → QueryHandler → ReadRepository
+
+**API Contract**:
+- **Method**: GET
+- **Path**: `/clients/:id`
+- **Path Parameters**: `id` (string, UUID)
+- **Response**: `ClientReadModel | null`
+
+**Architecture**: This completes the basic CRUD read operation flow for clients
+**Next Steps**: Implement infrastructure layer (EventStore, ReadRepository implementations)
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design
