@@ -77,6 +77,23 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 
 **Verification**: Linting passed successfully
 
+### Task 5: Write Test for CreateClientCommand Handler ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/testing/src/tests/create-client.handler.spec.ts`
+
+**Description**: Created comprehensive test suite for the `CreateClientHandler` following TDD principles. The test suite covers:
+- Creating a new client aggregate and persisting events to the event store
+- Handling optional fields (phone, address, notes) as null values
+- Publishing integration events after successful client creation
+- Supporting all valid client status types (Active, Inactive, Prospect, Past Client)
+- Verifying proper interaction with event store (appendEvents with expected version -1)
+- Verifying proper interaction with event bus for integration events
+
+**Testing Framework**: Vitest with vi mock functions
+**Test Location**: `packages/testing/src/tests/` as per CLAUDE.md guidelines
+**TDD Status**: RED (test written, implementation pending)
+
 ---
 
 ## Technical Design
