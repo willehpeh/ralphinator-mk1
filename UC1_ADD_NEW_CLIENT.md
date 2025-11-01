@@ -94,6 +94,33 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 **Test Location**: `packages/testing/src/tests/` as per CLAUDE.md guidelines
 **TDD Status**: RED (test written, implementation pending)
 
+### Task 6: Implement CreateClientCommand and CreateClientHandler ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/application/src/lib/commands/create-client.command.ts`
+- `packages/application/src/lib/commands/handlers/create-client.handler.ts`
+- `packages/application/src/lib/ports/event-store.interface.ts`
+- `packages/application/src/lib/application.ts` (updated exports)
+- `packages/domain/src/lib/events/client-created.domain-event.ts` (added ClientStatus type)
+- `packages/domain/src/lib/aggregates/client.aggregate.ts` (updated to accept nullable parameters)
+
+**Description**: Implemented the command and handler to make the test pass (TDD GREEN phase). Implementation includes:
+- `CreateClientCommand` class with all required parameters (id, companyName, email, phone, address, status, notes)
+- `CreateClientHandler` that orchestrates the client creation workflow:
+  - Creates `ClientAggregate` using the domain factory method
+  - Persists domain events to event store via `IEventStore` port
+  - Publishes integration events to event bus for side effects
+  - Returns the client ID upon successful creation
+- `IEventStore` port interface defining the contract for event persistence:
+  - `appendEvents()` method for persisting events with optimistic concurrency control
+  - `getEvents()` method for loading aggregate event history
+- Extracted `ClientStatus` as a reusable type exported from domain layer
+- Updated `ClientAggregate.create()` to accept nullable phone, address, and notes parameters
+- All exports properly added to barrel files
+
+**TDD Status**: GREEN (test should now pass)
+**Verification**: Linting passed successfully for both domain and application packages
+
 ---
 
 ## Technical Design

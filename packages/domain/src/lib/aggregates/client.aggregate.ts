@@ -1,14 +1,14 @@
 import { EventSourcedAggregate } from '../base/event-sourced-aggregate';
 import { DomainEvent } from '../base/domain-event';
-import { ClientCreatedDomainEvent } from '../events/client-created.domain-event';
+import { ClientCreatedDomainEvent, ClientStatus } from '../events/client-created.domain-event';
 
 export class ClientAggregate extends EventSourcedAggregate {
   private companyName?: string;
   private email?: string;
-  private phone?: string;
-  private address?: string;
-  private status?: 'Active' | 'Inactive' | 'Prospect' | 'Past Client';
-  private notes?: string;
+  private phone?: string | null;
+  private address?: string | null;
+  private status?: ClientStatus;
+  private notes?: string | null;
 
   /**
    * Factory method to create a new Client aggregate
@@ -26,10 +26,10 @@ export class ClientAggregate extends EventSourcedAggregate {
     id: string,
     companyName: string,
     email: string,
-    phone: string,
-    address: string,
-    status: 'Active' | 'Inactive' | 'Prospect' | 'Past Client',
-    notes?: string
+    phone: string | null,
+    address: string | null,
+    status: ClientStatus,
+    notes: string | null
   ): ClientAggregate {
     const client = new ClientAggregate();
     client.applyEvent(
@@ -73,19 +73,19 @@ export class ClientAggregate extends EventSourcedAggregate {
     return this.email;
   }
 
-  getPhone(): string | undefined {
+  getPhone(): string | null | undefined {
     return this.phone;
   }
 
-  getAddress(): string | undefined {
+  getAddress(): string | null | undefined {
     return this.address;
   }
 
-  getStatus(): 'Active' | 'Inactive' | 'Prospect' | 'Past Client' | undefined {
+  getStatus(): ClientStatus | undefined {
     return this.status;
   }
 
-  getNotes(): string | undefined {
+  getNotes(): string | null | undefined {
     return this.notes;
   }
 }

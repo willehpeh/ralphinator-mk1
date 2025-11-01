@@ -1,5 +1,7 @@
 import { DomainEvent } from '../base/domain-event';
 
+export type ClientStatus = 'Active' | 'Inactive' | 'Prospect' | 'Past Client';
+
 /**
  * Domain event representing the creation of a new client.
  * This event is stored in the event store and used to rebuild the Client aggregate.
@@ -11,7 +13,7 @@ export class ClientCreatedDomainEvent extends DomainEvent {
     public readonly email: string,
     public readonly phone: string | null,
     public readonly address: string | null,
-    public readonly status: 'Active' | 'Inactive' | 'Prospect' | 'Past Client',
+    public readonly status: ClientStatus,
     public readonly notes: string | null,
     eventVersion = 1
   ) {
