@@ -352,6 +352,27 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 **Next Steps**: Test the API endpoints end-to-end to verify the complete flow
 **Verification**: Linting passed successfully
 
+### Task 18: Fix TypeScript Compilation Errors ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/domain/src/lib/base/event-sourced-aggregate.ts` (updated)
+- `packages/domain/src/lib/aggregates/client.aggregate.ts` (updated)
+- `packages/infrastructure/src/lib/projections/client.projection.ts` (updated)
+- `apps/frontend/src/app/app.ts` (updated)
+
+**Description**: Fixed all TypeScript compilation errors that were preventing the API from building. This fix included:
+- Consolidated DomainEvent definitions by removing the interface from `EventSourcedAggregate` and importing the `DomainEvent` class instead
+- Changed `getUncommittedEvents()` return type from `ReadonlyArray<DomainEvent>` to `DomainEvent[]` to fix assignability issue in `CreateClientHandler`
+- Added missing `id` property and `getId()` getter method to `ClientAggregate`
+- Fixed `ClientProjection` to import `ClientCreatedDomainEvent` from domain package (`@angular-nest-starter/domain`) instead of application package
+- Fixed frontend linting errors: removed unnecessary type annotation from `backendStatus`, changed `any` to `unknown` for `backendResponse`
+
+**Root Cause**: Two separate `DomainEvent` definitions (interface vs class) caused type incompatibility. The class-based approach with `eventVersion` and `occurredOn` properties is the correct implementation for event sourcing.
+
+**Verification**: API build successful (`nx build api` passes), webpack compilation successful
+
+**Next Steps**: Start the API server and test endpoints end-to-end
+
 ---
 
 ## Technical Design
