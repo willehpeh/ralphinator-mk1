@@ -4,7 +4,11 @@ import {
   CreateClientHandler,
   GetClientByIdQueryHandler,
 } from '@angular-nest-starter/application';
-import { ClientProjection } from '@angular-nest-starter/infrastructure';
+import {
+  ClientProjection,
+  InMemoryEventStore,
+  InMemoryClientReadRepository,
+} from '@angular-nest-starter/infrastructure';
 import { ClientsController } from './clients.controller';
 
 const CommandHandlers = [CreateClientHandler];
@@ -18,6 +22,15 @@ const EventHandlers = [ClientProjection];
     ...CommandHandlers,
     ...QueryHandlers,
     ...EventHandlers,
+    // Infrastructure implementations
+    {
+      provide: 'IEventStore',
+      useClass: InMemoryEventStore,
+    },
+    {
+      provide: 'IClientReadRepository',
+      useClass: InMemoryClientReadRepository,
+    },
   ],
 })
 export class ClientsModule {}

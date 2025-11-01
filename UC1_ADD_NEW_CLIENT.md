@@ -332,6 +332,26 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 **Next Steps**: Wire up InMemoryEventStore and InMemoryClientReadRepository in ClientsModule
 **Verification**: Linting passed successfully
 
+### Task 17: Wire up InMemoryEventStore and InMemoryClientReadRepository in ClientsModule ✅
+**Completed**: 2025-11-01
+**Files**:
+- `apps/api/src/app/clients/clients.module.ts` (updated)
+
+**Description**: Wired up infrastructure implementations in ClientsModule to complete the CQRS/ES dependency injection chain. This update:
+- Imported `InMemoryEventStore` and `InMemoryClientReadRepository` from infrastructure package
+- Registered `InMemoryEventStore` as provider for `'IEventStore'` injection token
+- Registered `InMemoryClientReadRepository` as provider for `'IClientReadRepository'` injection token
+- Enables handlers and projections to receive concrete implementations via dependency injection
+- Completes the full CQRS/ES wiring for the clients feature module
+
+**Architecture**: This completes the dependency injection chain:
+- `CreateClientHandler` receives `IEventStore` → `InMemoryEventStore`
+- `GetClientByIdQueryHandler` receives `IClientReadRepository` → `InMemoryClientReadRepository`
+- `ClientProjection` receives `IClientReadRepository` → `InMemoryClientReadRepository`
+
+**Next Steps**: Test the API endpoints end-to-end to verify the complete flow
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design
