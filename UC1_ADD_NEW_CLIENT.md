@@ -194,6 +194,29 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 **TDD Status**: GREEN (all 8 tests pass)
 **Verification**: Linting passed successfully, all tests pass
 
+### Task 11: Create ClientProjection Event Handler ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/infrastructure/src/lib/projections/client.projection.ts`
+- `packages/infrastructure/src/lib/infrastructure.ts` (updated exports)
+- `packages/application/src/lib/ports/client-read-repository.interface.ts` (added save method)
+
+**Description**: Created the `ClientProjection` event handler that builds the read model from domain events. This projection:
+- Implements NestJS `IEventHandler` interface decorated with `@EventsHandler(ClientCreatedDomainEvent)`
+- Subscribes to `ClientCreatedDomainEvent` from the event store
+- Transforms domain events into `ClientReadModel` DTOs
+- Persists read models to the read repository via `IClientReadRepository` port
+- Enables separation of write (event store) and read (read model) data stores
+- Follows CQRS pattern by building optimized read models for queries
+- Added `save()` method to `IClientReadRepository` interface to support persistence
+
+**Architecture**: This completes the CQRS event sourcing flow:
+- Commands → Domain events → Event store (write side)
+- Domain events → Projections → Read models (read side)
+- Queries → Read repositories → Read models
+
+**Verification**: Linting passed successfully for both infrastructure and application packages
+
 ---
 
 ## Technical Design
