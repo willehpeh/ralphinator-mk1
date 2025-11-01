@@ -24,6 +24,16 @@
    - Uses NX run-many to start both api and frontend in parallel
    - Simplifies development workflow to single command
 
+4. **Test full-stack integration** (2025-11-01)
+   - Added health check endpoint to backend (apps/api/src/app/health.controller.ts)
+   - Enabled CORS on backend to allow frontend connections
+   - Added HttpClient configuration to frontend (provideHttpClient)
+   - Created integration test in frontend to verify backend connectivity
+   - Frontend displays backend connection status and response
+   - Verified backend responds correctly to health check: GET /api/health
+   - Confirmed CORS headers allow cross-origin requests from frontend
+   - Both services communicate successfully: frontend (4200) → backend (3000)
+
 ### Next Tasks
 
-- Test full-stack integration
+- None (Use case complete)
