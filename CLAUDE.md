@@ -198,6 +198,163 @@ ESLint enforces dependency rules (`eslint.config.mjs`):
 
 ---
 
+## Angular Frontend Best Practices
+
+### Modern Angular (v14+)
+
+The frontend follows modern Angular conventions with **standalone components** and **signals**:
+
+**Core Principles**:
+- **Standalone Components**: All components are standalone (default behavior, do NOT set `standalone: true`)
+- **Signals**: Primary state management mechanism (complement NGRX for global state)
+- **Modern Control Flow**: Use `@if`, `@for`, `@switch` instead of structural directives
+- **OnPush Change Detection**: Always set `changeDetection: ChangeDetectionStrategy.OnPush`
+- **Dependency Injection**: Use `inject()` function instead of constructor injection
+
+### Component Guidelines
+
+```typescript
+import { Component, ChangeDetectionStrategy, computed, signal, input, output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-user-profile',
+  imports: [CommonModule],  // Import dependencies directly
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.active]': 'isActive()',  // Use host object instead of @HostBinding
+    '(click)': 'handleClick()'       // Use host object instead of @HostListener
+  },
+  template: `
+    @if (user(); as user) {
+      <div class="profile">
+        <h2>{{ user.name }}</h2>
+        @for (role of user.roles; track role.id) {
+          <span class="role">{{ role.name }}</span>
+        }
+      </div>
+    }
+  `
+})
+export class UserProfileComponent {
+  // Use input() and output() functions
+  userId = input.required<string>();
+  userUpdated = output<User>();
+
+  // Use signals for local state
+  private count = signal(0);
+
+  // Use computed() for derived state
+  doubleCount = computed(() => this.count() * 2);
+
+  // Use inject() instead of constructor injection
+  private store = inject(Store);
+  private userService = inject(UserService);
+}
+```
+
+### Template Best Practices
+
+**Do's** ✅:
+- Use `@if`, `@for`, `@switch` for control flow
+- Use `[class.active]="condition"` for conditional classes
+- Use `[style.color]="value"` for dynamic styles
+- Use `async` pipe for observables
+- Use `track` in `@for` loops for performance
+- Use `NgOptimizedImage` for static images
+
+**Don'ts** ❌:
+- Don't use `*ngIf`, `*ngFor`, `*ngSwitch` (legacy syntax)
+- Don't use `ngClass` or `ngStyle` directives
+- Don't use `@HostBinding` or `@HostListener` decorators
+- Don't use `@Input()` or `@Output()` decorators
+- Don't use constructor injection
+- Don't use `mutate()` on signals (use `set()` or `update()`)
+
+### State Management Strategy
+
+**Local Component State**: Use signals
+```typescript
+private count = signal(0);
+private items = signal<Item[]>([]);
+
+increment() {
+  this.count.update(n => n + 1);
+}
+
+addItem(item: Item) {
+  this.items.update(items => [...items, item]);
+}
+```
+
+**Global Application State**: Use NGRX with signals
+```typescript
+// Select from store using signals
+users = this.store.selectSignal(selectAllUsers);
+loading = this.store.selectSignal(selectUsersLoading);
+```
+
+### Forms
+
+**Always use Reactive Forms** with typed form controls:
+```typescript
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+interface UserForm {
+  email: FormControl<string>;
+  name: FormControl<string>;
+}
+
+@Component({
+  imports: [ReactiveFormsModule],
+  // ...
+})
+export class UserFormComponent {
+  form = new FormGroup<UserForm>({
+    email: new FormControl('', { nonNullable: true }),
+    name: new FormControl('', { nonNullable: true })
+  });
+}
+```
+
+### Services
+
+```typescript
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'  // Singleton service
+})
+export class UserService {
+  // Use inject() instead of constructor
+  private http = inject(HttpClient);
+
+  getUsers() {
+    return this.http.get<User[]>('/api/users');
+  }
+}
+```
+
+### Testing (Vitest + @analogjs/vitest-angular)
+
+```typescript
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/angular';
+
+describe('UserProfileComponent', () => {
+  it('should display user name', async () => {
+    await render(UserProfileComponent, {
+      componentInputs: { userId: '123' }
+    });
+
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+  });
+});
+```
+
+---
+
 ## Development Workflow
 
 ### Creating a New Feature (Event Sourced)
