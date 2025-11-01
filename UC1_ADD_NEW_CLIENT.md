@@ -308,6 +308,30 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 **Next Steps**: Implement InMemoryClientReadRepository for read-side persistence
 **Verification**: Linting passed successfully
 
+### Task 16: Implement InMemoryClientReadRepository ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/infrastructure/src/lib/read-models/in-memory-client-read-repository.ts` (created)
+- `packages/infrastructure/src/lib/infrastructure.ts` (updated exports)
+
+**Description**: Implemented in-memory read repository that provides IClientReadRepository port implementation. This implementation:
+- Implements `IClientReadRepository` interface from application layer
+- Stores client read models in memory using a Map<id, ClientReadModel>
+- Provides `findById()` method to retrieve clients by ID
+- Provides `save()` method to persist/update client read models (upsert behavior)
+- Includes utility methods `findAll()` and `clear()` for testing/debugging
+- Decorated with `@Injectable()` for NestJS dependency injection
+- Includes comprehensive documentation about in-memory limitations
+- Suitable for development and testing (note: data is lost on restart)
+
+**Architecture**: This completes the read-side persistence for CQRS/ES
+- Write side: Commands → EventStore (InMemoryEventStore)
+- Read side: Queries → ReadRepository (InMemoryClientReadRepository)
+- Sync: DomainEvents → Projections → ReadRepository
+
+**Next Steps**: Wire up InMemoryEventStore and InMemoryClientReadRepository in ClientsModule
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design
