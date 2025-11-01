@@ -577,6 +577,36 @@ The `CreateClientHandler` persists domain events to the event store (line 38-42)
 
 **Verification**: Linting passed successfully
 
+### Task 25: Add Route for AddClientFormComponent ✅
+**Completed**: 2025-11-01
+**Files**:
+- `apps/frontend/src/app/app.routes.ts` (updated)
+- `apps/frontend/src/app/app.html` (updated)
+- `apps/frontend/src/app/app.ts` (updated)
+
+**Description**: Integrated AddClientFormComponent into the application routing to make it accessible to users. This implementation:
+- Added route configuration for `/clients/add` path pointing to `AddClientFormComponent`
+- Added default redirect from root path (`/`) to `/clients/add` for easy access
+- Updated app template to replace backend status check with `<router-outlet>` directive
+- Updated app component to import `RouterOutlet` from `@angular/router`
+- Removed backend health check logic from app component (no longer needed)
+- Simplified app component to be a shell for routed components
+- Follows modern Angular routing patterns with standalone components
+
+**Route Configuration**:
+- `/clients/add` → `AddClientFormComponent` (add new client form)
+- `/` → redirects to `/clients/add` (default route)
+
+**User Experience**: Users can now navigate to the application and immediately see the "Add New Client" form.
+
+**Architecture**: This completes the frontend routing setup. The form is now accessible via:
+- Direct URL: http://localhost:4200/clients/add
+- Default URL: http://localhost:4200/ (redirects to /clients/add)
+
+**Next Steps**: Start the frontend server and test the complete end-to-end flow (frontend → backend)
+
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design

@@ -1,13 +1,5 @@
 <div style="padding: 20px; font-family: Arial, sans-serif;">
   <h1>Ralphinator MK1</h1>
 
-  <div style="margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px;">
-    <h2>Backend Connection Status</h2>
-    <p><strong>Status:</strong> {{ backendStatus }}</p>
-
-    <div *ngIf="backendResponse" style="margin-top: 10px;">
-      <h3>Backend Response:</h3>
-      <pre style="background: #f5f5f5; padding: 10px; border-radius: 3px;">{{ backendResponse | json }}</pre>
-    </div>
-  </div>
+  <router-outlet></router-outlet>
 </div>
