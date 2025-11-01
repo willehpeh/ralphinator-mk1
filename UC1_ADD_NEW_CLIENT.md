@@ -411,6 +411,31 @@ The `CreateClientHandler` persists domain events to the event store (line 38-42)
 
 **Next Steps**: Fix `CreateClientHandler` to publish domain events to EventBus after persisting them to event store
 
+### Task 20: Fix CreateClientHandler to Publish Domain Events to EventBus ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/application/src/lib/commands/handlers/create-client.handler.ts` (updated)
+
+**Description**: Fixed the projection trigger issue by publishing domain events to EventBus after persisting them. This fix:
+- Captures uncommitted events before persisting to event store
+- Publishes each domain event to EventBus using `events.forEach(event => this.eventBus.publish(event))`
+- Enables `ClientProjection` to receive domain events and update read models
+- Removed integration event publication (was placeholder code, not needed yet)
+- Follows CQRS/ES pattern: persist events → publish events → trigger projections
+
+**Root Cause**: The original implementation persisted domain events to the event store but didn't publish them to EventBus. The `ClientProjection` subscribes to `ClientCreatedDomainEvent` via `@EventsHandler` decorator but never received the event because it wasn't published.
+
+**Architecture**: This completes the event flow:
+1. Command handler creates aggregate and gets uncommitted events
+2. Events persisted to event store (write-side source of truth)
+3. Events published to EventBus (triggers projections)
+4. Projection receives events and updates read models
+5. Query handler can now retrieve data from read models
+
+**Next Steps**: Restart API server and retest endpoints end-to-end
+
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design

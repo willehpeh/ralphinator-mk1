@@ -33,21 +33,20 @@ export class CreateClientHandler implements ICommandHandler<CreateClientCommand>
       command.notes
     );
 
+    // Get uncommitted events before persisting
+    const events = client.getUncommittedEvents();
+
     // Persist domain events to event store
     // Expected version -1 indicates this is a new aggregate
     await this.eventStore.appendEvents(
       command.id,
-      client.getUncommittedEvents(),
+      events,
       -1
     );
 
-    // Publish integration event for side effects
-    // This allows other parts of the system to react to client creation
-    this.eventBus.publish({
-      clientId: command.id,
-      companyName: command.companyName,
-      email: command.email,
-    });
+    // Publish domain events to EventBus
+    // This triggers projections to update read models
+    events.forEach(event => this.eventBus.publish(event));
 
     return command.id;
   }
