@@ -1,6 +1,7 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ClientsService } from './clients.service';
 
 interface AddClientForm {
   companyName: FormControl<string>;
@@ -18,6 +19,18 @@ interface AddClientForm {
   template: `
     <div class="add-client-form">
       <h2>Add New Client</h2>
+
+      @if (submitSuccess()) {
+        <div class="success-message">
+          Client created successfully!
+        </div>
+      }
+
+      @if (submitError()) {
+        <div class="error-message">
+          {{ submitError() }}
+        </div>
+      }
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
@@ -81,10 +94,14 @@ interface AddClientForm {
         </div>
 
         <div class="form-actions">
-          <button type="submit" [disabled]="form.invalid">
-            Add Client
+          <button type="submit" [disabled]="form.invalid || submitting()">
+            @if (submitting()) {
+              Submitting...
+            } @else {
+              Add Client
+            }
           </button>
-          <button type="button" (click)="onCancel()">
+          <button type="button" (click)="onCancel()" [disabled]="submitting()">
             Cancel
           </button>
         </div>
@@ -101,6 +118,26 @@ interface AddClientForm {
     h2 {
       margin-bottom: 1.5rem;
       color: #333;
+    }
+
+    .success-message {
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      border-radius: 4px;
+      color: #155724;
+      font-weight: 500;
+    }
+
+    .error-message {
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      border-radius: 4px;
+      color: #721c24;
+      font-weight: 500;
     }
 
     .form-group {
@@ -165,12 +202,19 @@ interface AddClientForm {
       color: white;
     }
 
-    button[type="button"]:hover {
+    button[type="button"]:hover:not(:disabled) {
       background-color: #545b62;
+    }
+
+    button[type="button"]:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
     }
   `]
 })
 export class AddClientFormComponent {
+  private clientsService = inject(ClientsService);
+
   form = new FormGroup<AddClientForm>({
     companyName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
@@ -180,15 +224,45 @@ export class AddClientFormComponent {
     notes: new FormControl('', { nonNullable: true })
   });
 
+  submitting = signal(false);
+  submitSuccess = signal(false);
+  submitError = signal<string | null>(null);
+
   onSubmit(): void {
-    if (this.form.valid) {
-      // TODO: Implement submit logic in next task
-      console.log('Form submitted:', this.form.value);
+    if (this.form.valid && !this.submitting()) {
+      this.submitting.set(true);
+      this.submitError.set(null);
+
+      const formValue = this.form.getRawValue();
+      const dto = {
+        companyName: formValue.companyName,
+        email: formValue.email,
+        phone: formValue.phone || null,
+        address: formValue.address || null,
+        status: formValue.status,
+        notes: formValue.notes || null
+      };
+
+      this.clientsService.createClient(dto).subscribe({
+        next: (response) => {
+          console.log('Client created successfully:', response);
+          this.submitSuccess.set(true);
+          this.submitting.set(false);
+          this.form.reset({ status: 'Active' });
+          setTimeout(() => this.submitSuccess.set(false), 3000);
+        },
+        error: (error) => {
+          console.error('Error creating client:', error);
+          this.submitError.set(error.message || 'Failed to create client');
+          this.submitting.set(false);
+        }
+      });
     }
   }
 
   onCancel(): void {
-    // TODO: Implement cancel logic in next task
     this.form.reset({ status: 'Active' });
+    this.submitSuccess.set(false);
+    this.submitError.set(null);
   }
 }

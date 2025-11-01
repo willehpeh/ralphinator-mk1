@@ -542,6 +542,41 @@ The `CreateClientHandler` persists domain events to the event store (line 38-42)
 
 **Verification**: Linting passed successfully
 
+### Task 24: Wire up ClientsService in AddClientFormComponent ✅
+**Completed**: 2025-11-01
+**Files**:
+- `apps/frontend/src/app/clients/add-client-form.component.ts` (updated)
+
+**Description**: Wired up the ClientsService in AddClientFormComponent to handle form submission and API communication. This implementation:
+- Uses `inject()` function to inject `ClientsService` following modern Angular patterns
+- Implements form submission logic that calls `clientsService.createClient()` with proper DTO mapping
+- Adds loading state management using signals: `submitting`, `submitSuccess`, `submitError`
+- Maps form values to DTO format, converting empty strings to null for optional fields
+- Handles success case: displays success message, resets form, auto-hides message after 3 seconds
+- Handles error case: displays error message with user-friendly text
+- Updates template to show loading state ("Submitting..." button text)
+- Updates template to display success/error messages using `@if` modern control flow
+- Disables buttons during submission to prevent duplicate requests
+- Adds styles for success message (green) and error message (red)
+- Subscribes to Observable returned by service and handles both next and error callbacks
+- Resets all state (form, success, error) when cancel button is clicked
+
+**User Experience Improvements**:
+- Button shows "Submitting..." text while request is in progress
+- Submit and cancel buttons are disabled during submission
+- Success message appears for 3 seconds then auto-hides
+- Error messages persist until form is resubmitted or cancelled
+- Form resets to default state (status: 'Active') after successful submission
+
+**Architecture**: This completes the frontend-to-backend integration flow:
+- User fills form → Form submission → ClientsService → HTTP POST /api/clients
+- Backend creates client → Returns client ID → Frontend shows success message
+- Error handling throughout the flow with user-friendly feedback
+
+**Next Steps**: Integrate AddClientFormComponent into app routing and verify end-to-end
+
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design
