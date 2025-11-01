@@ -1,5 +1,15 @@
 # Implemented Use Cases
 
+## Use Case 1: Add a New Client (2025-11-01)
+- Full CQRS + Event Sourcing implementation with Clean Architecture
+- Backend API endpoints: POST /api/clients, GET /api/clients/:id
+- Frontend form component with reactive forms and validation
+- Complete event-driven flow: Commands → Events → Projections → Read Models
+- In-memory event store and read repository for development/testing
+- All 26 implementation tasks completed successfully
+- End-to-end verification: Both backend and frontend working correctly
+- Documentation: UC1_ADD_NEW_CLIENT.md
+
 ## Use Case 7: Start Development Environment (2025-11-01)
 - Backend server starts successfully on http://localhost:3000/api
 - Frontend application starts successfully on http://localhost:4200
