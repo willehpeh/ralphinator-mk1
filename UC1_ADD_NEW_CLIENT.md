@@ -46,6 +46,21 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 
 **Verification**: Linting passed successfully
 
+### Task 3: Create ClientCreatedDomainEvent ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/domain/src/lib/events/client-created.domain-event.ts`
+- `packages/domain/src/index.ts`
+
+**Description**: Created the `ClientCreatedDomainEvent` domain event that represents the creation of a new client. This event:
+- Extends the base `DomainEvent` class
+- Captures all client properties (companyName, email, phone, address, status, notes)
+- Uses readonly properties to ensure immutability
+- Supports event versioning (default version 1)
+- Defines client status as a union type: 'Active' | 'Inactive' | 'Prospect' | 'Past Client'
+
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design
