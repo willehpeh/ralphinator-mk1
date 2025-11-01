@@ -138,7 +138,7 @@ You are in Step 1 of an agentic software development workflow.
 EOF
 
     log_info "Invoking Claude Code for Step 1..."
-    claude --prompt-file /tmp/step1_prompt.md
+    claude -p --dangerously-skip-permissions /tmp/step1_prompt.md
     
     if file_exists "PROJECT_COMPLETE.md"; then
         log_success "Project marked as complete!"
@@ -214,7 +214,7 @@ Each use case MUST include:
 EOF
 
     log_info "Invoking Claude Code for Step 2..."
-    claude --prompt-file /tmp/step2_prompt.md
+    claude -p --dangerously-skip-permissions /tmp/step2_prompt.md
     
     if file_exists "NEXT_USE_CASES.md" && ! file_exists "NEXT_STORY.md"; then
         log_success "Use cases generated"
@@ -246,7 +246,7 @@ You are in Step 3 of an agentic software development workflow.
 EOF
 
     log_info "Invoking Claude Code for Step 3..."
-    claude --prompt-file /tmp/step3_prompt.md
+    claude -p --dangerously-skip-permissions /tmp/step3_prompt.md
     
     if file_exists "CURRENT_USE_CASE.md"; then
         log_success "Use case selected"
@@ -345,7 +345,7 @@ Focus on doing ONE SMALL THING WELL.
 EOF
 
     log_info "Invoking Claude Code for Step 3.5..."
-    claude --prompt-file /tmp/step3_5_prompt.md
+    claude -p --dangerously-skip-permissions /tmp/step3_5_prompt.md
     
     if ! file_exists "CURRENT_USE_CASE.md"; then
         log_success "Use case completed"
@@ -384,7 +384,7 @@ You are in Step 4 of an agentic software development workflow.
 EOF
 
     log_info "Invoking Claude Code for Step 4..."
-    claude --prompt-file /tmp/step4_prompt.md
+    claude -p --dangerously-skip-permissions /tmp/step4_prompt.md
     
     if ! file_exists "REFACTORING.md"; then
         log_success "Refactoring complete"
@@ -415,7 +415,7 @@ You are in Step 5 of an agentic software development workflow.
 EOF
 
     log_info "Invoking Claude Code for Step 5..."
-    claude --prompt-file /tmp/step5_prompt.md
+    claude -p --dangerously-skip-permissions /tmp/step5_prompt.md
     
     if file_exists "STORY_COMPLETE.md"; then
         log_success "Notification sent"
