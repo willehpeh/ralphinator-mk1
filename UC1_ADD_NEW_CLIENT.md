@@ -235,6 +235,30 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 **Next Steps**: Create controller with API endpoints for client operations
 **Verification**: Linting passed successfully
 
+### Task 13: Create ClientsController with POST /clients Endpoint ✅
+**Completed**: 2025-11-01
+**Files**:
+- `apps/api/src/app/clients/clients.controller.ts` (created)
+- `apps/api/src/app/clients/clients.module.ts` (updated to register controller)
+
+**Description**: Created the REST API controller with POST endpoint for creating clients. This controller:
+- Exposes POST `/clients` endpoint for creating new clients
+- Defines `CreateClientDto` for request body validation
+- Uses NestJS `CommandBus` to execute `CreateClientCommand`
+- Generates UUID for new client using Node's `crypto.randomUUID()`
+- Returns created client ID in response body: `{ id: string }`
+- Registered in `ClientsModule` controllers array
+- Follows NestJS controller conventions with decorators (`@Controller`, `@Post`, `@Body`)
+
+**API Contract**:
+- **Method**: POST
+- **Path**: `/clients`
+- **Request Body**: `{ companyName, email, phone?, address?, status, notes? }`
+- **Response**: `{ id: string }`
+
+**Next Steps**: Add GET endpoint for retrieving clients
+**Verification**: Linting passed successfully
+
 ---
 
 ## Technical Design
