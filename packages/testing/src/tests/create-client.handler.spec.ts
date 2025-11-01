@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { EventBus } from '@nestjs/cqrs';
-import { CreateClientHandler } from '@ralphinator-mk1/application';
-import { CreateClientCommand } from '@ralphinator-mk1/application';
-import { ClientAggregate } from '@ralphinator-mk1/domain';
+import { CreateClientHandler } from '@angular-nest-starter/application';
+import { CreateClientCommand } from '@angular-nest-starter/application';
+import { ClientAggregate } from '@angular-nest-starter/domain';
 
 describe('CreateClientHandler', () => {
   let handler: CreateClientHandler;

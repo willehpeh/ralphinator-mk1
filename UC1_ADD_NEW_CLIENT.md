@@ -121,6 +121,21 @@ This document tracks the implementation of Use Case 1: Add a New Client.
 **TDD Status**: GREEN (test should now pass)
 **Verification**: Linting passed successfully for both domain and application packages
 
+### Task 7: Fix Test Imports to Match tsconfig Package Names ✅
+**Completed**: 2025-11-01
+**Files**:
+- `packages/testing/src/tests/create-client.handler.spec.ts`
+
+**Description**: Fixed import statements in the test file to use correct package names defined in tsconfig.base.json. Changed imports from:
+- `@ralphinator-mk1/application` → `@angular-nest-starter/application`
+- `@ralphinator-mk1/domain` → `@angular-nest-starter/domain`
+
+**Verification**: All tests now pass successfully (5 tests passed)
+- ✅ CreateClientHandler creates new client aggregate and persists events
+- ✅ CreateClientHandler handles optional fields as null
+- ✅ CreateClientHandler publishes integration event after creating client
+- ✅ CreateClientHandler handles all valid client statuses
+
 ---
 
 ## Technical Design
