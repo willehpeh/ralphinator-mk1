@@ -146,3 +146,16 @@ Added reducer handlers for status change actions:
 - Added handler for `changeClientStatusFailure`: sets loading to false, stores error message
 - Follows same pattern as other action handlers in reducer
 - Includes note that UI should refresh client list after successful status change
+
+### ✅ Task 11: Add "Change Status" button to client detail view
+**Completed**: 2025-11-02
+
+Added UI button to initiate status change workflow:
+- File: `apps/frontend/src/app/clients/client-detail.component.ts`
+- Added "Change Status" button next to "Edit Client" button in header
+- Created `action-buttons` container with flexbox layout for button group
+- Added `isChangingStatus` signal to track status change mode state
+- Added `toggleStatusChangeMode()` method to toggle status change mode
+- Styled button with secondary color (gray) to distinguish from primary edit action
+- Button is only visible when not in edit mode and client is loaded
+- Sets foundation for status change UI component in next tasks

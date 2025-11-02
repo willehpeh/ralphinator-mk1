@@ -19,9 +19,14 @@ import { EditClientFormComponent } from './edit-client-form.component';
         <div class="header-title-section">
           <h2>Client Details</h2>
           @if (!isEditing() && client()) {
-            <button class="edit-button" (click)="toggleEditMode()">
-              Edit Client
-            </button>
+            <div class="action-buttons">
+              <button class="edit-button" (click)="toggleEditMode()">
+                Edit Client
+              </button>
+              <button class="change-status-button" (click)="toggleStatusChangeMode()">
+                Change Status
+              </button>
+            </div>
           }
         </div>
       </div>
@@ -149,6 +154,11 @@ import { EditClientFormComponent } from './edit-client-form.component';
       font-size: 1.75rem;
     }
 
+    .action-buttons {
+      display: flex;
+      gap: 0.75rem;
+    }
+
     .edit-button {
       padding: 0.6rem 1.5rem;
       background-color: #007bff;
@@ -163,6 +173,22 @@ import { EditClientFormComponent } from './edit-client-form.component';
 
     .edit-button:hover {
       background-color: #0056b3;
+    }
+
+    .change-status-button {
+      padding: 0.6rem 1.5rem;
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .change-status-button:hover {
+      background-color: #5a6268;
     }
 
     .loading-message {
@@ -287,6 +313,9 @@ export class ClientDetailComponent implements OnInit {
   // Edit mode state
   isEditing = signal(false);
 
+  // Status change mode state
+  isChangingStatus = signal(false);
+
   // Select data from store using signals
   client = this.store.selectSignal(selectClientById(this.clientId() ?? ''));
   loading = this.store.selectSignal(selectClientsLoading);
@@ -315,5 +344,9 @@ export class ClientDetailComponent implements OnInit {
     // Exit edit mode and reload clients to show updated data
     this.isEditing.set(false);
     this.store.dispatch(loadClients());
+  }
+
+  toggleStatusChangeMode(): void {
+    this.isChangingStatus.update(value => !value);
   }
 }
