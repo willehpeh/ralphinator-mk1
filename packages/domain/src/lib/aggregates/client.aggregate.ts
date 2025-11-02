@@ -112,17 +112,27 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Helper method to update client fields from ClientData value object
+   * Used by event handlers to apply state changes consistently
+   *
+   * @param clientData - Value object containing client information
+   */
+  private updateClientFields(clientData: ClientData): void {
+    this.companyName = clientData.companyName;
+    this.email = clientData.email;
+    this.phone = clientData.phone;
+    this.address = clientData.address;
+    this.status = clientData.status;
+    this.notes = clientData.notes;
+  }
+
+  /**
    * Event handler for ClientCreatedDomainEvent
    * Initializes the aggregate state when a new client is created
    */
   private onClientCreated(event: ClientCreatedDomainEvent): void {
     this.id = event.aggregateId;
-    this.companyName = event.clientData.companyName;
-    this.email = event.clientData.email;
-    this.phone = event.clientData.phone;
-    this.address = event.clientData.address;
-    this.status = event.clientData.status;
-    this.notes = event.clientData.notes;
+    this.updateClientFields(event.clientData);
   }
 
   /**
@@ -130,12 +140,7 @@ export class ClientAggregate extends EventSourcedAggregate {
    * Updates the aggregate state when client information changes
    */
   private onClientInformationUpdated(event: ClientInformationUpdatedDomainEvent): void {
-    this.companyName = event.clientData.companyName;
-    this.email = event.clientData.email;
-    this.phone = event.clientData.phone;
-    this.address = event.clientData.address;
-    this.status = event.clientData.status;
-    this.notes = event.clientData.notes;
+    this.updateClientFields(event.clientData);
   }
 
   /**
