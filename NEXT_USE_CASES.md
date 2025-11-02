@@ -1,32 +1,5 @@
 # Use Cases for Client Management System
 
-## Use Case 2: View All Clients
-
-**Primary Actor**: Developer/Business User
-
-**Goal**: See a list of all client companies to review business relationships
-
-**Preconditions**:
-- User has access to the client management system
-
-**Main Success Scenario**:
-1. User navigates to client list
-2. System retrieves all clients
-3. System displays list showing client names and key information
-4. User browses the list
-
-**Extensions**:
-- 2a. If no clients exist:
-  - System displays message indicating no clients found
-  - System provides option to add first client
-- 2b. If system takes time to load:
-  - System displays loading indicator
-  - System shows results when ready
-
-**Success Guarantee**: User can see all clients currently in the system
-
----
-
 ## Use Case 3: View Client Details
 
 **Primary Actor**: Developer/Business User
@@ -165,4 +138,5 @@ Each use case delivers independent business value and describes user goals in bu
 ## Completed Use Cases
 
 - **Use Case 1: Add a New Client** - Completed 2025-11-01 (See IMPLEMENTED_CASES.md)
+- **Use Case 2: View All Clients** - Completed 2025-11-02 (See IMPLEMENTED_CASES.md)
 - **Use Case 7: Start Development Environment** - Completed 2025-11-01 (See IMPLEMENTED_CASES.md)

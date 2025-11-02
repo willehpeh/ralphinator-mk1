@@ -10,6 +10,19 @@
 - End-to-end verification: Both backend and frontend working correctly
 - Documentation: UC1_ADD_NEW_CLIENT.md
 
+## Use Case 2: View All Clients (2025-11-02)
+- Complete CQRS query implementation with read model projections
+- Backend: GetAllClientsQuery and handler retrieve all clients from read repository
+- Backend API endpoint: GET /api/clients returns array of ClientReadModel
+- Frontend: ClientListComponent with NGRX state management (actions, reducer, selectors, effects)
+- Frontend: Modern Angular implementation (standalone components, signals, OnPush detection)
+- Frontend: Responsive client list UI with loading, error, and empty states
+- Frontend: Status badges color-coded by client status (ACTIVE/INACTIVE/PENDING)
+- Route: /clients set as default application route
+- All 11 frontend tests passing (component behavior, state management, rendering)
+- End-to-end verification: Complete data flow from UI → NGRX → API → Query Handler → Read Repository and back
+- Documentation: UC2_VIEW_ALL_CLIENTS.md
+
 ## Use Case 7: Start Development Environment (2025-11-01)
 - Backend server starts successfully on http://localhost:3000/api
 - Frontend application starts successfully on http://localhost:4200
