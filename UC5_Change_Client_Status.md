@@ -71,3 +71,18 @@ Implemented command handler for changing client status:
 - `changeStatus()` method enforces business rule: status must be different from current status
 - Status changes are tracked separately from general information updates
 - Event sourcing pattern: method applies event which updates state via `apply()`
+
+---
+
+## Frontend Implementation
+
+### ✅ Task 5: Add changeClientStatus actions to NGRX store
+**Completed**: 2025-11-02
+
+Created NGRX actions for status change operations:
+- File: `apps/frontend/src/app/clients/store/clients.actions.ts`
+- Added `changeClientStatus` action with id and status parameters
+- Added `changeClientStatusSuccess` action
+- Added `changeClientStatusFailure` action with error message
+- Follows NGRX action naming convention: `[Clients] {Action Name}`
+- Status type: `'ACTIVE' | 'INACTIVE' | 'PENDING'`

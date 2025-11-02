@@ -66,3 +66,30 @@ export const updateClientFailure = createAction(
   '[Clients] Update Client Failure',
   props<{ error: string }>()
 );
+
+/**
+ * Change client status
+ */
+export const changeClientStatus = createAction(
+  '[Clients] Change Client Status',
+  props<{
+    id: string;
+    status: 'ACTIVE' | 'INACTIVE' | 'PENDING';
+  }>()
+);
+
+/**
+ * Successfully changed client status
+ */
+export const changeClientStatusSuccess = createAction(
+  '[Clients] Change Client Status Success',
+  props<{ id: string }>()
+);
+
+/**
+ * Failed to change client status
+ */
+export const changeClientStatusFailure = createAction(
+  '[Clients] Change Client Status Failure',
+  props<{ error: string }>()
+);
