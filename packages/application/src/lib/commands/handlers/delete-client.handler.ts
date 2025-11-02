@@ -1,23 +1,17 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Inject } from '@nestjs/common';
 import { DeleteClientCommand } from '../delete-client.command';
 import { ClientAggregate } from '@angular-nest-starter/domain';
-import {
-  IAggregateRepository,
-  INJECTION_TOKENS,
-} from '../../ports';
+import { BaseCommandHandler } from '../base';
 
 /**
  * Command handler for deleting a client.
  * Follows CQRS pattern and event sourcing principles.
  */
 @CommandHandler(DeleteClientCommand)
-export class DeleteClientHandler implements ICommandHandler<DeleteClientCommand> {
-  constructor(
-    @Inject(INJECTION_TOKENS.AGGREGATE_REPOSITORY)
-    private readonly aggregateRepository: IAggregateRepository<ClientAggregate>
-  ) {}
-
+export class DeleteClientHandler
+  extends BaseCommandHandler<DeleteClientCommand, ClientAggregate>
+  implements ICommandHandler<DeleteClientCommand>
+{
   /**
    * Executes the DeleteClientCommand
    *
@@ -25,15 +19,9 @@ export class DeleteClientHandler implements ICommandHandler<DeleteClientCommand>
    * @returns The ID of the deleted client
    */
   async execute(command: DeleteClientCommand): Promise<string> {
-    // Load existing client aggregate from event store
-    const client = await this.aggregateRepository.load(command.id, ClientAggregate);
-
-    // Delete client using domain logic
-    client.delete();
-
-    // Persist aggregate (saves events and publishes to event bus)
-    await this.aggregateRepository.save(client);
-
-    return command.id;
+    return this.executeOnAggregate(command.id, ClientAggregate, (client) => {
+      // Delete client using domain logic
+      client.delete();
+    });
   }
 }

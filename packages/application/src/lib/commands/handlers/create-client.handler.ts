@@ -1,23 +1,17 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Inject } from '@nestjs/common';
 import { CreateClientCommand } from '../create-client.command';
 import { ClientAggregate } from '@angular-nest-starter/domain';
-import {
-  IAggregateRepository,
-  INJECTION_TOKENS,
-} from '../../ports';
+import { BaseCommandHandler } from '../base';
 
 /**
  * Command handler for creating a new client.
  * Follows CQRS pattern and event sourcing principles.
  */
 @CommandHandler(CreateClientCommand)
-export class CreateClientHandler implements ICommandHandler<CreateClientCommand> {
-  constructor(
-    @Inject(INJECTION_TOKENS.AGGREGATE_REPOSITORY)
-    private readonly aggregateRepository: IAggregateRepository<ClientAggregate>
-  ) {}
-
+export class CreateClientHandler
+  extends BaseCommandHandler<CreateClientCommand, ClientAggregate>
+  implements ICommandHandler<CreateClientCommand>
+{
   /**
    * Executes the CreateClientCommand
    *
@@ -37,7 +31,7 @@ export class CreateClientHandler implements ICommandHandler<CreateClientCommand>
     );
 
     // Persist aggregate (saves events and publishes to event bus)
-    await this.aggregateRepository.save(client);
+    await this.saveAggregate(client);
 
     return command.id;
   }
