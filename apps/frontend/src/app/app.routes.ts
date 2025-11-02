@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { AddClientFormComponent } from './clients/add-client-form.component';
+import { AddClientPageComponent } from './clients/add-client-page.component';
 import { ClientListComponent } from './clients/client-list.component';
 import { ClientDetailComponent } from './clients/client-detail.component';
 
@@ -10,7 +10,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'clients/add',
-    component: AddClientFormComponent,
+    component: AddClientPageComponent,
   },
   {
     path: 'clients/:id',

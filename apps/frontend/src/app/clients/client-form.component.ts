@@ -1,10 +1,23 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, input, output, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { ClientsService, CreateClientDto } from './clients.service';
+import { updateClient } from './store/clients.actions';
+import { selectClientsError } from './store/clients.selectors';
 import { ClientStatus } from '@angular-nest-starter/domain';
 
-interface AddClientForm {
+interface Client {
+  id: string;
+  companyName: string;
+  email: string;
+  phone?: string | null;
+  address?: string | null;
+  status: ClientStatus;
+  notes?: string | null;
+}
+
+interface ClientFormFields {
   companyName: FormControl<string>;
   email: FormControl<string>;
   phone: FormControl<string>;
@@ -14,22 +27,28 @@ interface AddClientForm {
 }
 
 @Component({
-  selector: 'app-add-client-form',
+  selector: 'app-client-form',
   imports: [CommonModule, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="add-client-form">
-      <h2>Add New Client</h2>
+    <div class="client-form">
+      <h2>{{ mode() === 'create' ? 'Add New Client' : 'Edit Client' }}</h2>
 
       @if (submitSuccess()) {
         <div class="success-message">
-          Client created successfully!
+          {{ mode() === 'create' ? 'Client created successfully!' : 'Client updated successfully!' }}
         </div>
       }
 
       @if (submitError()) {
         <div class="error-message">
           {{ submitError() }}
+        </div>
+      }
+
+      @if (storeError(); as errorMessage) {
+        <div class="error-message">
+          {{ errorMessage }}
         </div>
       }
 
@@ -97,9 +116,9 @@ interface AddClientForm {
         <div class="form-actions">
           <button type="submit" [disabled]="form.invalid || submitting()">
             @if (submitting()) {
-              Submitting...
+              {{ mode() === 'create' ? 'Submitting...' : 'Updating...' }}
             } @else {
-              Add Client
+              {{ mode() === 'create' ? 'Add Client' : 'Update Client' }}
             }
           </button>
           <button type="button" (click)="onCancel()" [disabled]="submitting()">
@@ -110,7 +129,7 @@ interface AddClientForm {
     </div>
   `,
   styles: [`
-    .add-client-form {
+    .client-form {
       max-width: 600px;
       margin: 0 auto;
       padding: 2rem;
@@ -213,10 +232,22 @@ interface AddClientForm {
     }
   `]
 })
-export class AddClientFormComponent {
+export class ClientFormComponent implements OnInit {
   private clientsService = inject(ClientsService);
+  private store = inject(Store);
 
-  form = new FormGroup<AddClientForm>({
+  // Inputs
+  mode = input.required<'create' | 'edit'>();
+  client = input<Client>();
+
+  // Outputs
+  formCancelled = output<void>();
+  formSucceeded = output<void>();
+
+  // Select error from store (for edit mode)
+  storeError = this.store.selectSignal(selectClientsError);
+
+  form = new FormGroup<ClientFormFields>({
     companyName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
     phone: new FormControl('', { nonNullable: true }),
@@ -229,41 +260,127 @@ export class AddClientFormComponent {
   submitSuccess = signal(false);
   submitError = signal<string | null>(null);
 
+  constructor() {
+    // Watch for client changes in edit mode and populate form
+    effect(() => {
+      const currentMode = this.mode();
+      const clientData = this.client();
+
+      if (currentMode === 'edit' && clientData) {
+        this.form.patchValue({
+          companyName: clientData.companyName,
+          email: clientData.email,
+          phone: clientData.phone || '',
+          address: clientData.address || '',
+          status: clientData.status,
+          notes: clientData.notes || ''
+        });
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    // Initial form population for edit mode
+    if (this.mode() === 'edit' && this.client()) {
+      const clientData = this.client()!;
+      this.form.patchValue({
+        companyName: clientData.companyName,
+        email: clientData.email,
+        phone: clientData.phone || '',
+        address: clientData.address || '',
+        status: clientData.status,
+        notes: clientData.notes || ''
+      });
+    }
+  }
+
   onSubmit(): void {
     if (this.form.valid && !this.submitting()) {
       this.submitting.set(true);
       this.submitError.set(null);
 
       const formValue = this.form.getRawValue();
-      const dto: CreateClientDto = {
-        companyName: formValue.companyName,
-        email: formValue.email,
-        phone: formValue.phone ? formValue.phone : undefined,
-        address: formValue.address ? formValue.address : undefined,
-        status: formValue.status,
-        notes: formValue.notes ? formValue.notes : undefined
-      };
 
-      this.clientsService.createClient(dto).subscribe({
-        next: (response) => {
-          console.log('Client created successfully:', response);
-          this.submitSuccess.set(true);
-          this.submitting.set(false);
-          this.form.reset({ status: 'Active' });
-          setTimeout(() => this.submitSuccess.set(false), 3000);
-        },
-        error: (error) => {
-          console.error('Error creating client:', error);
-          this.submitError.set(error.message || 'Failed to create client');
-          this.submitting.set(false);
-        }
-      });
+      if (this.mode() === 'create') {
+        this.handleCreate(formValue);
+      } else {
+        this.handleUpdate(formValue);
+      }
     }
   }
 
+  private handleCreate(formValue: ReturnType<typeof this.form.getRawValue>): void {
+    const dto: CreateClientDto = {
+      companyName: formValue.companyName,
+      email: formValue.email,
+      phone: formValue.phone || undefined,
+      address: formValue.address || undefined,
+      status: formValue.status,
+      notes: formValue.notes || undefined
+    };
+
+    this.clientsService.createClient(dto).subscribe({
+      next: () => {
+        this.submitSuccess.set(true);
+        this.submitting.set(false);
+        this.form.reset({ status: 'Active' });
+        setTimeout(() => {
+          this.submitSuccess.set(false);
+          this.formSucceeded.emit();
+        }, 3000);
+      },
+      error: (error) => {
+        this.submitError.set(error.message || 'Failed to create client');
+        this.submitting.set(false);
+      }
+    });
+  }
+
+  private handleUpdate(formValue: ReturnType<typeof this.form.getRawValue>): void {
+    const clientData = this.client();
+    if (!clientData) {
+      this.submitError.set('Client data not found');
+      this.submitting.set(false);
+      return;
+    }
+
+    this.store.dispatch(updateClient({
+      id: clientData.id,
+      companyName: formValue.companyName,
+      email: formValue.email,
+      phone: formValue.phone || null,
+      address: formValue.address || null,
+      status: formValue.status,
+      notes: formValue.notes || null
+    }));
+
+    // Emit success event after a brief delay to allow the store to update
+    setTimeout(() => {
+      this.submitting.set(false);
+      this.formSucceeded.emit();
+    }, 1000);
+  }
+
   onCancel(): void {
-    this.form.reset({ status: 'Active' });
-    this.submitSuccess.set(false);
-    this.submitError.set(null);
+    if (this.mode() === 'create') {
+      this.form.reset({ status: 'Active' });
+      this.submitSuccess.set(false);
+      this.submitError.set(null);
+    } else {
+      // Reset form to original client data in edit mode
+      const clientData = this.client();
+      if (clientData) {
+        this.form.patchValue({
+          companyName: clientData.companyName,
+          email: clientData.email,
+          phone: clientData.phone || '',
+          address: clientData.address || '',
+          status: clientData.status,
+          notes: clientData.notes || ''
+        });
+      }
+    }
+
+    this.formCancelled.emit();
   }
 }

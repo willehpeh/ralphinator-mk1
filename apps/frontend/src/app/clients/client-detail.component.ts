@@ -4,12 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { loadClients } from './store/clients.actions';
 import { selectClientById, selectClientsLoading, selectClientsError } from './store/clients.selectors';
-import { EditClientFormComponent } from './edit-client-form.component';
+import { ClientFormComponent } from './client-form.component';
 import { ChangeStatusFormComponent } from './change-status-form.component';
 
 @Component({
   selector: 'app-client-detail',
-  imports: [CommonModule, EditClientFormComponent, ChangeStatusFormComponent],
+  imports: [CommonModule, ClientFormComponent, ChangeStatusFormComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="client-detail">
@@ -52,10 +52,11 @@ import { ChangeStatusFormComponent } from './change-status-form.component';
 
       @if (client(); as clientData) {
         @if (isEditing()) {
-          <app-edit-client-form
-            [clientId]="clientData.id"
-            (editCancelled)="toggleEditMode()"
-            (editSucceeded)="handleEditSuccess()"
+          <app-client-form
+            [mode]="'edit'"
+            [client]="clientData"
+            (formCancelled)="toggleEditMode()"
+            (formSucceeded)="handleEditSuccess()"
           />
         } @else if (isChangingStatus()) {
           <app-change-status-form
