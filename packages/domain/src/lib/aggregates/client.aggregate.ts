@@ -60,6 +60,20 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Ensures that the aggregate has been initialized (created).
+   * Throws an error if the aggregate ID is not set.
+   *
+   * @throws Error if the aggregate has not been created
+   * @returns The aggregate ID
+   */
+  private ensureInitialized(): string {
+    if (!this.id) {
+      throw new Error('Cannot perform operation on a client that has not been created');
+    }
+    return this.id;
+  }
+
+  /**
    * Update client information
    *
    * @param companyName - Updated company name
@@ -77,13 +91,11 @@ export class ClientAggregate extends EventSourcedAggregate {
     status: ClientStatus,
     notes: string | null
   ): void {
-    if (!this.id) {
-      throw new Error('Cannot update information on a client that has not been created');
-    }
+    const id = this.ensureInitialized();
 
     this.applyEvent(
       new ClientInformationUpdatedDomainEvent(
-        this.id,
+        id,
         companyName,
         email,
         phone,
@@ -100,9 +112,7 @@ export class ClientAggregate extends EventSourcedAggregate {
    * @param newStatus - The new status to set for the client
    */
   changeStatus(newStatus: ClientStatus): void {
-    if (!this.id) {
-      throw new Error('Cannot change status on a client that has not been created');
-    }
+    const id = this.ensureInitialized();
 
     if (!this.status) {
       throw new Error('Client status is not initialized');
@@ -114,7 +124,7 @@ export class ClientAggregate extends EventSourcedAggregate {
 
     this.applyEvent(
       new ClientStatusChangedDomainEvent(
-        this.id,
+        id,
         this.status,
         newStatus
       )
@@ -126,12 +136,10 @@ export class ClientAggregate extends EventSourcedAggregate {
    * This marks the client as deleted by applying a ClientDeletedDomainEvent
    */
   delete(): void {
-    if (!this.id) {
-      throw new Error('Cannot delete a client that has not been created');
-    }
+    const id = this.ensureInitialized();
 
     this.applyEvent(
-      new ClientDeletedDomainEvent(this.id)
+      new ClientDeletedDomainEvent(id)
     );
   }
 
@@ -182,10 +190,7 @@ export class ClientAggregate extends EventSourcedAggregate {
 
   // Getters for accessing aggregate state
   getId(): string {
-    if (!this.id) {
-      throw new Error('Aggregate ID is not set');
-    }
-    return this.id;
+    return this.ensureInitialized();
   }
 
   getCompanyName(): string | undefined {
