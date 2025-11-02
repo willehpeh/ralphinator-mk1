@@ -1,29 +1,5 @@
 # Use Cases: Client Management
 
-## Use Case 2: Update Client Information
-
-- **Primary Actor**: Developer/CRM User
-- **Goal**: Modify existing client information to keep records current and accurate
-- **Preconditions**: The client record exists in the system
-- **Main Success Scenario**:
-  1. User specifies which client to update (by client ID)
-  2. User provides updated information (name, email, phone, status, or notes)
-  3. System verifies the client exists
-  4. System validates the updated information
-  5. System saves the changes
-  6. System confirms the update was successful
-- **Extensions**:
-  - 3a. If client does not exist:
-    - System notifies user that client was not found
-    - Use case ends in failure
-  - 4a. If updated information is invalid:
-    - System notifies user of validation errors
-    - User corrects the information
-    - Continue at step 4
-- **Success Guarantee**: The client record reflects the updated information, and the change history is preserved
-
----
-
 ## Use Case 3: View a Specific Client's Details
 
 - **Primary Actor**: Developer/CRM User
