@@ -12,7 +12,7 @@
 - [x] Frontend: Add NGRX reducer for clients state
 - [x] Frontend: Add NGRX selectors for client list
 - [x] Frontend: Add NGRX effects for loading clients
-- [ ] Frontend: Create `ClientListComponent`
+- [x] Frontend: Create `ClientListComponent`
 - [ ] Frontend: Add route for client list
 - [ ] Frontend: Test component with NGRX integration
 - [ ] End-to-End: Verify complete flow works
@@ -31,6 +31,7 @@
 - **2025-11-02**: Created NGRX reducer `apps/frontend/src/app/clients/store/clients.reducer.ts` with `ClientsState` interface (clients array, loading boolean, error string). Reducer handles `loadClients` (sets loading=true), `loadClientsSuccess` (stores clients, sets loading=false), and `loadClientsFailure` (stores error, sets loading=false).
 - **2025-11-02**: Created NGRX selectors in `apps/frontend/src/app/clients/store/clients.selectors.ts`. Includes: `selectClientsState` (feature selector), `selectAllClients` (all clients), `selectClientsLoading` (loading status), `selectClientsError` (error message), `selectHasClients` (boolean for empty state), `selectClientsCount` (total count), `selectActiveClients` (filtered active), `selectInactiveClients` (filtered inactive).
 - **2025-11-02**: Created NGRX effects file `apps/frontend/src/app/clients/store/clients.effects.ts` with `ClientsEffects` class. Effect `loadClients$` listens for `loadClients` action, calls `ClientsService.getAllClients()`, and dispatches `loadClientsSuccess` or `loadClientsFailure`. Added `getAllClients()` method to ClientsService that calls `GET /api/clients`.
+- **2025-11-02**: Created `ClientListComponent` in `apps/frontend/src/app/clients/client-list.component.ts`. Component uses modern Angular patterns: standalone component, `OnPush` change detection, `inject()` for DI, and `store.selectSignal()` for NGRX state. Dispatches `loadClients` action on `ngOnInit()`. Template displays loading state, error message, empty state (when no clients), and grid of client cards showing all client details. Status badges color-coded by status (ACTIVE/INACTIVE/PENDING).
 
 ## Completion Checklist
 - [ ] Backend query handler returns all clients from read model
