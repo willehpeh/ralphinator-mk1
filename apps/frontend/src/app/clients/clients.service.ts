@@ -1,8 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Client } from './store/clients.actions';
-import { ClientStatus } from './client.types';
+import { Client, ClientStatus } from './client.types';
 
 interface ClientDataDto {
   companyName: string;

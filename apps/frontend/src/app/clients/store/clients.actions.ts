@@ -1,19 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { ClientStatus } from '../client.types';
-
-/**
- * Client interface matching the backend ClientReadModel
- */
-export interface Client {
-  id: string;
-  companyName: string;
-  email: string;
-  phone: string | null;
-  address: string | null;
-  status: ClientStatus;
-  notes: string | null;
-  createdAt: string;
-}
+import { ClientStatus, Client } from '../client.types';
 
 /**
  * Load all clients from the backend

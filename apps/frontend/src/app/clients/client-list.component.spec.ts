@@ -9,7 +9,7 @@ import {
   selectClientsError,
   selectHasClients,
 } from './store/clients.selectors';
-import { Client } from './store/clients.actions';
+import { Client } from './client.types';
 
 describe('ClientListComponent', () => {
   const mockClients: Client[] = [

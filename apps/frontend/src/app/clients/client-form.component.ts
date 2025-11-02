@@ -7,20 +7,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { ClientsService, CreateClientDto } from './clients.service';
 import { updateClient, updateClientSuccess, updateClientFailure } from './store/clients.actions';
 import { selectClientsError } from './store/clients.selectors';
-import { ClientStatus } from './client.types';
+import { ClientStatus, Client } from './client.types';
 import { CLIENT_STATUSES } from './client.constants';
 
 const SUCCESS_MESSAGE_DISMISS_DURATION_MS = 3000;
-
-interface Client {
-  id: string;
-  companyName: string;
-  email: string;
-  phone?: string | null;
-  address?: string | null;
-  status: ClientStatus;
-  notes?: string | null;
-}
 
 interface ClientFormFields {
   companyName: FormControl<string>;

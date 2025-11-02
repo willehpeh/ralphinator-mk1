@@ -1,6 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
 import {
-  Client,
   loadClients,
   loadClientsSuccess,
   loadClientsFailure,
@@ -18,6 +17,7 @@ import {
   deleteClientSuccess,
   deleteClientFailure
 } from './clients.actions';
+import { Client } from '../client.types';
 
 /**
  * Clients state interface
