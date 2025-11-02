@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { ClientStatus } from '@angular-nest-starter/domain';
 
 /**
  * Client interface matching the backend ClientReadModel
@@ -9,7 +10,7 @@ export interface Client {
   email: string;
   phone: string | null;
   address: string | null;
-  status: 'ACTIVE' | 'INACTIVE' | 'PENDING';
+  status: ClientStatus;
   notes: string | null;
   createdAt: string;
 }
@@ -46,7 +47,7 @@ export const updateClient = createAction(
     email: string;
     phone: string | null;
     address: string | null;
-    status: 'ACTIVE' | 'INACTIVE' | 'PENDING';
+    status: ClientStatus;
     notes: string | null;
   }>()
 );
@@ -74,7 +75,7 @@ export const changeClientStatus = createAction(
   '[Clients] Change Client Status',
   props<{
     id: string;
-    status: 'ACTIVE' | 'INACTIVE' | 'PENDING';
+    status: ClientStatus;
   }>()
 );
 
@@ -99,7 +100,7 @@ export const changeClientStatusFailure = createAction(
  */
 export const filterClientsByStatus = createAction(
   '[Clients] Filter Clients By Status',
-  props<{ status: 'Active' | 'Inactive' | 'Prospect' | 'Past Client' }>()
+  props<{ status: ClientStatus }>()
 );
 
 /**

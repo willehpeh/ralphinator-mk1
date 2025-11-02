@@ -42,10 +42,10 @@ export class ClientsEffects {
         this.clientsService.updateClient(action.id, {
           companyName: action.companyName,
           email: action.email,
-          phone: action.phone,
-          address: action.address,
+          phone: action.phone ?? undefined,
+          address: action.address ?? undefined,
           status: action.status,
-          notes: action.notes,
+          notes: action.notes ?? undefined,
         }).pipe(
           map((response) => updateClientSuccess({ id: response.id })),
           catchError((error) =>

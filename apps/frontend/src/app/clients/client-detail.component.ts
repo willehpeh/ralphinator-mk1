@@ -60,7 +60,6 @@ import { ChangeStatusFormComponent } from './change-status-form.component';
         } @else if (isChangingStatus()) {
           <app-change-status-form
             [clientId]="clientData.id"
-            [currentStatus]="clientData.status"
             (statusChanged)="handleStatusChangeSuccess()"
             (changeCancelled)="toggleStatusChangeMode()"
           />

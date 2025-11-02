@@ -2,13 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Client } from './store/clients.actions';
+import { ClientStatus } from '@angular-nest-starter/domain';
 
 export interface CreateClientDto {
   companyName: string;
   email: string;
   phone?: string;
   address?: string;
-  status: 'Active' | 'Inactive' | 'Prospect' | 'Past Client';
+  status: ClientStatus;
   notes?: string;
 }
 
@@ -21,7 +22,7 @@ export interface UpdateClientDto {
   email: string;
   phone?: string;
   address?: string;
-  status: 'Active' | 'Inactive' | 'Prospect' | 'Past Client';
+  status: ClientStatus;
   notes?: string;
 }
 
@@ -30,7 +31,7 @@ export interface UpdateClientResponse {
 }
 
 export interface ChangeClientStatusDto {
-  status: 'ACTIVE' | 'INACTIVE' | 'PENDING';
+  status: ClientStatus;
 }
 
 export interface ChangeClientStatusResponse {
@@ -60,7 +61,7 @@ export class ClientsService {
     return this.http.get<Client[]>(this.apiUrl);
   }
 
-  getClientsByStatus(status: 'Active' | 'Inactive' | 'Prospect' | 'Past Client'): Observable<Client[]> {
+  getClientsByStatus(status: ClientStatus): Observable<Client[]> {
     return this.http.get<Client[]>(`${this.apiUrl}/status/${status}`);
   }
 }

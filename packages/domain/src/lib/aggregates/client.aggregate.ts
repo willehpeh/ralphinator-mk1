@@ -1,6 +1,7 @@
 import { EventSourcedAggregate } from '../base/event-sourced-aggregate';
 import { DomainEvent } from '../base/domain-event';
-import { ClientCreatedDomainEvent, ClientStatus } from '../events/client-created.domain-event';
+import { ClientStatus } from '../types/client-status.type';
+import { ClientCreatedDomainEvent } from '../events/client-created.domain-event';
 import { ClientInformationUpdatedDomainEvent } from '../events/client-information-updated.domain-event';
 import { ClientStatusChangedDomainEvent } from '../events/client-status-changed.domain-event';
 

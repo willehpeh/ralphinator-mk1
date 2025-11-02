@@ -1,6 +1,5 @@
 import { DomainEvent } from '../base/domain-event';
-
-export type ClientStatus = 'Active' | 'Inactive' | 'Prospect' | 'Past Client';
+import { ClientStatus } from '../types/client-status.type';
 
 /**
  * Domain event representing the creation of a new client.

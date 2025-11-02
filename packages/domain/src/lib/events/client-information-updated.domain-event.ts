@@ -1,5 +1,5 @@
 import { DomainEvent } from '../base/domain-event';
-import { ClientStatus } from './client-created.domain-event';
+import { ClientStatus } from '../types/client-status.type';
 
 /**
  * Domain event representing the update of client information.

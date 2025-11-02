@@ -9,6 +9,7 @@ import {
   selectClientsError,
   selectHasClients
 } from './store/clients.selectors';
+import { ClientStatus } from '@angular-nest-starter/domain';
 
 @Component({
   selector: 'app-client-list',
@@ -283,7 +284,7 @@ export class ClientListComponent implements OnInit {
   hasClients = this.store.selectSignal(selectHasClients);
 
   // Track selected filter
-  selectedFilter = signal<'all' | 'Active' | 'Inactive' | 'Prospect' | 'Past Client'>('all');
+  selectedFilter = signal<'all' | ClientStatus>('all');
 
   ngOnInit(): void {
     // Dispatch action to load clients when component initializes
@@ -292,7 +293,7 @@ export class ClientListComponent implements OnInit {
 
   onFilterChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
-    const value = selectElement.value as 'all' | 'Active' | 'Inactive' | 'Prospect' | 'Past Client';
+    const value = selectElement.value as 'all' | ClientStatus;
 
     this.selectedFilter.set(value);
 

@@ -2,13 +2,14 @@ import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientsService, CreateClientDto } from './clients.service';
+import { ClientStatus } from '@angular-nest-starter/domain';
 
 interface AddClientForm {
   companyName: FormControl<string>;
   email: FormControl<string>;
   phone: FormControl<string>;
   address: FormControl<string>;
-  status: FormControl<'Active' | 'Inactive' | 'Prospect' | 'Past Client'>;
+  status: FormControl<ClientStatus>;
   notes: FormControl<string>;
 }
 
@@ -220,7 +221,7 @@ export class AddClientFormComponent {
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
     phone: new FormControl('', { nonNullable: true }),
     address: new FormControl('', { nonNullable: true }),
-    status: new FormControl<'Active' | 'Inactive' | 'Prospect' | 'Past Client'>('Active', { nonNullable: true, validators: [Validators.required] }),
+    status: new FormControl<ClientStatus>('Active', { nonNullable: true, validators: [Validators.required] }),
     notes: new FormControl('', { nonNullable: true })
   });
 

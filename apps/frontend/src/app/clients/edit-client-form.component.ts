@@ -1,16 +1,17 @@
-import { Component, ChangeDetectionStrategy, inject, signal, input, output, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, input, output, OnInit, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { updateClient } from './store/clients.actions';
 import { selectClientById, selectClientsLoading, selectClientsError } from './store/clients.selectors';
+import { ClientStatus } from '@angular-nest-starter/domain';
 
 interface EditClientForm {
   companyName: FormControl<string>;
   email: FormControl<string>;
   phone: FormControl<string>;
   address: FormControl<string>;
-  status: FormControl<'Active' | 'Inactive' | 'Prospect' | 'Past Client'>;
+  status: FormControl<ClientStatus>;
   notes: FormControl<string>;
 }
 
@@ -224,7 +225,10 @@ export class EditClientFormComponent implements OnInit {
   editSucceeded = output<void>();
 
   // Select data from store using signals
-  client = this.store.selectSignal(selectClientById(this.clientId()));
+  client = computed(() => {
+    const id = this.clientId();
+    return this.store.selectSignal(selectClientById(id))();
+  });
   loading = this.store.selectSignal(selectClientsLoading);
   error = this.store.selectSignal(selectClientsError);
 
@@ -233,7 +237,7 @@ export class EditClientFormComponent implements OnInit {
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
     phone: new FormControl('', { nonNullable: true }),
     address: new FormControl('', { nonNullable: true }),
-    status: new FormControl<'Active' | 'Inactive' | 'Prospect' | 'Past Client'>('Active', { nonNullable: true, validators: [Validators.required] }),
+    status: new FormControl<ClientStatus>('Active', { nonNullable: true, validators: [Validators.required] }),
     notes: new FormControl('', { nonNullable: true })
   });
 
@@ -264,10 +268,10 @@ export class EditClientFormComponent implements OnInit {
         id: this.clientId(),
         companyName: formValue.companyName,
         email: formValue.email,
-        phone: formValue.phone || undefined,
-        address: formValue.address || undefined,
+        phone: formValue.phone || null,
+        address: formValue.address || null,
         status: formValue.status,
-        notes: formValue.notes || undefined
+        notes: formValue.notes || null
       }));
 
       // Emit success event after a brief delay to allow the store to update

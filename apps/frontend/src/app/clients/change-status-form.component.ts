@@ -1,15 +1,14 @@
-import { Component, ChangeDetectionStrategy, inject, input, output, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, input, output, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { changeClientStatus } from './store/clients.actions';
 import { selectClientById } from './store/clients.selectors';
+import { ClientStatus } from '@angular-nest-starter/domain';
 
 interface StatusForm {
-  status: FormControl<string>;
+  status: FormControl<ClientStatus>;
 }
-
-type ClientStatus = 'ACTIVE' | 'INACTIVE' | 'PENDING';
 
 @Component({
   selector: 'app-change-status-form',
@@ -230,14 +229,17 @@ export class ChangeStatusFormComponent {
   changeCancelled = output<void>();
 
   // Available status options
-  availableStatuses: ClientStatus[] = ['ACTIVE', 'INACTIVE', 'PENDING'];
+  availableStatuses: ClientStatus[] = ['Active', 'Inactive', 'Prospect', 'Past Client'];
 
   // Get client from store
-  client = this.store.selectSignal(selectClientById(this.clientId()));
+  client = computed(() => {
+    const id = this.clientId();
+    return this.store.selectSignal(selectClientById(id))();
+  });
 
   // Form
   form = new FormGroup<StatusForm>({
-    status: new FormControl('', {
+    status: new FormControl<ClientStatus>('Active', {
       nonNullable: true,
       validators: [Validators.required]
     })
