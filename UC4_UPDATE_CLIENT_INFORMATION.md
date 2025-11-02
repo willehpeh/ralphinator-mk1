@@ -227,3 +227,31 @@ This document tracks the implementation of Use Case 4: Update Client Information
 
 ---
 
+### Task 11: Add NGRX reducer cases for updateClient actions ✅
+**Completed**: 2025-11-02
+**Files**:
+- `apps/frontend/src/app/clients/store/clients.reducer.ts`
+
+**Description**: Added NGRX reducer cases to handle client update actions in the state management layer. This implementation:
+- Imported `updateClient`, `updateClientSuccess`, and `updateClientFailure` actions
+- Added reducer case for `updateClient` action that:
+  - Sets loading state to true
+  - Clears any previous errors
+  - Maintains existing clients array unchanged
+- Added reducer case for `updateClientSuccess` action that:
+  - Sets loading state to false
+  - Clears error state
+  - Note: Does not update the client in the array since the success action only contains the id
+  - Added comment explaining that UI should dispatch loadClients to refresh, or this could be enhanced to return full updated client
+- Added reducer case for `updateClientFailure` action that:
+  - Sets loading state to false
+  - Stores the error message
+  - Maintains existing clients array unchanged
+- Follows the same pattern as `loadClients` reducers for consistency
+- Enables the NGRX store to properly track loading and error states during client updates
+- Completes the reducer layer for UC4 update functionality
+
+**Verification**: Linting passed successfully (npx eslint apps/frontend/src/app/clients/store/clients.reducer.ts)
+
+---
+

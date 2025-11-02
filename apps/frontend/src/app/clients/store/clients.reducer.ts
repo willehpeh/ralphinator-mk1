@@ -1,5 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
-import { Client, loadClients, loadClientsSuccess, loadClientsFailure } from './clients.actions';
+import {
+  Client,
+  loadClients,
+  loadClientsSuccess,
+  loadClientsFailure,
+  updateClient,
+  updateClientSuccess,
+  updateClientFailure
+} from './clients.actions';
 
 /**
  * Clients state interface
@@ -42,6 +50,30 @@ export const clientsReducer = createReducer(
 
   // When loading clients fails
   on(loadClientsFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+
+  // When updating a client is triggered
+  on(updateClient, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  // When client is successfully updated
+  // Note: The current implementation only receives the id in the success action.
+  // The UI should dispatch loadClients after a successful update to refresh the list,
+  // or this could be enhanced in a future task to return the full updated client.
+  on(updateClientSuccess, (state) => ({
+    ...state,
+    loading: false,
+    error: null,
+  })),
+
+  // When updating client fails
+  on(updateClientFailure, (state, { error }) => ({
     ...state,
     loading: false,
     error,
