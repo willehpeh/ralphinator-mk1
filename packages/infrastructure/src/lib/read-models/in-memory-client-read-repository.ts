@@ -64,6 +64,15 @@ export class InMemoryClientReadRepository implements IClientReadRepository {
   }
 
   /**
+   * Deletes a client by ID
+   *
+   * @param id - The client ID to delete
+   */
+  async delete(id: string): Promise<void> {
+    this.clients.delete(id);
+  }
+
+  /**
    * Utility method to clear all clients (useful for testing)
    * Not part of the IClientReadRepository interface
    */

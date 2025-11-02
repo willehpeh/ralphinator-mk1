@@ -6,4 +6,5 @@ export interface IClientReadRepository {
   findAll(): Promise<ClientReadModel[]>;
   findByStatus(status: ClientStatus): Promise<ClientReadModel[]>;
   save(client: ClientReadModel): Promise<void>;
+  delete(id: string): Promise<void>;
 }
