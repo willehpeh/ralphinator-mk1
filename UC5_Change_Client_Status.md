@@ -86,3 +86,13 @@ Created NGRX actions for status change operations:
 - Added `changeClientStatusFailure` action with error message
 - Follows NGRX action naming convention: `[Clients] {Action Name}`
 - Status type: `'ACTIVE' | 'INACTIVE' | 'PENDING'`
+
+### ✅ Task 6: Register ChangeClientStatusHandler in clients module
+**Completed**: 2025-11-02
+
+Registered the command handler in the NestJS module:
+- File: `apps/api/src/app/clients/clients.module.ts`
+- Imported `ChangeClientStatusHandler` from application package
+- Added handler to `CommandHandlers` array
+- Handler is now registered as a provider via spread operator
+- Follows same pattern as other command handlers in the module
