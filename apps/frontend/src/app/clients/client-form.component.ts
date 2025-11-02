@@ -245,14 +245,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
       const clientData = this.client();
 
       if (currentMode === 'edit' && clientData) {
-        this.form.patchValue({
-          companyName: clientData.companyName,
-          email: clientData.email,
-          phone: clientData.phone ?? '',
-          address: clientData.address ?? '',
-          status: clientData.status,
-          notes: clientData.notes ?? ''
-        });
+        this.populateFormWithClientData(clientData);
       }
     });
 
@@ -278,14 +271,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
     // Initial form population for edit mode
     const clientData = this.client();
     if (this.mode() === 'edit' && clientData) {
-      this.form.patchValue({
-        companyName: clientData.companyName,
-        email: clientData.email,
-        phone: clientData.phone ?? '',
-        address: clientData.address ?? '',
-        status: clientData.status,
-        notes: clientData.notes ?? ''
-      });
+      this.populateFormWithClientData(clientData);
     }
   }
 
@@ -307,6 +293,17 @@ export class ClientFormComponent implements OnInit, OnDestroy {
         this.handleUpdate(formValue);
       }
     }
+  }
+
+  private populateFormWithClientData(clientData: Client): void {
+    this.form.patchValue({
+      companyName: clientData.companyName,
+      email: clientData.email,
+      phone: clientData.phone ?? '',
+      address: clientData.address ?? '',
+      status: clientData.status,
+      notes: clientData.notes ?? ''
+    });
   }
 
   private handleCreate(formValue: ReturnType<typeof this.form.getRawValue>): void {
@@ -365,14 +362,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
       // Reset form to original client data in edit mode
       const clientData = this.client();
       if (clientData) {
-        this.form.patchValue({
-          companyName: clientData.companyName,
-          email: clientData.email,
-          phone: clientData.phone || '',
-          address: clientData.address || '',
-          status: clientData.status,
-          notes: clientData.notes || ''
-        });
+        this.populateFormWithClientData(clientData);
       }
     }
 
