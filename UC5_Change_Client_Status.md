@@ -159,3 +159,20 @@ Added UI button to initiate status change workflow:
 - Styled button with secondary color (gray) to distinguish from primary edit action
 - Button is only visible when not in edit mode and client is loaded
 - Sets foundation for status change UI component in next tasks
+
+### ✅ Task 12: Create ChangeStatusFormComponent
+**Completed**: 2025-11-02
+
+Created dedicated form component for changing client status:
+- File: `apps/frontend/src/app/clients/change-status-form.component.ts`
+- Standalone component with OnPush change detection
+- Uses reactive forms with typed FormControl
+- Displays current status with styled badge
+- Provides dropdown to select new status (ACTIVE, INACTIVE, PENDING)
+- Includes form validation (required status selection)
+- Disables submit button when form is invalid or pristine
+- Dispatches `changeClientStatus` NGRX action on submit
+- Emits `statusChanged` output event on successful submission
+- Emits `changeCancelled` output event when user cancels
+- Styled consistently with edit form component
+- Follows modern Angular patterns: input()/output() functions, inject(), signals
