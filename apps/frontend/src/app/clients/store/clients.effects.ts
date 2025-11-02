@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { ClientsService } from '../clients.service';
 import { loadClients, loadClientsSuccess, loadClientsFailure, updateClient, updateClientSuccess, updateClientFailure, changeClientStatus, changeClientStatusSuccess, changeClientStatusFailure, filterClientsByStatus, filterClientsByStatusSuccess, filterClientsByStatusFailure, deleteClient, deleteClientSuccess, deleteClientFailure } from './clients.actions';
 
@@ -12,6 +13,7 @@ import { loadClients, loadClientsSuccess, loadClientsFailure, updateClient, upda
 export class ClientsEffects {
   private actions$ = inject(Actions);
   private clientsService = inject(ClientsService);
+  private router = inject(Router);
 
   /**
    * Effect to load all clients from the backend
@@ -110,5 +112,18 @@ export class ClientsEffects {
         )
       )
     )
+  );
+
+  /**
+   * Effect to navigate to client list after successful deletion
+   * Listens for deleteClientSuccess action and navigates to /clients
+   */
+  deleteClientSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(deleteClientSuccess),
+        tap(() => this.router.navigate(['/clients']))
+      ),
+    { dispatch: false }
   );
 }

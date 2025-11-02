@@ -148,7 +148,17 @@
   - Verified no new linting errors introduced
   - Verified frontend builds successfully
   - Delete button now shows confirmation dialog before dispatching delete action
-- [ ] Handle delete success (navigate to list)
+- [x] **Handle delete success (navigate to list)** ✅
+  - Added Router import to `apps/frontend/src/app/clients/store/clients.effects.ts`
+  - Added tap operator import from rxjs/operators
+  - Injected Router service in ClientsEffects class
+  - Created deleteClientSuccess$ effect that listens for deleteClientSuccess action
+  - Effect uses tap operator to call router.navigate(['/clients'])
+  - Effect configured with { dispatch: false } since it performs side effect only
+  - Follows NGRX pattern for navigation effects (non-dispatching)
+  - Verified frontend builds successfully (no new compilation errors)
+  - No new linting errors introduced (pre-existing architectural decisions maintained)
+  - User will now be automatically navigated to client list after successful deletion
 - [ ] Handle delete errors (show error message)
 - [ ] Update client list to reflect deletion
 
