@@ -5,10 +5,6 @@ Implement client name search functionality that filters the client list in real-
 
 ## Tasks
 
-### Task 6: NOT STARTED - Update component to dispatch name filter action
-- Connect search handler to dispatch filterClientsByName action
-- Status: Not Started
-
 ### Task 7: NOT STARTED - Add combined filtering support
 - Enable simultaneous search and status filtering
 - Status: Not Started
@@ -60,3 +56,10 @@ Implement client name search functionality that filters the client list in real-
 - Implements case-insensitive search on company name
 - Returns all clients when search term is empty
 - Location: apps/frontend/src/app/clients/store/clients.reducer.ts:22-162
+- Commit: 3534c71
+
+### ✅ Task 6: Update component to dispatch name filter action - COMPLETED
+- Imported filterClientsByName action into client-list.component.ts
+- Updated onSearchChange method to dispatch filterClientsByName action with searchTerm
+- Search input now triggers state update through NGRX store
+- Location: apps/frontend/src/app/clients/client-list.component.ts:5,340-345

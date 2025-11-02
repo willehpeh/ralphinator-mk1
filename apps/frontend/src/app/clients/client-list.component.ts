@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@ang
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { loadClients, filterClientsByStatus } from './store/clients.actions';
+import { loadClients, filterClientsByStatus, filterClientsByName } from './store/clients.actions';
 import {
   selectAllClients,
   selectClientsLoading,
@@ -339,7 +339,9 @@ export class ClientListComponent implements OnInit {
 
   onSearchChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    this.searchTerm.set(inputElement.value);
+    const searchTerm = inputElement.value;
+    this.searchTerm.set(searchTerm);
+    this.store.dispatch(filterClientsByName({ searchTerm }));
   }
 
   navigateToDetail(clientId: string): void {
