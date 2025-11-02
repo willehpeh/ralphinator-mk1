@@ -1,0 +1,122 @@
+@use './clients-variables.scss' as *;
+@use './clients-mixins.scss' as *;
+
+.client-detail {
+  @include page-container;
+}
+
+.detail-header {
+  margin-bottom: $spacing-2xl;
+}
+
+.header-title-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-button {
+  @include btn-link;
+  font-size: 0.95rem;
+  padding: $spacing-sm 0;
+  margin-bottom: $spacing-lg;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+h2 {
+  margin: 0;
+  color: $color-text-primary;
+  font-size: 1.75rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.edit-button {
+  @include btn-primary;
+  @include btn-small;
+}
+
+.change-status-button {
+  @include btn-secondary;
+  @include btn-small;
+}
+
+.delete-button {
+  @include btn-danger;
+  @include btn-small;
+}
+
+.detail-card {
+  @include card;
+}
+
+.detail-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-2xl;
+  padding-bottom: $spacing-xl;
+  border-bottom: 2px solid $color-border-light;
+
+  h3 {
+    margin: 0;
+    color: $color-text-primary;
+    font-size: 1.5rem;
+  }
+}
+
+.status-badge {
+  padding: $spacing-sm $spacing-lg;
+  border-radius: 16px;
+  font-size: 0.85rem;
+}
+
+.detail-section {
+  margin-bottom: $spacing-2xl;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+h4 {
+  margin: 0 0 $spacing-lg 0;
+  color: $color-text-secondary;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: $spacing-lg;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.detail-label {
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-sm;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  font-size: $font-size-base;
+}
+
+.notes-content {
+  color: $color-text-primary;
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-wrap;
+}

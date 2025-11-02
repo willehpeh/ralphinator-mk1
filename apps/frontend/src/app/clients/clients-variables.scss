@@ -31,10 +31,26 @@ $color-warning-text: #856404;
 
 /* Neutral Colors */
 $color-text-primary: #333;
-$color-text-secondary: #666;
+$color-text-secondary: #555;
+$color-text-tertiary: #666;
 $color-border: #ddd;
 $color-border-light: #eee;
+$color-border-medium: #e0e0e0;
+$color-background-light: #f8f9fa;
 $color-white: white;
+$color-disabled: #ccc;
+
+/* Action Button Colors (matching existing inline styles) */
+$color-action-primary: #007bff;
+$color-action-primary-hover: #0056b3;
+$color-action-secondary: #6c757d;
+$color-action-secondary-hover: #545b62;
+$color-action-danger: #dc3545;
+$color-action-danger-hover: #c82333;
+
+/* Shadow */
+$color-backdrop: rgba(0, 0, 0, 0.5);
+$color-shadow: rgba(0, 0, 0, 0.1);
 
 /* Border Radius */
 $border-radius-sm: 4px;

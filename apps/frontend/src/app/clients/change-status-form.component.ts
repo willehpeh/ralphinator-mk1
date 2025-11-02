@@ -15,7 +15,7 @@ interface StatusForm {
   selector: 'app-change-status-form',
   imports: [CommonModule, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrl: './clients-common.scss',
+  styleUrls: ['./clients-common.scss', './change-status-form.component.scss'],
   template: `
     <div class="card">
       <div class="card-header">
@@ -77,31 +77,7 @@ interface StatusForm {
         </form>
       }
     </div>
-  `,
-  styles: [`
-    .form-description {
-      margin: 0 0 1.5rem 0;
-      color: #666;
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-
-    .current-status {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-      background-color: #f8f9fa;
-      border-radius: 4px;
-    }
-
-    .current-status .label {
-      font-weight: 600;
-      color: #666;
-      font-size: 0.9rem;
-    }
-  `]
+  `
 })
 export class ChangeStatusFormComponent {
   private store = inject(Store);

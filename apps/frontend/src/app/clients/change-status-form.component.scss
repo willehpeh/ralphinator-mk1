@@ -1,0 +1,25 @@
+@use './clients-variables.scss' as *;
+@use './clients-mixins.scss' as *;
+
+.form-description {
+  margin: 0 0 $spacing-xl 0;
+  color: $color-text-tertiary;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.current-status {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  margin-bottom: $spacing-xl;
+  padding: $spacing-lg;
+  background-color: $color-background-light;
+  border-radius: $border-radius-sm;
+
+  .label {
+    font-weight: $font-weight-semibold;
+    color: $color-text-tertiary;
+    font-size: 0.9rem;
+  }
+}

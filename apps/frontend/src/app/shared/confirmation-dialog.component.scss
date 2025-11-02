@@ -1,0 +1,63 @@
+@use '../clients/clients-variables.scss' as *;
+@use '../clients/clients-mixins.scss' as *;
+
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $color-backdrop;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.dialog-container {
+  background: $color-white;
+  border-radius: $border-radius-md;
+  min-width: 400px;
+  max-width: 500px;
+  box-shadow: 0 4px 6px $color-shadow;
+  overflow: hidden;
+}
+
+.dialog-header {
+  padding: $spacing-xl;
+  border-bottom: 1px solid $color-border-medium;
+
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: $color-text-primary;
+  }
+}
+
+.dialog-content {
+  padding: $spacing-xl;
+
+  p {
+    margin: 0;
+    color: $color-text-secondary;
+    line-height: 1.5;
+  }
+}
+
+.dialog-actions {
+  padding: $spacing-xl;
+  border-top: 1px solid $color-border-medium;
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-md;
+}
+
+.cancel-button {
+  @include btn-secondary;
+  @include btn-small;
+}
+
+.confirm-button {
+  @include btn-danger;
+  @include btn-small;
+}

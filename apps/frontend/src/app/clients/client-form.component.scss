@@ -1,0 +1,33 @@
+@use './clients-variables.scss' as *;
+@use './clients-mixins.scss' as *;
+
+.client-form {
+  @include narrow-container;
+}
+
+h2 {
+  @include heading-primary;
+}
+
+label {
+  @include label-text;
+}
+
+input,
+textarea,
+select {
+  @include form-input;
+}
+
+.form-actions {
+  gap: $spacing-lg;
+  margin-top: $spacing-xl;
+}
+
+button[type="submit"] {
+  @include btn-primary;
+}
+
+button[type="button"] {
+  @include btn-secondary;
+}

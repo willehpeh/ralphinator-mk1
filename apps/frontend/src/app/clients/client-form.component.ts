@@ -25,7 +25,7 @@ interface ClientFormFields {
   selector: 'app-client-form',
   imports: [CommonModule, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrl: './clients-common.scss',
+  styleUrls: ['./clients-common.scss', './client-form.component.scss'],
   template: `
     <div class="client-form">
       <h2>{{ mode() === 'create' ? 'Add New Client' : 'Edit Client' }}</h2>
@@ -122,78 +122,7 @@ interface ClientFormFields {
         </div>
       </form>
     </div>
-  `,
-  styles: [`
-    .client-form {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-
-    h2 {
-      margin-bottom: 1.5rem;
-      color: #333;
-    }
-
-    label {
-      color: #555;
-    }
-
-    input,
-    textarea,
-    select {
-      padding: 0.5rem;
-      font-size: 1rem;
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: #007bff;
-    }
-
-    .form-actions {
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    button {
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    button[type="submit"] {
-      background-color: #007bff;
-      color: white;
-    }
-
-    button[type="submit"]:hover:not(:disabled) {
-      background-color: #0056b3;
-    }
-
-    button[type="submit"]:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-
-    button[type="button"] {
-      background-color: #6c757d;
-      color: white;
-    }
-
-    button[type="button"]:hover:not(:disabled) {
-      background-color: #545b62;
-    }
-
-    button[type="button"]:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-  `]
+  `
 })
 export class ClientFormComponent implements OnInit, OnDestroy {
   private clientsService = inject(ClientsService);
