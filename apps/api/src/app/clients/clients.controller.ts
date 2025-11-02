@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, GetClientByIdQuery, GetAllClientsQuery, ClientReadModel } from '@angular-nest-starter/application';
+import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel } from '@angular-nest-starter/application';
 import { ClientStatus } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
 
@@ -57,6 +57,13 @@ export class ClientsController {
   async getAllClients(): Promise<ClientReadModel[]> {
     const query = new GetAllClientsQuery();
     const clients = await this.queryBus.execute<GetAllClientsQuery, ClientReadModel[]>(query);
+    return clients;
+  }
+
+  @Get('status/:status')
+  async getClientsByStatus(@Param('status') status: ClientStatus): Promise<ClientReadModel[]> {
+    const query = new GetClientsByStatusQuery(status);
+    const clients = await this.queryBus.execute<GetClientsByStatusQuery, ClientReadModel[]>(query);
     return clients;
   }
 

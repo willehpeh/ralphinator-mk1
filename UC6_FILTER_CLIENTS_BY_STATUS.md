@@ -59,6 +59,17 @@ This file will track the implementation progress for Use Case 6: Filter Clients 
 
 ### API Endpoints
 
+#### Task 5: Created GET /clients/status/:status endpoint (2025-11-02)
+- **File**: `apps/api/src/app/clients/clients.controller.ts`
+- **Description**: Added API endpoint to filter clients by status
+- **Details**:
+  - Added GetClientsByStatusQuery to imports from @angular-nest-starter/application
+  - Implemented @Get('status/:status') endpoint
+  - Accepts ClientStatus as URL parameter
+  - Executes GetClientsByStatusQuery via QueryBus
+  - Returns ClientReadModel[] array
+  - Placed before @Get(':id') route to ensure correct route matching (more specific routes must come first)
+
 
 ---
 
