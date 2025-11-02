@@ -79,7 +79,7 @@ export class ClientProjection extends BaseProjectionHandler {
       address: event.address,
       status: event.status,
       notes: event.notes,
-      createdAt: existingReadModel?.createdAt || event.occurredOn, // Preserve original createdAt
+      createdAt: existingReadModel?.createdAt ?? event.occurredOn, // Preserve original createdAt
     };
 
     // Update the read repository
