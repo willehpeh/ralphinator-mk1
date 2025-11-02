@@ -22,6 +22,7 @@ export * from './queries/handlers/get-clients-by-status.handler';
 
 // Integration Events
 export * from './events/client-created.event';
+export * from './events/client-deleted.event';
 
 // Ports
 export * from './ports/event-store.interface';

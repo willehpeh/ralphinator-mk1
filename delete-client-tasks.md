@@ -31,6 +31,13 @@
 - Added export to application package index
 - Verified with linting
 
+### 5. Create ClientDeletedEvent (integration event)
+- Created `packages/application/src/lib/events/client-deleted.event.ts`
+- Implemented IEvent interface from @nestjs/cqrs
+- Added clientId and occurredOn fields
+- Added export to application package index
+- Verified with linting
+
 ## Next Tasks (Not Started)
 
 ### Domain Layer
@@ -38,7 +45,7 @@
 
 ### Application Layer
 - [x] Create DeleteClientHandler (load aggregate, call delete(), persist events)
-- [ ] Create ClientDeletedEvent (integration event)
+- [x] Create ClientDeletedEvent (integration event)
 - [ ] Add test for DeleteClientHandler
 
 ### Infrastructure Layer
