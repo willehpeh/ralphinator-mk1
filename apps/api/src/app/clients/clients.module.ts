@@ -6,6 +6,7 @@ import {
   ChangeClientStatusHandler,
   GetClientByIdQueryHandler,
   GetAllClientsQueryHandler,
+  GetClientsByStatusQueryHandler,
 } from '@angular-nest-starter/application';
 import {
   ClientProjection,
@@ -15,7 +16,7 @@ import {
 import { ClientsController } from './clients.controller';
 
 const CommandHandlers = [CreateClientHandler, UpdateClientHandler, ChangeClientStatusHandler];
-const QueryHandlers = [GetClientByIdQueryHandler, GetAllClientsQueryHandler];
+const QueryHandlers = [GetClientByIdQueryHandler, GetAllClientsQueryHandler, GetClientsByStatusQueryHandler];
 const EventHandlers = [ClientProjection];
 
 @Module({

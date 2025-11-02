@@ -236,24 +236,41 @@ You are in Step 3 of an agentic software development workflow.
 ## Your Task
 
 1. Read NEXT_USE_CASES.md to see all remaining use cases
-2. Analyze which use case should be implemented next
-3. Write the selected use case to CURRENT_USE_CASE.md
-4. Create an empty task documentation file named after the use case
+2. Check if there are ANY use cases left in the file
+3. Take action based on what you find:
+
+## If NO Use Cases Remain (file is empty or only has headers):
+1. Delete NEXT_USE_CASES.md
+2. Do NOT create CURRENT_USE_CASE.md
+3. Create REFACTORING.md and leave it empty.
+4. The workflow will move to refactoring (Step 4)
+
+## If Use Cases Remain:
+1. Analyze which use case should be implemented next based on:
+   - Dependencies (what needs to be built first)
+   - Logical implementation order
+   - Business priority
+2. Write the selected use case to CURRENT_USE_CASE.md
+3. Create an empty task documentation file named descriptively after the use case
+4. Do NOT modify NEXT_USE_CASES.md (Step 3.5 will remove completed ones)
 
 ## Important:
-- Choose the most logical next use case
-- Do NOT remove anything from NEXT_USE_CASES.md yet
+- Your job is to recognize when all use cases are done
+- If the file is empty, delete it and move on
+- If there are use cases, select the most logical next one
+- Task documentation filename should clearly describe the use case (e.g., "add-client-tasks.md")
 EOF
 
     log_info "Invoking Claude Code for Step 3..."
     claude -p --dangerously-skip-permissions /tmp/step3_prompt.md
-    
-    if file_exists "CURRENT_USE_CASE.md"; then
+    if ! file_exists "NEXT_USE_CASES.md"; then
+        log_success "All use cases complete! Moving to refactoring."
+    elif file_exists "CURRENT_USE_CASE.md"; then
         log_success "Use case selected"
     else
-        log_error "Step 3 failed"
+        log_error "Step 3 failed: NEXT_USE_CASES.md exists but CURRENT_USE_CASE.md was not created"
         exit 1
-    fi
+    fi    
 }
 
 execute_step_3_5() {
