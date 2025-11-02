@@ -83,6 +83,16 @@ This file will track the implementation progress for Use Case 6: Filter Clients 
 
 ### Services
 
+#### Task 6: Added getClientsByStatus method to ClientsService (2025-11-02)
+- **File**: `apps/frontend/src/app/clients/clients.service.ts`
+- **Description**: Added method to call backend API for filtering clients by status
+- **Details**:
+  - Implemented getClientsByStatus(status: 'Active' | 'Inactive' | 'Prospect' | 'Past Client'): Observable<Client[]>
+  - Calls GET /api/clients/status/:status endpoint
+  - Returns Observable of Client[] array
+  - Uses existing HttpClient inject pattern
+  - Maintains consistency with other service methods
+
 
 ---
 

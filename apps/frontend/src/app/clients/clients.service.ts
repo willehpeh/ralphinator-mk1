@@ -59,4 +59,8 @@ export class ClientsService {
   getAllClients(): Observable<Client[]> {
     return this.http.get<Client[]>(this.apiUrl);
   }
+
+  getClientsByStatus(status: 'Active' | 'Inactive' | 'Prospect' | 'Past Client'): Observable<Client[]> {
+    return this.http.get<Client[]>(`${this.apiUrl}/status/${status}`);
+  }
 }
