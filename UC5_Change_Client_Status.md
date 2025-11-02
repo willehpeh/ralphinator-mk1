@@ -121,3 +121,16 @@ Added service method to call status change API:
 - Uses HTTP PATCH to call `/clients/:id/status` endpoint
 - Returns Observable of response with client ID
 - Follows Angular service pattern with typed interfaces
+
+### ✅ Task 9: Add changeClientStatus effect to ClientsEffects
+**Completed**: 2025-11-02
+
+Created NGRX effect to handle status change side effects:
+- File: `apps/frontend/src/app/clients/store/clients.effects.ts`
+- Added `changeClientStatus$` effect
+- Listens for `changeClientStatus` action
+- Calls `ClientsService.changeClientStatus()` method
+- Maps successful response to `changeClientStatusSuccess` action
+- Catches errors and dispatches `changeClientStatusFailure` action
+- Follows NGRX effects pattern with switchMap operator
+- Includes descriptive error message on failure

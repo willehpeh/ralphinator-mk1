@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { ClientsService } from '../clients.service';
-import { loadClients, loadClientsSuccess, loadClientsFailure, updateClient, updateClientSuccess, updateClientFailure } from './clients.actions';
+import { loadClients, loadClientsSuccess, loadClientsFailure, updateClient, updateClientSuccess, updateClientFailure, changeClientStatus, changeClientStatusSuccess, changeClientStatusFailure } from './clients.actions';
 
 /**
  * NGRX Effects for client-related side effects
@@ -50,6 +50,26 @@ export class ClientsEffects {
           map((response) => updateClientSuccess({ id: response.id })),
           catchError((error) =>
             of(updateClientFailure({ error: error?.message || 'Failed to update client' }))
+          )
+        )
+      )
+    )
+  );
+
+  /**
+   * Effect to change a client's status in the backend
+   * Listens for changeClientStatus action, calls the service, and dispatches success/failure
+   */
+  changeClientStatus$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(changeClientStatus),
+      switchMap((action) =>
+        this.clientsService.changeClientStatus(action.id, {
+          status: action.status,
+        }).pipe(
+          map((response) => changeClientStatusSuccess({ id: response.id })),
+          catchError((error) =>
+            of(changeClientStatusFailure({ error: error?.message || 'Failed to change client status' }))
           )
         )
       )
