@@ -14,7 +14,7 @@
 - [x] Frontend: Add NGRX effects for loading clients
 - [x] Frontend: Create `ClientListComponent`
 - [x] Frontend: Add route for client list
-- [ ] Frontend: Test component with NGRX integration
+- [x] Frontend: Test component with NGRX integration
 - [ ] End-to-End: Verify complete flow works
 
 ## Technical Decisions
@@ -33,6 +33,7 @@
 - **2025-11-02**: Created NGRX effects file `apps/frontend/src/app/clients/store/clients.effects.ts` with `ClientsEffects` class. Effect `loadClients$` listens for `loadClients` action, calls `ClientsService.getAllClients()`, and dispatches `loadClientsSuccess` or `loadClientsFailure`. Added `getAllClients()` method to ClientsService that calls `GET /api/clients`.
 - **2025-11-02**: Created `ClientListComponent` in `apps/frontend/src/app/clients/client-list.component.ts`. Component uses modern Angular patterns: standalone component, `OnPush` change detection, `inject()` for DI, and `store.selectSignal()` for NGRX state. Dispatches `loadClients` action on `ngOnInit()`. Template displays loading state, error message, empty state (when no clients), and grid of client cards showing all client details. Status badges color-coded by status (ACTIVE/INACTIVE/PENDING).
 - **2025-11-02**: Added route for client list in `apps/frontend/src/app/app.routes.ts`. Created `/clients` route pointing to `ClientListComponent`. Updated default redirect to point to `/clients` instead of `/clients/add`, making the client list the default view. Kept `/clients/add` route for adding new clients.
+- **2025-11-02**: Created comprehensive tests for `ClientListComponent` in `apps/frontend/src/app/clients/client-list.component.spec.ts`. Tests cover: loading state display, error state handling, empty state message, client list display with all fields, optional field visibility, component initialization with action dispatch, and status badge CSS class application for all statuses (ACTIVE, INACTIVE, PENDING). All 10 tests passing using Angular TestBed and MockStore from @ngrx/store/testing.
 
 ## Completion Checklist
 - [ ] Backend query handler returns all clients from read model
