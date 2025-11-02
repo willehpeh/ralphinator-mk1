@@ -1,5 +1,4 @@
 import { EventSourcedAggregate } from '../base/event-sourced-aggregate';
-import { DomainEvent } from '../base/domain-event';
 import { ClientStatus } from '../types/client-status.type';
 import { ClientCreatedDomainEvent } from '../events/client-created.domain-event';
 import { ClientInformationUpdatedDomainEvent } from '../events/client-information-updated.domain-event';
@@ -14,6 +13,15 @@ export class ClientAggregate extends EventSourcedAggregate {
   private address?: string | null;
   private status?: ClientStatus;
   private notes?: string | null;
+
+  constructor() {
+    super();
+    // Register event handlers for all client events
+    this.registerEventHandler('ClientCreatedDomainEvent', this.onClientCreated.bind(this));
+    this.registerEventHandler('ClientInformationUpdatedDomainEvent', this.onClientInformationUpdated.bind(this));
+    this.registerEventHandler('ClientStatusChangedDomainEvent', this.onClientStatusChanged.bind(this));
+    this.registerEventHandler('ClientDeletedDomainEvent', this.onClientDeleted.bind(this));
+  }
 
   /**
    * Factory method to create a new Client aggregate
@@ -128,33 +136,48 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
-   * Apply domain events to rebuild aggregate state
-   * This method is called when replaying events from the event store
-   *
-   * @param event - The domain event to apply
+   * Event handler for ClientCreatedDomainEvent
+   * Initializes the aggregate state when a new client is created
    */
-  protected apply(event: DomainEvent): void {
-    if (event instanceof ClientCreatedDomainEvent) {
-      this.id = event.aggregateId;
-      this.companyName = event.companyName;
-      this.email = event.email;
-      this.phone = event.phone;
-      this.address = event.address;
-      this.status = event.status;
-      this.notes = event.notes;
-    } else if (event instanceof ClientInformationUpdatedDomainEvent) {
-      this.companyName = event.companyName;
-      this.email = event.email;
-      this.phone = event.phone;
-      this.address = event.address;
-      this.status = event.status;
-      this.notes = event.notes;
-    } else if (event instanceof ClientStatusChangedDomainEvent) {
-      this.status = event.newStatus;
-    } else if (event instanceof ClientDeletedDomainEvent) {
-      // Mark aggregate as deleted - state is preserved for event replay
-      // The aggregate maintains its ID but is logically deleted
-    }
+  private onClientCreated(event: ClientCreatedDomainEvent): void {
+    this.id = event.aggregateId;
+    this.companyName = event.companyName;
+    this.email = event.email;
+    this.phone = event.phone;
+    this.address = event.address;
+    this.status = event.status;
+    this.notes = event.notes;
+  }
+
+  /**
+   * Event handler for ClientInformationUpdatedDomainEvent
+   * Updates the aggregate state when client information changes
+   */
+  private onClientInformationUpdated(event: ClientInformationUpdatedDomainEvent): void {
+    this.companyName = event.companyName;
+    this.email = event.email;
+    this.phone = event.phone;
+    this.address = event.address;
+    this.status = event.status;
+    this.notes = event.notes;
+  }
+
+  /**
+   * Event handler for ClientStatusChangedDomainEvent
+   * Updates the aggregate state when client status changes
+   */
+  private onClientStatusChanged(event: ClientStatusChangedDomainEvent): void {
+    this.status = event.newStatus;
+  }
+
+  /**
+   * Event handler for ClientDeletedDomainEvent
+   * Marks the aggregate as deleted (state is preserved for event replay)
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private onClientDeleted(_event: ClientDeletedDomainEvent): void {
+    // Mark aggregate as deleted - state is preserved for event replay
+    // The aggregate maintains its ID but is logically deleted
   }
 
   // Getters for accessing aggregate state

@@ -1,10 +1,11 @@
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { EventsHandler } from '@nestjs/cqrs';
 import { Injectable, Inject } from '@nestjs/common';
 import { ClientCreatedDomainEvent, ClientInformationUpdatedDomainEvent, ClientStatusChangedDomainEvent, ClientDeletedDomainEvent } from '@angular-nest-starter/domain';
 import {
   IClientReadRepository,
   ClientReadModel
 } from '@angular-nest-starter/application';
+import { BaseProjectionHandler } from '../base/base-projection.handler';
 
 /**
  * ClientProjection
@@ -17,71 +18,94 @@ import {
  * - Transforms domain events into ClientReadModel DTOs
  * - Persists read models to the read repository (optimized for queries)
  * - Enables separation of write (event store) and read (read model) data stores
+ * - Uses the event handler registry pattern for extensible event handling
  */
 @Injectable()
 @EventsHandler(ClientCreatedDomainEvent, ClientInformationUpdatedDomainEvent, ClientStatusChangedDomainEvent, ClientDeletedDomainEvent)
-export class ClientProjection implements IEventHandler<ClientCreatedDomainEvent | ClientInformationUpdatedDomainEvent | ClientStatusChangedDomainEvent | ClientDeletedDomainEvent> {
+export class ClientProjection extends BaseProjectionHandler {
   constructor(
     @Inject('IClientReadRepository')
     private readonly clientReadRepository: IClientReadRepository
-  ) {}
+  ) {
+    super();
+    // Register event handlers for all client events
+    this.registerEventHandler('ClientCreatedDomainEvent', this.onClientCreated.bind(this));
+    this.registerEventHandler('ClientInformationUpdatedDomainEvent', this.onClientInformationUpdated.bind(this));
+    this.registerEventHandler('ClientStatusChangedDomainEvent', this.onClientStatusChanged.bind(this));
+    this.registerEventHandler('ClientDeletedDomainEvent', this.onClientDeleted.bind(this));
+  }
 
   /**
-   * Handles domain events by creating/updating/deleting the read model
-   *
-   * @param event - The domain event from the event store
+   * Event handler for ClientCreatedDomainEvent
+   * Creates a new read model when a client is created
    */
-  async handle(event: ClientCreatedDomainEvent | ClientInformationUpdatedDomainEvent | ClientStatusChangedDomainEvent | ClientDeletedDomainEvent): Promise<void> {
-    if (event instanceof ClientCreatedDomainEvent) {
-      // Transform ClientCreatedDomainEvent into read model
-      const readModel: ClientReadModel = {
-        id: event.aggregateId,
-        companyName: event.companyName,
-        email: event.email,
-        phone: event.phone,
-        address: event.address,
-        status: event.status,
-        notes: event.notes,
-        createdAt: event.occurredOn,
+  private async onClientCreated(event: ClientCreatedDomainEvent): Promise<void> {
+    // Transform ClientCreatedDomainEvent into read model
+    const readModel: ClientReadModel = {
+      id: event.aggregateId,
+      companyName: event.companyName,
+      email: event.email,
+      phone: event.phone,
+      address: event.address,
+      status: event.status,
+      notes: event.notes,
+      createdAt: event.occurredOn,
+    };
+
+    // Persist to read repository
+    await this.clientReadRepository.save(readModel);
+  }
+
+  /**
+   * Event handler for ClientInformationUpdatedDomainEvent
+   * Updates the read model when client information changes
+   */
+  private async onClientInformationUpdated(event: ClientInformationUpdatedDomainEvent): Promise<void> {
+    // Fetch the existing read model to preserve createdAt timestamp
+    const existingReadModel = await this.clientReadRepository.findById(event.aggregateId);
+
+    // Transform ClientInformationUpdatedDomainEvent into read model
+    const readModel: ClientReadModel = {
+      id: event.aggregateId,
+      companyName: event.companyName,
+      email: event.email,
+      phone: event.phone,
+      address: event.address,
+      status: event.status,
+      notes: event.notes,
+      createdAt: existingReadModel?.createdAt || event.occurredOn, // Preserve original createdAt
+    };
+
+    // Update the read repository
+    await this.clientReadRepository.save(readModel);
+  }
+
+  /**
+   * Event handler for ClientStatusChangedDomainEvent
+   * Updates only the status field in the read model
+   */
+  private async onClientStatusChanged(event: ClientStatusChangedDomainEvent): Promise<void> {
+    // Fetch the existing read model
+    const existingReadModel = await this.clientReadRepository.findById(event.aggregateId);
+
+    if (existingReadModel) {
+      // Update only the status field
+      const updatedReadModel: ClientReadModel = {
+        ...existingReadModel,
+        status: event.newStatus,
       };
 
-      // Persist to read repository
-      await this.clientReadRepository.save(readModel);
-    } else if (event instanceof ClientInformationUpdatedDomainEvent) {
-      // Fetch the existing read model to preserve createdAt timestamp
-      const existingReadModel = await this.clientReadRepository.findById(event.aggregateId);
-
-      // Transform ClientInformationUpdatedDomainEvent into read model
-      const readModel: ClientReadModel = {
-        id: event.aggregateId,
-        companyName: event.companyName,
-        email: event.email,
-        phone: event.phone,
-        address: event.address,
-        status: event.status,
-        notes: event.notes,
-        createdAt: existingReadModel?.createdAt || event.occurredOn, // Preserve original createdAt
-      };
-
-      // Update the read repository
-      await this.clientReadRepository.save(readModel);
-    } else if (event instanceof ClientStatusChangedDomainEvent) {
-      // Fetch the existing read model
-      const existingReadModel = await this.clientReadRepository.findById(event.aggregateId);
-
-      if (existingReadModel) {
-        // Update only the status field
-        const updatedReadModel: ClientReadModel = {
-          ...existingReadModel,
-          status: event.newStatus,
-        };
-
-        // Persist the updated read model
-        await this.clientReadRepository.save(updatedReadModel);
-      }
-    } else if (event instanceof ClientDeletedDomainEvent) {
-      // Remove the client from the read model
-      await this.clientReadRepository.delete(event.aggregateId);
+      // Persist the updated read model
+      await this.clientReadRepository.save(updatedReadModel);
     }
+  }
+
+  /**
+   * Event handler for ClientDeletedDomainEvent
+   * Removes the client from the read model
+   */
+  private async onClientDeleted(event: ClientDeletedDomainEvent): Promise<void> {
+    // Remove the client from the read model
+    await this.clientReadRepository.delete(event.aggregateId);
   }
 }

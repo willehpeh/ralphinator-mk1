@@ -1,13 +1,22 @@
 import { DomainEvent } from './domain-event';
 
 /**
+ * Type for event handler functions that update aggregate state
+ */
+type EventHandler<TEvent extends DomainEvent> = (event: TEvent) => void;
+
+/**
  * Base class for all event-sourced aggregates.
  * Aggregates rebuild their state by replaying domain events.
  * This ensures events are the single source of truth.
+ *
+ * Uses a Map-based event handler registry pattern for O(1) event dispatching,
+ * eliminating the need for instanceof chains and improving extensibility.
  */
 export abstract class EventSourcedAggregate {
   private uncommittedEvents: DomainEvent[] = [];
   private version = 0;
+  private eventHandlers = new Map<string, EventHandler<DomainEvent>>();
 
   /**
    * Gets the aggregate's unique identifier.
@@ -57,10 +66,32 @@ export abstract class EventSourcedAggregate {
   }
 
   /**
-   * Abstract method that child aggregates must implement.
-   * Defines how each event type updates the aggregate's state.
+   * Registers an event handler for a specific event type.
+   * Child aggregates should call this in their constructor to register handlers.
+   *
+   * @param eventType - The event type name (usually the class name)
+   * @param handler - The function to handle events of this type
    */
-  protected abstract apply(event: DomainEvent): void;
+  protected registerEventHandler<TEvent extends DomainEvent>(
+    eventType: string,
+    handler: EventHandler<TEvent>
+  ): void {
+    this.eventHandlers.set(eventType, handler as EventHandler<DomainEvent>);
+  }
+
+  /**
+   * Applies an event by dispatching to the registered handler.
+   * Uses Map lookup instead of instanceof chains for better performance and extensibility.
+   *
+   * @param event - The domain event to apply
+   */
+  protected apply(event: DomainEvent): void {
+    const handler = this.eventHandlers.get(event.eventType);
+    if (handler) {
+      handler(event);
+    }
+    // Silent ignore if no handler registered - allows for forward compatibility
+  }
 
   /**
    * Internal method to apply event and manage versioning.

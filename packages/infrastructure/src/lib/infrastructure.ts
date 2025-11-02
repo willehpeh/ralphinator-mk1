@@ -2,6 +2,9 @@ export function infrastructure(): string {
   return 'infrastructure';
 }
 
+// Base Classes
+export * from './base/base-projection.handler';
+
 // Event Store
 export * from './event-store/in-memory-event-store';
 
