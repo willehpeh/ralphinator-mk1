@@ -68,7 +68,9 @@ import { CLIENT_STATUSES } from './client.constants';
         <div class="empty-state">
           <p>No clients found</p>
           <p class="empty-state-hint">
-            @if (selectedFilter() === 'all') {
+            @if (searchTerm()) {
+              No clients found matching your search "{{ searchTerm() }}". Try a different search term.
+            } @else if (selectedFilter() === 'all') {
               Add your first client to get started
             } @else {
               No clients found with status "{{ selectedFilter() }}". Try a different filter.

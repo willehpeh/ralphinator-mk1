@@ -5,10 +5,6 @@ Implement client name search functionality that filters the client list in real-
 
 ## Tasks
 
-### Task 8: NOT STARTED - Add "No clients found" message for search
-- Display appropriate message when search returns no results
-- Status: Not Started
-
 ### Task 9: NOT STARTED - Add client count display
 - Show count of matching clients
 - Status: Not Started
@@ -65,3 +61,10 @@ Implement client name search functionality that filters the client list in real-
 - Search term is now applied to status-filtered results automatically
 - Both filters work together: status filter is applied first, then search filter
 - Location: apps/frontend/src/app/clients/store/clients.reducer.ts:123-142
+
+### ✅ Task 8: Add "No clients found" message for search - COMPLETED
+- Updated empty state template to check for search term
+- Displays "No clients found matching your search" when search returns no results
+- Shows search term in message to help user understand what was searched
+- Prioritizes search message over filter and empty state messages
+- Location: apps/frontend/src/app/clients/client-list.component.ts:71-72
