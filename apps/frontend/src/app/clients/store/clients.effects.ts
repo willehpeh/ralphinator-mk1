@@ -17,6 +17,20 @@ export class ClientsEffects {
   private router = inject(Router);
 
   /**
+   * Creates a reusable error handler for effects
+   * @param failureAction - The action creator to dispatch on error
+   * @param defaultMessage - The default error message to use
+   * @returns An observable of the failure action
+   */
+  private handleError<T>(
+    failureAction: (payload: { error: string }) => T,
+    defaultMessage: string
+  ) {
+    return (error: unknown) =>
+      of(failureAction({ error: (error as Error)?.message || defaultMessage }));
+  }
+
+  /**
    * Effect to load all clients from the backend
    * Listens for loadClients action, calls the service, and dispatches success/failure
    */
@@ -26,9 +40,7 @@ export class ClientsEffects {
       switchMap(() =>
         this.clientsService.getAllClients().pipe(
           map((clients) => loadClientsSuccess({ clients })),
-          catchError((error) =>
-            of(loadClientsFailure({ error: error?.message || 'Failed to load clients' }))
-          )
+          catchError(this.handleError(loadClientsFailure, 'Failed to load clients'))
         )
       )
     )
@@ -51,9 +63,7 @@ export class ClientsEffects {
           notes: action.notes ?? undefined,
         }).pipe(
           map((client) => updateClientSuccess({ client })),
-          catchError((error) =>
-            of(updateClientFailure({ error: error?.message || 'Failed to update client' }))
-          )
+          catchError(this.handleError(updateClientFailure, 'Failed to update client'))
         )
       )
     )
@@ -71,9 +81,7 @@ export class ClientsEffects {
           status: action.status,
         }).pipe(
           map((client) => changeClientStatusSuccess({ client })),
-          catchError((error) =>
-            of(changeClientStatusFailure({ error: error?.message || 'Failed to change client status' }))
-          )
+          catchError(this.handleError(changeClientStatusFailure, 'Failed to change client status'))
         )
       )
     )
@@ -89,9 +97,7 @@ export class ClientsEffects {
       switchMap((action) =>
         this.clientsService.getClientsByStatus(action.status).pipe(
           map((clients) => filterClientsByStatusSuccess({ clients })),
-          catchError((error) =>
-            of(filterClientsByStatusFailure({ error: error?.message || 'Failed to filter clients by status' }))
-          )
+          catchError(this.handleError(filterClientsByStatusFailure, 'Failed to filter clients by status'))
         )
       )
     )
@@ -107,9 +113,7 @@ export class ClientsEffects {
       switchMap((action) =>
         this.clientsService.deleteClient(action.id).pipe(
           map((response) => deleteClientSuccess({ id: response.id })),
-          catchError((error) =>
-            of(deleteClientFailure({ error: error?.message || 'Failed to delete client' }))
-          )
+          catchError(this.handleError(deleteClientFailure, 'Failed to delete client'))
         )
       )
     )
