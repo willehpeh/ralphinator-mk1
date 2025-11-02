@@ -29,6 +29,14 @@ export interface UpdateClientResponse {
   id: string;
 }
 
+export interface ChangeClientStatusDto {
+  status: 'ACTIVE' | 'INACTIVE' | 'PENDING';
+}
+
+export interface ChangeClientStatusResponse {
+  id: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -42,6 +50,10 @@ export class ClientsService {
 
   updateClient(id: string, dto: UpdateClientDto): Observable<UpdateClientResponse> {
     return this.http.put<UpdateClientResponse>(`${this.apiUrl}/${id}`, dto);
+  }
+
+  changeClientStatus(id: string, dto: ChangeClientStatusDto): Observable<ChangeClientStatusResponse> {
+    return this.http.patch<ChangeClientStatusResponse>(`${this.apiUrl}/${id}/status`, dto);
   }
 
   getAllClients(): Observable<Client[]> {

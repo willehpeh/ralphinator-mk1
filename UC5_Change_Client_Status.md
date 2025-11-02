@@ -109,3 +109,15 @@ Created dedicated API endpoint for status changes:
 - Executes `ChangeClientStatusCommand` via command bus
 - Returns client ID on successful status change
 - Follows REST conventions: PATCH for partial updates
+
+### ✅ Task 8: Add changeClientStatus method to ClientsService
+**Completed**: 2025-11-02
+
+Added service method to call status change API:
+- File: `apps/frontend/src/app/clients/clients.service.ts`
+- Created `ChangeClientStatusDto` interface with status field
+- Created `ChangeClientStatusResponse` interface with id field
+- Added `changeClientStatus(id: string, dto: ChangeClientStatusDto)` method
+- Uses HTTP PATCH to call `/clients/:id/status` endpoint
+- Returns Observable of response with client ID
+- Follows Angular service pattern with typed interfaces
