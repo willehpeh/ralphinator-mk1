@@ -428,7 +428,7 @@ You are in Step 5 of an agentic software development workflow.
 
 1. Read IMPLEMENTED_STORIES.md and IMPLEMENTED_CASES.md
 2. Create a summary of the completed story
-3. Send notification using curl
+3. Send notification using curl, the exact command iscurl -d "$SUMMARY" ntfy.sh/willehpeh-es-crm-ralphinator
 4. Create STORY_COMPLETE.md
 5. Delete REFACTORING_COMPLETE.me
 

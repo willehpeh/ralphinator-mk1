@@ -5,10 +5,6 @@ Implement client name search functionality that filters the client list in real-
 
 ## Tasks
 
-### Task 9: NOT STARTED - Add client count display
-- Show count of matching clients
-- Status: Not Started
-
 ### Task 10: NOT STARTED - Test search functionality
 - Manual testing of all search scenarios
 - Status: Not Started
@@ -68,3 +64,12 @@ Implement client name search functionality that filters the client list in real-
 - Shows search term in message to help user understand what was searched
 - Prioritizes search message over filter and empty state messages
 - Location: apps/frontend/src/app/clients/client-list.component.ts:71-72
+
+### ✅ Task 9: Add client count display - COMPLETED
+- Added computed signal `clientCount` to calculate number of clients
+- Added client count display in template showing count of matching clients
+- Display includes conditional text for search term and filter status
+- Uses proper singular/plural grammar ("client" vs "clients")
+- Styled with green border and light background for visibility
+- Only shown when not loading and has clients
+- Location: apps/frontend/src/app/clients/client-list.component.ts:1,55-65,252-260,335

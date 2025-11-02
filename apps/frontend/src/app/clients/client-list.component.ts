@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -51,6 +51,18 @@ import { CLIENT_STATUSES } from './client.constants';
           </div>
         </div>
       </div>
+
+      @if (!loading() && hasClients()) {
+        <div class="client-count">
+          Showing {{ clientCount() }} {{ clientCount() === 1 ? 'client' : 'clients' }}
+          @if (searchTerm()) {
+            matching "{{ searchTerm() }}"
+          }
+          @if (selectedFilter() !== 'all') {
+            with status "{{ selectedFilter() }}"
+          }
+        </div>
+      }
 
       @if (loading()) {
         <div class="loading-message">
@@ -237,6 +249,16 @@ import { CLIENT_STATUSES } from './client.constants';
       box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
     }
 
+    .client-count {
+      padding: 0.75rem 1rem;
+      background-color: #f5f5f5;
+      border-left: 3px solid #4CAF50;
+      color: #555;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+    }
+
     .empty-state {
       padding: 3rem;
       text-align: center;
@@ -318,6 +340,9 @@ export class ClientListComponent implements OnInit {
 
   // Track search term
   searchTerm = signal<string>('');
+
+  // Compute client count
+  clientCount = computed(() => this.clients().length);
 
   ngOnInit(): void {
     // Dispatch action to load clients when component initializes
