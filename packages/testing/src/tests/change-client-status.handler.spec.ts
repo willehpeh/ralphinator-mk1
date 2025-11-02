@@ -1,20 +1,16 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ChangeClientStatusHandler, ChangeClientStatusCommand } from '@angular-nest-starter/application';
 import { ClientAggregate, ClientStatus, DOMAIN_ERRORS } from '@angular-nest-starter/domain';
-import { createMockAggregateRepository } from '../lib/mock-factories';
+import { createCommandHandlerTestSetup } from '../lib/mock-factories';
 import { ClientAggregateBuilder } from '../lib/builders/client-aggregate.builder';
 
 describe('ChangeClientStatusHandler', () => {
-  let handler: ChangeClientStatusHandler;
-  let mockAggregateRepository: ReturnType<typeof createMockAggregateRepository>['mockRepository'];
-  let getSavedAggregate: ReturnType<typeof createMockAggregateRepository>['getSavedAggregate'];
+  const { handler, mockRepository, getSavedAggregate } =
+    createCommandHandlerTestSetup(ChangeClientStatusHandler);
 
   beforeEach(() => {
-    const mocks = createMockAggregateRepository();
-    mockAggregateRepository = mocks.mockRepository;
-    getSavedAggregate = mocks.getSavedAggregate;
-
-    handler = new ChangeClientStatusHandler(mockAggregateRepository);
+    mockRepository.save.mockClear();
+    mockRepository.load.mockClear();
   });
 
   describe('execute', () => {
@@ -27,7 +23,7 @@ describe('ChangeClientStatusHandler', () => {
         .withStatus('Prospect')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(existingAggregate);
+      mockRepository.load.mockResolvedValue(existingAggregate);
 
       const command = new ChangeClientStatusCommand('client-123', 'Active');
 
@@ -36,8 +32,8 @@ describe('ChangeClientStatusHandler', () => {
 
       // Assert
       expect(clientId).toBe('client-123');
-      expect(mockAggregateRepository.load).toHaveBeenCalledWith('client-123', ClientAggregate);
-      expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+      expect(mockRepository.load).toHaveBeenCalledWith('client-123', ClientAggregate);
+      expect(mockRepository.save).toHaveBeenCalledTimes(1);
       expect(getSavedAggregate()).toBeDefined();
       expect(getSavedAggregate().getId()).toBe('client-123');
       expect(getSavedAggregate().getStatus()).toBe('Active');
@@ -52,7 +48,7 @@ describe('ChangeClientStatusHandler', () => {
         .withStatus('Active')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(existingAggregate);
+      mockRepository.load.mockResolvedValue(existingAggregate);
 
       const command = new ChangeClientStatusCommand('client-456', 'Inactive');
 
@@ -73,7 +69,7 @@ describe('ChangeClientStatusHandler', () => {
         .withStatus('Active')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(existingAggregate);
+      mockRepository.load.mockResolvedValue(existingAggregate);
 
       const command = new ChangeClientStatusCommand('client-789', 'Past Client');
 
@@ -106,7 +102,7 @@ describe('ChangeClientStatusHandler', () => {
           .withStatus(transition.from)
           .build();
 
-        mockAggregateRepository.load.mockResolvedValue(existingAggregate);
+        mockRepository.load.mockResolvedValue(existingAggregate);
 
         const command = new ChangeClientStatusCommand(
           `client-${transition.from}-to-${transition.to}`,
@@ -120,8 +116,8 @@ describe('ChangeClientStatusHandler', () => {
         expect(getSavedAggregate().getStatus()).toBe(transition.to);
 
         // Reset for next iteration
-        mockAggregateRepository.load.mockClear();
-        mockAggregateRepository.save.mockClear();
+        mockRepository.load.mockClear();
+        mockRepository.save.mockClear();
       }
     });
 
@@ -134,7 +130,7 @@ describe('ChangeClientStatusHandler', () => {
         .withStatus('Prospect')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(existingAggregate);
+      mockRepository.load.mockResolvedValue(existingAggregate);
 
       const command = new ChangeClientStatusCommand('client-persist', 'Active');
 
@@ -142,8 +138,8 @@ describe('ChangeClientStatusHandler', () => {
       await handler.execute(command);
 
       // Assert
-      expect(mockAggregateRepository.load).toHaveBeenCalledWith('client-persist', ClientAggregate);
-      expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+      expect(mockRepository.load).toHaveBeenCalledWith('client-persist', ClientAggregate);
+      expect(mockRepository.save).toHaveBeenCalledTimes(1);
       const savedAggregate = getSavedAggregate();
       expect(savedAggregate).toBe(existingAggregate);
       expect(savedAggregate.getStatus()).toBe('Active');
@@ -158,7 +154,7 @@ describe('ChangeClientStatusHandler', () => {
         .withStatus('Active')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(existingAggregate);
+      mockRepository.load.mockResolvedValue(existingAggregate);
 
       const command = new ChangeClientStatusCommand('client-same-status', 'Active');
 
@@ -166,8 +162,8 @@ describe('ChangeClientStatusHandler', () => {
       await expect(handler.execute(command)).rejects.toThrow(
         DOMAIN_ERRORS.CLIENT_STATUS_UNCHANGED
       );
-      expect(mockAggregateRepository.load).toHaveBeenCalledWith('client-same-status', ClientAggregate);
-      expect(mockAggregateRepository.save).not.toHaveBeenCalled();
+      expect(mockRepository.load).toHaveBeenCalledWith('client-same-status', ClientAggregate);
+      expect(mockRepository.save).not.toHaveBeenCalled();
     });
 
     it('should preserve other client properties when changing status', async () => {
@@ -182,7 +178,7 @@ describe('ChangeClientStatusHandler', () => {
         .withNotes('Important client notes')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(existingAggregate);
+      mockRepository.load.mockResolvedValue(existingAggregate);
 
       const command = new ChangeClientStatusCommand('client-preserve', 'Active');
 

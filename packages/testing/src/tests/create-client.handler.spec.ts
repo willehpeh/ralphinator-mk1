@@ -1,20 +1,14 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { CreateClientHandler, CreateClientCommand, ClientDataPayload } from '@angular-nest-starter/application';
-import { createMockAggregateRepository } from '../lib/mock-factories';
+import { createCommandHandlerTestSetup } from '../lib/mock-factories';
 
 describe('CreateClientHandler', () => {
-  let handler: CreateClientHandler;
-  let mockAggregateRepository: ReturnType<typeof createMockAggregateRepository>['mockRepository'];
-  let getSavedAggregate: ReturnType<typeof createMockAggregateRepository>['getSavedAggregate'];
-  let resetSavedAggregate: ReturnType<typeof createMockAggregateRepository>['resetSavedAggregate'];
+  const { handler, mockRepository, getSavedAggregate, resetSavedAggregate } =
+    createCommandHandlerTestSetup(CreateClientHandler);
 
   beforeEach(() => {
-    const mocks = createMockAggregateRepository();
-    mockAggregateRepository = mocks.mockRepository;
-    getSavedAggregate = mocks.getSavedAggregate;
-    resetSavedAggregate = mocks.resetSavedAggregate;
-
-    handler = new CreateClientHandler(mockAggregateRepository);
+    mockRepository.save.mockClear();
+    resetSavedAggregate();
   });
 
   describe('execute', () => {
@@ -35,7 +29,7 @@ describe('CreateClientHandler', () => {
 
       // Assert
       expect(clientId).toBe('client-123');
-      expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+      expect(mockRepository.save).toHaveBeenCalledTimes(1);
       expect(getSavedAggregate()).toBeDefined();
       expect(getSavedAggregate().getId()).toBe('client-123');
       expect(getSavedAggregate().getCompanyName()).toBe('Acme Corporation');
@@ -63,7 +57,7 @@ describe('CreateClientHandler', () => {
 
       // Assert
       expect(clientId).toBe('client-456');
-      expect(mockAggregateRepository.save).toHaveBeenCalled();
+      expect(mockRepository.save).toHaveBeenCalled();
       expect(getSavedAggregate().getId()).toBe('client-456');
       expect(getSavedAggregate().getCompanyName()).toBe('Beta Inc');
       expect(getSavedAggregate().getEmail()).toBe('info@beta.com');
@@ -89,7 +83,7 @@ describe('CreateClientHandler', () => {
       await handler.execute(command);
 
       // Assert
-      expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+      expect(mockRepository.save).toHaveBeenCalledTimes(1);
       expect(getSavedAggregate().getId()).toBe('client-789');
       expect(getSavedAggregate().getCompanyName()).toBe('Gamma LLC');
       expect(getSavedAggregate().getEmail()).toBe('hello@gamma.com');
@@ -105,7 +99,7 @@ describe('CreateClientHandler', () => {
 
       for (const status of statuses) {
         // Reset mocks
-        mockAggregateRepository.save.mockClear();
+        mockRepository.save.mockClear();
         resetSavedAggregate();
 
         const data = new ClientDataPayload(
@@ -122,7 +116,7 @@ describe('CreateClientHandler', () => {
         await handler.execute(command);
 
         // Assert
-        expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+        expect(mockRepository.save).toHaveBeenCalledTimes(1);
         expect(getSavedAggregate().getStatus()).toBe(status);
       }
     });

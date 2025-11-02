@@ -1,20 +1,16 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { UpdateClientHandler, UpdateClientCommand, ClientDataPayload } from '@angular-nest-starter/application';
 import { ClientAggregate } from '@angular-nest-starter/domain';
-import { createMockAggregateRepository } from '../lib/mock-factories';
+import { createCommandHandlerTestSetup } from '../lib/mock-factories';
 import { ClientAggregateBuilder } from '../lib/builders/client-aggregate.builder';
 
 describe('UpdateClientHandler', () => {
-  let handler: UpdateClientHandler;
-  let mockAggregateRepository: ReturnType<typeof createMockAggregateRepository>['mockRepository'];
-  let getSavedAggregate: ReturnType<typeof createMockAggregateRepository>['getSavedAggregate'];
+  const { handler, mockRepository, getSavedAggregate } =
+    createCommandHandlerTestSetup(UpdateClientHandler);
 
   beforeEach(() => {
-    const mocks = createMockAggregateRepository();
-    mockAggregateRepository = mocks.mockRepository;
-    getSavedAggregate = mocks.getSavedAggregate;
-
-    handler = new UpdateClientHandler(mockAggregateRepository);
+    mockRepository.save.mockClear();
+    mockRepository.load.mockClear();
   });
 
   describe('execute', () => {
@@ -30,7 +26,7 @@ describe('UpdateClientHandler', () => {
         .withNotes('Old notes')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(existingAggregate);
+      mockRepository.load.mockResolvedValue(existingAggregate);
 
       const updatedData = new ClientDataPayload(
         'New Company Name',
@@ -47,8 +43,8 @@ describe('UpdateClientHandler', () => {
 
       // Assert
       expect(clientId).toBe('client-123');
-      expect(mockAggregateRepository.load).toHaveBeenCalledWith('client-123', ClientAggregate);
-      expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+      expect(mockRepository.load).toHaveBeenCalledWith('client-123', ClientAggregate);
+      expect(mockRepository.save).toHaveBeenCalledTimes(1);
       expect(getSavedAggregate()).toBeDefined();
       expect(getSavedAggregate().getId()).toBe('client-123');
       expect(getSavedAggregate().getCompanyName()).toBe('New Company Name');
@@ -71,7 +67,7 @@ describe('UpdateClientHandler', () => {
         .withNotes('Existing notes')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(existingAggregate);
+      mockRepository.load.mockResolvedValue(existingAggregate);
 
       const updatedData = new ClientDataPayload(
         'Updated Company',
@@ -108,7 +104,7 @@ describe('UpdateClientHandler', () => {
         .withNotes('Original notes')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(existingAggregate);
+      mockRepository.load.mockResolvedValue(existingAggregate);
 
       // Update only company name and status
       const updatedData = new ClientDataPayload(
@@ -150,7 +146,7 @@ describe('UpdateClientHandler', () => {
           .withStatus('Prospect')
           .build();
 
-        mockAggregateRepository.load.mockResolvedValue(existingAggregate);
+        mockRepository.load.mockResolvedValue(existingAggregate);
 
         const updatedData = new ClientDataPayload(
           'Test Company',
@@ -169,8 +165,8 @@ describe('UpdateClientHandler', () => {
         expect(getSavedAggregate().getStatus()).toBe(status);
 
         // Reset for next iteration
-        mockAggregateRepository.load.mockClear();
-        mockAggregateRepository.save.mockClear();
+        mockRepository.load.mockClear();
+        mockRepository.save.mockClear();
       }
     });
 
@@ -182,7 +178,7 @@ describe('UpdateClientHandler', () => {
         .withEmail('before@example.com')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(existingAggregate);
+      mockRepository.load.mockResolvedValue(existingAggregate);
 
       const updatedData = new ClientDataPayload(
         'After Update',
@@ -198,8 +194,8 @@ describe('UpdateClientHandler', () => {
       await handler.execute(command);
 
       // Assert
-      expect(mockAggregateRepository.load).toHaveBeenCalledWith('client-persist', ClientAggregate);
-      expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+      expect(mockRepository.load).toHaveBeenCalledWith('client-persist', ClientAggregate);
+      expect(mockRepository.save).toHaveBeenCalledTimes(1);
       const savedAggregate = getSavedAggregate();
       expect(savedAggregate).toBe(existingAggregate);
       expect(savedAggregate.getCompanyName()).toBe('After Update');

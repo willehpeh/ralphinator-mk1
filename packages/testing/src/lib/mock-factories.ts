@@ -64,3 +64,41 @@ export function createMockReadRepository() {
     findById: vi.fn(),
   };
 }
+
+/**
+ * Creates a complete test setup for command handler tests.
+ * Provides the handler instance, mock repository, and helper methods in one call.
+ *
+ * @param handlerConstructor - The handler class constructor
+ * @returns Object containing handler instance and all mock utilities
+ *
+ * @example
+ * ```typescript
+ * describe('CreateClientHandler', () => {
+ *   const { handler, mockRepository, getSavedAggregate } =
+ *     createCommandHandlerTestSetup(CreateClientHandler);
+ *
+ *   beforeEach(() => {
+ *     mockRepository.save.mockClear();
+ *   });
+ *
+ *   it('should create client', async () => {
+ *     await handler.execute(command);
+ *     expect(getSavedAggregate()).toBeDefined();
+ *   });
+ * });
+ * ```
+ */
+export function createCommandHandlerTestSetup<THandler>(
+  handlerConstructor: new (repo: ReturnType<typeof createMockAggregateRepository>['mockRepository']) => THandler
+) {
+  const mocks = createMockAggregateRepository();
+  const handler = new handlerConstructor(mocks.mockRepository);
+
+  return {
+    handler,
+    mockRepository: mocks.mockRepository,
+    getSavedAggregate: mocks.getSavedAggregate,
+    resetSavedAggregate: mocks.resetSavedAggregate,
+  };
+}

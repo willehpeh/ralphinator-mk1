@@ -2,19 +2,15 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { DeleteClientHandler } from '@angular-nest-starter/application';
 import { DeleteClientCommand } from '@angular-nest-starter/application';
 import { ClientAggregate } from '@angular-nest-starter/domain';
-import { createMockAggregateRepository, ClientAggregateBuilder } from '../lib/mock-factories';
+import { createCommandHandlerTestSetup, ClientAggregateBuilder } from '../lib/mock-factories';
 
 describe('DeleteClientHandler', () => {
-  let handler: DeleteClientHandler;
-  let mockAggregateRepository: ReturnType<typeof createMockAggregateRepository>['mockRepository'];
-  let getSavedAggregate: ReturnType<typeof createMockAggregateRepository>['getSavedAggregate'];
+  const { handler, mockRepository, getSavedAggregate } =
+    createCommandHandlerTestSetup(DeleteClientHandler);
 
   beforeEach(() => {
-    const mocks = createMockAggregateRepository();
-    mockAggregateRepository = mocks.mockRepository;
-    getSavedAggregate = mocks.getSavedAggregate;
-
-    handler = new DeleteClientHandler(mockAggregateRepository);
+    mockRepository.save.mockClear();
+    mockRepository.load.mockClear();
   });
 
   describe('execute', () => {
@@ -31,7 +27,7 @@ describe('DeleteClientHandler', () => {
         .withNotes('Important client')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(aggregate);
+      mockRepository.load.mockResolvedValue(aggregate);
 
       const command = new DeleteClientCommand(clientId);
 
@@ -40,8 +36,8 @@ describe('DeleteClientHandler', () => {
 
       // Assert
       expect(deletedClientId).toBe(clientId);
-      expect(mockAggregateRepository.load).toHaveBeenCalledWith(clientId, ClientAggregate);
-      expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+      expect(mockRepository.load).toHaveBeenCalledWith(clientId, ClientAggregate);
+      expect(mockRepository.save).toHaveBeenCalledTimes(1);
       expect(getSavedAggregate()).toBe(aggregate);
     });
 
@@ -55,7 +51,7 @@ describe('DeleteClientHandler', () => {
         .withStatus('Prospect')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(aggregate);
+      mockRepository.load.mockResolvedValue(aggregate);
 
       const command = new DeleteClientCommand(clientId);
 
@@ -63,8 +59,8 @@ describe('DeleteClientHandler', () => {
       await handler.execute(command);
 
       // Assert
-      expect(mockAggregateRepository.load).toHaveBeenCalledWith(clientId, ClientAggregate);
-      expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+      expect(mockRepository.load).toHaveBeenCalledWith(clientId, ClientAggregate);
+      expect(mockRepository.save).toHaveBeenCalledTimes(1);
     });
 
     it('should call delete on the aggregate', async () => {
@@ -80,7 +76,7 @@ describe('DeleteClientHandler', () => {
         .withNotes('Test notes')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(aggregate);
+      mockRepository.load.mockResolvedValue(aggregate);
 
       const command = new DeleteClientCommand(clientId);
 
@@ -102,7 +98,7 @@ describe('DeleteClientHandler', () => {
         .withStatus('Inactive')
         .build();
 
-      mockAggregateRepository.load.mockResolvedValue(aggregate);
+      mockRepository.load.mockResolvedValue(aggregate);
 
       const command = new DeleteClientCommand(clientId);
 
