@@ -80,6 +80,27 @@
 - End-to-end verification: Complete user flow from detail view → change status → save → view updated status
 - Documentation: UC5_Change_Client_Status.md
 
+## Use Case 6: Filter Clients by Status (2025-11-02)
+- Complete CQRS query implementation for filtering clients by status
+- Backend: GetClientsByStatusQuery accepts ClientStatus parameter ('Active' | 'Inactive' | 'Prospect' | 'Past Client')
+- Backend: GetClientsByStatusQueryHandler executes query using read repository
+- Backend: IClientReadRepository.findByStatus() port interface method for filtering
+- Backend: InMemoryClientReadRepository.findByStatus() implementation filters clients by status
+- Backend API endpoint: GET /api/clients/status/:status returns array of ClientReadModel matching status
+- Frontend: ClientsService.getClientsByStatus() method for API communication
+- Frontend: NGRX actions (filterClientsByStatus, filterClientsByStatusSuccess, filterClientsByStatusFailure)
+- Frontend: NGRX effect for orchestrating API calls and state updates
+- Frontend: NGRX reducer cases for updating clients array and tracking loading/error states
+- Frontend: ClientListComponent enhanced with status filter dropdown UI
+- Frontend: Filter controls with "All Clients", "Active", "Inactive", "Prospect", "Past Client" options
+- Frontend: Signal-based filter state management with selectedFilter signal
+- Frontend: Context-aware empty state messages based on selected filter
+- Frontend: Styled filter controls with hover and focus states for better UX
+- Query layer: Read model separation (queries don't use aggregates or event store)
+- End-to-end verification: Complete user flow from selecting filter → backend API → filtered results displayed
+- Documentation: UC6_FILTER_CLIENTS_BY_STATUS.md
+- **Note**: Core functionality complete; unit/integration tests pending for future testing phase
+
 ## Use Case 7: Start Development Environment (2025-11-01)
 - Backend server starts successfully on http://localhost:3000/api
 - Frontend application starts successfully on http://localhost:4200
