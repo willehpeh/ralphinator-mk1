@@ -50,10 +50,15 @@ export class ClientsController {
     return client;
   }
 
-  @Post()
-  async createClient(@Body() dto: CreateClientDto): Promise<{ id: string }> {
-    const id = randomUUID();
-    const data = new ClientDataPayload(
+  /**
+   * Helper method to create ClientDataPayload from DTO.
+   * Centralizes the mapping logic to avoid duplication across endpoints.
+   *
+   * @param dto - The client data DTO (CreateClientDto or UpdateClientDto)
+   * @returns A new ClientDataPayload instance
+   */
+  private createClientDataPayload(dto: ClientDataDto): ClientDataPayload {
+    return new ClientDataPayload(
       dto.companyName,
       dto.email,
       dto.phone,
@@ -61,6 +66,12 @@ export class ClientsController {
       dto.status,
       dto.notes
     );
+  }
+
+  @Post()
+  async createClient(@Body() dto: CreateClientDto): Promise<{ id: string }> {
+    const id = randomUUID();
+    const data = this.createClientDataPayload(dto);
     const command = new CreateClientCommand(id, data);
 
     const clientId = await this.commandBus.execute<CreateClientCommand, string>(
@@ -96,14 +107,7 @@ export class ClientsController {
     @Param('id') id: string,
     @Body() dto: UpdateClientDto
   ): Promise<ClientReadModel> {
-    const data = new ClientDataPayload(
-      dto.companyName,
-      dto.email,
-      dto.phone,
-      dto.address,
-      dto.status,
-      dto.notes
-    );
+    const data = this.createClientDataPayload(dto);
     const command = new UpdateClientCommand(id, data);
 
     const clientId = await this.commandBus.execute<UpdateClientCommand, string>(
