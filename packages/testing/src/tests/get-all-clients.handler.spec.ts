@@ -1,15 +1,13 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { GetAllClientsQuery, GetAllClientsQueryHandler } from '@angular-nest-starter/application';
-import { createMockReadRepository } from '../lib/mock-factories';
+import { createQueryHandlerTestSetup } from '../lib/mock-factories';
 
 describe('GetAllClientsQueryHandler', () => {
-  let handler: GetAllClientsQueryHandler;
-  let mockReadRepository: ReturnType<typeof createMockReadRepository>;
+  const { handler, mockReadRepository } = createQueryHandlerTestSetup(GetAllClientsQueryHandler);
 
   beforeEach(() => {
-    mockReadRepository = createMockReadRepository();
-
-    handler = new GetAllClientsQueryHandler(mockReadRepository);
+    mockReadRepository.findAll.mockClear();
+    mockReadRepository.findById.mockClear();
   });
 
   it('should retrieve all clients from read repository', async () => {

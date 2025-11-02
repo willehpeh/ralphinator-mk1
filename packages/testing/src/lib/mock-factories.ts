@@ -102,3 +102,40 @@ export function createCommandHandlerTestSetup<THandler>(
     resetSavedAggregate: mocks.resetSavedAggregate,
   };
 }
+
+/**
+ * Creates a complete test setup for query handler tests.
+ * Provides the handler instance and mock read repository in one call.
+ *
+ * @param handlerConstructor - The handler class constructor
+ * @returns Object containing handler instance and mock read repository
+ *
+ * @example
+ * ```typescript
+ * describe('GetAllClientsQueryHandler', () => {
+ *   const { handler, mockReadRepository } =
+ *     createQueryHandlerTestSetup(GetAllClientsQueryHandler);
+ *
+ *   beforeEach(() => {
+ *     mockReadRepository.findAll.mockClear();
+ *   });
+ *
+ *   it('should retrieve all clients', async () => {
+ *     mockReadRepository.findAll.mockResolvedValue([...clients]);
+ *     const result = await handler.execute(query);
+ *     expect(result).toEqual([...clients]);
+ *   });
+ * });
+ * ```
+ */
+export function createQueryHandlerTestSetup<THandler>(
+  handlerConstructor: new (repo: ReturnType<typeof createMockReadRepository>) => THandler
+) {
+  const mockReadRepository = createMockReadRepository();
+  const handler = new handlerConstructor(mockReadRepository);
+
+  return {
+    handler,
+    mockReadRepository,
+  };
+}
