@@ -26,7 +26,7 @@ This document tracks the implementation of Use Case 4: Update Client Information
 **Frontend (⏳ In Progress)**:
 - ClientsService.updateClient() method (✅ complete)
 - NGRX update action (✅ complete)
-- NGRX update effect (not started)
+- NGRX update effect (✅ complete)
 - NGRX reducer for update (not started)
 - Edit form component (not started)
 - UI integration with client detail view (not started)
@@ -201,6 +201,29 @@ This document tracks the implementation of Use Case 4: Update Client Information
 - Will be connected to effects in next task to trigger API calls
 
 **Verification**: Linting passed successfully (eslint apps/frontend/src/app/clients/store/clients.actions.ts)
+
+---
+
+### Task 10: Create NGRX update client effect ✅
+**Completed**: 2025-11-02
+**Files**:
+- `apps/frontend/src/app/clients/store/clients.effects.ts`
+
+**Description**: Added NGRX effect to handle client update side effects. This implementation:
+- Imported `updateClient`, `updateClientSuccess`, and `updateClientFailure` actions
+- Created `updateClient$` effect that:
+  - Listens for the `updateClient` action using `ofType()`
+  - Uses `switchMap` to handle the observable stream
+  - Extracts client data from the action (id, companyName, email, phone, address, status, notes)
+  - Calls `clientsService.updateClient()` with the id and DTO
+  - Maps the successful response to `updateClientSuccess` action with the returned id
+  - Catches errors and dispatches `updateClientFailure` action with error message
+- Follows the same pattern as `loadClients$` effect for consistency
+- Uses RxJS operators (`switchMap`, `map`, `catchError`) for reactive programming
+- Enables the frontend to make API calls when update actions are dispatched
+- Will trigger reducer to update the store when success/failure actions are dispatched
+
+**Verification**: Linting passed successfully (npx eslint apps/frontend/src/app/clients/store/clients.effects.ts)
 
 ---
 

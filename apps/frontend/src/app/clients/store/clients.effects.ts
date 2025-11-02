@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { ClientsService } from '../clients.service';
-import { loadClients, loadClientsSuccess, loadClientsFailure } from './clients.actions';
+import { loadClients, loadClientsSuccess, loadClientsFailure, updateClient, updateClientSuccess, updateClientFailure } from './clients.actions';
 
 /**
  * NGRX Effects for client-related side effects
@@ -25,6 +25,31 @@ export class ClientsEffects {
           map((clients) => loadClientsSuccess({ clients })),
           catchError((error) =>
             of(loadClientsFailure({ error: error?.message || 'Failed to load clients' }))
+          )
+        )
+      )
+    )
+  );
+
+  /**
+   * Effect to update a client in the backend
+   * Listens for updateClient action, calls the service, and dispatches success/failure
+   */
+  updateClient$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateClient),
+      switchMap((action) =>
+        this.clientsService.updateClient(action.id, {
+          companyName: action.companyName,
+          email: action.email,
+          phone: action.phone,
+          address: action.address,
+          status: action.status,
+          notes: action.notes,
+        }).pipe(
+          map((response) => updateClientSuccess({ id: response.id })),
+          catchError((error) =>
+            of(updateClientFailure({ error: error?.message || 'Failed to update client' }))
           )
         )
       )
