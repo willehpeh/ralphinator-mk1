@@ -3,7 +3,8 @@ import { DeleteClientHandler } from '@angular-nest-starter/application';
 import { DeleteClientCommand } from '@angular-nest-starter/application';
 import {
   ClientCreatedDomainEvent,
-  ClientAggregate
+  ClientAggregate,
+  ClientData
 } from '@angular-nest-starter/domain';
 import { createMockAggregateRepository } from '../lib/mock-factories';
 
@@ -28,12 +29,14 @@ describe('DeleteClientHandler', () => {
       const existingEvents = [
         new ClientCreatedDomainEvent(
           clientId,
-          'Acme Corporation',
-          'contact@acme.com',
-          '+1234567890',
-          '123 Main St',
-          'Active',
-          'Important client'
+          new ClientData(
+            'Acme Corporation',
+            'contact@acme.com',
+            '+1234567890',
+            '123 Main St',
+            'Active',
+            'Important client'
+          )
         ),
       ];
       existingEvents.forEach(event => aggregate.apply(event));
@@ -59,12 +62,14 @@ describe('DeleteClientHandler', () => {
       const existingEvents = [
         new ClientCreatedDomainEvent(
           clientId,
-          'Beta Inc',
-          'info@beta.com',
-          null,
-          null,
-          'Prospect',
-          null
+          new ClientData(
+            'Beta Inc',
+            'info@beta.com',
+            null,
+            null,
+            'Prospect',
+            null
+          )
         ),
       ];
       existingEvents.forEach(event => aggregate.apply(event));
@@ -88,12 +93,14 @@ describe('DeleteClientHandler', () => {
       const existingEvents = [
         new ClientCreatedDomainEvent(
           clientId,
-          'Gamma LLC',
-          'hello@gamma.com',
-          '+9876543210',
-          '456 Oak Ave',
-          'Active',
-          'Test notes'
+          new ClientData(
+            'Gamma LLC',
+            'hello@gamma.com',
+            '+9876543210',
+            '456 Oak Ave',
+            'Active',
+            'Test notes'
+          )
         ),
       ];
       existingEvents.forEach(event => aggregate.apply(event));
@@ -117,12 +124,14 @@ describe('DeleteClientHandler', () => {
       const existingEvents = [
         new ClientCreatedDomainEvent(
           clientId,
-          'Test Corp',
-          'test@test.com',
-          null,
-          null,
-          'Inactive',
-          null
+          new ClientData(
+            'Test Corp',
+            'test@test.com',
+            null,
+            null,
+            'Inactive',
+            null
+          )
         ),
       ];
       existingEvents.forEach(event => aggregate.apply(event));
