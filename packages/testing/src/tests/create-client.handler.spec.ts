@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { CreateClientHandler } from '@angular-nest-starter/application';
-import { CreateClientCommand } from '@angular-nest-starter/application';
+import { CreateClientHandler, CreateClientCommand, ClientDataPayload } from '@angular-nest-starter/application';
 
 describe('CreateClientHandler', () => {
   let handler: CreateClientHandler;
@@ -24,8 +23,7 @@ describe('CreateClientHandler', () => {
   describe('execute', () => {
     it('should create a new client aggregate and persist events', async () => {
       // Arrange
-      const command = new CreateClientCommand(
-        'client-123',
+      const data = new ClientDataPayload(
         'Acme Corporation',
         'contact@acme.com',
         '+1234567890',
@@ -33,6 +31,7 @@ describe('CreateClientHandler', () => {
         'Active',
         'Important client'
       );
+      const command = new CreateClientCommand('client-123', data);
 
       // Act
       const clientId = await handler.execute(command);
@@ -52,8 +51,7 @@ describe('CreateClientHandler', () => {
 
     it('should create client with optional fields as null', async () => {
       // Arrange
-      const command = new CreateClientCommand(
-        'client-456',
+      const data = new ClientDataPayload(
         'Beta Inc',
         'info@beta.com',
         null,
@@ -61,6 +59,7 @@ describe('CreateClientHandler', () => {
         'Prospect',
         null
       );
+      const command = new CreateClientCommand('client-456', data);
 
       // Act
       const clientId = await handler.execute(command);
@@ -79,8 +78,7 @@ describe('CreateClientHandler', () => {
 
     it('should persist aggregate through repository', async () => {
       // Arrange
-      const command = new CreateClientCommand(
-        'client-789',
+      const data = new ClientDataPayload(
         'Gamma LLC',
         'hello@gamma.com',
         '+9876543210',
@@ -88,6 +86,7 @@ describe('CreateClientHandler', () => {
         'Inactive',
         'Test notes'
       );
+      const command = new CreateClientCommand('client-789', data);
 
       // Act
       await handler.execute(command);
@@ -112,8 +111,7 @@ describe('CreateClientHandler', () => {
         mockAggregateRepository.save.mockClear();
         savedAggregate = null;
 
-        const command = new CreateClientCommand(
-          `client-${status}`,
+        const data = new ClientDataPayload(
           'Test Company',
           'test@test.com',
           null,
@@ -121,6 +119,7 @@ describe('CreateClientHandler', () => {
           status,
           null
         );
+        const command = new CreateClientCommand(`client-${status}`, data);
 
         // Act
         await handler.execute(command);

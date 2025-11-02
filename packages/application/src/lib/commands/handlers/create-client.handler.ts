@@ -24,12 +24,12 @@ export class CreateClientHandler implements ICommandHandler<CreateClientCommand>
     // Create new client aggregate using domain logic
     const client = ClientAggregate.create(
       command.id,
-      command.companyName,
-      command.email,
-      command.phone,
-      command.address,
-      command.status,
-      command.notes
+      command.data.companyName,
+      command.data.email,
+      command.data.phone,
+      command.data.address,
+      command.data.status,
+      command.data.notes
     );
 
     // Persist aggregate (saves events and publishes to event bus)

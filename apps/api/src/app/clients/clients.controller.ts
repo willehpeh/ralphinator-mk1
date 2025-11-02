@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel } from '@angular-nest-starter/application';
+import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel, ClientDataPayload } from '@angular-nest-starter/application';
 import { ClientStatus } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
 
@@ -53,8 +53,7 @@ export class ClientsController {
   @Post()
   async createClient(@Body() dto: CreateClientDto): Promise<{ id: string }> {
     const id = randomUUID();
-    const command = new CreateClientCommand(
-      id,
+    const data = new ClientDataPayload(
       dto.companyName,
       dto.email,
       dto.phone,
@@ -62,6 +61,7 @@ export class ClientsController {
       dto.status,
       dto.notes
     );
+    const command = new CreateClientCommand(id, data);
 
     const clientId = await this.commandBus.execute<CreateClientCommand, string>(
       command
@@ -96,8 +96,7 @@ export class ClientsController {
     @Param('id') id: string,
     @Body() dto: UpdateClientDto
   ): Promise<ClientReadModel> {
-    const command = new UpdateClientCommand(
-      id,
+    const data = new ClientDataPayload(
       dto.companyName,
       dto.email,
       dto.phone,
@@ -105,6 +104,7 @@ export class ClientsController {
       dto.status,
       dto.notes
     );
+    const command = new UpdateClientCommand(id, data);
 
     const clientId = await this.commandBus.execute<UpdateClientCommand, string>(
       command
