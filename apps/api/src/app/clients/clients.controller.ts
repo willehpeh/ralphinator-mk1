@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateClientCommand, GetClientByIdQuery, ClientReadModel } from '@angular-nest-starter/application';
+import { CreateClientCommand, GetClientByIdQuery, GetAllClientsQuery, ClientReadModel } from '@angular-nest-starter/application';
 import { ClientStatus } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
 
@@ -38,6 +38,13 @@ export class ClientsController {
     );
 
     return { id: clientId };
+  }
+
+  @Get()
+  async getAllClients(): Promise<ClientReadModel[]> {
+    const query = new GetAllClientsQuery();
+    const clients = await this.queryBus.execute<GetAllClientsQuery, ClientReadModel[]>(query);
+    return clients;
   }
 
   @Get(':id')

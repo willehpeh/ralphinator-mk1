@@ -6,7 +6,7 @@
 ## Implementation Tasks
 - [x] Backend: Create `GetAllClientsQuery`
 - [x] Backend: Create `GetAllClientsHandler`
-- [ ] Backend: Add controller endpoint `GET /api/clients`
+- [x] Backend: Add controller endpoint `GET /api/clients`
 - [ ] Backend: Write tests for query handler
 - [ ] Frontend: Create `ClientListComponent`
 - [ ] Frontend: Add NGRX actions for loading clients
@@ -23,6 +23,7 @@
 - **2025-11-01**: Created `GetAllClientsQuery` class - no parameters needed as it retrieves all clients
 - **2025-11-02**: Added `findAll()` method to `IClientReadRepository` interface to support retrieving all clients
 - **2025-11-02**: Created `GetAllClientsQueryHandler` that retrieves all clients from read repository. Registered handler in ClientsModule.
+- **2025-11-02**: Added `GET /api/clients` endpoint to ClientsController. Endpoint executes GetAllClientsQuery and returns array of ClientReadModel.
 
 ## Completion Checklist
 - [ ] Backend query handler returns all clients from read model
