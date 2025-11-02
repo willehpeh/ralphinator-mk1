@@ -2,9 +2,9 @@ import {
   ClientAggregate,
   ClientData,
   ClientCreatedDomainEvent,
-  ClientStatus,
   Email,
 } from '@angular-nest-starter/domain';
+import { BaseClientDataBuilder } from './base-client-data.builder';
 
 /**
  * Test builder for ClientAggregate instances.
@@ -19,50 +19,7 @@ import {
  *   .build();
  * ```
  */
-export class ClientAggregateBuilder {
-  private clientId = 'test-client-id';
-  private companyName = 'Test Company';
-  private email = 'test@example.com';
-  private phone: string | null = null;
-  private address: string | null = null;
-  private status: ClientStatus = 'Active';
-  private notes: string | null = null;
-
-  withId(id: string): ClientAggregateBuilder {
-    this.clientId = id;
-    return this;
-  }
-
-  withCompanyName(name: string): ClientAggregateBuilder {
-    this.companyName = name;
-    return this;
-  }
-
-  withEmail(email: string): ClientAggregateBuilder {
-    this.email = email;
-    return this;
-  }
-
-  withPhone(phone: string | null): ClientAggregateBuilder {
-    this.phone = phone;
-    return this;
-  }
-
-  withAddress(address: string | null): ClientAggregateBuilder {
-    this.address = address;
-    return this;
-  }
-
-  withStatus(status: ClientStatus): ClientAggregateBuilder {
-    this.status = status;
-    return this;
-  }
-
-  withNotes(notes: string | null): ClientAggregateBuilder {
-    this.notes = notes;
-    return this;
-  }
-
+export class ClientAggregateBuilder extends BaseClientDataBuilder<ClientAggregate> {
   /**
    * Builds a ClientAggregate with initialized state.
    * The aggregate will have a ClientCreatedDomainEvent applied.
@@ -79,7 +36,7 @@ export class ClientAggregateBuilder {
       this.status,
       this.notes
     );
-    const event = new ClientCreatedDomainEvent(this.clientId, clientData);
+    const event = new ClientCreatedDomainEvent(this.id, clientData);
     aggregate.apply(event);
     return aggregate;
   }

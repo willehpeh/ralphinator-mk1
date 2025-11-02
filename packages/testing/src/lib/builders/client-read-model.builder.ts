@@ -1,5 +1,5 @@
 import { ClientReadModel } from '@angular-nest-starter/application';
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { BaseClientDataBuilder } from './base-client-data.builder';
 
 /**
  * Test builder for ClientReadModel instances.
@@ -14,52 +14,10 @@ import { ClientStatus } from '@angular-nest-starter/domain';
  *   .build();
  * ```
  */
-export class ClientReadModelBuilder {
-  private id = 'test-client-id';
-  private companyName = 'Test Company';
-  private email = 'test@example.com';
-  private phone: string | null = null;
-  private address: string | null = null;
-  private status: ClientStatus = 'Active';
-  private notes: string | null = null;
+export class ClientReadModelBuilder extends BaseClientDataBuilder<ClientReadModel> {
   private createdAt = new Date('2025-11-01T00:00:00.000Z');
 
-  withId(id: string): ClientReadModelBuilder {
-    this.id = id;
-    return this;
-  }
-
-  withCompanyName(companyName: string): ClientReadModelBuilder {
-    this.companyName = companyName;
-    return this;
-  }
-
-  withEmail(email: string): ClientReadModelBuilder {
-    this.email = email;
-    return this;
-  }
-
-  withPhone(phone: string | null): ClientReadModelBuilder {
-    this.phone = phone;
-    return this;
-  }
-
-  withAddress(address: string | null): ClientReadModelBuilder {
-    this.address = address;
-    return this;
-  }
-
-  withStatus(status: ClientStatus): ClientReadModelBuilder {
-    this.status = status;
-    return this;
-  }
-
-  withNotes(notes: string | null): ClientReadModelBuilder {
-    this.notes = notes;
-    return this;
-  }
-
-  withCreatedAt(createdAt: Date): ClientReadModelBuilder {
+  withCreatedAt(createdAt: Date): this {
     this.createdAt = createdAt;
     return this;
   }
