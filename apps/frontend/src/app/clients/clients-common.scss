@@ -1,144 +1,145 @@
 /* Shared styles for client management components */
+@use './clients-variables.scss' as *;
 
 /* Status Badge Styles */
 .status-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $border-radius-lg;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
   text-transform: uppercase;
 }
 
 .status-active {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: $color-success-bg;
+  color: $color-success-text;
 }
 
 .status-inactive {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: $color-error-bg;
+  color: $color-error-text;
 }
 
 .status-pending {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: $color-warning-bg;
+  color: $color-warning-text;
 }
 
 /* Message Styles */
 .loading-message {
-  padding: 2rem;
+  padding: $spacing-2xl;
   text-align: center;
-  color: #666;
-  font-size: 1.1rem;
+  color: $color-text-secondary;
+  font-size: $font-size-lg;
 }
 
 .error-message {
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  border-radius: 4px;
-  color: #721c24;
-  font-weight: 500;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  background-color: $color-error-bg;
+  border: 1px solid $color-error-border;
+  border-radius: $border-radius-sm;
+  color: $color-error-text;
+  font-weight: $font-weight-medium;
 }
 
 .success-message {
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  background-color: #d4edda;
-  border: 1px solid #c3e6cb;
-  border-radius: 4px;
-  color: #155724;
-  font-weight: 500;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  background-color: $color-success-bg;
+  border: 1px solid $color-success-border;
+  border-radius: $border-radius-sm;
+  color: $color-success-text;
+  font-weight: $font-weight-medium;
 }
 
 /* Button Styles */
 .btn {
-  padding: 0.75rem 1.5rem;
+  padding: $spacing-md $spacing-xl;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 500;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all $transition-fast;
 }
 
 .btn:disabled {
-  opacity: 0.5;
+  opacity: $opacity-disabled;
   cursor: not-allowed;
 }
 
 .btn-primary {
-  background-color: #4CAF50;
-  color: white;
+  background-color: $color-primary;
+  color: $color-white;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #45a049;
+  background-color: $color-primary-hover;
 }
 
 .btn-secondary {
-  background-color: #2196F3;
-  color: white;
+  background-color: $color-secondary;
+  color: $color-white;
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: #0b7dda;
+  background-color: $color-secondary-hover;
 }
 
 .btn-danger {
-  background-color: #f44336;
-  color: white;
+  background-color: $color-danger;
+  color: $color-white;
 }
 
 .btn-danger:hover:not(:disabled) {
-  background-color: #da190b;
+  background-color: $color-danger-hover;
 }
 
 .btn-cancel {
-  background-color: #757575;
-  color: white;
+  background-color: $color-cancel;
+  color: $color-white;
 }
 
 .btn-cancel:hover:not(:disabled) {
-  background-color: #616161;
+  background-color: $color-cancel-hover;
 }
 
 /* Form Styles */
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: $spacing-xl;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #333;
+  margin-bottom: $spacing-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.2s;
+  padding: $spacing-md;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-base;
+  transition: border-color $transition-fast;
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #4CAF50;
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+  border-color: $color-primary;
+  box-shadow: $shadow-focus;
 }
 
 .form-group input.ng-invalid.ng-touched,
 .form-group textarea.ng-invalid.ng-touched,
 .form-group select.ng-invalid.ng-touched {
-  border-color: #f44336;
+  border-color: $color-danger;
 }
 
 .form-group textarea {
@@ -149,51 +150,51 @@
 
 .form-actions {
   display: flex;
-  gap: 1rem;
+  gap: $spacing-lg;
   justify-content: flex-end;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #eee;
+  margin-top: $spacing-2xl;
+  padding-top: $spacing-xl;
+  border-top: 1px solid $color-border-light;
 }
 
 /* Card Styles */
 .card {
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-md;
+  padding: $spacing-2xl;
+  box-shadow: $shadow-sm;
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #eee;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 1px solid $color-border-light;
 }
 
 .card-header h2,
 .card-header h3 {
   margin: 0;
-  color: #333;
+  color: $color-text-primary;
 }
 
 /* Detail Row Styles */
 .detail-row {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
 }
 
 .detail-label {
-  font-weight: 500;
-  color: #666;
+  font-weight: $font-weight-medium;
+  color: $color-text-secondary;
   min-width: 120px;
 }
 
 .detail-value {
-  color: #333;
+  color: $color-text-primary;
   word-break: break-word;
 }
