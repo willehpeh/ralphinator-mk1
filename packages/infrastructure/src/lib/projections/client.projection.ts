@@ -48,6 +48,9 @@ export class ClientProjection implements IEventHandler<ClientCreatedDomainEvent 
       // Persist to read repository
       await this.clientReadRepository.save(readModel);
     } else if (event instanceof ClientInformationUpdatedDomainEvent) {
+      // Fetch the existing read model to preserve createdAt timestamp
+      const existingReadModel = await this.clientReadRepository.findById(event.aggregateId);
+
       // Transform ClientInformationUpdatedDomainEvent into read model
       const readModel: ClientReadModel = {
         id: event.aggregateId,
@@ -57,7 +60,7 @@ export class ClientProjection implements IEventHandler<ClientCreatedDomainEvent 
         address: event.address,
         status: event.status,
         notes: event.notes,
-        createdAt: event.occurredOn,
+        createdAt: existingReadModel?.createdAt || event.occurredOn, // Preserve original createdAt
       };
 
       // Update the read repository
