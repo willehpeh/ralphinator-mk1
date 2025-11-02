@@ -23,6 +23,18 @@ Created domain event to represent client status changes:
 - Includes event versioning (version 1)
 - Exported from domain package
 
+### ✅ Task 2: Add changeStatus method to ClientAggregate
+**Completed**: 2025-11-02
+
+Implemented status change business logic in the aggregate:
+- File: `packages/domain/src/lib/aggregates/client.aggregate.ts`
+- Added `changeStatus(newStatus: ClientStatus)` method
+- Validates client exists before changing status
+- Validates status is initialized
+- Prevents changing to the same status (business rule)
+- Applies `ClientStatusChangedDomainEvent` when status is changed
+- Updated `apply()` method to handle `ClientStatusChangedDomainEvent`
+
 ---
 
 ## Implementation Notes
@@ -31,3 +43,8 @@ Created domain event to represent client status changes:
 - Created `ClientStatusChangedDomainEvent` to capture status change operations separately from full information updates
 - Event includes both previous and new status to maintain full audit trail
 - Status type is `ClientStatus` ('Active' | 'Inactive' | 'Prospect' | 'Past Client')
+
+### Aggregate Business Logic
+- `changeStatus()` method enforces business rule: status must be different from current status
+- Status changes are tracked separately from general information updates
+- Event sourcing pattern: method applies event which updates state via `apply()`

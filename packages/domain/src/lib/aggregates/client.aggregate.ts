@@ -2,6 +2,7 @@ import { EventSourcedAggregate } from '../base/event-sourced-aggregate';
 import { DomainEvent } from '../base/domain-event';
 import { ClientCreatedDomainEvent, ClientStatus } from '../events/client-created.domain-event';
 import { ClientInformationUpdatedDomainEvent } from '../events/client-information-updated.domain-event';
+import { ClientStatusChangedDomainEvent } from '../events/client-status-changed.domain-event';
 
 export class ClientAggregate extends EventSourcedAggregate {
   private id?: string;
@@ -84,6 +85,33 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Change client status
+   *
+   * @param newStatus - The new status to set for the client
+   */
+  changeStatus(newStatus: ClientStatus): void {
+    if (!this.id) {
+      throw new Error('Cannot change status on a client that has not been created');
+    }
+
+    if (!this.status) {
+      throw new Error('Client status is not initialized');
+    }
+
+    if (this.status === newStatus) {
+      throw new Error('New status must be different from current status');
+    }
+
+    this.applyEvent(
+      new ClientStatusChangedDomainEvent(
+        this.id,
+        this.status,
+        newStatus
+      )
+    );
+  }
+
+  /**
    * Apply domain events to rebuild aggregate state
    * This method is called when replaying events from the event store
    *
@@ -105,6 +133,8 @@ export class ClientAggregate extends EventSourcedAggregate {
       this.address = event.address;
       this.status = event.status;
       this.notes = event.notes;
+    } else if (event instanceof ClientStatusChangedDomainEvent) {
+      this.status = event.newStatus;
     }
   }
 
