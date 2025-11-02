@@ -1,8 +1,8 @@
-import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { CreateClientCommand } from '../create-client.command';
 import { ClientAggregate } from '@angular-nest-starter/domain';
-import { IEventStore } from '../../ports/event-store.interface';
+import { IAggregateRepository } from '../../ports/aggregate-repository.interface';
 
 /**
  * Command handler for creating a new client.
@@ -11,8 +11,7 @@ import { IEventStore } from '../../ports/event-store.interface';
 @CommandHandler(CreateClientCommand)
 export class CreateClientHandler implements ICommandHandler<CreateClientCommand> {
   constructor(
-    @Inject('IEventStore') private readonly eventStore: IEventStore,
-    private readonly eventBus: EventBus
+    @Inject('IAggregateRepository') private readonly aggregateRepository: IAggregateRepository<ClientAggregate>
   ) {}
 
   /**
@@ -33,20 +32,8 @@ export class CreateClientHandler implements ICommandHandler<CreateClientCommand>
       command.notes
     );
 
-    // Get uncommitted events before persisting
-    const events = client.getUncommittedEvents();
-
-    // Persist domain events to event store
-    // Expected version -1 indicates this is a new aggregate
-    await this.eventStore.appendEvents(
-      command.id,
-      events,
-      -1
-    );
-
-    // Publish domain events to EventBus
-    // This triggers projections to update read models
-    events.forEach(event => this.eventBus.publish(event));
+    // Persist aggregate (saves events and publishes to event bus)
+    await this.aggregateRepository.save(client);
 
     return command.id;
   }

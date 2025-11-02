@@ -13,6 +13,7 @@ import {
   ClientProjection,
   InMemoryEventStore,
   InMemoryClientReadRepository,
+  AggregateRepository,
 } from '@angular-nest-starter/infrastructure';
 import { ClientsController } from './clients.controller';
 
@@ -35,6 +36,10 @@ const EventHandlers = [ClientProjection];
     {
       provide: 'IClientReadRepository',
       useClass: InMemoryClientReadRepository,
+    },
+    {
+      provide: 'IAggregateRepository',
+      useClass: AggregateRepository,
     },
   ],
 })

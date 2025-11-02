@@ -10,6 +10,12 @@ export abstract class EventSourcedAggregate {
   private version = 0;
 
   /**
+   * Gets the aggregate's unique identifier.
+   * Must be implemented by child aggregates.
+   */
+  abstract getId(): string;
+
+  /**
    * Gets the aggregate's current version.
    * Used for optimistic concurrency control.
    */

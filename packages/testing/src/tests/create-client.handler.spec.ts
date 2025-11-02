@@ -1,26 +1,24 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { EventBus } from '@nestjs/cqrs';
 import { CreateClientHandler } from '@angular-nest-starter/application';
 import { CreateClientCommand } from '@angular-nest-starter/application';
-import { ClientAggregate } from '@angular-nest-starter/domain';
 
 describe('CreateClientHandler', () => {
   let handler: CreateClientHandler;
-  let mockEventStore: any;
-  let mockEventBus: EventBus;
+  let mockAggregateRepository: any;
+  let savedAggregate: any;
 
   beforeEach(() => {
-    // Mock event store
-    mockEventStore = {
-      appendEvents: vi.fn().mockResolvedValue(undefined),
+    savedAggregate = null;
+
+    // Mock aggregate repository
+    mockAggregateRepository = {
+      save: vi.fn().mockImplementation(async (aggregate) => {
+        savedAggregate = aggregate;
+      }),
+      load: vi.fn(),
     };
 
-    // Mock event bus
-    mockEventBus = {
-      publish: vi.fn(),
-    } as any;
-
-    handler = new CreateClientHandler(mockEventStore, mockEventBus);
+    handler = new CreateClientHandler(mockAggregateRepository);
   });
 
   describe('execute', () => {
@@ -41,22 +39,15 @@ describe('CreateClientHandler', () => {
 
       // Assert
       expect(clientId).toBe('client-123');
-      expect(mockEventStore.appendEvents).toHaveBeenCalledTimes(1);
-      expect(mockEventStore.appendEvents).toHaveBeenCalledWith(
-        'client-123',
-        expect.arrayContaining([
-          expect.objectContaining({
-            aggregateId: 'client-123',
-            companyName: 'Acme Corporation',
-            email: 'contact@acme.com',
-            phone: '+1234567890',
-            address: '123 Main St, City, State 12345',
-            status: 'Active',
-            notes: 'Important client',
-          }),
-        ]),
-        -1 // Expected version for new aggregate
-      );
+      expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+      expect(savedAggregate).toBeDefined();
+      expect(savedAggregate.getId()).toBe('client-123');
+      expect(savedAggregate.getCompanyName()).toBe('Acme Corporation');
+      expect(savedAggregate.getEmail()).toBe('contact@acme.com');
+      expect(savedAggregate.getPhone()).toBe('+1234567890');
+      expect(savedAggregate.getAddress()).toBe('123 Main St, City, State 12345');
+      expect(savedAggregate.getStatus()).toBe('Active');
+      expect(savedAggregate.getNotes()).toBe('Important client');
     });
 
     it('should create client with optional fields as null', async () => {
@@ -76,24 +67,17 @@ describe('CreateClientHandler', () => {
 
       // Assert
       expect(clientId).toBe('client-456');
-      expect(mockEventStore.appendEvents).toHaveBeenCalledWith(
-        'client-456',
-        expect.arrayContaining([
-          expect.objectContaining({
-            aggregateId: 'client-456',
-            companyName: 'Beta Inc',
-            email: 'info@beta.com',
-            phone: null,
-            address: null,
-            status: 'Prospect',
-            notes: null,
-          }),
-        ]),
-        -1
-      );
+      expect(mockAggregateRepository.save).toHaveBeenCalled();
+      expect(savedAggregate.getId()).toBe('client-456');
+      expect(savedAggregate.getCompanyName()).toBe('Beta Inc');
+      expect(savedAggregate.getEmail()).toBe('info@beta.com');
+      expect(savedAggregate.getPhone()).toBe(null);
+      expect(savedAggregate.getAddress()).toBe(null);
+      expect(savedAggregate.getStatus()).toBe('Prospect');
+      expect(savedAggregate.getNotes()).toBe(null);
     });
 
-    it('should publish integration event after creating client', async () => {
+    it('should persist aggregate through repository', async () => {
       // Arrange
       const command = new CreateClientCommand(
         'client-789',
@@ -109,14 +93,10 @@ describe('CreateClientHandler', () => {
       await handler.execute(command);
 
       // Assert
-      expect(mockEventBus.publish).toHaveBeenCalledTimes(1);
-      expect(mockEventBus.publish).toHaveBeenCalledWith(
-        expect.objectContaining({
-          clientId: 'client-789',
-          companyName: 'Gamma LLC',
-          email: 'hello@gamma.com',
-        })
-      );
+      expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+      expect(savedAggregate.getId()).toBe('client-789');
+      expect(savedAggregate.getCompanyName()).toBe('Gamma LLC');
+      expect(savedAggregate.getEmail()).toBe('hello@gamma.com');
     });
 
     it('should handle all valid client statuses', async () => {
@@ -129,7 +109,8 @@ describe('CreateClientHandler', () => {
 
       for (const status of statuses) {
         // Reset mocks
-        mockEventStore.appendEvents.mockClear();
+        mockAggregateRepository.save.mockClear();
+        savedAggregate = null;
 
         const command = new CreateClientCommand(
           `client-${status}`,
@@ -145,15 +126,8 @@ describe('CreateClientHandler', () => {
         await handler.execute(command);
 
         // Assert
-        expect(mockEventStore.appendEvents).toHaveBeenCalledWith(
-          expect.any(String),
-          expect.arrayContaining([
-            expect.objectContaining({
-              status,
-            }),
-          ]),
-          -1
-        );
+        expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+        expect(savedAggregate.getStatus()).toBe(status);
       }
     });
   });

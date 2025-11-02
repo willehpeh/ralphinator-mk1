@@ -1,36 +1,35 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { EventBus } from '@nestjs/cqrs';
 import { DeleteClientHandler } from '@angular-nest-starter/application';
 import { DeleteClientCommand } from '@angular-nest-starter/application';
 import {
-  ClientDeletedDomainEvent,
-  ClientCreatedDomainEvent
+  ClientCreatedDomainEvent,
+  ClientAggregate
 } from '@angular-nest-starter/domain';
 
 describe('DeleteClientHandler', () => {
   let handler: DeleteClientHandler;
-  let mockEventStore: any;
-  let mockEventBus: EventBus;
+  let mockAggregateRepository: any;
+  let savedAggregate: any;
 
   beforeEach(() => {
-    // Mock event store
-    mockEventStore = {
-      getEvents: vi.fn(),
-      appendEvents: vi.fn().mockResolvedValue(undefined),
+    savedAggregate = null;
+
+    // Mock aggregate repository
+    mockAggregateRepository = {
+      load: vi.fn(),
+      save: vi.fn().mockImplementation(async (aggregate) => {
+        savedAggregate = aggregate;
+      }),
     };
 
-    // Mock event bus
-    mockEventBus = {
-      publish: vi.fn(),
-    } as any;
-
-    handler = new DeleteClientHandler(mockEventStore, mockEventBus);
+    handler = new DeleteClientHandler(mockAggregateRepository);
   });
 
   describe('execute', () => {
     it('should load existing client, delete it, and persist deletion event', async () => {
       // Arrange
       const clientId = 'client-123';
+      const aggregate = new ClientAggregate();
       const existingEvents = [
         new ClientCreatedDomainEvent(
           clientId,
@@ -42,8 +41,9 @@ describe('DeleteClientHandler', () => {
           'Important client'
         ),
       ];
+      existingEvents.forEach(event => aggregate.apply(event));
 
-      mockEventStore.getEvents.mockResolvedValue(existingEvents);
+      mockAggregateRepository.load.mockResolvedValue(aggregate);
 
       const command = new DeleteClientCommand(clientId);
 
@@ -52,21 +52,15 @@ describe('DeleteClientHandler', () => {
 
       // Assert
       expect(deletedClientId).toBe(clientId);
-      expect(mockEventStore.getEvents).toHaveBeenCalledTimes(1);
-      expect(mockEventStore.getEvents).toHaveBeenCalledWith(clientId);
-      expect(mockEventStore.appendEvents).toHaveBeenCalledTimes(1);
-      expect(mockEventStore.appendEvents).toHaveBeenCalledWith(
-        clientId,
-        expect.arrayContaining([
-          expect.any(ClientDeletedDomainEvent),
-        ]),
-        0 // Expected version (0 because we had 1 event before)
-      );
+      expect(mockAggregateRepository.load).toHaveBeenCalledWith(clientId, ClientAggregate);
+      expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
+      expect(savedAggregate).toBe(aggregate);
     });
 
-    it('should publish deletion event to event bus for projections', async () => {
+    it('should load aggregate and save through repository', async () => {
       // Arrange
       const clientId = 'client-456';
+      const aggregate = new ClientAggregate();
       const existingEvents = [
         new ClientCreatedDomainEvent(
           clientId,
@@ -78,8 +72,9 @@ describe('DeleteClientHandler', () => {
           null
         ),
       ];
+      existingEvents.forEach(event => aggregate.apply(event));
 
-      mockEventStore.getEvents.mockResolvedValue(existingEvents);
+      mockAggregateRepository.load.mockResolvedValue(aggregate);
 
       const command = new DeleteClientCommand(clientId);
 
@@ -87,17 +82,14 @@ describe('DeleteClientHandler', () => {
       await handler.execute(command);
 
       // Assert
-      expect(mockEventBus.publish).toHaveBeenCalledTimes(1);
-      expect(mockEventBus.publish).toHaveBeenCalledWith(
-        expect.objectContaining({
-          aggregateId: clientId,
-        })
-      );
+      expect(mockAggregateRepository.load).toHaveBeenCalledWith(clientId, ClientAggregate);
+      expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
     });
 
-    it('should use version for optimistic concurrency control', async () => {
+    it('should call delete on the aggregate', async () => {
       // Arrange
       const clientId = 'client-789';
+      const aggregate = new ClientAggregate();
       const existingEvents = [
         new ClientCreatedDomainEvent(
           clientId,
@@ -109,8 +101,9 @@ describe('DeleteClientHandler', () => {
           'Test notes'
         ),
       ];
+      existingEvents.forEach(event => aggregate.apply(event));
 
-      mockEventStore.getEvents.mockResolvedValue(existingEvents);
+      mockAggregateRepository.load.mockResolvedValue(aggregate);
 
       const command = new DeleteClientCommand(clientId);
 
@@ -118,17 +111,14 @@ describe('DeleteClientHandler', () => {
       await handler.execute(command);
 
       // Assert
-      // Verifies version is passed for optimistic concurrency control
-      expect(mockEventStore.appendEvents).toHaveBeenCalledWith(
-        clientId,
-        expect.any(Array),
-        0 // Version used for concurrency control
-      );
+      expect(savedAggregate).toBe(aggregate);
+      expect(savedAggregate.getUncommittedEvents().length).toBeGreaterThan(0);
     });
 
     it('should return the client ID after successful deletion', async () => {
       // Arrange
       const clientId = 'client-999';
+      const aggregate = new ClientAggregate();
       const existingEvents = [
         new ClientCreatedDomainEvent(
           clientId,
@@ -140,8 +130,9 @@ describe('DeleteClientHandler', () => {
           null
         ),
       ];
+      existingEvents.forEach(event => aggregate.apply(event));
 
-      mockEventStore.getEvents.mockResolvedValue(existingEvents);
+      mockAggregateRepository.load.mockResolvedValue(aggregate);
 
       const command = new DeleteClientCommand(clientId);
 

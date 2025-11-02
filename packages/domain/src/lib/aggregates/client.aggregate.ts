@@ -158,7 +158,10 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   // Getters for accessing aggregate state
-  getId(): string | undefined {
+  getId(): string {
+    if (!this.id) {
+      throw new Error('Aggregate ID is not set');
+    }
     return this.id;
   }
 

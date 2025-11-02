@@ -5,6 +5,9 @@ export function infrastructure(): string {
 // Event Store
 export * from './event-store/in-memory-event-store';
 
+// Repositories
+export * from './repositories/aggregate.repository';
+
 // Projections
 export * from './projections/client.projection';
 
