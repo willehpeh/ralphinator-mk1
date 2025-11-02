@@ -92,7 +92,12 @@
 - ✅ All API layer tasks complete
 
 ### Frontend Layer
-- [ ] Add deleteClient action to NGRX store
+- [x] **Add deleteClient action to NGRX store** ✅
+  - Added deleteClient action with props<{ id: string }> to `apps/frontend/src/app/clients/store/clients.actions.ts`
+  - Added deleteClientSuccess action with props<{ id: string }>
+  - Added deleteClientFailure action with props<{ error: string }>
+  - Follows existing NGRX action pattern with action creator and typed props
+  - No new linting errors introduced (pre-existing architectural decisions maintained)
 - [ ] Add deleteClient effect to call API
 - [ ] Update reducer to remove deleted client
 - [ ] Add "Delete Client" button to client detail view

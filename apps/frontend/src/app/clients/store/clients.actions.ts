@@ -126,3 +126,27 @@ export const filterClientsByName = createAction(
   '[Clients] Filter Clients By Name',
   props<{ searchTerm: string }>()
 );
+
+/**
+ * Delete a client
+ */
+export const deleteClient = createAction(
+  '[Clients] Delete Client',
+  props<{ id: string }>()
+);
+
+/**
+ * Successfully deleted client
+ */
+export const deleteClientSuccess = createAction(
+  '[Clients] Delete Client Success',
+  props<{ id: string }>()
+);
+
+/**
+ * Failed to delete client
+ */
+export const deleteClientFailure = createAction(
+  '[Clients] Delete Client Failure',
+  props<{ error: string }>()
+);
