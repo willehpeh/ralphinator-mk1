@@ -188,7 +188,7 @@ describe('ChangeClientStatusHandler', () => {
       // Assert
       const savedAggregate = getSavedAggregate();
       expect(savedAggregate.getCompanyName()).toBe('Preserve Properties Inc.');
-      expect(savedAggregate.getEmail()).toBe('preserve@example.com');
+      expect(savedAggregate.getEmail()?.getValue()).toBe('preserve@example.com');
       expect(savedAggregate.getPhone()).toBe('+1234567890');
       expect(savedAggregate.getAddress()).toBe('123 Main St');
       expect(savedAggregate.getStatus()).toBe('Active');

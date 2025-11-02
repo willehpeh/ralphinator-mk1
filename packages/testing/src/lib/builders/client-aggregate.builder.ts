@@ -3,6 +3,7 @@ import {
   ClientData,
   ClientCreatedDomainEvent,
   ClientStatus,
+  Email,
 } from '@angular-nest-starter/domain';
 
 /**
@@ -72,7 +73,7 @@ export class ClientAggregateBuilder {
     const aggregate = new ClientAggregate();
     const clientData = new ClientData(
       this.companyName,
-      this.email,
+      Email.create(this.email),
       this.phone,
       this.address,
       this.status,
