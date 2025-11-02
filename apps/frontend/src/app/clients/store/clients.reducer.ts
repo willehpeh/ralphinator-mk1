@@ -42,85 +42,82 @@ export const initialState: ClientsState = {
 };
 
 /**
+ * Helper functions for common state transitions
+ */
+
+/**
+ * Set loading state to true and clear any errors
+ */
+const setLoading = (state: ClientsState): ClientsState => ({
+  ...state,
+  loading: true,
+  error: null,
+});
+
+/**
+ * Set loading state to false and set an error message
+ */
+const setError = (state: ClientsState, error: string): ClientsState => ({
+  ...state,
+  loading: false,
+  error,
+});
+
+/**
+ * Clear loading and error states
+ */
+const clearLoadingAndError = (state: ClientsState): ClientsState => ({
+  ...state,
+  loading: false,
+  error: null,
+});
+
+/**
  * Clients reducer
  */
 export const clientsReducer = createReducer(
   initialState,
 
   // When loading clients is triggered
-  on(loadClients, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
+  on(loadClients, setLoading),
 
   // When clients are successfully loaded
   on(loadClientsSuccess, (state, { clients }) => ({
-    ...state,
+    ...clearLoadingAndError(state),
     clients,
     allClients: clients, // Store all clients for filtering
     searchTerm: '', // Reset search term
-    loading: false,
-    error: null,
   })),
 
   // When loading clients fails
-  on(loadClientsFailure, (state, { error }) => ({
-    ...state,
-    loading: false,
-    error,
-  })),
+  on(loadClientsFailure, (state, { error }) => setError(state, error)),
 
   // When updating a client is triggered
-  on(updateClient, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
+  on(updateClient, setLoading),
 
   // When client is successfully updated
   on(updateClientSuccess, (state, { client }) => ({
-    ...state,
+    ...clearLoadingAndError(state),
     clients: state.clients.map((c) => (c.id === client.id ? client : c)),
-    loading: false,
-    error: null,
   })),
 
   // When updating client fails
-  on(updateClientFailure, (state, { error }) => ({
-    ...state,
-    loading: false,
-    error,
-  })),
+  on(updateClientFailure, (state, { error }) => setError(state, error)),
 
   // When changing client status is triggered
-  on(changeClientStatus, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
+  on(changeClientStatus, setLoading),
 
   // When client status is successfully changed
   on(changeClientStatusSuccess, (state, { client }) => ({
-    ...state,
+    ...clearLoadingAndError(state),
     clients: state.clients.map((c) => (c.id === client.id ? client : c)),
-    loading: false,
-    error: null,
   })),
 
   // When changing client status fails
-  on(changeClientStatusFailure, (state, { error }) => ({
-    ...state,
-    loading: false,
-    error,
-  })),
+  on(changeClientStatusFailure, (state, { error }) => setError(state, error)),
 
   // When filtering clients by status is triggered
-  on(filterClientsByStatus, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
+  on(filterClientsByStatus, setLoading),
 
   // When clients are successfully filtered by status
   on(filterClientsByStatusSuccess, (state, { clients }) => {
@@ -135,21 +132,15 @@ export const clientsReducer = createReducer(
       : clients;
 
     return {
-      ...state,
+      ...clearLoadingAndError(state),
       clients: filteredClients,
       allClients: clients, // Update all clients for filtering
       // Preserve search term instead of resetting it
-      loading: false,
-      error: null,
     };
   }),
 
   // When filtering clients by status fails
-  on(filterClientsByStatusFailure, (state, { error }) => ({
-    ...state,
-    loading: false,
-    error,
-  })),
+  on(filterClientsByStatusFailure, (state, { error }) => setError(state, error)),
 
   // When filtering clients by name (client-side filtering)
   on(filterClientsByName, (state, { searchTerm }) => {
@@ -177,25 +168,15 @@ export const clientsReducer = createReducer(
   }),
 
   // When deleting a client is triggered
-  on(deleteClient, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
+  on(deleteClient, setLoading),
 
   // When client is successfully deleted
   on(deleteClientSuccess, (state, { id }) => ({
-    ...state,
+    ...clearLoadingAndError(state),
     clients: state.clients.filter((c) => c.id !== id),
     allClients: state.allClients.filter((c) => c.id !== id),
-    loading: false,
-    error: null,
   })),
 
   // When deleting client fails
-  on(deleteClientFailure, (state, { error }) => ({
-    ...state,
-    loading: false,
-    error,
-  }))
+  on(deleteClientFailure, (state, { error }) => setError(state, error))
 );
