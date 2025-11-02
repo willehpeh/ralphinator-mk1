@@ -78,12 +78,10 @@ export function createMockReadRepository() {
  * @example
  * ```typescript
  * describe('CreateClientHandler', () => {
- *   const { handler, mockRepository, getSavedAggregate } =
+ *   const { handler, mockRepository, getSavedAggregate, clearMocks } =
  *     createCommandHandlerTestSetup(CreateClientHandler);
  *
- *   beforeEach(() => {
- *     mockRepository.save.mockClear();
- *   });
+ *   beforeEach(clearMocks);
  *
  *   it('should create client', async () => {
  *     await handler.execute(command);
@@ -98,11 +96,22 @@ export function createCommandHandlerTestSetup<THandler>(
   const mocks = createMockAggregateRepository();
   const handler = new handlerConstructor(mocks.mockRepository);
 
+  /**
+   * Clears all mock call history and resets saved aggregate state.
+   * Use this in beforeEach to ensure test isolation.
+   */
+  const clearMocks = () => {
+    mocks.mockRepository.save.mockClear();
+    mocks.mockRepository.load.mockClear();
+    mocks.resetSavedAggregate();
+  };
+
   return {
     handler,
     mockRepository: mocks.mockRepository,
     getSavedAggregate: mocks.getSavedAggregate,
     resetSavedAggregate: mocks.resetSavedAggregate,
+    clearMocks,
   };
 }
 

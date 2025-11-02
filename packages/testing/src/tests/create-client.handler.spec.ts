@@ -4,13 +4,10 @@ import { createCommandHandlerTestSetup } from '../lib/mock-factories';
 import { expectAggregateToMatch, testAllClientStatuses } from '../lib/test-assertions';
 
 describe('CreateClientHandler', () => {
-  const { handler, mockRepository, getSavedAggregate, resetSavedAggregate } =
+  const { handler, mockRepository, getSavedAggregate, clearMocks } =
     createCommandHandlerTestSetup(CreateClientHandler);
 
-  beforeEach(() => {
-    mockRepository.save.mockClear();
-    resetSavedAggregate();
-  });
+  beforeEach(clearMocks);
 
   describe('execute', () => {
     it('should create a new client aggregate and persist events', async () => {
@@ -114,10 +111,7 @@ describe('CreateClientHandler', () => {
         // Assert
         expect(mockRepository.save).toHaveBeenCalledTimes(1);
         expect(getSavedAggregate().getStatus()).toBe(status);
-      }, () => {
-        mockRepository.save.mockClear();
-        resetSavedAggregate();
-      });
+      }, clearMocks);
     });
   });
 });

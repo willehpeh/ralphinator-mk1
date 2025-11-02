@@ -6,13 +6,10 @@ import { ClientAggregateBuilder } from '../lib/builders/client-aggregate.builder
 import { expectAggregateToMatch } from '../lib/test-assertions';
 
 describe('ChangeClientStatusHandler', () => {
-  const { handler, mockRepository, getSavedAggregate } =
+  const { handler, mockRepository, getSavedAggregate, clearMocks } =
     createCommandHandlerTestSetup(ChangeClientStatusHandler);
 
-  beforeEach(() => {
-    mockRepository.save.mockClear();
-    mockRepository.load.mockClear();
-  });
+  beforeEach(clearMocks);
 
   describe('execute', () => {
     it('should change client status from Prospect to Active', async () => {
