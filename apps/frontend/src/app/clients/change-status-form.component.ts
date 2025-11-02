@@ -6,6 +6,7 @@ import { changeClientStatus } from './store/clients.actions';
 import { selectClientById, selectClientsError } from './store/clients.selectors';
 import { ClientStatus } from './client.types';
 import { CLIENT_STATUSES, DEFAULT_CLIENT_STATUS } from './client.constants';
+import { CLIENT_UI_TEXT } from './client-display.constants';
 import { StatusBadgeComponent } from './status-badge.component';
 
 interface StatusForm {
@@ -20,10 +21,10 @@ interface StatusForm {
   template: `
     <div class="card">
       <div class="card-header">
-        <h3>Change Client Status</h3>
+        <h3>{{ uiText.CHANGE_STATUS_TITLE }}</h3>
       </div>
       <p class="form-description">
-        Select a new status for this client. The change will be saved immediately.
+        {{ uiText.CHANGE_STATUS_DESCRIPTION }}
       </p>
 
       @if (storeError(); as errorMessage) {
@@ -34,25 +35,25 @@ interface StatusForm {
 
       @if (client(); as clientData) {
         <div class="current-status">
-          <span class="label">Current Status:</span>
+          <span class="label">{{ uiText.CURRENT_STATUS_LABEL }}</span>
           <app-status-badge [status]="clientData.status" />
         </div>
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-group">
-            <label for="status">New Status</label>
+            <label for="status">{{ uiText.NEW_STATUS_LABEL }}</label>
             <select
               id="status"
               formControlName="status"
             >
-              <option value="" disabled>Select a status</option>
+              <option value="" disabled>{{ uiText.SELECT_STATUS_PLACEHOLDER }}</option>
               @for (status of availableStatuses; track status) {
                 <option [value]="status">{{ status }}</option>
               }
             </select>
             @if (form.controls.status.invalid && form.controls.status.touched) {
               <div class="error-message">
-                Please select a status
+                {{ uiText.SELECT_STATUS_ERROR }}
               </div>
             }
           </div>
@@ -63,14 +64,14 @@ interface StatusForm {
               class="btn btn-cancel"
               (click)="onCancel()"
             >
-              Cancel
+              {{ uiText.CANCEL_BUTTON }}
             </button>
             <button
               type="submit"
               class="btn btn-primary"
               [disabled]="form.invalid || !form.dirty"
             >
-              Save Status
+              {{ uiText.SAVE_STATUS_BUTTON }}
             </button>
           </div>
         </form>
@@ -87,6 +88,9 @@ export class ChangeStatusFormComponent {
   // Outputs
   statusChanged = output<void>();
   changeCancelled = output<void>();
+
+  // UI text
+  readonly uiText = CLIENT_UI_TEXT;
 
   // Available status options
   readonly availableStatuses = CLIENT_STATUSES;

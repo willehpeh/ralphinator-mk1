@@ -35,4 +35,14 @@ export const CLIENT_UI_TEXT = {
 
   CLIENT_CREATED_SUCCESS: 'Client created successfully!',
   CLIENT_UPDATED_SUCCESS: 'Client updated successfully!',
+
+  // Change Status Form
+  CHANGE_STATUS_TITLE: 'Change Client Status',
+  CHANGE_STATUS_DESCRIPTION: 'Select a new status for this client. The change will be saved immediately.',
+  CURRENT_STATUS_LABEL: 'Current Status:',
+  NEW_STATUS_LABEL: 'New Status',
+  SELECT_STATUS_PLACEHOLDER: 'Select a status',
+  SELECT_STATUS_ERROR: 'Please select a status',
+  SAVE_STATUS_BUTTON: 'Save Status',
+  CANCEL_BUTTON: 'Cancel',
 } as const;
