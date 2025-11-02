@@ -5,10 +5,6 @@ Implement client name search functionality that filters the client list in real-
 
 ## Tasks
 
-### Task 5: NOT STARTED - Update reducer to handle name filtering
-- Modify clients reducer to filter clients by name
-- Status: Not Started
-
 ### Task 6: NOT STARTED - Update component to dispatch name filter action
 - Connect search handler to dispatch filterClientsByName action
 - Status: Not Started
@@ -54,3 +50,13 @@ Implement client name search functionality that filters the client list in real-
 - Action accepts searchTerm string property
 - Follows existing action naming convention
 - Location: apps/frontend/src/app/clients/store/clients.actions.ts:125-128
+- Commit: 09c66f8
+
+### ✅ Task 5: Update reducer to handle name filtering - COMPLETED
+- Modified ClientsState to include allClients and searchTerm fields
+- Updated loadClientsSuccess to store all clients for filtering
+- Updated filterClientsByStatusSuccess to preserve allClients and reset search
+- Added filterClientsByName reducer handler with client-side filtering logic
+- Implements case-insensitive search on company name
+- Returns all clients when search term is empty
+- Location: apps/frontend/src/app/clients/store/clients.reducer.ts:22-162

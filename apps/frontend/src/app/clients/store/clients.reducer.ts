@@ -12,7 +12,8 @@ import {
   changeClientStatusFailure,
   filterClientsByStatus,
   filterClientsByStatusSuccess,
-  filterClientsByStatusFailure
+  filterClientsByStatusFailure,
+  filterClientsByName
 } from './clients.actions';
 
 /**
@@ -20,6 +21,8 @@ import {
  */
 export interface ClientsState {
   clients: Client[];
+  allClients: Client[]; // Store all clients for filtering
+  searchTerm: string; // Current search term
   loading: boolean;
   error: string | null;
 }
@@ -29,6 +32,8 @@ export interface ClientsState {
  */
 export const initialState: ClientsState = {
   clients: [],
+  allClients: [],
+  searchTerm: '',
   loading: false,
   error: null,
 };
@@ -50,6 +55,8 @@ export const clientsReducer = createReducer(
   on(loadClientsSuccess, (state, { clients }) => ({
     ...state,
     clients,
+    allClients: clients, // Store all clients for filtering
+    searchTerm: '', // Reset search term
     loading: false,
     error: null,
   })),
@@ -116,6 +123,8 @@ export const clientsReducer = createReducer(
   on(filterClientsByStatusSuccess, (state, { clients }) => ({
     ...state,
     clients,
+    allClients: clients, // Update all clients for filtering
+    searchTerm: '', // Reset search term when status filter changes
     loading: false,
     error: null,
   })),
@@ -125,5 +134,30 @@ export const clientsReducer = createReducer(
     ...state,
     loading: false,
     error,
-  }))
+  })),
+
+  // When filtering clients by name (client-side filtering)
+  on(filterClientsByName, (state, { searchTerm }) => {
+    const normalizedSearch = searchTerm.toLowerCase().trim();
+
+    // If search term is empty, show all clients
+    if (!normalizedSearch) {
+      return {
+        ...state,
+        clients: state.allClients,
+        searchTerm: ''
+      };
+    }
+
+    // Filter clients by company name (case-insensitive)
+    const filtered = state.allClients.filter(client =>
+      client.companyName.toLowerCase().includes(normalizedSearch)
+    );
+
+    return {
+      ...state,
+      clients: filtered,
+      searchTerm
+    };
+  })
 );
