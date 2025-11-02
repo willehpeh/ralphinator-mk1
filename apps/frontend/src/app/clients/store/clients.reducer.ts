@@ -73,6 +73,22 @@ const clearLoadingAndError = (state: ClientsState): ClientsState => ({
 });
 
 /**
+ * Filter clients by search term (case-insensitive, trimmed)
+ * Returns all clients if search term is empty after normalization
+ */
+const filterClientsBySearchTerm = (clients: Client[], searchTerm: string): Client[] => {
+  const normalizedSearch = searchTerm.toLowerCase().trim();
+
+  if (!normalizedSearch) {
+    return clients;
+  }
+
+  return clients.filter(client =>
+    client.companyName.toLowerCase().includes(normalizedSearch)
+  );
+};
+
+/**
  * Clients reducer
  */
 export const clientsReducer = createReducer(
@@ -122,14 +138,7 @@ export const clientsReducer = createReducer(
   // When clients are successfully filtered by status
   on(filterClientsByStatusSuccess, (state, { clients }) => {
     // Preserve and apply existing search term to newly filtered clients
-    const normalizedSearch = state.searchTerm.toLowerCase().trim();
-
-    // If there's an active search term, filter the status-filtered results
-    const filteredClients = normalizedSearch
-      ? clients.filter(client =>
-          client.companyName.toLowerCase().includes(normalizedSearch)
-        )
-      : clients;
+    const filteredClients = filterClientsBySearchTerm(clients, state.searchTerm);
 
     return {
       ...clearLoadingAndError(state),
@@ -144,26 +153,13 @@ export const clientsReducer = createReducer(
 
   // When filtering clients by name (client-side filtering)
   on(filterClientsByName, (state, { searchTerm }) => {
-    const normalizedSearch = searchTerm.toLowerCase().trim();
-
-    // If search term is empty, show all clients
-    if (!normalizedSearch) {
-      return {
-        ...state,
-        clients: state.allClients,
-        searchTerm: ''
-      };
-    }
-
     // Filter clients by company name (case-insensitive)
-    const filtered = state.allClients.filter(client =>
-      client.companyName.toLowerCase().includes(normalizedSearch)
-    );
+    const filtered = filterClientsBySearchTerm(state.allClients, searchTerm);
 
     return {
       ...state,
       clients: filtered,
-      searchTerm
+      searchTerm: searchTerm.toLowerCase().trim() ? searchTerm : ''
     };
   }),
 
