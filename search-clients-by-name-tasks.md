@@ -5,10 +5,6 @@ Implement client name search functionality that filters the client list in real-
 
 ## Tasks
 
-### Task 4: NOT STARTED - Add NGRX action for filtering by name
-- Create filterClientsByName action in clients.actions.ts
-- Status: Not Started
-
 ### Task 5: NOT STARTED - Update reducer to handle name filtering
 - Modify clients reducer to filter clients by name
 - Status: Not Started
@@ -51,3 +47,10 @@ Implement client name search functionality that filters the client list in real-
 - Method extracts value from input element and updates searchTerm signal
 - Bound (input) event to search input field in template
 - Location: apps/frontend/src/app/clients/client-list.component.ts:340-343
+- Commit: d08459e
+
+### ✅ Task 4: Add NGRX action for filtering by name - COMPLETED
+- Created filterClientsByName action in clients.actions.ts
+- Action accepts searchTerm string property
+- Follows existing action naming convention
+- Location: apps/frontend/src/app/clients/store/clients.actions.ts:125-128

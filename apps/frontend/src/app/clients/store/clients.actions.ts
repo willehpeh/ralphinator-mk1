@@ -118,3 +118,11 @@ export const filterClientsByStatusFailure = createAction(
   '[Clients] Filter Clients By Status Failure',
   props<{ error: string }>()
 );
+
+/**
+ * Filter clients by name (search term)
+ */
+export const filterClientsByName = createAction(
+  '[Clients] Filter Clients By Name',
+  props<{ searchTerm: string }>()
+);
