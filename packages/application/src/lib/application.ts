@@ -8,6 +8,7 @@ export * from './commands/delete-client.command';
 export * from './commands/handlers/create-client.handler';
 export * from './commands/handlers/update-client.handler';
 export * from './commands/handlers/change-client-status.handler';
+export * from './commands/handlers/delete-client.handler';
 
 // Queries
 export * from './queries/get-client-by-id.query';
