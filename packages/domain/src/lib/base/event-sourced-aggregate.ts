@@ -80,6 +80,20 @@ export abstract class EventSourcedAggregate {
   }
 
   /**
+   * Registers multiple event handlers at once using an event type to handler map.
+   * This is a convenience method to reduce boilerplate when registering multiple handlers.
+   *
+   * @param handlers - Record mapping event types to their handler functions
+   */
+  protected registerEventHandlers<TEvent extends DomainEvent>(
+    handlers: Record<string, EventHandler<TEvent>>
+  ): void {
+    Object.entries(handlers).forEach(([eventType, handler]) => {
+      this.registerEventHandler(eventType, handler);
+    });
+  }
+
+  /**
    * Applies an event by dispatching to the registered handler.
    * Uses Map lookup instead of instanceof chains for better performance and extensibility.
    *

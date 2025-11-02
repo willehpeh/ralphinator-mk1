@@ -35,11 +35,13 @@ export class ClientProjection extends BaseProjectionHandler {
     private readonly clientReadRepository: IClientReadRepository
   ) {
     super();
-    // Register event handlers for all client events
-    this.registerEventHandler(CLIENT_EVENT_TYPES.CREATED, this.onClientCreated.bind(this));
-    this.registerEventHandler(CLIENT_EVENT_TYPES.INFORMATION_UPDATED, this.onClientInformationUpdated.bind(this));
-    this.registerEventHandler(CLIENT_EVENT_TYPES.STATUS_CHANGED, this.onClientStatusChanged.bind(this));
-    this.registerEventHandler(CLIENT_EVENT_TYPES.DELETED, this.onClientDeleted.bind(this));
+    // Register event handlers for all client events using helper method
+    this.registerEventHandlers({
+      [CLIENT_EVENT_TYPES.CREATED]: this.onClientCreated.bind(this),
+      [CLIENT_EVENT_TYPES.INFORMATION_UPDATED]: this.onClientInformationUpdated.bind(this),
+      [CLIENT_EVENT_TYPES.STATUS_CHANGED]: this.onClientStatusChanged.bind(this),
+      [CLIENT_EVENT_TYPES.DELETED]: this.onClientDeleted.bind(this),
+    });
   }
 
   /**
