@@ -103,12 +103,26 @@
 - Documentation: UC6_FILTER_CLIENTS_BY_STATUS.md
 - **Note**: Core functionality complete; unit/integration tests pending for future testing phase
 
-## Use Case 7: Start Development Environment (2025-11-01)
-- Backend server starts successfully on http://localhost:3000/api
-- Frontend application starts successfully on http://localhost:4200
-- Full-stack integration verified with health check endpoint
-- CORS enabled for cross-origin communication
-- Single command `npm run dev` starts both services in parallel
+## Use Case 7: Remove a Client from the System (2025-11-02)
+- Complete event-sourced client deletion implementation with CQRS pattern
+- Backend: ClientDeletedDomainEvent domain event for capturing deletion
+- Backend: ClientAggregate.delete() method for business logic
+- Backend: DeleteClientCommand and DeleteClientHandler for command processing
+- Backend: ClientProjection updated to handle ClientDeletedDomainEvent (removes from read model)
+- Backend API endpoint: DELETE /api/clients/:id accepts client ID and returns { id: string }
+- Frontend: ClientsService.deleteClient() method for API communication
+- Frontend: NGRX actions (deleteClient, deleteClientSuccess, deleteClientFailure)
+- Frontend: NGRX effect for orchestrating API calls and navigation
+- Frontend: NGRX reducer cases for removing client from state array
+- Frontend: ConfirmationDialogComponent for user confirmation with custom styling
+- Frontend: ClientDetailComponent with delete functionality using showDeleteConfirmation signal
+- Frontend: "Delete Client" button in detail view that shows confirmation dialog
+- Frontend: Cancel and confirm buttons in dialog with proper styling (danger red for confirm)
+- Frontend: Automatic navigation to client list after successful deletion
+- Event sourcing: All client deletions captured as immutable events in event store
+- Optimistic concurrency: Version checking prevents concurrent deletion conflicts
+- End-to-end verification: Complete user flow from detail view → delete → confirm → navigate to list
+- Documentation: CURRENT_USE_CASE.md (to be archived)
 
 ## Use Case 8: Search for Clients by Name (2025-11-02)
 - Complete client-side search implementation with NGRX state management
@@ -125,3 +139,10 @@
 - All extensions implemented: empty search results, clear search, combined search+filter
 - End-to-end verification: Complete user flow from typing search → real-time filtering → seeing count → identifying desired client
 - Documentation: search-clients-by-name-tasks.md
+
+## Use Case 9: Start Development Environment (2025-11-01)
+- Backend server starts successfully on http://localhost:3000/api
+- Frontend application starts successfully on http://localhost:4200
+- Full-stack integration verified with health check endpoint
+- CORS enabled for cross-origin communication
+- Single command `npm run dev` starts both services in parallel
