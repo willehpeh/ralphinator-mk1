@@ -69,7 +69,7 @@ import { StatusBadgeComponent } from './status-badge.component';
 
       @if (loading()) {
         <div class="loading-message">
-          Loading clients...
+          {{ uiText.LOADING_CLIENTS }}
         </div>
       }
 
@@ -81,14 +81,14 @@ import { StatusBadgeComponent } from './status-badge.component';
 
       @if (!loading() && !hasClients()) {
         <div class="empty-state">
-          <p>No clients found</p>
+          <p>{{ uiText.NO_CLIENTS_FOUND }}</p>
           <p class="empty-state-hint">
             @if (searchTerm()) {
-              No clients found matching your search "{{ searchTerm() }}". Try a different search term.
+              No clients found matching your search "{{ searchTerm() }}". {{ uiText.NO_SEARCH_RESULTS }}
             } @else if (selectedFilter() === filterAllValue) {
-              Add your first client to get started
+              {{ uiText.ADD_FIRST_CLIENT }}
             } @else {
-              No clients found with status "{{ selectedFilter() }}". Try a different filter.
+              No clients found with status "{{ selectedFilter() }}". {{ uiText.NO_FILTER_RESULTS }}
             }
           </p>
         </div>

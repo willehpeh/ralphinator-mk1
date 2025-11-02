@@ -36,6 +36,15 @@ export const CLIENT_UI_TEXT = {
   CLIENT_CREATED_SUCCESS: 'Client created successfully!',
   CLIENT_UPDATED_SUCCESS: 'Client updated successfully!',
 
+  // Loading and error states
+  LOADING_CLIENTS: 'Loading clients...',
+  LOADING_CLIENT_DETAILS: 'Loading client details...',
+  CLIENT_NOT_FOUND: 'Client not found',
+  NO_CLIENTS_FOUND: 'No clients found',
+  ADD_FIRST_CLIENT: 'Add your first client to get started',
+  NO_SEARCH_RESULTS: 'Try a different search term.',
+  NO_FILTER_RESULTS: 'Try a different filter.',
+
   // Change Status Form
   CHANGE_STATUS_TITLE: 'Change Client Status',
   CHANGE_STATUS_DESCRIPTION: 'Select a new status for this client. The change will be saved immediately.',

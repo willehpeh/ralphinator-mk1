@@ -42,7 +42,7 @@ import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants
 
       @if (loading()) {
         <div class="loading-message">
-          Loading client details...
+          {{ uiText.LOADING_CLIENT_DETAILS }}
         </div>
       }
 
@@ -54,7 +54,7 @@ import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants
 
       @if (!loading() && !client() && !error()) {
         <div class="error-message">
-          Client not found
+          {{ uiText.CLIENT_NOT_FOUND }}
         </div>
       }
 
