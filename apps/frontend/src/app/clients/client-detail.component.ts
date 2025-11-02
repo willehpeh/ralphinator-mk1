@@ -9,7 +9,7 @@ import { ChangeStatusFormComponent } from './change-status-form.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { StatusBadgeComponent } from './status-badge.component';
 import { CLIENT_ROUTES } from './client-routes.constants';
-import { STANDARD_DATE_FORMAT } from './client-display.constants';
+import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
 
 @Component({
   selector: 'app-client-detail',
@@ -20,20 +20,20 @@ import { STANDARD_DATE_FORMAT } from './client-display.constants';
     <div class="client-detail">
       <div class="detail-header">
         <button class="back-button" (click)="navigateBack()">
-          ← Back to List
+          {{ uiText.BACK_TO_LIST }}
         </button>
         <div class="header-title-section">
-          <h2>Client Details</h2>
+          <h2>{{ uiText.CLIENT_DETAILS }}</h2>
           @if (!isEditing() && !isChangingStatus() && client()) {
             <div class="action-buttons">
               <button class="edit-button" (click)="toggleEditMode()">
-                Edit Client
+                {{ uiText.EDIT_CLIENT }}
               </button>
               <button class="change-status-button" (click)="toggleStatusChangeMode()">
-                Change Status
+                {{ uiText.CHANGE_STATUS }}
               </button>
               <button class="delete-button" (click)="deleteClient()">
-                Delete Client
+                {{ uiText.DELETE_CLIENT }}
               </button>
             </div>
           }
@@ -127,10 +127,10 @@ import { STANDARD_DATE_FORMAT } from './client-display.constants';
 
       @if (showDeleteConfirmation()) {
         <app-confirmation-dialog
-          [title]="'Delete Client'"
-          [message]="'Are you sure you want to delete this client? This action cannot be undone.'"
-          [confirmText]="'Delete'"
-          [cancelText]="'Cancel'"
+          [title]="uiText.DELETE_CONFIRMATION_TITLE"
+          [message]="uiText.DELETE_CONFIRMATION_MESSAGE"
+          [confirmText]="uiText.DELETE_CONFIRM_BUTTON"
+          [cancelText]="uiText.DELETE_CANCEL_BUTTON"
           (confirmed)="confirmDelete()"
           (cancelled)="cancelDelete()"
         />
@@ -157,6 +157,9 @@ export class ClientDetailComponent implements OnInit {
 
   // Date format for displaying client dates
   readonly dateFormat = STANDARD_DATE_FORMAT;
+
+  // UI text labels
+  readonly uiText = CLIENT_UI_TEXT;
 
   // Select data from store using signals
   client = this.store.selectSignal(selectClientById(this.clientId() ?? ''));

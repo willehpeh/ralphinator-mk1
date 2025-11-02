@@ -9,6 +9,7 @@ import { updateClient, updateClientSuccess, updateClientFailure } from './store/
 import { selectClientsError } from './store/clients.selectors';
 import { ClientStatus, Client } from './client.types';
 import { CLIENT_STATUSES, DEFAULT_CLIENT_STATUS } from './client.constants';
+import { CLIENT_UI_TEXT } from './client-display.constants';
 
 const SUCCESS_MESSAGE_DISMISS_DURATION_MS = 3000;
 
@@ -28,11 +29,11 @@ interface ClientFormFields {
   styleUrls: ['./clients-common.scss', './client-form.component.scss'],
   template: `
     <div class="client-form">
-      <h2>{{ mode() === 'create' ? 'Add New Client' : 'Edit Client' }}</h2>
+      <h2>{{ mode() === 'create' ? uiText.ADD_CLIENT_TITLE : uiText.EDIT_CLIENT_TITLE }}</h2>
 
       @if (submitSuccess()) {
         <div class="success-message">
-          {{ mode() === 'create' ? 'Client created successfully!' : 'Client updated successfully!' }}
+          {{ mode() === 'create' ? uiText.CLIENT_CREATED_SUCCESS : uiText.CLIENT_UPDATED_SUCCESS }}
         </div>
       }
 
@@ -151,6 +152,9 @@ export class ClientFormComponent implements OnInit, OnDestroy {
 
   // Available status options
   readonly availableStatuses = CLIENT_STATUSES;
+
+  // UI text labels
+  readonly uiText = CLIENT_UI_TEXT;
 
   // Select error from store (for edit mode)
   storeError = this.store.selectSignal(selectClientsError);

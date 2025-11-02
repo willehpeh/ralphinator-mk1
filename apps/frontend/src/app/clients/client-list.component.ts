@@ -12,7 +12,7 @@ import {
 import { ClientStatus } from './client.types';
 import { CLIENT_STATUSES, FILTER_ALL_CLIENTS } from './client.constants';
 import { CLIENT_ROUTES } from './client-routes.constants';
-import { STANDARD_DATE_FORMAT } from './client-display.constants';
+import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
 import { StatusBadgeComponent } from './status-badge.component';
 
 @Component({
@@ -23,11 +23,11 @@ import { StatusBadgeComponent } from './status-badge.component';
   template: `
     <div class="client-list">
       <div class="list-header">
-        <h2>Client List</h2>
+        <h2>{{ uiText.CLIENT_LIST }}</h2>
 
         <div class="header-actions">
           <button class="add-client-btn" (click)="navigateToAddClient()">
-            Add New Client
+            {{ uiText.ADD_NEW_CLIENT }}
           </button>
 
           <div class="search-controls">
@@ -155,6 +155,9 @@ export class ClientListComponent implements OnInit {
 
   // Filter value for "all clients" option
   readonly filterAllValue = FILTER_ALL_CLIENTS;
+
+  // UI text labels
+  readonly uiText = CLIENT_UI_TEXT;
 
   // Select data from store using signals
   clients = this.store.selectSignal(selectAllClients);
