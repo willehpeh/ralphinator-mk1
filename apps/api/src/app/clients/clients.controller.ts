@@ -33,6 +33,28 @@ export class ClientsController {
     private readonly queryBus: QueryBus
   ) {}
 
+  /**
+   * Helper method to fetch a client by ID after a mutation command.
+   * Throws an error if the client is not found.
+   *
+   * @param clientId - The ID of the client to fetch
+   * @param operation - Description of the operation for error message (e.g., 'update', 'status change')
+   * @returns The client read model
+   */
+  private async fetchClientAfterMutation(
+    clientId: string,
+    operation: string
+  ): Promise<ClientReadModel> {
+    const query = new GetClientByIdQuery(clientId);
+    const client = await this.queryBus.execute<GetClientByIdQuery, ClientReadModel | null>(query);
+
+    if (!client) {
+      throw new Error(`Client ${clientId} not found after ${operation}`);
+    }
+
+    return client;
+  }
+
   @Post()
   async createClient(@Body() dto: CreateClientDto): Promise<{ id: string }> {
     const id = randomUUID();
@@ -94,14 +116,7 @@ export class ClientsController {
     );
 
     // Return the updated client to avoid unnecessary refetch
-    const query = new GetClientByIdQuery(clientId);
-    const client = await this.queryBus.execute<GetClientByIdQuery, ClientReadModel | null>(query);
-
-    if (!client) {
-      throw new Error(`Client ${clientId} not found after update`);
-    }
-
-    return client;
+    return this.fetchClientAfterMutation(clientId, 'update');
   }
 
   @Patch(':id/status')
@@ -116,13 +131,6 @@ export class ClientsController {
     );
 
     // Return the updated client to avoid unnecessary refetch
-    const query = new GetClientByIdQuery(clientId);
-    const client = await this.queryBus.execute<GetClientByIdQuery, ClientReadModel | null>(query);
-
-    if (!client) {
-      throw new Error(`Client ${clientId} not found after status change`);
-    }
-
-    return client;
+    return this.fetchClientAfterMutation(clientId, 'status change');
   }
 }
