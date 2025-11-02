@@ -17,8 +17,16 @@ export class GetClientByIdQueryHandler
    *
    * @param query - The get client by ID query
    * @returns The client read model or null if not found
+   * @throws Error if the read repository operation fails
    */
   async execute(query: GetClientByIdQuery): Promise<ClientReadModel | null> {
-    return this.readRepository.findById(query.id);
+    try {
+      return await this.readRepository.findById(query.id);
+    } catch (error) {
+      const message = `Failed to retrieve client with ID ${query.id} from read model`;
+      throw new Error(
+        `${message}: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
   }
 }

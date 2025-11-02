@@ -17,9 +17,17 @@ export class GetAllClientsQueryHandler
    *
    * @param _query - The get all clients query (unused)
    * @returns Array of all client read models
+   * @throws Error if the read repository operation fails
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async execute(_query: GetAllClientsQuery): Promise<ClientReadModel[]> {
-    return this.readRepository.findAll();
+    try {
+      return await this.readRepository.findAll();
+    } catch (error) {
+      const message = 'Failed to retrieve all clients from read model';
+      throw new Error(
+        `${message}: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
   }
 }
