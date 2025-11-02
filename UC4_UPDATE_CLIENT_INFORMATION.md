@@ -47,3 +47,21 @@ This document tracks the implementation of Use Case 4: Update Client Information
 - Follows the event sourcing pattern where business logic is executed and events are applied
 
 **Verification**: Linting passed successfully
+
+---
+
+### Task 3: Create UpdateClientCommand ✅
+**Completed**: 2025-11-02
+**Files**:
+- `packages/application/src/lib/commands/update-client.command.ts`
+- `packages/application/src/lib/application.ts`
+
+**Description**: Created the `UpdateClientCommand` command class that represents the intent to update client information. This command:
+- Contains all fields needed to update a client (id, companyName, email, phone, address, status, notes)
+- Uses readonly properties following CQRS pattern (commands are immutable data)
+- Includes the client id to identify which client to update
+- Uses `ClientStatus` type from domain layer for type safety
+- Exported from the application package for use in the API layer
+- Follows naming convention: `{Verb}{Noun}Command`
+
+**Verification**: Linting passed successfully

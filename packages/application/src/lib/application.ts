@@ -1,5 +1,6 @@
 // Commands
 export * from './commands/create-client.command';
+export * from './commands/update-client.command';
 
 // Command Handlers
 export * from './commands/handlers/create-client.handler';
