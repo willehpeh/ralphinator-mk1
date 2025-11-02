@@ -134,3 +134,15 @@ Created NGRX effect to handle status change side effects:
 - Catches errors and dispatches `changeClientStatusFailure` action
 - Follows NGRX effects pattern with switchMap operator
 - Includes descriptive error message on failure
+
+### ✅ Task 10: Add changeClientStatus action handlers to NGRX reducer
+**Completed**: 2025-11-02
+
+Added reducer handlers for status change actions:
+- File: `apps/frontend/src/app/clients/store/clients.reducer.ts`
+- Imported `changeClientStatus`, `changeClientStatusSuccess`, `changeClientStatusFailure` actions
+- Added handler for `changeClientStatus`: sets loading to true, clears error
+- Added handler for `changeClientStatusSuccess`: sets loading to false, clears error
+- Added handler for `changeClientStatusFailure`: sets loading to false, stores error message
+- Follows same pattern as other action handlers in reducer
+- Includes note that UI should refresh client list after successful status change

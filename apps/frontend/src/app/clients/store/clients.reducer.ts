@@ -6,7 +6,10 @@ import {
   loadClientsFailure,
   updateClient,
   updateClientSuccess,
-  updateClientFailure
+  updateClientFailure,
+  changeClientStatus,
+  changeClientStatusSuccess,
+  changeClientStatusFailure
 } from './clients.actions';
 
 /**
@@ -74,6 +77,30 @@ export const clientsReducer = createReducer(
 
   // When updating client fails
   on(updateClientFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+
+  // When changing client status is triggered
+  on(changeClientStatus, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  // When client status is successfully changed
+  // Note: The current implementation only receives the id in the success action.
+  // The UI should dispatch loadClients after a successful status change to refresh the list,
+  // or this could be enhanced in a future task to return the full updated client.
+  on(changeClientStatusSuccess, (state) => ({
+    ...state,
+    loading: false,
+    error: null,
+  })),
+
+  // When changing client status fails
+  on(changeClientStatusFailure, (state, { error }) => ({
     ...state,
     loading: false,
     error,
