@@ -28,6 +28,9 @@ import { ChangeStatusFormComponent } from './change-status-form.component';
               <button class="change-status-button" (click)="toggleStatusChangeMode()">
                 Change Status
               </button>
+              <button class="delete-button" (click)="deleteClient()">
+                Delete Client
+              </button>
             </div>
           }
         </div>
@@ -200,6 +203,22 @@ import { ChangeStatusFormComponent } from './change-status-form.component';
       background-color: #5a6268;
     }
 
+    .delete-button {
+      padding: 0.6rem 1.5rem;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .delete-button:hover {
+      background-color: #c82333;
+    }
+
     .detail-card {
       background: white;
       border: 1px solid #ddd;
@@ -324,5 +343,11 @@ export class ClientDetailComponent implements OnInit {
   handleStatusChangeSuccess(): void {
     // Exit status change mode (store is automatically updated with the returned client data)
     this.isChangingStatus.set(false);
+  }
+
+  deleteClient(): void {
+    // TODO: Show confirmation dialog before deleting
+    // Will be implemented in next task
+    console.log('Delete button clicked for client:', this.clientId());
   }
 }

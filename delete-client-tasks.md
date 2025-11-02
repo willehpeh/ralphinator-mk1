@@ -114,7 +114,14 @@
   - Added on(deleteClientFailure) handler to set error state
   - Follows existing NGRX reducer pattern
   - No new linting errors introduced (pre-existing architectural decisions maintained)
-- [ ] Add "Delete Client" button to client detail view
+- [x] **Add "Delete Client" button to client detail view** ✅
+  - Added "Delete Client" button to action buttons section in `apps/frontend/src/app/clients/client-detail.component.ts`
+  - Added delete-button CSS styling with red color (#dc3545) to indicate destructive action
+  - Added deleteClient() method with placeholder implementation (logs to console)
+  - Button appears alongside "Edit Client" and "Change Status" buttons
+  - Button is only visible when not in edit or status change mode
+  - No new linting errors introduced (pre-existing architectural decisions maintained)
+  - Ready for next task: confirmation dialog implementation
 - [ ] Add confirmation dialog component
 - [ ] Handle delete success (navigate to list)
 - [ ] Handle delete errors (show error message)
