@@ -313,6 +313,9 @@ export class ClientListComponent implements OnInit {
   // Track selected filter
   selectedFilter = signal<'all' | ClientStatus>('all');
 
+  // Track search term
+  searchTerm = signal<string>('');
+
   ngOnInit(): void {
     // Dispatch action to load clients when component initializes
     this.store.dispatch(loadClients());

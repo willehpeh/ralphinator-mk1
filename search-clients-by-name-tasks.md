@@ -5,10 +5,6 @@ Implement client name search functionality that filters the client list in real-
 
 ## Tasks
 
-### Task 2: Add signal for search term ⏳ IN PROGRESS
-- Create a signal to track the search term
-- Status: In Progress
-
 ### Task 3: NOT STARTED - Add search input event handler
 - Implement method to handle search input changes
 - Update the search term signal
@@ -48,4 +44,9 @@ Implement client name search functionality that filters the client list in real-
 - Added search input field to the header-actions section
 - Added placeholder text "Search by company name..."
 - Added appropriate styling for the search input matching the filter controls
+- Commit: f3f8a97
+
+### ✅ Task 2: Add signal for search term - COMPLETED
+- Created searchTerm signal to track the search term
+- Initialized with empty string
 - Commit: (pending)
