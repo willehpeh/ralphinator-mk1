@@ -11,6 +11,7 @@ export * from './commands/handlers/change-client-status.handler';
 // Queries
 export * from './queries/get-client-by-id.query';
 export * from './queries/get-all-clients.query';
+export * from './queries/get-clients-by-status.query';
 
 // Query Handlers
 export * from './queries/handlers/get-client-by-id.handler';
