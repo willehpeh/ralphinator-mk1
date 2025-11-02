@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { GetClientByIdQuery, GetClientByIdQueryHandler } from '@angular-nest-starter/application';
 import { createQueryHandlerTestSetup } from '../lib/mock-factories';
+import { ClientReadModelBuilder } from '../lib/builders/client-read-model.builder';
 
 describe('GetClientByIdQueryHandler', () => {
   const { handler, mockReadRepository } = createQueryHandlerTestSetup(GetClientByIdQueryHandler);
@@ -13,16 +14,16 @@ describe('GetClientByIdQueryHandler', () => {
   it('should retrieve client by id from read repository', async () => {
     // Arrange
     const clientId = 'client-123';
-    const expectedClient = {
-      id: clientId,
-      companyName: 'Acme Corp',
-      email: 'contact@acme.com',
-      phone: '555-1234',
-      address: '123 Main St',
-      status: 'Active' as const,
-      notes: 'Test client',
-      createdAt: new Date('2025-11-01'),
-    };
+    const expectedClient = new ClientReadModelBuilder()
+      .withId(clientId)
+      .withCompanyName('Acme Corp')
+      .withEmail('contact@acme.com')
+      .withPhone('555-1234')
+      .withAddress('123 Main St')
+      .withStatus('Active')
+      .withNotes('Test client')
+      .withCreatedAt(new Date('2025-11-01'))
+      .build();
 
     mockReadRepository.findById.mockResolvedValue(expectedClient);
 
@@ -58,16 +59,12 @@ describe('GetClientByIdQueryHandler', () => {
     for (const status of statuses) {
       // Arrange
       const clientId = `client-${status}`;
-      const client = {
-        id: clientId,
-        companyName: 'Test Corp',
-        email: 'test@example.com',
-        phone: null,
-        address: null,
-        status,
-        notes: null,
-        createdAt: new Date(),
-      };
+      const client = new ClientReadModelBuilder()
+        .withId(clientId)
+        .withCompanyName('Test Corp')
+        .withEmail('test@example.com')
+        .withStatus(status)
+        .build();
 
       mockReadRepository.findById.mockResolvedValue(client);
 

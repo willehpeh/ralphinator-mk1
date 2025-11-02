@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { GetAllClientsQuery, GetAllClientsQueryHandler } from '@angular-nest-starter/application';
 import { createQueryHandlerTestSetup } from '../lib/mock-factories';
+import { ClientReadModelBuilder } from '../lib/builders/client-read-model.builder';
 
 describe('GetAllClientsQueryHandler', () => {
   const { handler, mockReadRepository } = createQueryHandlerTestSetup(GetAllClientsQueryHandler);
@@ -13,26 +14,26 @@ describe('GetAllClientsQueryHandler', () => {
   it('should retrieve all clients from read repository', async () => {
     // Arrange
     const expectedClients = [
-      {
-        id: 'client-1',
-        companyName: 'Acme Corp',
-        email: 'contact@acme.com',
-        phone: '555-1234',
-        address: '123 Main St',
-        status: 'Active' as const,
-        notes: 'Test client 1',
-        createdAt: new Date('2025-11-01'),
-      },
-      {
-        id: 'client-2',
-        companyName: 'TechCo',
-        email: 'info@techco.com',
-        phone: '555-5678',
-        address: '456 Oak Ave',
-        status: 'Prospect' as const,
-        notes: null,
-        createdAt: new Date('2025-11-02'),
-      },
+      new ClientReadModelBuilder()
+        .withId('client-1')
+        .withCompanyName('Acme Corp')
+        .withEmail('contact@acme.com')
+        .withPhone('555-1234')
+        .withAddress('123 Main St')
+        .withStatus('Active')
+        .withNotes('Test client 1')
+        .withCreatedAt(new Date('2025-11-01'))
+        .build(),
+      new ClientReadModelBuilder()
+        .withId('client-2')
+        .withCompanyName('TechCo')
+        .withEmail('info@techco.com')
+        .withPhone('555-5678')
+        .withAddress('456 Oak Ave')
+        .withStatus('Prospect')
+        .withNotes(null)
+        .withCreatedAt(new Date('2025-11-02'))
+        .build(),
     ];
 
     mockReadRepository.findAll.mockResolvedValue(expectedClients);
@@ -64,46 +65,30 @@ describe('GetAllClientsQueryHandler', () => {
   it('should handle multiple clients with different statuses', async () => {
     // Arrange
     const clients = [
-      {
-        id: 'client-active',
-        companyName: 'Active Corp',
-        email: 'active@example.com',
-        phone: null,
-        address: null,
-        status: 'Active' as const,
-        notes: null,
-        createdAt: new Date(),
-      },
-      {
-        id: 'client-inactive',
-        companyName: 'Inactive Corp',
-        email: 'inactive@example.com',
-        phone: null,
-        address: null,
-        status: 'Inactive' as const,
-        notes: null,
-        createdAt: new Date(),
-      },
-      {
-        id: 'client-prospect',
-        companyName: 'Prospect Corp',
-        email: 'prospect@example.com',
-        phone: null,
-        address: null,
-        status: 'Prospect' as const,
-        notes: null,
-        createdAt: new Date(),
-      },
-      {
-        id: 'client-past',
-        companyName: 'Past Client Corp',
-        email: 'past@example.com',
-        phone: null,
-        address: null,
-        status: 'Past Client' as const,
-        notes: null,
-        createdAt: new Date(),
-      },
+      new ClientReadModelBuilder()
+        .withId('client-active')
+        .withCompanyName('Active Corp')
+        .withEmail('active@example.com')
+        .withStatus('Active')
+        .build(),
+      new ClientReadModelBuilder()
+        .withId('client-inactive')
+        .withCompanyName('Inactive Corp')
+        .withEmail('inactive@example.com')
+        .withStatus('Inactive')
+        .build(),
+      new ClientReadModelBuilder()
+        .withId('client-prospect')
+        .withCompanyName('Prospect Corp')
+        .withEmail('prospect@example.com')
+        .withStatus('Prospect')
+        .build(),
+      new ClientReadModelBuilder()
+        .withId('client-past')
+        .withCompanyName('Past Client Corp')
+        .withEmail('past@example.com')
+        .withStatus('Past Client')
+        .build(),
     ];
 
     mockReadRepository.findAll.mockResolvedValue(clients);
