@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { changeClientStatus } from './store/clients.actions';
-import { selectClientById } from './store/clients.selectors';
+import { selectClientById, selectClientsError } from './store/clients.selectors';
 import { ClientStatus } from '@angular-nest-starter/domain';
 import { CLIENT_STATUSES } from './client.constants';
 
@@ -24,6 +24,12 @@ interface StatusForm {
       <p class="form-description">
         Select a new status for this client. The change will be saved immediately.
       </p>
+
+      @if (storeError(); as errorMessage) {
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+      }
 
       @if (client(); as clientData) {
         <div class="current-status">
@@ -109,6 +115,9 @@ export class ChangeStatusFormComponent {
 
   // Available status options
   readonly availableStatuses = CLIENT_STATUSES;
+
+  // Select error from store
+  storeError = this.store.selectSignal(selectClientsError);
 
   // Get client from store
   client = computed(() => {
