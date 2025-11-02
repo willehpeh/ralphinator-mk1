@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Client } from './store/clients.actions';
 
 export interface CreateClientDto {
   companyName: string;
@@ -24,5 +25,9 @@ export class ClientsService {
 
   createClient(dto: CreateClientDto): Observable<CreateClientResponse> {
     return this.http.post<CreateClientResponse>(this.apiUrl, dto);
+  }
+
+  getAllClients(): Observable<Client[]> {
+    return this.http.get<Client[]>(this.apiUrl);
   }
 }

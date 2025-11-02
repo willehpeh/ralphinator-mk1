@@ -11,7 +11,7 @@
 - [x] Frontend: Add NGRX actions for loading clients
 - [x] Frontend: Add NGRX reducer for clients state
 - [x] Frontend: Add NGRX selectors for client list
-- [ ] Frontend: Add NGRX effects for loading clients
+- [x] Frontend: Add NGRX effects for loading clients
 - [ ] Frontend: Create `ClientListComponent`
 - [ ] Frontend: Add route for client list
 - [ ] Frontend: Test component with NGRX integration
@@ -30,6 +30,7 @@
 - **2025-11-02**: Created NGRX actions file `apps/frontend/src/app/clients/store/clients.actions.ts` with three actions: `loadClients` (trigger), `loadClientsSuccess` (with clients array), and `loadClientsFailure` (with error message). Defined Client interface matching backend ClientReadModel.
 - **2025-11-02**: Created NGRX reducer `apps/frontend/src/app/clients/store/clients.reducer.ts` with `ClientsState` interface (clients array, loading boolean, error string). Reducer handles `loadClients` (sets loading=true), `loadClientsSuccess` (stores clients, sets loading=false), and `loadClientsFailure` (stores error, sets loading=false).
 - **2025-11-02**: Created NGRX selectors in `apps/frontend/src/app/clients/store/clients.selectors.ts`. Includes: `selectClientsState` (feature selector), `selectAllClients` (all clients), `selectClientsLoading` (loading status), `selectClientsError` (error message), `selectHasClients` (boolean for empty state), `selectClientsCount` (total count), `selectActiveClients` (filtered active), `selectInactiveClients` (filtered inactive).
+- **2025-11-02**: Created NGRX effects file `apps/frontend/src/app/clients/store/clients.effects.ts` with `ClientsEffects` class. Effect `loadClients$` listens for `loadClients` action, calls `ClientsService.getAllClients()`, and dispatches `loadClientsSuccess` or `loadClientsFailure`. Added `getAllClients()` method to ClientsService that calls `GET /api/clients`.
 
 ## Completion Checklist
 - [ ] Backend query handler returns all clients from read model
