@@ -23,10 +23,10 @@ This document tracks the implementation of Use Case 4: Update Client Information
 - Projection: ClientProjection handles ClientInformationUpdatedDomainEvent
 - Read model updates working via event-driven projections
 
-**Frontend (⏳ Pending)**:
-- Edit form component (not started)
+**Frontend (⏳ In Progress)**:
+- ClientsService.updateClient() method (✅ complete)
 - NGRX update action (not started)
-- ClientsService.updateClient() method (not started)
+- Edit form component (not started)
 - UI integration with client detail view (not started)
 
 ---
@@ -159,3 +159,25 @@ This document tracks the implementation of Use Case 4: Update Client Information
 - Completes the projection layer for UC4
 
 **Verification**: Linting passed successfully
+
+---
+
+### Task 8: Add updateClient method to ClientsService ✅
+**Completed**: 2025-11-02
+**Files**:
+- `apps/frontend/src/app/clients/clients.service.ts`
+
+**Description**: Added the `updateClient()` method to the `ClientsService` for making HTTP PUT requests to update existing clients. This implementation:
+- Created `UpdateClientDto` interface with all client fields (companyName, email, phone, address, status, notes)
+- Created `UpdateClientResponse` interface with the expected response shape (id)
+- Implemented `updateClient(id: string, dto: UpdateClientDto)` method that:
+  - Accepts client ID as first parameter
+  - Accepts UpdateClientDto as second parameter
+  - Returns Observable<UpdateClientResponse>
+  - Makes HTTP PUT request to `/api/clients/{id}` with the DTO payload
+- Follows the same pattern as `createClient()` for consistency
+- Uses modern Angular patterns (inject() function, typed interfaces)
+- Enables the Angular app to communicate with the backend API for client updates
+
+**Verification**: Linting passed successfully (eslint apps/frontend/src/app/clients/clients.service.ts)
+

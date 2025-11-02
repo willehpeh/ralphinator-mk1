@@ -16,6 +16,19 @@ export interface CreateClientResponse {
   id: string;
 }
 
+export interface UpdateClientDto {
+  companyName: string;
+  email: string;
+  phone?: string;
+  address?: string;
+  status: 'Active' | 'Inactive' | 'Prospect' | 'Past Client';
+  notes?: string;
+}
+
+export interface UpdateClientResponse {
+  id: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,6 +38,10 @@ export class ClientsService {
 
   createClient(dto: CreateClientDto): Observable<CreateClientResponse> {
     return this.http.post<CreateClientResponse>(this.apiUrl, dto);
+  }
+
+  updateClient(id: string, dto: UpdateClientDto): Observable<UpdateClientResponse> {
+    return this.http.put<UpdateClientResponse>(`${this.apiUrl}/${id}`, dto);
   }
 
   getAllClients(): Observable<Client[]> {
