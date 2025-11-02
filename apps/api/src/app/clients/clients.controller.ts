@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel, ClientDataPayload } from '@angular-nest-starter/application';
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus, CLIENT_STATUS_VALUES } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
 import { IsString, IsEmail, IsOptional, IsIn, IsNotEmpty } from 'class-validator';
 
@@ -21,7 +21,7 @@ export class ClientDataDto {
   @IsOptional()
   address!: string | null;
 
-  @IsIn(['Active', 'Inactive', 'Prospect', 'Past Client'])
+  @IsIn(CLIENT_STATUS_VALUES)
   status!: ClientStatus;
 
   @IsString()
