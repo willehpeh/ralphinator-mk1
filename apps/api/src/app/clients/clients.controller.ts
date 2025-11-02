@@ -4,7 +4,7 @@ import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, De
 import { ClientStatus } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
 
-export class CreateClientDto {
+export class ClientDataDto {
   companyName!: string;
   email!: string;
   phone!: string | null;
@@ -13,14 +13,9 @@ export class CreateClientDto {
   notes!: string | null;
 }
 
-export class UpdateClientDto {
-  companyName!: string;
-  email!: string;
-  phone!: string | null;
-  address!: string | null;
-  status!: ClientStatus;
-  notes!: string | null;
-}
+export class CreateClientDto extends ClientDataDto {}
+
+export class UpdateClientDto extends ClientDataDto {}
 
 export class ChangeClientStatusDto {
   status!: ClientStatus;
