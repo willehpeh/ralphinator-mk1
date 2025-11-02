@@ -47,6 +47,20 @@
 - All 4 tests passing
 - Verified with vitest
 
+### 7. Add delete() method to IClientReadRepository
+- Added delete(id: string) method to IClientReadRepository interface in `packages/application/src/lib/ports/client-read-repository.interface.ts`
+- Implemented delete() in InMemoryClientReadRepository using Map.delete()
+- Verified with linting (both application and infrastructure packages)
+- Prerequisite for ClientDeletedProjection handler
+
+### 8. Add ClientDeletedDomainEvent handler to ClientProjection
+- Added ClientDeletedDomainEvent import to `packages/infrastructure/src/lib/projections/client.projection.ts`
+- Updated @EventsHandler decorator to include ClientDeletedDomainEvent
+- Updated IEventHandler type to include ClientDeletedDomainEvent
+- Added else-if branch to handle ClientDeletedDomainEvent
+- Calls clientReadRepository.delete() to remove client from read model
+- Verified with linting
+
 ## Next Tasks (Not Started)
 
 ### Domain Layer
@@ -56,8 +70,7 @@
 - ✅ All application layer tasks complete
 
 ### Infrastructure Layer
-- [ ] Create ClientDeletedProjection to update read model
-- [ ] Add projection handler registration
+- ✅ All infrastructure layer tasks complete
 
 ### API Layer
 - [ ] Add DELETE /clients/:id endpoint in controller
