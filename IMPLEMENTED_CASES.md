@@ -29,6 +29,7 @@
 - Complete client detail view implementation with routing and state management
 - Backend: GetClientByIdQuery and handler retrieve single client by ID from read repository
 - Backend API endpoint: GET /api/clients/:id returns ClientReadModel or null
+- Frontend: ClientsService.getClientById() method for direct API calls to retrieve single client
 - Frontend: NGRX selector selectClientById(id) for retrieving client from store by ID
 - Frontend: Route configuration for /clients/:id with proper route parameter handling
 - Frontend: ClientDetailComponent with modern Angular patterns (standalone, signals, OnPush)
@@ -38,7 +39,7 @@
 - Frontend: Back to list navigation preserves NGRX state
 - Route: /clients/:id positioned correctly after /clients/add to avoid path conflicts
 - End-to-end verification: Complete user flow from list → detail → back to list working correctly
-- Documentation: UC3_View_Client_Details.md
+- Documentation: UC3_View_Client_Details.md, view-client-details-tasks.md
 - **Note**: Core functionality complete; unit/integration tests pending for future testing phase
 
 ## Use Case 4: Update Client Information (2025-11-02)
