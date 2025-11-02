@@ -1,5 +1,5 @@
 import { DomainEvent } from '../base/domain-event';
-import { ClientStatus } from '../types/client-status.type';
+import { ClientData } from '../value-objects/client-data.value-object';
 
 /**
  * Domain event representing the update of client information.
@@ -8,12 +8,7 @@ import { ClientStatus } from '../types/client-status.type';
 export class ClientInformationUpdatedDomainEvent extends DomainEvent {
   constructor(
     aggregateId: string,
-    public readonly companyName: string,
-    public readonly email: string,
-    public readonly phone: string | null,
-    public readonly address: string | null,
-    public readonly status: ClientStatus,
-    public readonly notes: string | null,
+    public readonly clientData: ClientData,
     eventVersion = 1
   ) {
     super(aggregateId, eventVersion);

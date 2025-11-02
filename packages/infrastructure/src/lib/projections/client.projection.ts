@@ -52,12 +52,12 @@ export class ClientProjection extends BaseProjectionHandler {
     // Transform ClientCreatedDomainEvent into read model
     const readModel: ClientReadModel = {
       id: event.aggregateId,
-      companyName: event.companyName,
-      email: event.email,
-      phone: event.phone,
-      address: event.address,
-      status: event.status,
-      notes: event.notes,
+      companyName: event.clientData.companyName,
+      email: event.clientData.email,
+      phone: event.clientData.phone,
+      address: event.clientData.address,
+      status: event.clientData.status,
+      notes: event.clientData.notes,
       createdAt: event.occurredOn,
     };
 
@@ -76,12 +76,12 @@ export class ClientProjection extends BaseProjectionHandler {
     // Transform ClientInformationUpdatedDomainEvent into read model
     const readModel: ClientReadModel = {
       id: event.aggregateId,
-      companyName: event.companyName,
-      email: event.email,
-      phone: event.phone,
-      address: event.address,
-      status: event.status,
-      notes: event.notes,
+      companyName: event.clientData.companyName,
+      email: event.clientData.email,
+      phone: event.clientData.phone,
+      address: event.clientData.address,
+      status: event.clientData.status,
+      notes: event.clientData.notes,
       createdAt: existingReadModel?.createdAt ?? event.occurredOn, // Preserve original createdAt
     };
 

@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UpdateClientCommand } from '../update-client.command';
-import { ClientAggregate } from '@angular-nest-starter/domain';
+import { ClientAggregate, ClientData } from '@angular-nest-starter/domain';
 import { BaseCommandHandler } from '../base';
 
 /**
@@ -20,8 +20,8 @@ export class UpdateClientHandler
    */
   async execute(command: UpdateClientCommand): Promise<string> {
     return this.executeOnAggregate(command.id, ClientAggregate, (client) => {
-      // Update client information using domain logic
-      client.updateInformation(
+      // Create ClientData value object
+      const clientData = new ClientData(
         command.data.companyName,
         command.data.email,
         command.data.phone,
@@ -29,6 +29,9 @@ export class UpdateClientHandler
         command.data.status,
         command.data.notes
       );
+
+      // Update client information using domain logic
+      client.updateInformation(clientData);
     });
   }
 }

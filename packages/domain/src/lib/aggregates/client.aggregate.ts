@@ -6,6 +6,7 @@ import { ClientCreatedDomainEvent } from '../events/client-created.domain-event'
 import { ClientInformationUpdatedDomainEvent } from '../events/client-information-updated.domain-event';
 import { ClientStatusChangedDomainEvent } from '../events/client-status-changed.domain-event';
 import { ClientDeletedDomainEvent } from '../events/client-deleted.domain-event';
+import { ClientData } from '../value-objects/client-data.value-object';
 
 export class ClientAggregate extends EventSourcedAggregate {
   private id?: string;
@@ -31,34 +32,16 @@ export class ClientAggregate extends EventSourcedAggregate {
    * Factory method to create a new Client aggregate
    *
    * @param id - Unique identifier for the client
-   * @param companyName - Name of the client company
-   * @param email - Client contact email
-   * @param phone - Client contact phone number
-   * @param address - Client physical address
-   * @param status - Client relationship status
-   * @param notes - Additional notes about the client
+   * @param clientData - Value object containing all client information
    * @returns A new ClientAggregate instance with ClientCreatedDomainEvent applied
    */
   static create(
     id: string,
-    companyName: string,
-    email: string,
-    phone: string | null,
-    address: string | null,
-    status: ClientStatus,
-    notes: string | null
+    clientData: ClientData
   ): ClientAggregate {
     const client = new ClientAggregate();
     client.applyEvent(
-      new ClientCreatedDomainEvent(
-        id,
-        companyName,
-        email,
-        phone,
-        address,
-        status,
-        notes
-      )
+      new ClientCreatedDomainEvent(id, clientData)
     );
     return client;
   }
@@ -80,33 +63,13 @@ export class ClientAggregate extends EventSourcedAggregate {
   /**
    * Update client information
    *
-   * @param companyName - Updated company name
-   * @param email - Updated email
-   * @param phone - Updated phone number
-   * @param address - Updated address
-   * @param status - Updated status
-   * @param notes - Updated notes
+   * @param clientData - Value object containing updated client information
    */
-  updateInformation(
-    companyName: string,
-    email: string,
-    phone: string | null,
-    address: string | null,
-    status: ClientStatus,
-    notes: string | null
-  ): void {
+  updateInformation(clientData: ClientData): void {
     const id = this.ensureInitialized();
 
     this.applyEvent(
-      new ClientInformationUpdatedDomainEvent(
-        id,
-        companyName,
-        email,
-        phone,
-        address,
-        status,
-        notes
-      )
+      new ClientInformationUpdatedDomainEvent(id, clientData)
     );
   }
 
@@ -153,12 +116,12 @@ export class ClientAggregate extends EventSourcedAggregate {
    */
   private onClientCreated(event: ClientCreatedDomainEvent): void {
     this.id = event.aggregateId;
-    this.companyName = event.companyName;
-    this.email = event.email;
-    this.phone = event.phone;
-    this.address = event.address;
-    this.status = event.status;
-    this.notes = event.notes;
+    this.companyName = event.clientData.companyName;
+    this.email = event.clientData.email;
+    this.phone = event.clientData.phone;
+    this.address = event.clientData.address;
+    this.status = event.clientData.status;
+    this.notes = event.clientData.notes;
   }
 
   /**
@@ -166,12 +129,12 @@ export class ClientAggregate extends EventSourcedAggregate {
    * Updates the aggregate state when client information changes
    */
   private onClientInformationUpdated(event: ClientInformationUpdatedDomainEvent): void {
-    this.companyName = event.companyName;
-    this.email = event.email;
-    this.phone = event.phone;
-    this.address = event.address;
-    this.status = event.status;
-    this.notes = event.notes;
+    this.companyName = event.clientData.companyName;
+    this.email = event.clientData.email;
+    this.phone = event.clientData.phone;
+    this.address = event.clientData.address;
+    this.status = event.clientData.status;
+    this.notes = event.clientData.notes;
   }
 
   /**

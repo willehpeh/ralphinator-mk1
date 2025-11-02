@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateClientCommand } from '../create-client.command';
-import { ClientAggregate } from '@angular-nest-starter/domain';
+import { ClientAggregate, ClientData } from '@angular-nest-starter/domain';
 import { BaseCommandHandler } from '../base';
 
 /**
@@ -19,9 +19,8 @@ export class CreateClientHandler
    * @returns The ID of the newly created client
    */
   async execute(command: CreateClientCommand): Promise<string> {
-    // Create new client aggregate using domain logic
-    const client = ClientAggregate.create(
-      command.id,
+    // Create ClientData value object
+    const clientData = new ClientData(
       command.data.companyName,
       command.data.email,
       command.data.phone,
@@ -29,6 +28,9 @@ export class CreateClientHandler
       command.data.status,
       command.data.notes
     );
+
+    // Create new client aggregate using domain logic
+    const client = ClientAggregate.create(command.id, clientData);
 
     // Persist aggregate (saves events and publishes to event bus)
     await this.saveAggregate(client);
