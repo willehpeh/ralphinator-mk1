@@ -15,7 +15,7 @@
 - [x] Frontend: Create `ClientListComponent`
 - [x] Frontend: Add route for client list
 - [x] Frontend: Test component with NGRX integration
-- [ ] End-to-End: Verify complete flow works
+- [x] End-to-End: Verify complete flow works
 
 ## Technical Decisions
 
@@ -34,12 +34,14 @@
 - **2025-11-02**: Created `ClientListComponent` in `apps/frontend/src/app/clients/client-list.component.ts`. Component uses modern Angular patterns: standalone component, `OnPush` change detection, `inject()` for DI, and `store.selectSignal()` for NGRX state. Dispatches `loadClients` action on `ngOnInit()`. Template displays loading state, error message, empty state (when no clients), and grid of client cards showing all client details. Status badges color-coded by status (ACTIVE/INACTIVE/PENDING).
 - **2025-11-02**: Added route for client list in `apps/frontend/src/app/app.routes.ts`. Created `/clients` route pointing to `ClientListComponent`. Updated default redirect to point to `/clients` instead of `/clients/add`, making the client list the default view. Kept `/clients/add` route for adding new clients.
 - **2025-11-02**: Created comprehensive tests for `ClientListComponent` in `apps/frontend/src/app/clients/client-list.component.spec.ts`. Tests cover: loading state display, error state handling, empty state message, client list display with all fields, optional field visibility, component initialization with action dispatch, and status badge CSS class application for all statuses (ACTIVE, INACTIVE, PENDING). All 10 tests passing using Angular TestBed and MockStore from @ngrx/store/testing.
+- **2025-11-02**: Fixed TypeScript compilation error in `clients.selectors.ts` - changed lowercase status values ('active', 'inactive') to uppercase ('ACTIVE', 'INACTIVE') to match ClientStatus type definition.
+- **2025-11-02**: Completed end-to-end verification of UC2 (View All Clients). Verified: (1) Backend builds and runs successfully, (2) Frontend builds and runs successfully with all tests passing, (3) GET /api/clients endpoint returns client data correctly, (4) Complete data flow: Frontend component → NGRX action → Effect → Service → HTTP → Backend query handler → Read repository → Response flows back through all layers → Template displays data. Both servers running (backend on :3000, frontend on :4200). Feature is fully functional.
 
 ## Completion Checklist
-- [ ] Backend query handler returns all clients from read model
-- [ ] API endpoint accessible and returns correct data
-- [ ] Frontend displays list of clients
-- [ ] Loading state handled appropriately
-- [ ] Empty state handled (no clients message)
-- [ ] All tests passing
-- [ ] End-to-end flow verified
+- [x] Backend query handler returns all clients from read model
+- [x] API endpoint accessible and returns correct data
+- [x] Frontend displays list of clients
+- [x] Loading state handled appropriately
+- [x] Empty state handled (no clients message)
+- [x] All tests passing
+- [x] End-to-end flow verified

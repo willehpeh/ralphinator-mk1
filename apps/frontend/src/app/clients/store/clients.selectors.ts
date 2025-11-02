@@ -51,7 +51,7 @@ export const selectClientsCount = createSelector(
  */
 export const selectActiveClients = createSelector(
   selectAllClients,
-  (clients) => clients.filter(client => client.status === 'active')
+  (clients) => clients.filter(client => client.status === 'ACTIVE')
 );
 
 /**
@@ -59,5 +59,5 @@ export const selectActiveClients = createSelector(
  */
 export const selectInactiveClients = createSelector(
   selectAllClients,
-  (clients) => clients.filter(client => client.status === 'inactive')
+  (clients) => clients.filter(client => client.status === 'INACTIVE')
 );
