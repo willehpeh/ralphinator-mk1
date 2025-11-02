@@ -46,6 +46,16 @@ This file will track the implementation progress for Use Case 6: Filter Clients 
 
 ### Read Model Updates
 
+#### Task 4: Implemented findByStatus in InMemoryClientReadRepository (2025-11-02)
+- **File**: `packages/infrastructure/src/lib/read-models/in-memory-client-read-repository.ts`
+- **Description**: Implemented findByStatus method to filter clients by status
+- **Details**:
+  - Added import for ClientStatus from domain package
+  - Implemented findByStatus(status: ClientStatus): Promise<ClientReadModel[]>
+  - Filters in-memory client collection by status field
+  - Returns array of ClientReadModel objects matching the specified status
+  - Completes infrastructure implementation for UC6 backend query layer
+
 
 ### API Endpoints
 

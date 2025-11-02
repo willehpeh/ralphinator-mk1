@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IClientReadRepository, ClientReadModel } from '@angular-nest-starter/application';
+import { ClientStatus } from '@angular-nest-starter/domain';
 
 /**
  * In-memory implementation of IClientReadRepository
@@ -38,6 +39,18 @@ export class InMemoryClientReadRepository implements IClientReadRepository {
    */
   async save(client: ClientReadModel): Promise<void> {
     this.clients.set(client.id, client);
+  }
+
+  /**
+   * Finds clients by status
+   *
+   * @param status - The client status to filter by
+   * @returns Array of client read models matching the specified status
+   */
+  async findByStatus(status: ClientStatus): Promise<ClientReadModel[]> {
+    return Array.from(this.clients.values()).filter(
+      (client) => client.status === status
+    );
   }
 
   /**
