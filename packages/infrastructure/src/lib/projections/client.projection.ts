@@ -1,6 +1,6 @@
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Injectable, Inject } from '@nestjs/common';
-import { ClientCreatedDomainEvent } from '@angular-nest-starter/domain';
+import { ClientCreatedDomainEvent, ClientInformationUpdatedDomainEvent } from '@angular-nest-starter/domain';
 import {
   IClientReadRepository,
   ClientReadModel
@@ -13,38 +13,55 @@ import {
  * optimized read models for the CQRS query side.
  *
  * This projection:
- * - Subscribes to ClientCreatedDomainEvent from the event store
+ * - Subscribes to ClientCreatedDomainEvent and ClientInformationUpdatedDomainEvent from the event store
  * - Transforms domain events into ClientReadModel DTOs
  * - Persists read models to the read repository (optimized for queries)
  * - Enables separation of write (event store) and read (read model) data stores
  */
 @Injectable()
-@EventsHandler(ClientCreatedDomainEvent)
-export class ClientProjection implements IEventHandler<ClientCreatedDomainEvent> {
+@EventsHandler(ClientCreatedDomainEvent, ClientInformationUpdatedDomainEvent)
+export class ClientProjection implements IEventHandler<ClientCreatedDomainEvent | ClientInformationUpdatedDomainEvent> {
   constructor(
     @Inject('IClientReadRepository')
     private readonly clientReadRepository: IClientReadRepository
   ) {}
 
   /**
-   * Handles ClientCreatedDomainEvent by creating/updating the read model
+   * Handles domain events by creating/updating the read model
    *
    * @param event - The domain event from the event store
    */
-  async handle(event: ClientCreatedDomainEvent): Promise<void> {
-    // Transform domain event into read model
-    const readModel: ClientReadModel = {
-      id: event.aggregateId,
-      companyName: event.companyName,
-      email: event.email,
-      phone: event.phone,
-      address: event.address,
-      status: event.status,
-      notes: event.notes,
-      createdAt: event.occurredOn,
-    };
+  async handle(event: ClientCreatedDomainEvent | ClientInformationUpdatedDomainEvent): Promise<void> {
+    if (event instanceof ClientCreatedDomainEvent) {
+      // Transform ClientCreatedDomainEvent into read model
+      const readModel: ClientReadModel = {
+        id: event.aggregateId,
+        companyName: event.companyName,
+        email: event.email,
+        phone: event.phone,
+        address: event.address,
+        status: event.status,
+        notes: event.notes,
+        createdAt: event.occurredOn,
+      };
 
-    // Persist to read repository
-    await this.clientReadRepository.save(readModel);
+      // Persist to read repository
+      await this.clientReadRepository.save(readModel);
+    } else if (event instanceof ClientInformationUpdatedDomainEvent) {
+      // Transform ClientInformationUpdatedDomainEvent into read model
+      const readModel: ClientReadModel = {
+        id: event.aggregateId,
+        companyName: event.companyName,
+        email: event.email,
+        phone: event.phone,
+        address: event.address,
+        status: event.status,
+        notes: event.notes,
+        createdAt: event.occurredOn,
+      };
+
+      // Update the read repository
+      await this.clientReadRepository.save(readModel);
+    }
   }
 }

@@ -122,3 +122,23 @@ This document tracks the implementation of Use Case 4: Update Client Information
 - Completes the backend API layer for UC4
 
 **Verification**: Linting passed successfully
+
+---
+
+### Task 7: Add ClientInformationUpdatedDomainEvent handler to ClientProjection ✅
+**Completed**: 2025-11-02
+**Files**:
+- `packages/infrastructure/src/lib/projections/client.projection.ts`
+
+**Description**: Updated the `ClientProjection` to handle the `ClientInformationUpdatedDomainEvent` for updating read models. This update:
+- Imported `ClientInformationUpdatedDomainEvent` from the domain package
+- Added `ClientInformationUpdatedDomainEvent` to the `@EventsHandler` decorator
+- Updated the `implements` clause to handle both event types
+- Modified the `handle` method to check event type using `instanceof`
+- Transforms `ClientInformationUpdatedDomainEvent` into `ClientReadModel` DTO
+- Calls `save()` on the read repository to persist the updated read model
+- Enables the read model to stay in sync with the event store when clients are updated
+- Follows the same pattern as the `ClientCreatedDomainEvent` handler
+- Completes the projection layer for UC4
+
+**Verification**: Linting passed successfully
