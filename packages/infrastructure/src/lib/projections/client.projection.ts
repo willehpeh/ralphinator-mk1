@@ -45,21 +45,42 @@ export class ClientProjection extends BaseProjectionHandler {
   }
 
   /**
+   * Helper method to transform ClientData and metadata into a ClientReadModel.
+   * Eliminates duplication between create and update event handlers.
+   *
+   * @param aggregateId - The client aggregate ID
+   * @param clientData - The client data from the domain event
+   * @param createdAt - The timestamp when the client was created
+   * @returns ClientReadModel for persistence
+   */
+  private transformToReadModel(
+    aggregateId: string,
+    clientData: ClientCreatedDomainEvent['clientData'],
+    createdAt: Date
+  ): ClientReadModel {
+    return {
+      id: aggregateId,
+      companyName: clientData.companyName,
+      email: clientData.email?.getValue() ?? null,
+      phone: clientData.phone,
+      address: clientData.address,
+      status: clientData.status,
+      notes: clientData.notes,
+      createdAt,
+    };
+  }
+
+  /**
    * Event handler for ClientCreatedDomainEvent
    * Creates a new read model when a client is created
    */
   private async onClientCreated(event: ClientCreatedDomainEvent): Promise<void> {
-    // Transform ClientCreatedDomainEvent into read model
-    const readModel: ClientReadModel = {
-      id: event.aggregateId,
-      companyName: event.clientData.companyName,
-      email: event.clientData.email?.getValue() ?? null,
-      phone: event.clientData.phone,
-      address: event.clientData.address,
-      status: event.clientData.status,
-      notes: event.clientData.notes,
-      createdAt: event.occurredOn,
-    };
+    // Transform ClientCreatedDomainEvent into read model using helper
+    const readModel = this.transformToReadModel(
+      event.aggregateId,
+      event.clientData,
+      event.occurredOn
+    );
 
     // Persist to read repository
     await this.clientReadRepository.save(readModel);
@@ -73,17 +94,12 @@ export class ClientProjection extends BaseProjectionHandler {
     // Fetch the existing read model to preserve createdAt timestamp
     const existingReadModel = await this.clientReadRepository.findById(event.aggregateId);
 
-    // Transform ClientInformationUpdatedDomainEvent into read model
-    const readModel: ClientReadModel = {
-      id: event.aggregateId,
-      companyName: event.clientData.companyName,
-      email: event.clientData.email?.getValue() ?? null,
-      phone: event.clientData.phone,
-      address: event.clientData.address,
-      status: event.clientData.status,
-      notes: event.clientData.notes,
-      createdAt: existingReadModel?.createdAt ?? event.occurredOn, // Preserve original createdAt
-    };
+    // Transform ClientInformationUpdatedDomainEvent into read model using helper
+    const readModel = this.transformToReadModel(
+      event.aggregateId,
+      event.clientData,
+      existingReadModel?.createdAt ?? event.occurredOn // Preserve original createdAt
+    );
 
     // Update the read repository
     await this.clientReadRepository.save(readModel);
