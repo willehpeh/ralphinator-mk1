@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { ClientsService } from '../clients.service';
-import { loadClients, loadClientsSuccess, loadClientsFailure, updateClient, updateClientSuccess, updateClientFailure, changeClientStatus, changeClientStatusSuccess, changeClientStatusFailure } from './clients.actions';
+import { loadClients, loadClientsSuccess, loadClientsFailure, updateClient, updateClientSuccess, updateClientFailure, changeClientStatus, changeClientStatusSuccess, changeClientStatusFailure, filterClientsByStatus, filterClientsByStatusSuccess, filterClientsByStatusFailure } from './clients.actions';
 
 /**
  * NGRX Effects for client-related side effects
@@ -70,6 +70,24 @@ export class ClientsEffects {
           map((response) => changeClientStatusSuccess({ id: response.id })),
           catchError((error) =>
             of(changeClientStatusFailure({ error: error?.message || 'Failed to change client status' }))
+          )
+        )
+      )
+    )
+  );
+
+  /**
+   * Effect to filter clients by status from the backend
+   * Listens for filterClientsByStatus action, calls the service, and dispatches success/failure
+   */
+  filterClientsByStatus$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(filterClientsByStatus),
+      switchMap((action) =>
+        this.clientsService.getClientsByStatus(action.status).pipe(
+          map((clients) => filterClientsByStatusSuccess({ clients })),
+          catchError((error) =>
+            of(filterClientsByStatusFailure({ error: error?.message || 'Failed to filter clients by status' }))
           )
         )
       )

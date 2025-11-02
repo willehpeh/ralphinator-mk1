@@ -87,6 +87,19 @@ This file will track the implementation progress for Use Case 6: Filter Clients 
   - Follows existing action naming pattern and structure
   - Uses proper TypeScript typing for status values matching backend domain
 
+#### Task 8: Added NGRX effects to handle filterClientsByStatus action (2025-11-02)
+- **File**: `apps/frontend/src/app/clients/store/clients.effects.ts`
+- **Description**: Created effect to handle filtering clients by status with backend integration
+- **Details**:
+  - Imported filterClientsByStatus, filterClientsByStatusSuccess, filterClientsByStatusFailure actions
+  - Created filterClientsByStatus$ effect using createEffect()
+  - Listens for filterClientsByStatus action using ofType()
+  - Uses switchMap to call clientsService.getClientsByStatus(action.status)
+  - Maps successful response to filterClientsByStatusSuccess action with clients array
+  - Catches errors and dispatches filterClientsByStatusFailure with error message
+  - Follows same pattern as other effects (loadClients$, updateClient$, changeClientStatus$)
+  - Maintains consistency with modern Angular inject() pattern
+
 
 ### Components
 
