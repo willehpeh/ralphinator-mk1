@@ -49,4 +49,4 @@ Implement client name search functionality that filters the client list in real-
 ### ✅ Task 2: Add signal for search term - COMPLETED
 - Created searchTerm signal to track the search term
 - Initialized with empty string
-- Commit: (pending)
+- Commit: c24fb7b
