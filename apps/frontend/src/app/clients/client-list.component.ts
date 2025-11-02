@@ -22,17 +22,23 @@ import { CLIENT_STATUSES } from './client.constants';
       <div class="list-header">
         <h2>Client List</h2>
 
-        <div class="filter-controls">
-          <label for="status-filter">Filter by Status:</label>
-          <select
-            id="status-filter"
-            (change)="onFilterChange($event)"
-            [value]="selectedFilter()">
-            <option value="all">All Clients</option>
-            @for (status of availableStatuses; track status) {
-              <option [value]="status">{{ status }}</option>
-            }
-          </select>
+        <div class="header-actions">
+          <button class="add-client-btn" (click)="navigateToAddClient()">
+            Add New Client
+          </button>
+
+          <div class="filter-controls">
+            <label for="status-filter">Filter by Status:</label>
+            <select
+              id="status-filter"
+              (change)="onFilterChange($event)"
+              [value]="selectedFilter()">
+              <option value="all">All Clients</option>
+              @for (status of availableStatuses; track status) {
+                <option [value]="status">{{ status }}</option>
+              }
+            </select>
+          </div>
         </div>
       </div>
 
@@ -124,6 +130,29 @@ import { CLIENT_STATUSES } from './client.constants';
     h2 {
       margin: 0;
       color: #333;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .add-client-btn {
+      padding: 0.75rem 1.5rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .add-client-btn:hover {
+      background-color: #45a049;
     }
 
     .filter-controls {
@@ -260,5 +289,9 @@ export class ClientListComponent implements OnInit {
 
   navigateToDetail(clientId: string): void {
     this.router.navigate(['/clients', clientId]);
+  }
+
+  navigateToAddClient(): void {
+    this.router.navigate(['/clients/add']);
   }
 }
