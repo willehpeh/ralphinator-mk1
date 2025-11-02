@@ -86,3 +86,19 @@ This document tracks the implementation of Use Case 4: Update Client Information
 - Exported from the application package for registration in the API module
 
 **Verification**: Linting passed successfully
+
+---
+
+### Task 5: Register UpdateClientHandler in ClientsModule ✅
+**Completed**: 2025-11-02
+**Files**:
+- `apps/api/src/app/clients/clients.module.ts`
+
+**Description**: Registered the `UpdateClientHandler` in the `ClientsModule` to enable command processing. This registration:
+- Imported `UpdateClientHandler` from the application package
+- Added it to the `CommandHandlers` array in the module
+- Enables the CQRS infrastructure to route `UpdateClientCommand` to the handler
+- Follows the same pattern as `CreateClientHandler` registration
+- Completes the backend wiring for the update client functionality
+
+**Verification**: Linting passed successfully
