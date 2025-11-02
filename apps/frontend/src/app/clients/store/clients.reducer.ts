@@ -13,7 +13,10 @@ import {
   filterClientsByStatus,
   filterClientsByStatusSuccess,
   filterClientsByStatusFailure,
-  filterClientsByName
+  filterClientsByName,
+  deleteClient,
+  deleteClientSuccess,
+  deleteClientFailure
 } from './clients.actions';
 
 /**
@@ -171,5 +174,28 @@ export const clientsReducer = createReducer(
       clients: filtered,
       searchTerm
     };
-  })
+  }),
+
+  // When deleting a client is triggered
+  on(deleteClient, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  // When client is successfully deleted
+  on(deleteClientSuccess, (state, { id }) => ({
+    ...state,
+    clients: state.clients.filter((c) => c.id !== id),
+    allClients: state.allClients.filter((c) => c.id !== id),
+    loading: false,
+    error: null,
+  })),
+
+  // When deleting client fails
+  on(deleteClientFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  }))
 );

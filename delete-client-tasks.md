@@ -107,7 +107,13 @@
   - Effect calls clientsService.deleteClient() and dispatches success/failure actions
   - Follows existing NGRX effect pattern (switchMap, map, catchError)
   - No new linting errors introduced in effects file
-- [ ] Update reducer to remove deleted client
+- [x] **Update reducer to remove deleted client** ✅
+  - Added deleteClient, deleteClientSuccess, deleteClientFailure imports to `apps/frontend/src/app/clients/store/clients.reducer.ts`
+  - Added on(deleteClient) handler to set loading state
+  - Added on(deleteClientSuccess) handler to filter deleted client from both clients and allClients arrays
+  - Added on(deleteClientFailure) handler to set error state
+  - Follows existing NGRX reducer pattern
+  - No new linting errors introduced (pre-existing architectural decisions maintained)
 - [ ] Add "Delete Client" button to client detail view
 - [ ] Add confirmation dialog component
 - [ ] Handle delete success (navigate to list)
