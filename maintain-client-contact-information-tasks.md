@@ -22,14 +22,20 @@ This use case ensures the system has current contact methods for reaching client
   - Changed email property type from string to Email
   - Updated fromPayload factory method signature to accept Email instead of string
 
+### Application Layer
+- Update CreateClientHandler to construct Email from string
+  - Imported Email value object into handler
+  - Added email string to Email value object conversion using Email.create()
+  - Updated ClientData.fromPayload() call to pass Email object instead of string
+  - Email validation now happens in handler before aggregate creation
+
 ## Tasks Remaining
 
 ### Domain Layer
 - Create PhoneNumber value object (optional enhancement)
 
 ### Application Layer
-- Update CreateClientCommand to validate email using Email value object
-- Add email validation error handling to CreateClientHandler
+- Update UpdateClientHandler to construct Email from string
 
 ### Infrastructure Layer
 - Update ClientProjection to handle Email value object serialization
@@ -55,3 +61,6 @@ This use case ensures the system has current contact methods for reaching client
 - `packages/domain/src/lib/constants/domain-errors.ts` (modified - added INVALID_EMAIL_FORMAT)
 - `packages/domain/src/index.ts` (modified - exported Email value object)
 - `packages/domain/src/lib/value-objects/client-data.value-object.ts` (modified - uses Email value object)
+
+### Application Layer
+- `packages/application/src/lib/commands/handlers/create-client.handler.ts` (modified - converts email string to Email value object)
