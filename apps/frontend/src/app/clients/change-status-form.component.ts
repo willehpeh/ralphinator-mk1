@@ -17,8 +17,10 @@ interface StatusForm {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './clients-common.scss',
   template: `
-    <div class="change-status-form">
-      <h3>Change Client Status</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3>Change Client Status</h3>
+      </div>
       <p class="form-description">
         Select a new status for this client. The change will be saved immediately.
       </p>
@@ -37,8 +39,6 @@ interface StatusForm {
             <select
               id="status"
               formControlName="status"
-              class="form-control"
-              [class.invalid]="form.controls.status.invalid && form.controls.status.touched"
             >
               <option value="" disabled>Select a status</option>
               @for (status of availableStatuses; track status) {
@@ -55,14 +55,14 @@ interface StatusForm {
           <div class="form-actions">
             <button
               type="button"
-              class="cancel-button"
+              class="btn btn-cancel"
               (click)="onCancel()"
             >
               Cancel
             </button>
             <button
               type="submit"
-              class="submit-button"
+              class="btn btn-primary"
               [disabled]="form.invalid || !form.dirty"
             >
               Save Status
@@ -73,19 +73,6 @@ interface StatusForm {
     </div>
   `,
   styles: [`
-    .change-status-form {
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 2rem;
-    }
-
-    h3 {
-      margin: 0 0 0.5rem 0;
-      color: #333;
-      font-size: 1.3rem;
-    }
-
     .form-description {
       margin: 0 0 1.5rem 0;
       color: #666;
@@ -107,78 +94,6 @@ interface StatusForm {
       font-weight: 600;
       color: #666;
       font-size: 0.9rem;
-    }
-
-    .status-badge {
-      padding: 0.4rem 0.9rem;
-      border-radius: 14px;
-      font-size: 0.8rem;
-    }
-
-    form {
-      margin-top: 1.5rem;
-    }
-
-    label {
-      font-weight: 600;
-      color: #555;
-      font-size: 0.95rem;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 0.6rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 0.95rem;
-      transition: border-color 0.2s;
-      background-color: white;
-    }
-
-    .form-control:focus {
-      outline: none;
-      border-color: #007bff;
-    }
-
-    .form-control.invalid {
-      border-color: #dc3545;
-    }
-
-    .cancel-button {
-      padding: 0.6rem 1.5rem;
-      background-color: #6c757d;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .cancel-button:hover {
-      background-color: #5a6268;
-    }
-
-    .submit-button {
-      padding: 0.6rem 1.5rem;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .submit-button:hover:not(:disabled) {
-      background-color: #0056b3;
-    }
-
-    .submit-button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
     }
   `]
 })
