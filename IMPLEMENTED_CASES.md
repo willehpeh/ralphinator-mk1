@@ -23,6 +23,22 @@
 - End-to-end verification: Complete data flow from UI → NGRX → API → Query Handler → Read Repository and back
 - Documentation: UC2_VIEW_ALL_CLIENTS.md
 
+## Use Case 3: View Client Details (2025-11-02)
+- Complete client detail view implementation with routing and state management
+- Backend: GetClientByIdQuery and handler retrieve single client by ID from read repository
+- Backend API endpoint: GET /api/clients/:id returns ClientReadModel or null
+- Frontend: NGRX selector selectClientById(id) for retrieving client from store by ID
+- Frontend: Route configuration for /clients/:id with proper route parameter handling
+- Frontend: ClientDetailComponent with modern Angular patterns (standalone, signals, OnPush)
+- Frontend: Complete UI displaying all client information (name, status, email, phone, address, notes, metadata)
+- Frontend: UI states implemented (loading, error, not found, success)
+- Frontend: Click navigation from ClientListComponent to detail view with enhanced card hover effects
+- Frontend: Back to list navigation preserves NGRX state
+- Route: /clients/:id positioned correctly after /clients/add to avoid path conflicts
+- End-to-end verification: Complete user flow from list → detail → back to list working correctly
+- Documentation: UC3_View_Client_Details.md
+- **Note**: Core functionality complete; unit/integration tests pending for future testing phase
+
 ## Use Case 7: Start Development Environment (2025-11-01)
 - Backend server starts successfully on http://localhost:3000/api
 - Frontend application starts successfully on http://localhost:4200

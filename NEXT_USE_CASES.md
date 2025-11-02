@@ -1,33 +1,5 @@
 # Use Cases for Client Management System
 
-## Use Case 3: View Client Details
-
-**Primary Actor**: Developer/Business User
-
-**Goal**: See complete information about a specific client company
-
-**Preconditions**:
-- User has access to the client management system
-- Client exists in the system
-
-**Main Success Scenario**:
-1. User selects a client from the list
-2. System retrieves complete client information
-3. System displays all client details (name, email, phone, address, status, notes)
-4. User reviews the information
-
-**Extensions**:
-- 2a. If client no longer exists:
-  - System displays error message
-  - System returns user to client list
-- 2b. If system takes time to load:
-  - System displays loading indicator
-  - System shows details when ready
-
-**Success Guarantee**: User can see all recorded information about the client
-
----
-
 ## Use Case 4: Update Client Information
 
 **Primary Actor**: Developer/Business User
@@ -139,4 +111,5 @@ Each use case delivers independent business value and describes user goals in bu
 
 - **Use Case 1: Add a New Client** - Completed 2025-11-01 (See IMPLEMENTED_CASES.md)
 - **Use Case 2: View All Clients** - Completed 2025-11-02 (See IMPLEMENTED_CASES.md)
+- **Use Case 3: View Client Details** - Completed 2025-11-02 (See IMPLEMENTED_CASES.md)
 - **Use Case 7: Start Development Environment** - Completed 2025-11-01 (See IMPLEMENTED_CASES.md)
