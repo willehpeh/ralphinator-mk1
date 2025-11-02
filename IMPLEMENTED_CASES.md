@@ -166,3 +166,22 @@
 - Partial contact information supported: Users can enter only email or only phone
 - Extension 4a implemented: Invalid email format shows validation error to user
 - Documentation: maintain-client-contact-information-tasks.md
+
+## Use Case 11: Track Client Status Throughout Relationship Lifecycle (2025-11-02)
+- This use case is fully satisfied by existing implementations (Use Cases 2, 3, 5, and 6)
+- Users can view client status in multiple contexts:
+  - List view: Status badges displayed for all clients (Use Case 2)
+  - Detail view: Status badge prominently shown in client details (Use Case 3)
+  - Filter view: Filter clients by specific status (Use Case 6)
+- Users can change client status:
+  - "Change Status" button in client detail view (Use Case 5)
+  - Status change form with validation (Use Case 5)
+  - Status changes persisted via event sourcing (Use Case 5)
+- Status values: 'Active', 'Inactive', 'Prospect', 'Past Client'
+- All extensions satisfied:
+  - 2a: Prospect status visible and understandable
+  - 2b: Active status visible and understandable
+  - 2c: Inactive status visible and understandable
+  - 2d: Past Client status visible and understandable
+- Success guarantee met: Users can view status and understand client relationship stage
+- Documentation: track-client-status-tasks.md
