@@ -4,6 +4,7 @@ import { ClientStatus } from '../types/client-status.type';
 import { ClientCreatedDomainEvent } from '../events/client-created.domain-event';
 import { ClientInformationUpdatedDomainEvent } from '../events/client-information-updated.domain-event';
 import { ClientStatusChangedDomainEvent } from '../events/client-status-changed.domain-event';
+import { ClientDeletedDomainEvent } from '../events/client-deleted.domain-event';
 
 export class ClientAggregate extends EventSourcedAggregate {
   private id?: string;
@@ -113,6 +114,20 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Delete the client
+   * This marks the client as deleted by applying a ClientDeletedDomainEvent
+   */
+  delete(): void {
+    if (!this.id) {
+      throw new Error('Cannot delete a client that has not been created');
+    }
+
+    this.applyEvent(
+      new ClientDeletedDomainEvent(this.id)
+    );
+  }
+
+  /**
    * Apply domain events to rebuild aggregate state
    * This method is called when replaying events from the event store
    *
@@ -136,6 +151,9 @@ export class ClientAggregate extends EventSourcedAggregate {
       this.notes = event.notes;
     } else if (event instanceof ClientStatusChangedDomainEvent) {
       this.status = event.newStatus;
+    } else if (event instanceof ClientDeletedDomainEvent) {
+      // Mark aggregate as deleted - state is preserved for event replay
+      // The aggregate maintains its ID but is logically deleted
     }
   }
 

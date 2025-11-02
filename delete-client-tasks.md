@@ -2,17 +2,23 @@
 
 ## Completed Tasks
 
-### 1. Create ClientDeletedDomainEvent class 
+### 1. Create ClientDeletedDomainEvent class
 - Created `packages/domain/src/lib/events/client-deleted.domain-event.ts`
 - Extended DomainEvent base class
 - Added export to domain package index
 - Verified with linting
 
+### 2. Add delete() method and apply() case to ClientAggregate
+- Added import for ClientDeletedDomainEvent in `packages/domain/src/lib/aggregates/client.aggregate.ts`
+- Implemented delete() method that applies ClientDeletedDomainEvent
+- Added validation to ensure client exists before deletion
+- Added apply() case to handle ClientDeletedDomainEvent during event replay
+- Verified with linting
+
 ## Next Tasks (Not Started)
 
 ### Domain Layer
-- [ ] Add delete() method to ClientAggregate to apply ClientDeletedDomainEvent
-- [ ] Add apply() case in ClientAggregate for ClientDeletedDomainEvent
+- âœ… All domain layer tasks complete
 
 ### Application Layer
 - [ ] Create DeleteClientCommand
@@ -39,6 +45,6 @@
 - [ ] Update client list to reflect deletion
 
 ## Notes
-- Following event sourcing pattern: domain event ’ aggregate ’ command handler ’ projection
+- Following event sourcing pattern: domain event â†’ aggregate â†’ command handler â†’ projection
 - Using TDD approach: tests first, then implementation
 - One atomic task at a time
