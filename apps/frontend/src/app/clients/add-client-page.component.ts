@@ -19,10 +19,14 @@ export class AddClientPageComponent {
   private router = inject(Router);
 
   handleCancel(): void {
-    this.router.navigate([CLIENT_ROUTES.BASE]);
+    this.navigateToClientList();
   }
 
   handleSuccess(): void {
+    this.navigateToClientList();
+  }
+
+  private navigateToClientList(): void {
     this.router.navigate([CLIENT_ROUTES.BASE]);
   }
 }
