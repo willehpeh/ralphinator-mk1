@@ -17,11 +17,14 @@ This use case ensures the system has current contact methods for reaching client
   - Added INVALID_EMAIL_FORMAT error constant
   - Email is trimmed before validation
   - Exported Email value object from domain package
+- Update ClientData to use Email value object instead of string
+  - Imported Email value object into ClientData
+  - Changed email property type from string to Email
+  - Updated fromPayload factory method signature to accept Email instead of string
 
 ## Tasks Remaining
 
 ### Domain Layer
-- Update ClientData to use Email value object instead of string
 - Create PhoneNumber value object (optional enhancement)
 
 ### Application Layer
@@ -51,3 +54,4 @@ This use case ensures the system has current contact methods for reaching client
 - `packages/domain/src/lib/value-objects/email.value-object.ts` (created)
 - `packages/domain/src/lib/constants/domain-errors.ts` (modified - added INVALID_EMAIL_FORMAT)
 - `packages/domain/src/index.ts` (modified - exported Email value object)
+- `packages/domain/src/lib/value-objects/client-data.value-object.ts` (modified - uses Email value object)

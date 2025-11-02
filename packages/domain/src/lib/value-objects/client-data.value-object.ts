@@ -1,4 +1,5 @@
 import { ClientStatus } from '../types/client-status.type';
+import { Email } from './email.value-object';
 
 /**
  * Value object encapsulating client information.
@@ -7,7 +8,7 @@ import { ClientStatus } from '../types/client-status.type';
 export class ClientData {
   constructor(
     public readonly companyName: string,
-    public readonly email: string,
+    public readonly email: Email,
     public readonly phone: string | null,
     public readonly address: string | null,
     public readonly status: ClientStatus,
@@ -23,7 +24,7 @@ export class ClientData {
    */
   static fromPayload(payload: {
     companyName: string;
-    email: string;
+    email: Email;
     phone: string | null;
     address: string | null;
     status: ClientStatus;
