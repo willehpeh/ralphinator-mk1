@@ -54,8 +54,7 @@ export class InMemoryClientReadRepository implements IClientReadRepository {
   }
 
   /**
-   * Utility method to get all clients (useful for listing/debugging)
-   * Not part of the IClientReadRepository interface
+   * Finds all clients
    *
    * @returns Array of all client read models
    */
@@ -74,7 +73,9 @@ export class InMemoryClientReadRepository implements IClientReadRepository {
 
   /**
    * Utility method to clear all clients (useful for testing)
-   * Not part of the IClientReadRepository interface
+   *
+   * Note: This method is not part of the IClientReadRepository interface
+   * and should only be used for testing purposes.
    */
   async clear(): Promise<void> {
     this.clients.clear();
