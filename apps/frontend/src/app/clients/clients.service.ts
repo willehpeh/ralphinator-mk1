@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Client } from './store/clients.actions';
 import { ClientStatus } from './client.types';
 
-export interface CreateClientDto {
+interface ClientDataDto {
   companyName: string;
   email: string;
   phone?: string;
@@ -12,18 +12,12 @@ export interface CreateClientDto {
   status: ClientStatus;
   notes?: string;
 }
+
+export type CreateClientDto = ClientDataDto;
+export type UpdateClientDto = ClientDataDto;
 
 export interface CreateClientResponse {
   id: string;
-}
-
-export interface UpdateClientDto {
-  companyName: string;
-  email: string;
-  phone?: string;
-  address?: string;
-  status: ClientStatus;
-  notes?: string;
 }
 
 export interface ChangeClientStatusDto {
