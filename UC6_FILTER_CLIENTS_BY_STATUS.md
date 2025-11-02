@@ -24,6 +24,14 @@ This file will track the implementation progress for Use Case 6: Filter Clients 
   - Accepts ClientStatus parameter ('Active' | 'Inactive' | 'Prospect' | 'Past Client')
   - Added export to packages/application/src/lib/application.ts
 
+#### Task 2: Added findByStatus method to IClientReadRepository (2025-11-02)
+- **File**: `packages/application/src/lib/ports/client-read-repository.interface.ts`
+- **Description**: Extended repository interface to support filtering clients by status
+- **Details**:
+  - Added findByStatus(status: ClientStatus): Promise<ClientReadModel[]> method signature
+  - Imported ClientStatus from domain package
+  - Follows port/adapter pattern - interface defined in application layer
+
 
 ### Event Handlers
 
