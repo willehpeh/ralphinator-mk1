@@ -4,6 +4,7 @@ import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, De
 import { ClientStatus, CLIENT_STATUS_VALUES } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
 import { IsString, IsEmail, IsOptional, IsIn, IsNotEmpty } from 'class-validator';
+import { CLIENT_CONTROLLER_ERROR_MESSAGES } from './clients-controller.constants';
 
 export class ClientDataDto {
   @IsString()
@@ -60,7 +61,7 @@ export class ClientsController {
     const client = await this.queryBus.execute<GetClientByIdQuery, ClientReadModel | null>(query);
 
     if (!client) {
-      throw new Error(`Client ${clientId} not found after ${operation}`);
+      throw new Error(CLIENT_CONTROLLER_ERROR_MESSAGES.CLIENT_NOT_FOUND_AFTER_MUTATION(clientId, operation));
     }
 
     return client;
