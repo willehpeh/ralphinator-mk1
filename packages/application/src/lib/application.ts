@@ -16,6 +16,7 @@ export * from './queries/get-clients-by-status.query';
 // Query Handlers
 export * from './queries/handlers/get-client-by-id.handler';
 export * from './queries/handlers/get-all-clients.handler';
+export * from './queries/handlers/get-clients-by-status.handler';
 
 // Integration Events
 export * from './events/client-created.event';
