@@ -10,6 +10,8 @@ import { selectClientsError } from './store/clients.selectors';
 import { ClientStatus } from '@angular-nest-starter/domain';
 import { CLIENT_STATUSES } from './client.constants';
 
+const SUCCESS_MESSAGE_DISMISS_DURATION_MS = 3000;
+
 interface Client {
   id: string;
   companyName: string;
@@ -325,7 +327,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.submitSuccess.set(false);
           this.formSucceeded.emit();
-        }, 3000);
+        }, SUCCESS_MESSAGE_DISMISS_DURATION_MS);
       },
       error: (error) => {
         this.submitError.set(error.message || 'Failed to create client');
