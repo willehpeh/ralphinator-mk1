@@ -17,23 +17,6 @@
 
 ---
 
-## Use Case 4: List All Clients
-
-- **Primary Actor**: Developer/CRM User
-- **Goal**: View all clients in the system to get an overview of business relationships
-- **Preconditions**: None
-- **Main Success Scenario**:
-  1. User requests a list of all clients
-  2. System retrieves all client records
-  3. System displays the list with key information for each client
-- **Extensions**:
-  - 2a. If no clients exist:
-    - System displays an empty list
-    - System may indicate that no clients have been added yet
-- **Success Guarantee**: User can see all clients currently in the system
-
----
-
 ## Use Case 5: Filter Clients by Status
 
 - **Primary Actor**: Developer/CRM User

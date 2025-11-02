@@ -209,3 +209,19 @@
   - Notes can be of any reasonable length (no truncation)
   - Team members can access shared context about client
 - Documentation: record-client-notes-tasks.md
+
+## Use Case 13: List All Clients (2025-11-02)
+- This use case is the same as "View All Clients" (Use Case 2) - already fully implemented
+- Backend: GetAllClientsQuery and GetAllClientsQueryHandler retrieve all clients from read repository
+- Backend API endpoint: GET /api/clients returns array of ClientReadModel
+- Frontend: ClientListComponent displays all clients from NGRX store
+- Frontend: Route /clients configured as default application route
+- Complete CQRS query pattern with read model separation (no event store access)
+- Comprehensive tests: packages/testing/src/tests/get-all-clients.handler.spec.ts
+- Tests cover: retrieval of multiple clients, empty array case, different status types
+- All acceptance criteria met:
+  - User can request a list of all clients
+  - System retrieves all client records
+  - System displays the list with key information
+  - System handles empty list case (displays empty array)
+- Documentation: list-all-clients-tasks.md
