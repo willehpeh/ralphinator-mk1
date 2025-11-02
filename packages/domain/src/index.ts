@@ -5,4 +5,5 @@ export * from './lib/types/client-status.type';
 export * from './lib/events/client-created.domain-event';
 export * from './lib/events/client-information-updated.domain-event';
 export * from './lib/events/client-status-changed.domain-event';
+export * from './lib/events/client-deleted.domain-event';
 export * from './lib/aggregates/client.aggregate';
