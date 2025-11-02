@@ -9,7 +9,8 @@ import {
 } from '@angular-nest-starter/domain';
 import {
   IClientReadRepository,
-  ClientReadModel
+  ClientReadModel,
+  INJECTION_TOKENS,
 } from '@angular-nest-starter/application';
 import { BaseProjectionHandler } from '../base/base-projection.handler';
 
@@ -30,7 +31,7 @@ import { BaseProjectionHandler } from '../base/base-projection.handler';
 @EventsHandler(ClientCreatedDomainEvent, ClientInformationUpdatedDomainEvent, ClientStatusChangedDomainEvent, ClientDeletedDomainEvent)
 export class ClientProjection extends BaseProjectionHandler {
   constructor(
-    @Inject('IClientReadRepository')
+    @Inject(INJECTION_TOKENS.CLIENT_READ_REPOSITORY)
     private readonly clientReadRepository: IClientReadRepository
   ) {
     super();

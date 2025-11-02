@@ -2,7 +2,10 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { ChangeClientStatusCommand } from '../change-client-status.command';
 import { ClientAggregate } from '@angular-nest-starter/domain';
-import { IAggregateRepository } from '../../ports/aggregate-repository.interface';
+import {
+  IAggregateRepository,
+  INJECTION_TOKENS,
+} from '../../ports';
 
 /**
  * Command handler for changing client status.
@@ -11,7 +14,8 @@ import { IAggregateRepository } from '../../ports/aggregate-repository.interface
 @CommandHandler(ChangeClientStatusCommand)
 export class ChangeClientStatusHandler implements ICommandHandler<ChangeClientStatusCommand> {
   constructor(
-    @Inject('IAggregateRepository') private readonly aggregateRepository: IAggregateRepository<ClientAggregate>
+    @Inject(INJECTION_TOKENS.AGGREGATE_REPOSITORY)
+    private readonly aggregateRepository: IAggregateRepository<ClientAggregate>
   ) {}
 
   /**

@@ -1,15 +1,18 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { Inject } from '@nestjs/common';
 import { GetClientByIdQuery } from '../get-client-by-id.query';
 import { ClientReadModel } from '../../read-models/client.read-model';
-import { IClientReadRepository } from '../../ports/client-read-repository.interface';
-import { Inject } from '@nestjs/common';
+import {
+  IClientReadRepository,
+  INJECTION_TOKENS,
+} from '../../ports';
 
 @QueryHandler(GetClientByIdQuery)
 export class GetClientByIdQueryHandler
   implements IQueryHandler<GetClientByIdQuery, ClientReadModel | null>
 {
   constructor(
-    @Inject('IClientReadRepository')
+    @Inject(INJECTION_TOKENS.CLIENT_READ_REPOSITORY)
     private readonly readRepository: IClientReadRepository
   ) {}
 

@@ -2,7 +2,10 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { CreateClientCommand } from '../create-client.command';
 import { ClientAggregate } from '@angular-nest-starter/domain';
-import { IAggregateRepository } from '../../ports/aggregate-repository.interface';
+import {
+  IAggregateRepository,
+  INJECTION_TOKENS,
+} from '../../ports';
 
 /**
  * Command handler for creating a new client.
@@ -11,7 +14,8 @@ import { IAggregateRepository } from '../../ports/aggregate-repository.interface
 @CommandHandler(CreateClientCommand)
 export class CreateClientHandler implements ICommandHandler<CreateClientCommand> {
   constructor(
-    @Inject('IAggregateRepository') private readonly aggregateRepository: IAggregateRepository<ClientAggregate>
+    @Inject(INJECTION_TOKENS.AGGREGATE_REPOSITORY)
+    private readonly aggregateRepository: IAggregateRepository<ClientAggregate>
   ) {}
 
   /**

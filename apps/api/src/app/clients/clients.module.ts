@@ -8,6 +8,7 @@ import {
   GetClientByIdQueryHandler,
   GetAllClientsQueryHandler,
   GetClientsByStatusQueryHandler,
+  INJECTION_TOKENS,
 } from '@angular-nest-starter/application';
 import {
   ClientProjection,
@@ -30,15 +31,15 @@ const EventHandlers = [ClientProjection];
     ...EventHandlers,
     // Infrastructure implementations
     {
-      provide: 'IEventStore',
+      provide: INJECTION_TOKENS.EVENT_STORE,
       useClass: InMemoryEventStore,
     },
     {
-      provide: 'IClientReadRepository',
+      provide: INJECTION_TOKENS.CLIENT_READ_REPOSITORY,
       useClass: InMemoryClientReadRepository,
     },
     {
-      provide: 'IAggregateRepository',
+      provide: INJECTION_TOKENS.AGGREGATE_REPOSITORY,
       useClass: AggregateRepository,
     },
   ],

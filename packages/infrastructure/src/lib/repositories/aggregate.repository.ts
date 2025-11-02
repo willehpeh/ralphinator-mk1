@@ -1,7 +1,11 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
 import { EventSourcedAggregate } from '@angular-nest-starter/domain';
-import { IAggregateRepository, IEventStore } from '@angular-nest-starter/application';
+import {
+  IAggregateRepository,
+  IEventStore,
+  INJECTION_TOKENS,
+} from '@angular-nest-starter/application';
 
 /**
  * Infrastructure implementation of the aggregate repository pattern.
@@ -11,7 +15,8 @@ import { IAggregateRepository, IEventStore } from '@angular-nest-starter/applica
 @Injectable()
 export class AggregateRepository<T extends EventSourcedAggregate> implements IAggregateRepository<T> {
   constructor(
-    @Inject('IEventStore') private readonly eventStore: IEventStore,
+    @Inject(INJECTION_TOKENS.EVENT_STORE)
+    private readonly eventStore: IEventStore,
     private readonly eventBus: EventBus
   ) {}
 

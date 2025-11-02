@@ -29,6 +29,7 @@ export * from './events/client-deleted.event';
 export * from './ports/event-store.interface';
 export * from './ports/client-read-repository.interface';
 export * from './ports/aggregate-repository.interface';
+export * from './ports/injection-tokens';
 
 // Read Models
 export * from './read-models/client.read-model';
