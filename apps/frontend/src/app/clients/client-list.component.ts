@@ -15,6 +15,7 @@ import { ClientStatus } from '@angular-nest-starter/domain';
   selector: 'app-client-list',
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './clients-common.scss',
   template: `
     <div class="client-list">
       <div class="list-header">
@@ -158,23 +159,6 @@ import { ClientStatus } from '@angular-nest-starter/domain';
       box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
     }
 
-    .loading-message {
-      padding: 2rem;
-      text-align: center;
-      color: #666;
-      font-size: 1.1rem;
-    }
-
-    .error-message {
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      background-color: #f8d7da;
-      border: 1px solid #f5c6cb;
-      border-radius: 4px;
-      color: #721c24;
-      font-weight: 500;
-    }
-
     .empty-state {
       padding: 3rem;
       text-align: center;
@@ -227,49 +211,14 @@ import { ClientStatus } from '@angular-nest-starter/domain';
       font-size: 1.25rem;
     }
 
-    .status-badge {
-      padding: 0.25rem 0.75rem;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .status-active {
-      background-color: #d4edda;
-      color: #155724;
-    }
-
-    .status-inactive {
-      background-color: #f8d7da;
-      color: #721c24;
-    }
-
-    .status-pending {
-      background-color: #fff3cd;
-      color: #856404;
-    }
-
     .client-details {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
     }
 
-    .detail-row {
-      display: flex;
-      gap: 0.5rem;
-    }
-
     .detail-label {
-      font-weight: 500;
-      color: #666;
       min-width: 70px;
-    }
-
-    .detail-value {
-      color: #333;
-      word-break: break-word;
     }
   `]
 })

@@ -30,6 +30,7 @@ interface ClientFormFields {
   selector: 'app-client-form',
   imports: [CommonModule, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './clients-common.scss',
   template: `
     <div class="client-form">
       <h2>{{ mode() === 'create' ? 'Add New Client' : 'Edit Client' }}</h2>
@@ -140,56 +141,24 @@ interface ClientFormFields {
       color: #333;
     }
 
-    .success-message {
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      background-color: #d4edda;
-      border: 1px solid #c3e6cb;
-      border-radius: 4px;
-      color: #155724;
-      font-weight: 500;
-    }
-
-    .error-message {
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      background-color: #f8d7da;
-      border: 1px solid #f5c6cb;
-      border-radius: 4px;
-      color: #721c24;
-      font-weight: 500;
-    }
-
-    .form-group {
-      margin-bottom: 1rem;
-    }
-
     label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
       color: #555;
     }
 
     input,
     textarea,
     select {
-      width: 100%;
       padding: 0.5rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
       font-size: 1rem;
     }
 
     input:focus,
     textarea:focus,
     select:focus {
-      outline: none;
       border-color: #007bff;
     }
 
     .form-actions {
-      display: flex;
       gap: 1rem;
       margin-top: 1.5rem;
     }

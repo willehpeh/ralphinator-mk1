@@ -14,6 +14,7 @@ interface StatusForm {
   selector: 'app-change-status-form',
   imports: [CommonModule, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './clients-common.scss',
   template: `
     <div class="change-status-form">
       <h3>Change Client Status</h3>
@@ -111,36 +112,13 @@ interface StatusForm {
       padding: 0.4rem 0.9rem;
       border-radius: 14px;
       font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .status-active {
-      background-color: #d4edda;
-      color: #155724;
-    }
-
-    .status-inactive {
-      background-color: #f8d7da;
-      color: #721c24;
-    }
-
-    .status-pending {
-      background-color: #fff3cd;
-      color: #856404;
     }
 
     form {
       margin-top: 1.5rem;
     }
 
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
     label {
-      display: block;
-      margin-bottom: 0.5rem;
       font-weight: 600;
       color: #555;
       font-size: 0.95rem;
@@ -163,21 +141,6 @@ interface StatusForm {
 
     .form-control.invalid {
       border-color: #dc3545;
-    }
-
-    .error-message {
-      margin-top: 0.5rem;
-      color: #dc3545;
-      font-size: 0.85rem;
-    }
-
-    .form-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid #eee;
     }
 
     .cancel-button {

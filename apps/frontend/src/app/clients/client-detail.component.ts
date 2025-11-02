@@ -11,6 +11,7 @@ import { ChangeStatusFormComponent } from './change-status-form.component';
   selector: 'app-client-detail',
   imports: [CommonModule, ClientFormComponent, ChangeStatusFormComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './clients-common.scss',
   template: `
     <div class="client-detail">
       <div class="detail-header">
@@ -199,23 +200,6 @@ import { ChangeStatusFormComponent } from './change-status-form.component';
       background-color: #5a6268;
     }
 
-    .loading-message {
-      padding: 2rem;
-      text-align: center;
-      color: #666;
-      font-size: 1.1rem;
-    }
-
-    .error-message {
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      background-color: #f8d7da;
-      border: 1px solid #f5c6cb;
-      border-radius: 4px;
-      color: #721c24;
-      font-weight: 500;
-    }
-
     .detail-card {
       background: white;
       border: 1px solid #ddd;
@@ -242,23 +226,6 @@ import { ChangeStatusFormComponent } from './change-status-form.component';
       padding: 0.5rem 1rem;
       border-radius: 16px;
       font-size: 0.85rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .status-active {
-      background-color: #d4edda;
-      color: #155724;
-    }
-
-    .status-inactive {
-      background-color: #f8d7da;
-      color: #721c24;
-    }
-
-    .status-pending {
-      background-color: #fff3cd;
-      color: #856404;
     }
 
     .detail-section {
@@ -290,16 +257,13 @@ import { ChangeStatusFormComponent } from './change-status-form.component';
 
     .detail-label {
       font-weight: 600;
-      color: #666;
       font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
     .detail-value {
-      color: #333;
       font-size: 1rem;
-      word-break: break-word;
     }
 
     .notes-content {
