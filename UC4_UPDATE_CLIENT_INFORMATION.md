@@ -27,7 +27,7 @@ This document tracks the implementation of Use Case 4: Update Client Information
 - ClientsService.updateClient() method (✅ complete)
 - NGRX update action (✅ complete)
 - NGRX update effect (✅ complete)
-- NGRX reducer for update (not started)
+- NGRX reducer for update (✅ complete)
 - Edit form component (not started)
 - UI integration with client detail view (not started)
 
