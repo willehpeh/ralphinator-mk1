@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UpdateClientCommand } from '../update-client.command';
-import { ClientAggregate, ClientData } from '@angular-nest-starter/domain';
+import { ClientAggregate, ClientData, Email } from '@angular-nest-starter/domain';
 import { BaseCommandHandler } from '../base';
 
 /**
@@ -20,8 +20,14 @@ export class UpdateClientHandler
    */
   async execute(command: UpdateClientCommand): Promise<string> {
     return this.executeOnAggregate(command.id, ClientAggregate, (client) => {
-      // Create ClientData value object using factory method
-      const clientData = ClientData.fromPayload(command.data);
+      // Convert email string to Email value object for validation
+      const email = Email.create(command.data.email);
+
+      // Create ClientData value object with validated email
+      const clientData = ClientData.fromPayload({
+        ...command.data,
+        email
+      });
 
       // Update client information using domain logic
       client.updateInformation(clientData);

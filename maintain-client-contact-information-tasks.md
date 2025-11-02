@@ -28,6 +28,11 @@ This use case ensures the system has current contact methods for reaching client
   - Added email string to Email value object conversion using Email.create()
   - Updated ClientData.fromPayload() call to pass Email object instead of string
   - Email validation now happens in handler before aggregate creation
+- Update UpdateClientHandler to construct Email from string
+  - Imported Email value object into UpdateClientHandler
+  - Added email string to Email value object conversion using Email.create()
+  - Updated ClientData.fromPayload() call to pass Email object instead of string
+  - Email validation now happens in handler before aggregate update
 
 ## Tasks Remaining
 
@@ -35,7 +40,6 @@ This use case ensures the system has current contact methods for reaching client
 - Create PhoneNumber value object (optional enhancement)
 
 ### Application Layer
-- Update UpdateClientHandler to construct Email from string
 
 ### Infrastructure Layer
 - Update ClientProjection to handle Email value object serialization
@@ -64,3 +68,4 @@ This use case ensures the system has current contact methods for reaching client
 
 ### Application Layer
 - `packages/application/src/lib/commands/handlers/create-client.handler.ts` (modified - converts email string to Email value object)
+- `packages/application/src/lib/commands/handlers/update-client.handler.ts` (modified - converts email string to Email value object)
