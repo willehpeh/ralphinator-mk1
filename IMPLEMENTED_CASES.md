@@ -109,3 +109,19 @@
 - Full-stack integration verified with health check endpoint
 - CORS enabled for cross-origin communication
 - Single command `npm run dev` starts both services in parallel
+
+## Use Case 8: Search for Clients by Name (2025-11-02)
+- Complete client-side search implementation with NGRX state management
+- Frontend: Search input field in ClientListComponent header with real-time filtering
+- Frontend: searchTerm signal tracks current search query
+- Frontend: NGRX action filterClientsByName(searchTerm) dispatched on input change
+- Frontend: NGRX reducer handles client-side filtering with case-insensitive search on company name
+- Frontend: ClientsState enhanced with allClients and searchTerm fields for filtering
+- Frontend: Combined filtering support - search works together with status filter
+- Frontend: Empty state message "No clients found matching your search" when no results
+- Frontend: Client count display showing number of matching clients
+- Frontend: Count display dynamically updates to show active search term and filter status
+- Frontend: Proper singular/plural grammar ("client" vs "clients") in count display
+- All extensions implemented: empty search results, clear search, combined search+filter
+- End-to-end verification: Complete user flow from typing search → real-time filtering → seeing count → identifying desired client
+- Documentation: search-clients-by-name-tasks.md
