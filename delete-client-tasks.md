@@ -122,7 +122,18 @@
   - Button is only visible when not in edit or status change mode
   - No new linting errors introduced (pre-existing architectural decisions maintained)
   - Ready for next task: confirmation dialog implementation
-- [ ] Add confirmation dialog component
+- [x] **Add confirmation dialog component** ✅
+  - Created `apps/frontend/src/app/shared/confirmation-dialog.component.ts`
+  - Implemented reusable confirmation dialog with modern Angular patterns
+  - Uses signal-based input() and output() functions
+  - Uses OnPush change detection strategy
+  - Includes accessibility features (ARIA attributes, keyboard support, focusability)
+  - Supports escape key to cancel dialog
+  - Backdrop click dismisses dialog
+  - Customizable title, message, confirmText, and cancelText via inputs
+  - Emits confirmed and cancelled events via outputs
+  - Styled with red confirm button to indicate destructive action
+  - No new linting errors (all accessibility requirements met)
 - [ ] Handle delete success (navigate to list)
 - [ ] Handle delete errors (show error message)
 - [ ] Update client list to reflect deletion
