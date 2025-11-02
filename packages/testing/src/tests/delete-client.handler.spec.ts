@@ -1,12 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { DeleteClientHandler } from '@angular-nest-starter/application';
 import { DeleteClientCommand } from '@angular-nest-starter/application';
-import {
-  ClientCreatedDomainEvent,
-  ClientAggregate,
-  ClientData
-} from '@angular-nest-starter/domain';
-import { createMockAggregateRepository } from '../lib/mock-factories';
+import { ClientAggregate } from '@angular-nest-starter/domain';
+import { createMockAggregateRepository, ClientAggregateBuilder } from '../lib/mock-factories';
 
 describe('DeleteClientHandler', () => {
   let handler: DeleteClientHandler;
@@ -25,21 +21,15 @@ describe('DeleteClientHandler', () => {
     it('should load existing client, delete it, and persist deletion event', async () => {
       // Arrange
       const clientId = 'client-123';
-      const aggregate = new ClientAggregate();
-      const existingEvents = [
-        new ClientCreatedDomainEvent(
-          clientId,
-          new ClientData(
-            'Acme Corporation',
-            'contact@acme.com',
-            '+1234567890',
-            '123 Main St',
-            'Active',
-            'Important client'
-          )
-        ),
-      ];
-      existingEvents.forEach(event => aggregate.apply(event));
+      const aggregate = new ClientAggregateBuilder()
+        .withId(clientId)
+        .withCompanyName('Acme Corporation')
+        .withEmail('contact@acme.com')
+        .withPhone('+1234567890')
+        .withAddress('123 Main St')
+        .withStatus('Active')
+        .withNotes('Important client')
+        .build();
 
       mockAggregateRepository.load.mockResolvedValue(aggregate);
 
@@ -58,21 +48,12 @@ describe('DeleteClientHandler', () => {
     it('should load aggregate and save through repository', async () => {
       // Arrange
       const clientId = 'client-456';
-      const aggregate = new ClientAggregate();
-      const existingEvents = [
-        new ClientCreatedDomainEvent(
-          clientId,
-          new ClientData(
-            'Beta Inc',
-            'info@beta.com',
-            null,
-            null,
-            'Prospect',
-            null
-          )
-        ),
-      ];
-      existingEvents.forEach(event => aggregate.apply(event));
+      const aggregate = new ClientAggregateBuilder()
+        .withId(clientId)
+        .withCompanyName('Beta Inc')
+        .withEmail('info@beta.com')
+        .withStatus('Prospect')
+        .build();
 
       mockAggregateRepository.load.mockResolvedValue(aggregate);
 
@@ -89,21 +70,15 @@ describe('DeleteClientHandler', () => {
     it('should call delete on the aggregate', async () => {
       // Arrange
       const clientId = 'client-789';
-      const aggregate = new ClientAggregate();
-      const existingEvents = [
-        new ClientCreatedDomainEvent(
-          clientId,
-          new ClientData(
-            'Gamma LLC',
-            'hello@gamma.com',
-            '+9876543210',
-            '456 Oak Ave',
-            'Active',
-            'Test notes'
-          )
-        ),
-      ];
-      existingEvents.forEach(event => aggregate.apply(event));
+      const aggregate = new ClientAggregateBuilder()
+        .withId(clientId)
+        .withCompanyName('Gamma LLC')
+        .withEmail('hello@gamma.com')
+        .withPhone('+9876543210')
+        .withAddress('456 Oak Ave')
+        .withStatus('Active')
+        .withNotes('Test notes')
+        .build();
 
       mockAggregateRepository.load.mockResolvedValue(aggregate);
 
@@ -120,21 +95,12 @@ describe('DeleteClientHandler', () => {
     it('should return the client ID after successful deletion', async () => {
       // Arrange
       const clientId = 'client-999';
-      const aggregate = new ClientAggregate();
-      const existingEvents = [
-        new ClientCreatedDomainEvent(
-          clientId,
-          new ClientData(
-            'Test Corp',
-            'test@test.com',
-            null,
-            null,
-            'Inactive',
-            null
-          )
-        ),
-      ];
-      existingEvents.forEach(event => aggregate.apply(event));
+      const aggregate = new ClientAggregateBuilder()
+        .withId(clientId)
+        .withCompanyName('Test Corp')
+        .withEmail('test@test.com')
+        .withStatus('Inactive')
+        .build();
 
       mockAggregateRepository.load.mockResolvedValue(aggregate);
 

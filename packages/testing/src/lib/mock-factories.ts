@@ -1,5 +1,8 @@
 import { vi } from 'vitest';
 
+// Re-export builders for convenience
+export { ClientAggregateBuilder } from './builders/client-aggregate.builder';
+
 /**
  * Creates a mock aggregate repository for testing command handlers.
  *
