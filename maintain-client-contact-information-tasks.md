@@ -39,6 +39,19 @@ This use case ensures the system has current contact methods for reaching client
   - Modified onClientCreated() to serialize Email value object using getValue()
   - Modified onClientInformationUpdated() to serialize Email value object using getValue()
   - Both handlers now convert Email value object to string (or null) for read model persistence
+- Fix ClientAggregate email field type mismatch (bugfix from previous tasks)
+  - Updated email field type from `string` to `Email` value object
+  - Updated getEmail() return type from `string | undefined` to `Email | undefined`
+  - Imported Email value object into ClientAggregate
+  - Fixed type errors preventing build from succeeding
+
+### API Layer
+- Update CreateClientDto to validate email format
+  - Installed class-validator and class-transformer packages
+  - Added validation decorators to ClientDataDto (@IsEmail, @IsString, @IsNotEmpty, @IsOptional, @IsIn)
+  - Enabled global ValidationPipe in main.ts with whitelist and transform options
+  - Email format validation now happens at API layer before reaching command handlers
+  - Invalid email requests will be rejected with 400 Bad Request and validation error messages
 
 ## Tasks Remaining
 
@@ -50,8 +63,7 @@ This use case ensures the system has current contact methods for reaching client
 ### Infrastructure Layer
 
 ### API Layer
-- Update CreateClientDto to validate email format
-- Add proper error responses for invalid email format
+- Add proper error responses for invalid email format (optional - ValidationPipe handles this)
 
 ### Frontend Layer
 - Add email format validators to client form
@@ -70,6 +82,7 @@ This use case ensures the system has current contact methods for reaching client
 - `packages/domain/src/lib/constants/domain-errors.ts` (modified - added INVALID_EMAIL_FORMAT)
 - `packages/domain/src/index.ts` (modified - exported Email value object)
 - `packages/domain/src/lib/value-objects/client-data.value-object.ts` (modified - uses Email value object)
+- `packages/domain/src/lib/aggregates/client.aggregate.ts` (modified - email field type, getEmail() return type)
 
 ### Application Layer
 - `packages/application/src/lib/commands/handlers/create-client.handler.ts` (modified - converts email string to Email value object)
@@ -77,3 +90,9 @@ This use case ensures the system has current contact methods for reaching client
 
 ### Infrastructure Layer
 - `packages/infrastructure/src/lib/projections/client.projection.ts` (modified - serializes Email value object to string)
+
+### API Layer
+- `apps/api/src/app/clients/clients.controller.ts` (modified - added validation decorators to DTOs)
+- `apps/api/src/main.ts` (modified - enabled global ValidationPipe)
+- `package.json` (modified - added class-validator and class-transformer dependencies)
+- `package-lock.json` (modified - dependency lock file updated)

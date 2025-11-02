@@ -3,13 +3,29 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel, ClientDataPayload } from '@angular-nest-starter/application';
 import { ClientStatus } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
+import { IsString, IsEmail, IsOptional, IsIn, IsNotEmpty } from 'class-validator';
 
 export class ClientDataDto {
+  @IsString()
+  @IsNotEmpty()
   companyName!: string;
+
+  @IsEmail()
   email!: string;
+
+  @IsString()
+  @IsOptional()
   phone!: string | null;
+
+  @IsString()
+  @IsOptional()
   address!: string | null;
+
+  @IsIn(['Active', 'Inactive', 'Prospect', 'Past Client'])
   status!: ClientStatus;
+
+  @IsString()
+  @IsOptional()
   notes!: string | null;
 }
 

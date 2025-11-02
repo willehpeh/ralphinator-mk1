@@ -7,11 +7,12 @@ import { ClientInformationUpdatedDomainEvent } from '../events/client-informatio
 import { ClientStatusChangedDomainEvent } from '../events/client-status-changed.domain-event';
 import { ClientDeletedDomainEvent } from '../events/client-deleted.domain-event';
 import { ClientData } from '../value-objects/client-data.value-object';
+import { Email } from '../value-objects/email.value-object';
 
 export class ClientAggregate extends EventSourcedAggregate {
   private id?: string;
   private companyName?: string;
-  private email?: string;
+  private email?: Email;
   private phone?: string | null;
   private address?: string | null;
   private status?: ClientStatus;
@@ -164,7 +165,7 @@ export class ClientAggregate extends EventSourcedAggregate {
     return this.companyName;
   }
 
-  getEmail(): string | undefined {
+  getEmail(): Email | undefined {
     return this.email;
   }
 
