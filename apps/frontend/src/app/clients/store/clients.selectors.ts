@@ -61,3 +61,11 @@ export const selectInactiveClients = createSelector(
   selectAllClients,
   (clients) => clients.filter(client => client.status === 'INACTIVE')
 );
+
+/**
+ * Select a specific client by ID
+ */
+export const selectClientById = (id: string) => createSelector(
+  selectAllClients,
+  (clients) => clients.find(client => client.id === id) ?? null
+);
