@@ -185,3 +185,27 @@
   - 2d: Past Client status visible and understandable
 - Success guarantee met: Users can view status and understand client relationship stage
 - Documentation: track-client-status-tasks.md
+
+## Use Case 12: Record Additional Context About a Client (2025-11-02)
+- This use case was already fully implemented as part of the initial client entity design (Use Case 1)
+- Domain: ClientAggregate includes notes field with getter method
+- Domain: ClientData value object includes notes parameter (optional)
+- Domain: All domain events (ClientCreatedDomainEvent, ClientInformationUpdatedDomainEvent) handle notes
+- Application: ClientReadModel includes notes field for query operations
+- Infrastructure: ClientProjection persists notes to read model from domain events
+- API: ClientDataDto validates notes as optional string field
+- API: Create and update endpoints accept and persist notes through command handlers
+- Frontend: ClientFormComponent includes notes textarea field with 4 rows
+- Frontend: Notes field integrated into both create and edit modes
+- Frontend: Notes included in form submission for both create and update operations
+- Frontend: ClientDetailComponent displays notes in dedicated section when present
+- Frontend: ClientListComponent shows notes in client cards when present
+- Tests: Existing tests include notes validation in test data
+- All requirements satisfied:
+  - Users can enter observations and contextual information via textarea
+  - System stores notes with client record via event sourcing
+  - Notes visible in detail and list views for future reference
+  - Notes are optional (can be left empty)
+  - Notes can be of any reasonable length (no truncation)
+  - Team members can access shared context about client
+- Documentation: record-client-notes-tasks.md
