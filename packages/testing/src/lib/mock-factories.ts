@@ -46,7 +46,7 @@ export function createMockAggregateRepository<T = unknown>() {
 /**
  * Creates a mock read repository for testing query handlers.
  *
- * @returns Mock repository with findAll and findById methods that can be used with Vitest
+ * @returns Mock repository with findAll, findById, and findByStatus methods that can be used with Vitest
  *
  * @example
  * ```typescript
@@ -64,6 +64,7 @@ export function createMockReadRepository() {
   return {
     findAll: vi.fn(),
     findById: vi.fn(),
+    findByStatus: vi.fn(),
   };
 }
 
