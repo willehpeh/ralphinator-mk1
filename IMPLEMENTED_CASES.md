@@ -147,3 +147,22 @@
 - Full-stack integration verified with health check endpoint
 - CORS enabled for cross-origin communication
 - Single command `npm run dev` starts both services in parallel
+
+## Use Case 10: Maintain Client Contact Information (2025-11-02)
+- Complete implementation of email and phone contact information capture and validation
+- Domain: Email value object with format validation (regex-based)
+- Domain: ClientData updated to use Email value object instead of string
+- Domain: ClientAggregate updated with Email type for email field
+- Application: CreateClientHandler converts email string to Email value object with validation
+- Application: UpdateClientHandler converts email string to Email value object with validation
+- Infrastructure: ClientProjection serializes Email value object to string for read model persistence
+- API: Email format validation using class-validator decorators (@IsEmail)
+- API: Global ValidationPipe enabled in main.ts for automatic DTO validation
+- Frontend: Email field in client forms with Validators.required and Validators.email
+- Frontend: Email validation error messages displayed to users ("Email is required", "Please enter a valid email address")
+- Frontend: Styled validation errors with .validation-error CSS class and red border on invalid inputs
+- End-to-end validation: Email format validated at three layers (domain, API, frontend)
+- Contact information is optional: Users can proceed without entering email or phone
+- Partial contact information supported: Users can enter only email or only phone
+- Extension 4a implemented: Invalid email format shows validation error to user
+- Documentation: maintain-client-contact-information-tasks.md
