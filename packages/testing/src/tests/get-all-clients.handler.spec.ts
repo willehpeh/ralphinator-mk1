@@ -4,12 +4,9 @@ import { createQueryHandlerTestSetup } from '../lib/mock-factories';
 import { ClientReadModelBuilder } from '../lib/builders/client-read-model.builder';
 
 describe('GetAllClientsQueryHandler', () => {
-  const { handler, mockReadRepository } = createQueryHandlerTestSetup(GetAllClientsQueryHandler);
+  const { handler, mockReadRepository, clearMocks } = createQueryHandlerTestSetup(GetAllClientsQueryHandler);
 
-  beforeEach(() => {
-    mockReadRepository.findAll.mockClear();
-    mockReadRepository.findById.mockClear();
-  });
+  beforeEach(clearMocks);
 
   it('should retrieve all clients from read repository', async () => {
     // Arrange

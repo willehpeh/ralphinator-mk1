@@ -5,13 +5,9 @@ import { ClientReadModelBuilder } from '../lib/builders/client-read-model.builde
 import { testAllClientStatuses } from '../lib/test-assertions';
 
 describe('GetClientsByStatusQueryHandler', () => {
-  const { handler, mockReadRepository } = createQueryHandlerTestSetup(GetClientsByStatusQueryHandler);
+  const { handler, mockReadRepository, clearMocks } = createQueryHandlerTestSetup(GetClientsByStatusQueryHandler);
 
-  beforeEach(() => {
-    mockReadRepository.findAll.mockClear();
-    mockReadRepository.findById.mockClear();
-    mockReadRepository.findByStatus.mockClear();
-  });
+  beforeEach(clearMocks);
 
   it('should retrieve clients by status from read repository', async () => {
     // Arrange

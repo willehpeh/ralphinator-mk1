@@ -125,12 +125,10 @@ export function createCommandHandlerTestSetup<THandler>(
  * @example
  * ```typescript
  * describe('GetAllClientsQueryHandler', () => {
- *   const { handler, mockReadRepository } =
+ *   const { handler, mockReadRepository, clearMocks } =
  *     createQueryHandlerTestSetup(GetAllClientsQueryHandler);
  *
- *   beforeEach(() => {
- *     mockReadRepository.findAll.mockClear();
- *   });
+ *   beforeEach(clearMocks);
  *
  *   it('should retrieve all clients', async () => {
  *     mockReadRepository.findAll.mockResolvedValue([...clients]);
@@ -146,8 +144,19 @@ export function createQueryHandlerTestSetup<THandler>(
   const mockReadRepository = createMockReadRepository();
   const handler = new handlerConstructor(mockReadRepository);
 
+  /**
+   * Clears all mock call history for read repository methods.
+   * Use this in beforeEach to ensure test isolation.
+   */
+  const clearMocks = () => {
+    mockReadRepository.findAll.mockClear();
+    mockReadRepository.findById.mockClear();
+    mockReadRepository.findByStatus.mockClear();
+  };
+
   return {
     handler,
     mockReadRepository,
+    clearMocks,
   };
 }
