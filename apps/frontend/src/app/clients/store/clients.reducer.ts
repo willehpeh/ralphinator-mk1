@@ -120,14 +120,26 @@ export const clientsReducer = createReducer(
   })),
 
   // When clients are successfully filtered by status
-  on(filterClientsByStatusSuccess, (state, { clients }) => ({
-    ...state,
-    clients,
-    allClients: clients, // Update all clients for filtering
-    searchTerm: '', // Reset search term when status filter changes
-    loading: false,
-    error: null,
-  })),
+  on(filterClientsByStatusSuccess, (state, { clients }) => {
+    // Preserve and apply existing search term to newly filtered clients
+    const normalizedSearch = state.searchTerm.toLowerCase().trim();
+
+    // If there's an active search term, filter the status-filtered results
+    const filteredClients = normalizedSearch
+      ? clients.filter(client =>
+          client.companyName.toLowerCase().includes(normalizedSearch)
+        )
+      : clients;
+
+    return {
+      ...state,
+      clients: filteredClients,
+      allClients: clients, // Update all clients for filtering
+      // Preserve search term instead of resetting it
+      loading: false,
+      error: null,
+    };
+  }),
 
   // When filtering clients by status fails
   on(filterClientsByStatusFailure, (state, { error }) => ({

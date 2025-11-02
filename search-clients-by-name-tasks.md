@@ -5,10 +5,6 @@ Implement client name search functionality that filters the client list in real-
 
 ## Tasks
 
-### Task 7: NOT STARTED - Add combined filtering support
-- Enable simultaneous search and status filtering
-- Status: Not Started
-
 ### Task 8: NOT STARTED - Add "No clients found" message for search
 - Display appropriate message when search returns no results
 - Status: Not Started
@@ -63,3 +59,9 @@ Implement client name search functionality that filters the client list in real-
 - Updated onSearchChange method to dispatch filterClientsByName action with searchTerm
 - Search input now triggers state update through NGRX store
 - Location: apps/frontend/src/app/clients/client-list.component.ts:5,340-345
+
+### ✅ Task 7: Add combined filtering support - COMPLETED
+- Updated filterClientsByStatusSuccess reducer to preserve search term when status filter changes
+- Search term is now applied to status-filtered results automatically
+- Both filters work together: status filter is applied first, then search filter
+- Location: apps/frontend/src/app/clients/store/clients.reducer.ts:123-142
