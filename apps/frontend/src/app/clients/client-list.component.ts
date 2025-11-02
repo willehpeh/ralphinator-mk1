@@ -10,7 +10,7 @@ import {
   selectHasClients
 } from './store/clients.selectors';
 import { ClientStatus } from './client.types';
-import { CLIENT_STATUSES } from './client.constants';
+import { CLIENT_STATUSES, FILTER_ALL_CLIENTS } from './client.constants';
 import { CLIENT_ROUTES } from './client-routes.constants';
 import { STANDARD_DATE_FORMAT } from './client-display.constants';
 
@@ -45,7 +45,7 @@ import { STANDARD_DATE_FORMAT } from './client-display.constants';
               id="status-filter"
               (change)="onFilterChange($event)"
               [value]="selectedFilter()">
-              <option value="all">All Clients</option>
+              <option [value]="filterAllValue">All Clients</option>
               @for (status of availableStatuses; track status) {
                 <option [value]="status">{{ status }}</option>
               }
@@ -60,7 +60,7 @@ import { STANDARD_DATE_FORMAT } from './client-display.constants';
           @if (searchTerm()) {
             matching "{{ searchTerm() }}"
           }
-          @if (selectedFilter() !== 'all') {
+          @if (selectedFilter() !== filterAllValue) {
             with status "{{ selectedFilter() }}"
           }
         </div>
@@ -84,7 +84,7 @@ import { STANDARD_DATE_FORMAT } from './client-display.constants';
           <p class="empty-state-hint">
             @if (searchTerm()) {
               No clients found matching your search "{{ searchTerm() }}". Try a different search term.
-            } @else if (selectedFilter() === 'all') {
+            } @else if (selectedFilter() === filterAllValue) {
               Add your first client to get started
             } @else {
               No clients found with status "{{ selectedFilter() }}". Try a different filter.
@@ -154,6 +154,9 @@ export class ClientListComponent implements OnInit {
   // Date format for displaying client dates
   readonly dateFormat = STANDARD_DATE_FORMAT;
 
+  // Filter value for "all clients" option
+  readonly filterAllValue = FILTER_ALL_CLIENTS;
+
   // Select data from store using signals
   clients = this.store.selectSignal(selectAllClients);
   loading = this.store.selectSignal(selectClientsLoading);
@@ -161,7 +164,7 @@ export class ClientListComponent implements OnInit {
   hasClients = this.store.selectSignal(selectHasClients);
 
   // Track selected filter
-  selectedFilter = signal<'all' | ClientStatus>('all');
+  selectedFilter = signal<typeof FILTER_ALL_CLIENTS | ClientStatus>(FILTER_ALL_CLIENTS);
 
   // Track search term
   searchTerm = signal<string>('');
@@ -176,11 +179,11 @@ export class ClientListComponent implements OnInit {
 
   onFilterChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
-    const value = selectElement.value as 'all' | ClientStatus;
+    const value = selectElement.value as typeof FILTER_ALL_CLIENTS | ClientStatus;
 
     this.selectedFilter.set(value);
 
-    if (value === 'all') {
+    if (value === FILTER_ALL_CLIENTS) {
       // Load all clients
       this.store.dispatch(loadClients());
     } else {
