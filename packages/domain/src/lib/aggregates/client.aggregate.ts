@@ -155,8 +155,7 @@ export class ClientAggregate extends EventSourcedAggregate {
    * Event handler for ClientDeletedDomainEvent
    * Marks the aggregate as deleted (state is preserved for event replay)
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private onClientDeleted(_event: ClientDeletedDomainEvent): void {
+  private onClientDeleted(): void {
     // Mark aggregate as deleted - state is preserved for event replay
     // The aggregate maintains its ID but is logically deleted
   }
