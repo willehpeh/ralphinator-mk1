@@ -3,7 +3,7 @@ import { UpdateClientHandler, UpdateClientCommand, ClientDataPayload } from '@an
 import { ClientAggregate } from '@angular-nest-starter/domain';
 import { createCommandHandlerTestSetup } from '../lib/mock-factories';
 import { ClientAggregateBuilder } from '../lib/builders/client-aggregate.builder';
-import { expectAggregateToMatch } from '../lib/test-assertions';
+import { expectAggregateToMatch, testAllClientStatuses } from '../lib/test-assertions';
 
 describe('UpdateClientHandler', () => {
   const { handler, mockRepository, getSavedAggregate } =
@@ -140,14 +140,7 @@ describe('UpdateClientHandler', () => {
     });
 
     it('should handle all valid client statuses during update', async () => {
-      const statuses: Array<'Active' | 'Inactive' | 'Prospect' | 'Past Client'> = [
-        'Active',
-        'Inactive',
-        'Prospect',
-        'Past Client',
-      ];
-
-      for (const status of statuses) {
+      await testAllClientStatuses(async (status) => {
         const existingAggregate = new ClientAggregateBuilder()
           .withId(`client-${status}`)
           .withCompanyName('Test Company')
@@ -172,11 +165,10 @@ describe('UpdateClientHandler', () => {
 
         // Assert
         expect(getSavedAggregate().getStatus()).toBe(status);
-
-        // Reset for next iteration
+      }, () => {
         mockRepository.load.mockClear();
         mockRepository.save.mockClear();
-      }
+      });
     });
 
     it('should persist updated aggregate through repository', async () => {

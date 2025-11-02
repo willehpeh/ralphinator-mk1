@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { GetClientByIdQuery, GetClientByIdQueryHandler } from '@angular-nest-starter/application';
 import { createQueryHandlerTestSetup } from '../lib/mock-factories';
 import { ClientReadModelBuilder } from '../lib/builders/client-read-model.builder';
+import { testAllClientStatuses } from '../lib/test-assertions';
 
 describe('GetClientByIdQueryHandler', () => {
   const { handler, mockReadRepository } = createQueryHandlerTestSetup(GetClientByIdQueryHandler);
@@ -54,9 +55,7 @@ describe('GetClientByIdQueryHandler', () => {
   });
 
   it('should handle all client statuses', async () => {
-    const statuses = ['Active', 'Inactive', 'Prospect', 'Past Client'] as const;
-
-    for (const status of statuses) {
+    await testAllClientStatuses(async (status) => {
       // Arrange
       const clientId = `client-${status}`;
       const client = new ClientReadModelBuilder()
@@ -75,6 +74,6 @@ describe('GetClientByIdQueryHandler', () => {
 
       // Assert
       expect(result?.status).toBe(status);
-    }
+    });
   });
 });

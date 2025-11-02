@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { CreateClientHandler, CreateClientCommand, ClientDataPayload } from '@angular-nest-starter/application';
 import { createCommandHandlerTestSetup } from '../lib/mock-factories';
-import { expectAggregateToMatch } from '../lib/test-assertions';
+import { expectAggregateToMatch, testAllClientStatuses } from '../lib/test-assertions';
 
 describe('CreateClientHandler', () => {
   const { handler, mockRepository, getSavedAggregate, resetSavedAggregate } =
@@ -97,18 +97,7 @@ describe('CreateClientHandler', () => {
     });
 
     it('should handle all valid client statuses', async () => {
-      const statuses: Array<'Active' | 'Inactive' | 'Prospect' | 'Past Client'> = [
-        'Active',
-        'Inactive',
-        'Prospect',
-        'Past Client',
-      ];
-
-      for (const status of statuses) {
-        // Reset mocks
-        mockRepository.save.mockClear();
-        resetSavedAggregate();
-
+      await testAllClientStatuses(async (status) => {
         const data = new ClientDataPayload(
           'Test Company',
           'test@test.com',
@@ -125,7 +114,10 @@ describe('CreateClientHandler', () => {
         // Assert
         expect(mockRepository.save).toHaveBeenCalledTimes(1);
         expect(getSavedAggregate().getStatus()).toBe(status);
-      }
+      }, () => {
+        mockRepository.save.mockClear();
+        resetSavedAggregate();
+      });
     });
   });
 });
