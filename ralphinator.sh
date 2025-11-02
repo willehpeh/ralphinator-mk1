@@ -403,6 +403,7 @@ If you found and fixed a bug, skip step 1, commit all changes, keep REFACTORING.
 ## Important:
 - Only ONE refactoring per iteration
 - Only push and delete REFACTORING.md when done
+- Make sure you create REFACTORING_COMPLETE.md when done
 EOF
 
     log_info "Invoking Claude Code for Step 4..."
