@@ -3,6 +3,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import {
   CreateClientHandler,
   GetClientByIdQueryHandler,
+  GetAllClientsQueryHandler,
 } from '@angular-nest-starter/application';
 import {
   ClientProjection,
@@ -12,7 +13,7 @@ import {
 import { ClientsController } from './clients.controller';
 
 const CommandHandlers = [CreateClientHandler];
-const QueryHandlers = [GetClientByIdQueryHandler];
+const QueryHandlers = [GetClientByIdQueryHandler, GetAllClientsQueryHandler];
 const EventHandlers = [ClientProjection];
 
 @Module({

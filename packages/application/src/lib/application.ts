@@ -6,9 +6,11 @@ export * from './commands/handlers/create-client.handler';
 
 // Queries
 export * from './queries/get-client-by-id.query';
+export * from './queries/get-all-clients.query';
 
 // Query Handlers
 export * from './queries/handlers/get-client-by-id.handler';
+export * from './queries/handlers/get-all-clients.handler';
 
 // Integration Events
 export * from './events/client-created.event';
