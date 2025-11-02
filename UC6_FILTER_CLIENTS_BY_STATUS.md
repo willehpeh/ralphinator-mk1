@@ -77,6 +77,16 @@ This file will track the implementation progress for Use Case 6: Filter Clients 
 
 ### State Management
 
+#### Task 7: Added NGRX actions for filtering clients by status (2025-11-02)
+- **File**: `apps/frontend/src/app/clients/store/clients.actions.ts`
+- **Description**: Created NGRX actions to support filtering clients by status in the frontend state
+- **Details**:
+  - Added filterClientsByStatus action with status parameter ('Active' | 'Inactive' | 'Prospect' | 'Past Client')
+  - Added filterClientsByStatusSuccess action to handle successful filter results
+  - Added filterClientsByStatusFailure action to handle filter errors
+  - Follows existing action naming pattern and structure
+  - Uses proper TypeScript typing for status values matching backend domain
+
 
 ### Components
 

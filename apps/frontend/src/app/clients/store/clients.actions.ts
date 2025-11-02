@@ -93,3 +93,27 @@ export const changeClientStatusFailure = createAction(
   '[Clients] Change Client Status Failure',
   props<{ error: string }>()
 );
+
+/**
+ * Filter clients by status
+ */
+export const filterClientsByStatus = createAction(
+  '[Clients] Filter Clients By Status',
+  props<{ status: 'Active' | 'Inactive' | 'Prospect' | 'Past Client' }>()
+);
+
+/**
+ * Successfully filtered clients by status
+ */
+export const filterClientsByStatusSuccess = createAction(
+  '[Clients] Filter Clients By Status Success',
+  props<{ clients: Client[] }>()
+);
+
+/**
+ * Failed to filter clients by status
+ */
+export const filterClientsByStatusFailure = createAction(
+  '[Clients] Filter Clients By Status Failure',
+  props<{ error: string }>()
+);
