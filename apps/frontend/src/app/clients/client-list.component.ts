@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { loadClients } from './store/clients.actions';
+import { loadClients, filterClientsByStatus } from './store/clients.actions';
 import {
   selectAllClients,
   selectClientsLoading,
@@ -16,7 +16,23 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="client-list">
-      <h2>Client List</h2>
+      <div class="list-header">
+        <h2>Client List</h2>
+
+        <div class="filter-controls">
+          <label for="status-filter">Filter by Status:</label>
+          <select
+            id="status-filter"
+            (change)="onFilterChange($event)"
+            [value]="selectedFilter()">
+            <option value="all">All Clients</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Prospect">Prospect</option>
+            <option value="Past Client">Past Client</option>
+          </select>
+        </div>
+      </div>
 
       @if (loading()) {
         <div class="loading-message">
@@ -33,7 +49,13 @@ import {
       @if (!loading() && !hasClients()) {
         <div class="empty-state">
           <p>No clients found</p>
-          <p class="empty-state-hint">Add your first client to get started</p>
+          <p class="empty-state-hint">
+            @if (selectedFilter() === 'all') {
+              Add your first client to get started
+            } @else {
+              No clients found with status "{{ selectedFilter() }}". Try a different filter.
+            }
+          </p>
         </div>
       }
 
@@ -88,9 +110,51 @@ import {
       padding: 2rem;
     }
 
-    h2 {
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    h2 {
+      margin: 0;
       color: #333;
+    }
+
+    .filter-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .filter-controls label {
+      font-weight: 500;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .filter-controls select {
+      padding: 0.5rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: white;
+      color: #333;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .filter-controls select:hover {
+      border-color: #4CAF50;
+    }
+
+    .filter-controls select:focus {
+      outline: none;
+      border-color: #4CAF50;
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
     }
 
     .loading-message {
@@ -218,9 +282,27 @@ export class ClientListComponent implements OnInit {
   error = this.store.selectSignal(selectClientsError);
   hasClients = this.store.selectSignal(selectHasClients);
 
+  // Track selected filter
+  selectedFilter = signal<'all' | 'Active' | 'Inactive' | 'Prospect' | 'Past Client'>('all');
+
   ngOnInit(): void {
     // Dispatch action to load clients when component initializes
     this.store.dispatch(loadClients());
+  }
+
+  onFilterChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const value = selectElement.value as 'all' | 'Active' | 'Inactive' | 'Prospect' | 'Past Client';
+
+    this.selectedFilter.set(value);
+
+    if (value === 'all') {
+      // Load all clients
+      this.store.dispatch(loadClients());
+    } else {
+      // Filter clients by selected status
+      this.store.dispatch(filterClientsByStatus({ status: value }));
+    }
   }
 
   navigateToDetail(clientId: string): void {

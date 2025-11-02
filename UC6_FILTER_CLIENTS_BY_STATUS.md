@@ -115,6 +115,20 @@ This file will track the implementation progress for Use Case 6: Filter Clients 
 
 ### Components
 
+#### Task 10: Added status filter UI to client-list component (2025-11-02)
+- **File**: `apps/frontend/src/app/clients/client-list.component.ts`
+- **Description**: Added dropdown filter to allow users to filter clients by status
+- **Details**:
+  - Added signal import from Angular core
+  - Imported filterClientsByStatus action from store
+  - Added selectedFilter signal to track current filter selection ('all' | 'Active' | 'Inactive' | 'Prospect' | 'Past Client')
+  - Created list-header section with filter controls in template
+  - Added select dropdown with options for All Clients, Active, Inactive, Prospect, Past Client
+  - Implemented onFilterChange method to dispatch appropriate actions (loadClients for 'all', filterClientsByStatus for specific status)
+  - Updated empty state message to provide context-aware feedback based on selected filter
+  - Added CSS styles for filter controls with hover and focus states
+  - Follows modern Angular patterns: signals for local state, @if control flow, proper event binding
+  - Integrates with existing NGRX state management (dispatches actions, uses existing selectors)
 
 ### Services
 
@@ -148,11 +162,11 @@ This file will track the implementation progress for Use Case 6: Filter Clients 
 
 ## Completion Checklist
 
-- [ ] Backend query handler implemented
-- [ ] Read model supports status filtering
-- [ ] API endpoint created
-- [ ] Frontend filter UI component created
-- [ ] State management updated
-- [ ] Integration complete
+- [x] Backend query handler implemented
+- [x] Read model supports status filtering
+- [x] API endpoint created
+- [x] Frontend filter UI component created
+- [x] State management updated
+- [x] Integration complete
 - [ ] Tests passing
-- [ ] Documentation updated
+- [x] Documentation updated
