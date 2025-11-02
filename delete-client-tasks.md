@@ -70,6 +70,13 @@
 - Returns object with deleted client id
 - Verified with linting
 
+### 10. Register DeleteClientHandler and projection in module
+- Added DeleteClientHandler import to `apps/api/src/app/clients/clients.module.ts`
+- Added DeleteClientHandler to CommandHandlers array
+- ClientProjection already registered (handles all client domain events including deletion)
+- Verified with linting
+- Backend implementation now complete
+
 ## Next Tasks (Not Started)
 
 ### Domain Layer
@@ -82,8 +89,7 @@
 - ✅ All infrastructure layer tasks complete
 
 ### API Layer
-- [x] Add DELETE /clients/:id endpoint in controller
-- [ ] Register DeleteClientHandler and projection in module
+- ✅ All API layer tasks complete
 
 ### Frontend Layer
 - [ ] Add deleteClient action to NGRX store
