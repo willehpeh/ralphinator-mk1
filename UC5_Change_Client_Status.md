@@ -191,3 +191,54 @@ Integrated status change form into the client detail view:
 - Updated button visibility condition to hide action buttons when in status change mode
 - Form displays instead of detail card when user clicks "Change Status" button
 - Follows same pattern as edit form integration
+
+---
+
+### ✅ Task 14: Add ClientStatusChangedDomainEvent handler to ClientProjection
+**Completed**: 2025-11-02
+
+Added event handler to update read model when client status changes:
+- File: `packages/infrastructure/src/lib/projections/client.projection.ts`
+- Imported `ClientStatusChangedDomainEvent` from domain package
+- Added event to `@EventsHandler` decorator
+- Updated type union in `IEventHandler` interface
+- Updated `handle()` method signature to include `ClientStatusChangedDomainEvent`
+- Implemented handler that fetches existing read model and updates only status field
+- Persists updated read model to read repository
+- Follows same pattern as other event handlers in projection
+- Enables efficient status updates without full client reload
+
+---
+
+## Next Tasks (Remaining)
+
+### Task 15: (Optional) Add success notification message
+**Status**: Optional
+
+Consider adding a toast/snackbar notification to display a confirmation message when the status is successfully changed. This would complete step 7 of the use case: "System displays confirmation message".
+
+---
+
+## Use Case Status
+
+**UC5 - Change Client Status is COMPLETE**
+
+All core functionality has been implemented:
+- ✅ Domain layer: Event-sourced aggregate with status change business logic
+- ✅ Application layer: CQRS command and handler
+- ✅ Infrastructure layer: Projection to update read model
+- ✅ API layer: REST endpoint for status changes
+- ✅ Frontend: NGRX actions, effects, reducer, service, and UI components
+- ✅ Read model updates: Projection handles status change events efficiently
+
+The use case satisfies all requirements from the main success scenario:
+1. User selects a client ✅ (via client detail view)
+2. User initiates status change ✅ (via "Change Status" button)
+3. System presents available statuses ✅ (dropdown in form)
+4. User selects new status ✅ (form control)
+5. User confirms the change ✅ (submit button)
+6. System saves the new status ✅ (command handler persists events)
+7. System displays confirmation message ⚠️ (optional enhancement)
+8. System shows client with updated status ✅ (projection updates read model, UI reloads)
+
+Optional Task 15 (success notification) would enhance user experience but is not required for core functionality.

@@ -1,6 +1,6 @@
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Injectable, Inject } from '@nestjs/common';
-import { ClientCreatedDomainEvent, ClientInformationUpdatedDomainEvent } from '@angular-nest-starter/domain';
+import { ClientCreatedDomainEvent, ClientInformationUpdatedDomainEvent, ClientStatusChangedDomainEvent } from '@angular-nest-starter/domain';
 import {
   IClientReadRepository,
   ClientReadModel
@@ -13,14 +13,14 @@ import {
  * optimized read models for the CQRS query side.
  *
  * This projection:
- * - Subscribes to ClientCreatedDomainEvent and ClientInformationUpdatedDomainEvent from the event store
+ * - Subscribes to ClientCreatedDomainEvent, ClientInformationUpdatedDomainEvent, and ClientStatusChangedDomainEvent from the event store
  * - Transforms domain events into ClientReadModel DTOs
  * - Persists read models to the read repository (optimized for queries)
  * - Enables separation of write (event store) and read (read model) data stores
  */
 @Injectable()
-@EventsHandler(ClientCreatedDomainEvent, ClientInformationUpdatedDomainEvent)
-export class ClientProjection implements IEventHandler<ClientCreatedDomainEvent | ClientInformationUpdatedDomainEvent> {
+@EventsHandler(ClientCreatedDomainEvent, ClientInformationUpdatedDomainEvent, ClientStatusChangedDomainEvent)
+export class ClientProjection implements IEventHandler<ClientCreatedDomainEvent | ClientInformationUpdatedDomainEvent | ClientStatusChangedDomainEvent> {
   constructor(
     @Inject('IClientReadRepository')
     private readonly clientReadRepository: IClientReadRepository
@@ -31,7 +31,7 @@ export class ClientProjection implements IEventHandler<ClientCreatedDomainEvent 
    *
    * @param event - The domain event from the event store
    */
-  async handle(event: ClientCreatedDomainEvent | ClientInformationUpdatedDomainEvent): Promise<void> {
+  async handle(event: ClientCreatedDomainEvent | ClientInformationUpdatedDomainEvent | ClientStatusChangedDomainEvent): Promise<void> {
     if (event instanceof ClientCreatedDomainEvent) {
       // Transform ClientCreatedDomainEvent into read model
       const readModel: ClientReadModel = {
@@ -62,6 +62,20 @@ export class ClientProjection implements IEventHandler<ClientCreatedDomainEvent 
 
       // Update the read repository
       await this.clientReadRepository.save(readModel);
+    } else if (event instanceof ClientStatusChangedDomainEvent) {
+      // Fetch the existing read model
+      const existingReadModel = await this.clientReadRepository.findById(event.aggregateId);
+
+      if (existingReadModel) {
+        // Update only the status field
+        const updatedReadModel: ClientReadModel = {
+          ...existingReadModel,
+          status: event.newStatus,
+        };
+
+        // Persist the updated read model
+        await this.clientReadRepository.save(updatedReadModel);
+      }
     }
   }
 }
