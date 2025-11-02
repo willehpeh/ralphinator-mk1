@@ -57,4 +57,8 @@ export class ClientsService {
   getClientsByStatus(status: ClientStatus): Observable<Client[]> {
     return this.http.get<Client[]>(`${this.apiUrl}/status/${status}`);
   }
+
+  getClientById(id: string): Observable<Client> {
+    return this.http.get<Client>(`${this.apiUrl}/${id}`);
+  }
 }
