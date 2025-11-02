@@ -25,7 +25,9 @@ This document tracks the implementation of Use Case 4: Update Client Information
 
 **Frontend (⏳ In Progress)**:
 - ClientsService.updateClient() method (✅ complete)
-- NGRX update action (not started)
+- NGRX update action (✅ complete)
+- NGRX update effect (not started)
+- NGRX reducer for update (not started)
 - Edit form component (not started)
 - UI integration with client detail view (not started)
 
@@ -180,4 +182,25 @@ This document tracks the implementation of Use Case 4: Update Client Information
 - Enables the Angular app to communicate with the backend API for client updates
 
 **Verification**: Linting passed successfully (eslint apps/frontend/src/app/clients/clients.service.ts)
+
+---
+
+### Task 9: Create NGRX update client actions ✅
+**Completed**: 2025-11-02
+**Files**:
+- `apps/frontend/src/app/clients/store/clients.actions.ts`
+
+**Description**: Added NGRX actions for updating clients in the state management layer. This implementation:
+- Created `updateClient` action with props for all client fields (id, companyName, email, phone, address, status, notes)
+- Created `updateClientSuccess` action to handle successful updates (returns id)
+- Created `updateClientFailure` action to handle errors (returns error string)
+- Follows the same pattern as `loadClients` actions for consistency
+- Uses NGRX `createAction` and `props` for type-safe action creation
+- Uses action naming convention: `[Clients] {Action Name}`
+- Enables the frontend to dispatch update client commands to the NGRX store
+- Will be connected to effects in next task to trigger API calls
+
+**Verification**: Linting passed successfully (eslint apps/frontend/src/app/clients/store/clients.actions.ts)
+
+---
 

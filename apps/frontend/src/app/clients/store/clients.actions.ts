@@ -34,3 +34,35 @@ export const loadClientsFailure = createAction(
   '[Clients] Load Clients Failure',
   props<{ error: string }>()
 );
+
+/**
+ * Update an existing client
+ */
+export const updateClient = createAction(
+  '[Clients] Update Client',
+  props<{
+    id: string;
+    companyName: string;
+    email: string;
+    phone: string | null;
+    address: string | null;
+    status: 'ACTIVE' | 'INACTIVE' | 'PENDING';
+    notes: string | null;
+  }>()
+);
+
+/**
+ * Successfully updated client
+ */
+export const updateClientSuccess = createAction(
+  '[Clients] Update Client Success',
+  props<{ id: string }>()
+);
+
+/**
+ * Failed to update client
+ */
+export const updateClientFailure = createAction(
+  '[Clients] Update Client Failure',
+  props<{ error: string }>()
+);
