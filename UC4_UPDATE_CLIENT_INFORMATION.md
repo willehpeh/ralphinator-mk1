@@ -255,3 +255,27 @@ This document tracks the implementation of Use Case 4: Update Client Information
 
 ---
 
+### Task 12: Create EditClientFormComponent ✅
+**Completed**: 2025-11-02
+**Files**:
+- `apps/frontend/src/app/clients/edit-client-form.component.ts`
+
+**Description**: Created the `EditClientFormComponent` for editing existing client information. This component:
+- Created using modern Angular standalone component pattern
+- Uses `input.required<string>()` to accept clientId as component input
+- Uses NGRX store signals to select client data via `selectClientById` selector
+- Uses typed reactive form (`FormGroup<EditClientForm>`) with all client fields
+- Implements `OnInit` to populate form with existing client data using `patchValue()`
+- Dispatches `updateClient` action to NGRX store on form submission
+- Handles form validation (required fields: companyName, email, status)
+- Displays loading and error states from NGRX store
+- Implements cancel functionality that resets form to original client data
+- Uses signals for local component state (submitting)
+- Follows the same UI pattern and styles as `AddClientFormComponent`
+- Uses OnPush change detection strategy for performance
+- Ready to be integrated into the client detail view in next task
+
+**Verification**: Linting passed successfully (npx eslint apps/frontend/src/app/clients/edit-client-form.component.ts)
+
+---
+
