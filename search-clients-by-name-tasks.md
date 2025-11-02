@@ -5,11 +5,6 @@ Implement client name search functionality that filters the client list in real-
 
 ## Tasks
 
-### Task 3: NOT STARTED - Add search input event handler
-- Implement method to handle search input changes
-- Update the search term signal
-- Status: Not Started
-
 ### Task 4: NOT STARTED - Add NGRX action for filtering by name
 - Create filterClientsByName action in clients.actions.ts
 - Status: Not Started
@@ -50,3 +45,9 @@ Implement client name search functionality that filters the client list in real-
 - Created searchTerm signal to track the search term
 - Initialized with empty string
 - Commit: c24fb7b
+
+### ✅ Task 3: Add search input event handler - COMPLETED
+- Implemented onSearchChange method to handle search input changes
+- Method extracts value from input element and updates searchTerm signal
+- Bound (input) event to search input field in template
+- Location: apps/frontend/src/app/clients/client-list.component.ts:340-343

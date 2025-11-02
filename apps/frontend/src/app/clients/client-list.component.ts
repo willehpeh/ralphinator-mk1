@@ -33,7 +33,8 @@ import { CLIENT_STATUSES } from './client.constants';
               id="search-input"
               type="text"
               placeholder="Search by company name..."
-              class="search-input" />
+              class="search-input"
+              (input)="onSearchChange($event)" />
           </div>
 
           <div class="filter-controls">
@@ -334,6 +335,11 @@ export class ClientListComponent implements OnInit {
       // Filter clients by selected status
       this.store.dispatch(filterClientsByStatus({ status: value }));
     }
+  }
+
+  onSearchChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    this.searchTerm.set(inputElement.value);
   }
 
   navigateToDetail(clientId: string): void {
