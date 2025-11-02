@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { ClientsService } from '../clients.service';
-import { loadClients, loadClientsSuccess, loadClientsFailure, updateClient, updateClientSuccess, updateClientFailure, changeClientStatus, changeClientStatusSuccess, changeClientStatusFailure, filterClientsByStatus, filterClientsByStatusSuccess, filterClientsByStatusFailure } from './clients.actions';
+import { loadClients, loadClientsSuccess, loadClientsFailure, updateClient, updateClientSuccess, updateClientFailure, changeClientStatus, changeClientStatusSuccess, changeClientStatusFailure, filterClientsByStatus, filterClientsByStatusSuccess, filterClientsByStatusFailure, deleteClient, deleteClientSuccess, deleteClientFailure } from './clients.actions';
 
 /**
  * NGRX Effects for client-related side effects
@@ -88,6 +88,24 @@ export class ClientsEffects {
           map((clients) => filterClientsByStatusSuccess({ clients })),
           catchError((error) =>
             of(filterClientsByStatusFailure({ error: error?.message || 'Failed to filter clients by status' }))
+          )
+        )
+      )
+    )
+  );
+
+  /**
+   * Effect to delete a client from the backend
+   * Listens for deleteClient action, calls the service, and dispatches success/failure
+   */
+  deleteClient$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteClient),
+      switchMap((action) =>
+        this.clientsService.deleteClient(action.id).pipe(
+          map((response) => deleteClientSuccess({ id: response.id })),
+          catchError((error) =>
+            of(deleteClientFailure({ error: error?.message || 'Failed to delete client' }))
           )
         )
       )

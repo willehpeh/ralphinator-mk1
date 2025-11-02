@@ -30,6 +30,10 @@ export interface ChangeClientStatusDto {
   status: ClientStatus;
 }
 
+export interface DeleteClientResponse {
+  id: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -47,6 +51,10 @@ export class ClientsService {
 
   changeClientStatus(id: string, dto: ChangeClientStatusDto): Observable<Client> {
     return this.http.patch<Client>(`${this.apiUrl}/${id}/status`, dto);
+  }
+
+  deleteClient(id: string): Observable<DeleteClientResponse> {
+    return this.http.delete<DeleteClientResponse>(`${this.apiUrl}/${id}`);
   }
 
   getAllClients(): Observable<Client[]> {

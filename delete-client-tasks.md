@@ -98,7 +98,15 @@
   - Added deleteClientFailure action with props<{ error: string }>
   - Follows existing NGRX action pattern with action creator and typed props
   - No new linting errors introduced (pre-existing architectural decisions maintained)
-- [ ] Add deleteClient effect to call API
+- [x] **Add deleteClient effect to call API** ✅
+  - Added DeleteClientResponse interface to `apps/frontend/src/app/clients/clients.service.ts`
+  - Added deleteClient(id: string) method to ClientsService that calls DELETE /api/clients/:id
+  - Returns Observable<DeleteClientResponse> matching backend response type
+  - Added deleteClient, deleteClientSuccess, deleteClientFailure imports to `apps/frontend/src/app/clients/store/clients.effects.ts`
+  - Implemented deleteClient$ effect that listens for deleteClient action
+  - Effect calls clientsService.deleteClient() and dispatches success/failure actions
+  - Follows existing NGRX effect pattern (switchMap, map, catchError)
+  - No new linting errors introduced in effects file
 - [ ] Update reducer to remove deleted client
 - [ ] Add "Delete Client" button to client detail view
 - [ ] Add confirmation dialog component
