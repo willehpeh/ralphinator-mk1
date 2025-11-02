@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClientFormComponent } from './client-form.component';
+import { CLIENT_ROUTES } from './client-routes.constants';
 
 @Component({
   selector: 'app-add-client-page',
@@ -18,10 +19,10 @@ export class AddClientPageComponent {
   private router = inject(Router);
 
   handleCancel(): void {
-    this.router.navigate(['/clients']);
+    this.router.navigate([CLIENT_ROUTES.BASE]);
   }
 
   handleSuccess(): void {
-    this.router.navigate(['/clients']);
+    this.router.navigate([CLIENT_ROUTES.BASE]);
   }
 }

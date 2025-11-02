@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { ClientsService } from '../clients.service';
 import { loadClients, loadClientsSuccess, loadClientsFailure, updateClient, updateClientSuccess, updateClientFailure, changeClientStatus, changeClientStatusSuccess, changeClientStatusFailure, filterClientsByStatus, filterClientsByStatusSuccess, filterClientsByStatusFailure, deleteClient, deleteClientSuccess, deleteClientFailure } from './clients.actions';
+import { CLIENT_ROUTES } from '../client-routes.constants';
 
 /**
  * NGRX Effects for client-related side effects
@@ -116,13 +117,13 @@ export class ClientsEffects {
 
   /**
    * Effect to navigate to client list after successful deletion
-   * Listens for deleteClientSuccess action and navigates to /clients
+   * Listens for deleteClientSuccess action and navigates to client list
    */
   deleteClientSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(deleteClientSuccess),
-        tap(() => this.router.navigate(['/clients']))
+        tap(() => this.router.navigate([CLIENT_ROUTES.BASE]))
       ),
     { dispatch: false }
   );

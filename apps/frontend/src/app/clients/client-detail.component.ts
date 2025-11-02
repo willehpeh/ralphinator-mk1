@@ -7,6 +7,7 @@ import { selectClientById, selectClientsLoading, selectClientsError } from './st
 import { ClientFormComponent } from './client-form.component';
 import { ChangeStatusFormComponent } from './change-status-form.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
+import { CLIENT_ROUTES } from './client-routes.constants';
 
 @Component({
   selector: 'app-client-detail',
@@ -171,7 +172,7 @@ export class ClientDetailComponent implements OnInit {
   }
 
   navigateBack(): void {
-    this.router.navigate(['/clients']);
+    this.router.navigate([CLIENT_ROUTES.BASE]);
   }
 
   toggleEditMode(): void {

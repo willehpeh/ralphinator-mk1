@@ -389,7 +389,7 @@ You are in Step 4 of an agentic software development workflow.
 0. If there are any bugs in BUGS.md, fix the first one. Run all lint, unit test, and build tasks to ensure you fixed it. If a new error appears, add it to BUGS.md.
 If you found and fixed a bug, skip step 1, commit all changes, keep REFACTORING.md and end the iteration.
 1. Examine the codebase for refactoring opportunities
-2. If you find a refactoring:
+2. If you find a USEFUL refactoring (think YAGNI, avoid overengineering):
    - Implement ONE refactoring only
    - Run all lint, unit test, and build tasks
    - If there are any errors, write them to BUGS.md, creating the file if necessary

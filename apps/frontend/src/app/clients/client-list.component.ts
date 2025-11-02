@@ -11,6 +11,7 @@ import {
 } from './store/clients.selectors';
 import { ClientStatus } from './client.types';
 import { CLIENT_STATUSES } from './client.constants';
+import { CLIENT_ROUTES } from './client-routes.constants';
 
 @Component({
   selector: 'app-client-list',
@@ -192,10 +193,10 @@ export class ClientListComponent implements OnInit {
   }
 
   navigateToDetail(clientId: string): void {
-    this.router.navigate(['/clients', clientId]);
+    this.router.navigate([CLIENT_ROUTES.detail(clientId)]);
   }
 
   navigateToAddClient(): void {
-    this.router.navigate(['/clients/add']);
+    this.router.navigate([CLIENT_ROUTES.ADD]);
   }
 }
