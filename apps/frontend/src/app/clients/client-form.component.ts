@@ -9,9 +9,7 @@ import { updateClient, updateClientSuccess, updateClientFailure } from './store/
 import { selectClientsError } from './store/clients.selectors';
 import { ClientStatus, Client } from './client.types';
 import { CLIENT_STATUSES, DEFAULT_CLIENT_STATUS } from './client.constants';
-import { CLIENT_UI_TEXT, CLIENT_FORM_LABELS } from './client-display.constants';
-
-const SUCCESS_MESSAGE_DISMISS_DURATION_MS = 3000;
+import { CLIENT_UI_TEXT, CLIENT_FORM_LABELS, SUCCESS_MESSAGE_DISMISS_DURATION_MS } from './client-display.constants';
 
 interface ClientFormFields {
   companyName: FormControl<string>;
