@@ -8,7 +8,7 @@ import { ClientsService, CreateClientDto } from './clients.service';
 import { updateClient, updateClientSuccess, updateClientFailure } from './store/clients.actions';
 import { selectClientsError } from './store/clients.selectors';
 import { ClientStatus, Client } from './client.types';
-import { CLIENT_STATUSES } from './client.constants';
+import { CLIENT_STATUSES, DEFAULT_CLIENT_STATUS } from './client.constants';
 
 const SUCCESS_MESSAGE_DISMISS_DURATION_MS = 3000;
 
@@ -160,7 +160,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
     phone: new FormControl('', { nonNullable: true }),
     address: new FormControl('', { nonNullable: true }),
-    status: new FormControl<ClientStatus>('Active', { nonNullable: true, validators: [Validators.required] }),
+    status: new FormControl<ClientStatus>(DEFAULT_CLIENT_STATUS, { nonNullable: true, validators: [Validators.required] }),
     notes: new FormControl('', { nonNullable: true })
   });
 
@@ -250,7 +250,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
       next: () => {
         this.submitSuccess.set(true);
         this.submitting.set(false);
-        this.form.reset({ status: 'Active' });
+        this.form.reset({ status: DEFAULT_CLIENT_STATUS });
         setTimeout(() => {
           this.submitSuccess.set(false);
           this.formSucceeded.emit();
@@ -285,7 +285,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
 
   onCancel(): void {
     if (this.mode() === 'create') {
-      this.form.reset({ status: 'Active' });
+      this.form.reset({ status: DEFAULT_CLIENT_STATUS });
       this.submitSuccess.set(false);
       this.submitError.set(null);
     } else {

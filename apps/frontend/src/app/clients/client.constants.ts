@@ -10,3 +10,8 @@ export const CLIENT_STATUSES: readonly ClientStatus[] = [
   'Prospect',
   'Past Client'
 ] as const;
+
+/**
+ * Default client status used when creating new clients or resetting forms.
+ */
+export const DEFAULT_CLIENT_STATUS: ClientStatus = 'Active';

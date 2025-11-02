@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { changeClientStatus } from './store/clients.actions';
 import { selectClientById, selectClientsError } from './store/clients.selectors';
 import { ClientStatus } from './client.types';
-import { CLIENT_STATUSES } from './client.constants';
+import { CLIENT_STATUSES, DEFAULT_CLIENT_STATUS } from './client.constants';
 
 interface StatusForm {
   status: FormControl<ClientStatus>;
@@ -103,7 +103,7 @@ export class ChangeStatusFormComponent {
 
   // Form
   form = new FormGroup<StatusForm>({
-    status: new FormControl<ClientStatus>('Active', {
+    status: new FormControl<ClientStatus>(DEFAULT_CLIENT_STATUS, {
       nonNullable: true,
       validators: [Validators.required]
     })
