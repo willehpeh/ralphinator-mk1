@@ -9,7 +9,7 @@ import { updateClient, updateClientSuccess, updateClientFailure } from './store/
 import { selectClientsError } from './store/clients.selectors';
 import { ClientStatus, Client } from './client.types';
 import { CLIENT_STATUSES, DEFAULT_CLIENT_STATUS } from './client.constants';
-import { CLIENT_UI_TEXT } from './client-display.constants';
+import { CLIENT_UI_TEXT, CLIENT_FORM_LABELS } from './client-display.constants';
 
 const SUCCESS_MESSAGE_DISMISS_DURATION_MS = 3000;
 
@@ -51,58 +51,58 @@ interface ClientFormFields {
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label for="companyName">Company Name *</label>
+          <label for="companyName">{{ formLabels.COMPANY_NAME }}</label>
           <input
             id="companyName"
             type="text"
             formControlName="companyName"
-            placeholder="Enter company name"
+            [placeholder]="formLabels.COMPANY_NAME_PLACEHOLDER"
           />
         </div>
 
         <div class="form-group">
-          <label for="email">Email *</label>
+          <label for="email">{{ formLabels.EMAIL }}</label>
           <input
             id="email"
             type="email"
             formControlName="email"
-            placeholder="contact@example.com"
+            [placeholder]="formLabels.EMAIL_PLACEHOLDER"
             [class.invalid]="form.controls.email.invalid && form.controls.email.touched"
           />
           @if (form.controls.email.invalid && form.controls.email.touched) {
             <div class="validation-error">
               @if (form.controls.email.hasError('required')) {
-                Email is required
+                {{ formLabels.EMAIL_REQUIRED }}
               }
               @if (form.controls.email.hasError('email')) {
-                Please enter a valid email address
+                {{ formLabels.INVALID_EMAIL }}
               }
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="phone">Phone</label>
+          <label for="phone">{{ formLabels.PHONE }}</label>
           <input
             id="phone"
             type="tel"
             formControlName="phone"
-            placeholder="+1-555-0123"
+            [placeholder]="formLabels.PHONE_PLACEHOLDER"
           />
         </div>
 
         <div class="form-group">
-          <label for="address">Address</label>
+          <label for="address">{{ formLabels.ADDRESS }}</label>
           <textarea
             id="address"
             formControlName="address"
-            placeholder="123 Main St, City, State ZIP"
+            [placeholder]="formLabels.ADDRESS_PLACEHOLDER"
             rows="3"
           ></textarea>
         </div>
 
         <div class="form-group">
-          <label for="status">Status *</label>
+          <label for="status">{{ formLabels.STATUS }}</label>
           <select id="status" formControlName="status">
             @for (status of availableStatuses; track status) {
               <option [value]="status">{{ status }}</option>
@@ -111,11 +111,11 @@ interface ClientFormFields {
         </div>
 
         <div class="form-group">
-          <label for="notes">Notes</label>
+          <label for="notes">{{ formLabels.NOTES }}</label>
           <textarea
             id="notes"
             formControlName="notes"
-            placeholder="Additional notes about the client"
+            [placeholder]="formLabels.NOTES_PLACEHOLDER"
             rows="4"
           ></textarea>
         </div>
@@ -155,6 +155,9 @@ export class ClientFormComponent implements OnInit, OnDestroy {
 
   // UI text labels
   readonly uiText = CLIENT_UI_TEXT;
+
+  // Form labels
+  readonly formLabels = CLIENT_FORM_LABELS;
 
   // Select error from store (for edit mode)
   storeError = this.store.selectSignal(selectClientsError);

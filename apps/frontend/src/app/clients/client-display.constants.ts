@@ -46,3 +46,28 @@ export const CLIENT_UI_TEXT = {
   SAVE_STATUS_BUTTON: 'Save Status',
   CANCEL_BUTTON: 'Cancel',
 } as const;
+
+/**
+ * Form field labels and placeholders for client forms.
+ * This ensures consistent labeling across all client form instances.
+ */
+export const CLIENT_FORM_LABELS = {
+  // Field labels
+  COMPANY_NAME: 'Company Name *',
+  EMAIL: 'Email *',
+  PHONE: 'Phone',
+  ADDRESS: 'Address',
+  STATUS: 'Status *',
+  NOTES: 'Notes',
+
+  // Placeholders
+  COMPANY_NAME_PLACEHOLDER: 'Enter company name',
+  EMAIL_PLACEHOLDER: 'contact@example.com',
+  PHONE_PLACEHOLDER: '+1-555-0123',
+  ADDRESS_PLACEHOLDER: '123 Main St, City, State ZIP',
+  NOTES_PLACEHOLDER: 'Additional notes about the client',
+
+  // Validation messages
+  EMAIL_REQUIRED: 'Email is required',
+  INVALID_EMAIL: 'Please enter a valid email address',
+} as const;
