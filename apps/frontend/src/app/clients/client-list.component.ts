@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { loadClients } from './store/clients.actions';
 import {
@@ -39,7 +40,7 @@ import {
       @if (hasClients()) {
         <div class="clients-grid">
           @for (client of clients(); track client.id) {
-            <div class="client-card">
+            <div class="client-card" (click)="navigateToDetail(client.id)">
               <div class="client-header">
                 <h3>{{ client.companyName }}</h3>
                 <span class="status-badge" [class]="'status-' + client.status.toLowerCase()">
@@ -136,11 +137,14 @@ import {
       border: 1px solid #ddd;
       border-radius: 8px;
       padding: 1.5rem;
-      transition: box-shadow 0.2s;
+      transition: all 0.2s;
+      cursor: pointer;
     }
 
     .client-card:hover {
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-color: #4CAF50;
+      transform: translateY(-2px);
     }
 
     .client-header {
@@ -206,6 +210,7 @@ import {
 })
 export class ClientListComponent implements OnInit {
   private store = inject(Store);
+  private router = inject(Router);
 
   // Select data from store using signals
   clients = this.store.selectSignal(selectAllClients);
@@ -216,5 +221,9 @@ export class ClientListComponent implements OnInit {
   ngOnInit(): void {
     // Dispatch action to load clients when component initializes
     this.store.dispatch(loadClients());
+  }
+
+  navigateToDetail(clientId: string): void {
+    this.router.navigate(['/clients', clientId]);
   }
 }

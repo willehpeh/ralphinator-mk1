@@ -40,8 +40,8 @@ This document tracks the implementation of Use Case 3: View Client Details, whic
 - [x] Style component appropriately
 
 ### Frontend - Integration
-- [ ] Update ClientListComponent to navigate to details on click
-- [ ] Ensure navigation preserves state
+- [x] Update ClientListComponent to navigate to details on click
+- [x] Ensure navigation preserves state
 - [ ] Test navigation flow
 
 ### Testing
@@ -84,6 +84,18 @@ This document tracks the implementation of Use Case 3: View Client Details, whic
 - Imported `ClientDetailComponent` into routing configuration
 - Route now enables navigation to individual client detail pages
 - Location: `apps/frontend/src/app/app.routes.ts:16-18`
+
+### 2025-11-02: Added navigation from ClientListComponent
+- Imported `Router` service into `ClientListComponent`
+- Added `navigateToDetail(clientId: string)` method that navigates to `/clients/:id`
+- Added click handler to client cards: `(click)="navigateToDetail(client.id)"`
+- Enhanced card styling for better interactivity:
+  - Added `cursor: pointer` to indicate clickable cards
+  - Enhanced hover state with border color change and subtle lift effect
+  - Changed transition from `box-shadow 0.2s` to `all 0.2s` for smooth animations
+- Navigation preserves NGRX state - client data is already loaded in store
+- Users can now click any client card to view full details
+- Location: `apps/frontend/src/app/clients/client-list.component.ts`
 
 ---
 
