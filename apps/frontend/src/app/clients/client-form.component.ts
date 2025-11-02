@@ -1,9 +1,11 @@
-import { Component, ChangeDetectionStrategy, inject, signal, input, output, OnInit, effect } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, input, output, OnInit, effect, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
+import { Subject, takeUntil } from 'rxjs';
 import { ClientsService, CreateClientDto } from './clients.service';
-import { updateClient } from './store/clients.actions';
+import { updateClient, updateClientSuccess, updateClientFailure } from './store/clients.actions';
 import { selectClientsError } from './store/clients.selectors';
 import { ClientStatus } from '@angular-nest-starter/domain';
 import { CLIENT_STATUSES } from './client.constants';
@@ -201,9 +203,11 @@ interface ClientFormFields {
     }
   `]
 })
-export class ClientFormComponent implements OnInit {
+export class ClientFormComponent implements OnInit, OnDestroy {
   private clientsService = inject(ClientsService);
   private store = inject(Store);
+  private actions$ = inject(Actions);
+  private destroy$ = new Subject<void>();
 
   // Inputs
   mode = input.required<'create' | 'edit'>();
@@ -249,6 +253,23 @@ export class ClientFormComponent implements OnInit {
         });
       }
     });
+
+    // Listen for successful update actions in edit mode
+    this.actions$.pipe(
+      ofType(updateClientSuccess),
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
+      this.submitting.set(false);
+      this.formSucceeded.emit();
+    });
+
+    // Listen for failed update actions in edit mode
+    this.actions$.pipe(
+      ofType(updateClientFailure),
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
+      this.submitting.set(false);
+    });
   }
 
   ngOnInit(): void {
@@ -264,6 +285,11 @@ export class ClientFormComponent implements OnInit {
         notes: clientData.notes || ''
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   onSubmit(): void {
@@ -316,6 +342,7 @@ export class ClientFormComponent implements OnInit {
       return;
     }
 
+    // Dispatch update action - success/failure will be handled by the Actions stream listeners
     this.store.dispatch(updateClient({
       id: clientData.id,
       companyName: formValue.companyName,
@@ -325,12 +352,6 @@ export class ClientFormComponent implements OnInit {
       status: formValue.status,
       notes: formValue.notes || null
     }));
-
-    // Emit success event after a brief delay to allow the store to update
-    setTimeout(() => {
-      this.submitting.set(false);
-      this.formSucceeded.emit();
-    }, 1000);
   }
 
   onCancel(): void {
