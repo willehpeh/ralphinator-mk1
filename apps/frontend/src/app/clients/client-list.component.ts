@@ -12,6 +12,7 @@ import {
 import { ClientStatus } from './client.types';
 import { CLIENT_STATUSES } from './client.constants';
 import { CLIENT_ROUTES } from './client-routes.constants';
+import { STANDARD_DATE_FORMAT } from './client-display.constants';
 
 @Component({
   selector: 'app-client-list',
@@ -133,7 +134,7 @@ import { CLIENT_ROUTES } from './client-routes.constants';
                 }
                 <div class="detail-row">
                   <span class="detail-label">Created:</span>
-                  <span class="detail-value">{{ client.createdAt | date:'short' }}</span>
+                  <span class="detail-value">{{ client.createdAt | date:dateFormat }}</span>
                 </div>
               </div>
             </div>
@@ -149,6 +150,9 @@ export class ClientListComponent implements OnInit {
 
   // Available status options
   readonly availableStatuses = CLIENT_STATUSES;
+
+  // Date format for displaying client dates
+  readonly dateFormat = STANDARD_DATE_FORMAT;
 
   // Select data from store using signals
   clients = this.store.selectSignal(selectAllClients);

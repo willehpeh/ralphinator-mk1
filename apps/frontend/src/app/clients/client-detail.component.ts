@@ -8,6 +8,7 @@ import { ClientFormComponent } from './client-form.component';
 import { ChangeStatusFormComponent } from './change-status-form.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { CLIENT_ROUTES } from './client-routes.constants';
+import { STANDARD_DATE_FORMAT } from './client-display.constants';
 
 @Component({
   selector: 'app-client-detail',
@@ -117,7 +118,7 @@ import { CLIENT_ROUTES } from './client-routes.constants';
                 </div>
                 <div class="detail-item">
                   <span class="detail-label">Created:</span>
-                  <span class="detail-value">{{ clientData.createdAt | date:'medium' }}</span>
+                  <span class="detail-value">{{ clientData.createdAt | date:dateFormat }}</span>
                 </div>
               </div>
             </div>
@@ -154,6 +155,9 @@ export class ClientDetailComponent implements OnInit {
 
   // Delete confirmation dialog state
   showDeleteConfirmation = signal(false);
+
+  // Date format for displaying client dates
+  readonly dateFormat = STANDARD_DATE_FORMAT;
 
   // Select data from store using signals
   client = this.store.selectSignal(selectClientById(this.clientId() ?? ''));
