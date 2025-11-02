@@ -20,15 +20,8 @@ export class UpdateClientHandler
    */
   async execute(command: UpdateClientCommand): Promise<string> {
     return this.executeOnAggregate(command.id, ClientAggregate, (client) => {
-      // Create ClientData value object
-      const clientData = new ClientData(
-        command.data.companyName,
-        command.data.email,
-        command.data.phone,
-        command.data.address,
-        command.data.status,
-        command.data.notes
-      );
+      // Create ClientData value object using factory method
+      const clientData = ClientData.fromPayload(command.data);
 
       // Update client information using domain logic
       client.updateInformation(clientData);

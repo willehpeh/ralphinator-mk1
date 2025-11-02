@@ -19,15 +19,8 @@ export class CreateClientHandler
    * @returns The ID of the newly created client
    */
   async execute(command: CreateClientCommand): Promise<string> {
-    // Create ClientData value object
-    const clientData = new ClientData(
-      command.data.companyName,
-      command.data.email,
-      command.data.phone,
-      command.data.address,
-      command.data.status,
-      command.data.notes
-    );
+    // Create ClientData value object using factory method
+    const clientData = ClientData.fromPayload(command.data);
 
     // Create new client aggregate using domain logic
     const client = ClientAggregate.create(command.id, clientData);

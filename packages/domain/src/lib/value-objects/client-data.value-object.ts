@@ -13,4 +13,29 @@ export class ClientData {
     public readonly status: ClientStatus,
     public readonly notes: string | null
   ) {}
+
+  /**
+   * Factory method to create ClientData from payload objects.
+   * Reduces duplication in command handlers.
+   *
+   * @param payload - Object containing client data properties
+   * @returns New ClientData instance
+   */
+  static fromPayload(payload: {
+    companyName: string;
+    email: string;
+    phone: string | null;
+    address: string | null;
+    status: ClientStatus;
+    notes: string | null;
+  }): ClientData {
+    return new ClientData(
+      payload.companyName,
+      payload.email,
+      payload.phone,
+      payload.address,
+      payload.status,
+      payload.notes
+    );
+  }
 }
