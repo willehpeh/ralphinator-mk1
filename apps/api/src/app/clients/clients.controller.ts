@@ -1,10 +1,19 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateClientCommand, GetClientByIdQuery, GetAllClientsQuery, ClientReadModel } from '@angular-nest-starter/application';
+import { CreateClientCommand, UpdateClientCommand, GetClientByIdQuery, GetAllClientsQuery, ClientReadModel } from '@angular-nest-starter/application';
 import { ClientStatus } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
 
 export class CreateClientDto {
+  companyName!: string;
+  email!: string;
+  phone!: string | null;
+  address!: string | null;
+  status!: ClientStatus;
+  notes!: string | null;
+}
+
+export class UpdateClientDto {
   companyName!: string;
   email!: string;
   phone!: string | null;
@@ -52,5 +61,27 @@ export class ClientsController {
     const query = new GetClientByIdQuery(id);
     const client = await this.queryBus.execute<GetClientByIdQuery, ClientReadModel | null>(query);
     return client;
+  }
+
+  @Put(':id')
+  async updateClient(
+    @Param('id') id: string,
+    @Body() dto: UpdateClientDto
+  ): Promise<{ id: string }> {
+    const command = new UpdateClientCommand(
+      id,
+      dto.companyName,
+      dto.email,
+      dto.phone,
+      dto.address,
+      dto.status,
+      dto.notes
+    );
+
+    const clientId = await this.commandBus.execute<UpdateClientCommand, string>(
+      command
+    );
+
+    return { id: clientId };
   }
 }

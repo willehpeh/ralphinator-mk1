@@ -102,3 +102,23 @@ This document tracks the implementation of Use Case 4: Update Client Information
 - Completes the backend wiring for the update client functionality
 
 **Verification**: Linting passed successfully
+
+---
+
+### Task 6: Add PUT endpoint for updating client ✅
+**Completed**: 2025-11-02
+**Files**:
+- `apps/api/src/app/clients/clients.controller.ts`
+
+**Description**: Added a PUT endpoint to the `ClientsController` for updating existing clients. This endpoint:
+- Created `UpdateClientDto` class with all client fields (companyName, email, phone, address, status, notes)
+- Imported `Put` decorator and `UpdateClientCommand` from necessary packages
+- Implemented `@Put(':id')` endpoint that accepts client ID as URL parameter
+- Accepts `UpdateClientDto` in request body with updated client information
+- Creates an `UpdateClientCommand` with the ID and DTO data
+- Executes the command through the command bus
+- Returns the client ID in response format `{ id: string }`
+- Follows the same pattern as the POST endpoint for consistency
+- Completes the backend API layer for UC4
+
+**Verification**: Linting passed successfully
