@@ -9,7 +9,7 @@ import {
   selectClientsError,
   selectHasClients
 } from './store/clients.selectors';
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus } from './client.types';
 import { CLIENT_STATUSES } from './client.constants';
 
 @Component({
@@ -94,7 +94,13 @@ import { CLIENT_STATUSES } from './client.constants';
       @if (hasClients()) {
         <div class="clients-grid">
           @for (client of clients(); track client.id) {
-            <div class="client-card" (click)="navigateToDetail(client.id)">
+            <div
+              class="client-card"
+              role="button"
+              tabindex="0"
+              (click)="navigateToDetail(client.id)"
+              (keydown.enter)="navigateToDetail(client.id)"
+              (keydown.space)="navigateToDetail(client.id)">
               <div class="client-header">
                 <h3>{{ client.companyName }}</h3>
                 <span class="status-badge" [class]="'status-' + client.status.toLowerCase()">

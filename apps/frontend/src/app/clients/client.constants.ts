@@ -1,4 +1,4 @@
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus } from './client.types';
 
 /**
  * Available client status values.

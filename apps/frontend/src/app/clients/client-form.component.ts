@@ -7,7 +7,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ClientsService, CreateClientDto } from './clients.service';
 import { updateClient, updateClientSuccess, updateClientFailure } from './store/clients.actions';
 import { selectClientsError } from './store/clients.selectors';
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus } from './client.types';
 import { CLIENT_STATUSES } from './client.constants';
 
 const SUCCESS_MESSAGE_DISMISS_DURATION_MS = 3000;
@@ -276,8 +276,8 @@ export class ClientFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Initial form population for edit mode
-    if (this.mode() === 'edit' && this.client()) {
-      const clientData = this.client()!;
+    const clientData = this.client();
+    if (this.mode() === 'edit' && clientData) {
       this.form.patchValue({
         companyName: clientData.companyName,
         email: clientData.email,

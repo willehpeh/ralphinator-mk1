@@ -1,10 +1,10 @@
-import { Component, ChangeDetectionStrategy, inject, input, output, signal, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, input, output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { changeClientStatus } from './store/clients.actions';
 import { selectClientById, selectClientsError } from './store/clients.selectors';
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus } from './client.types';
 import { CLIENT_STATUSES } from './client.constants';
 
 interface StatusForm {

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { ClientListComponent } from './client-list.component';
 import { loadClients } from './store/clients.actions';

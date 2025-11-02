@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus } from '../client.types';
 
 /**
  * Client interface matching the backend ClientReadModel
