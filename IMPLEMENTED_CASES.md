@@ -39,6 +39,26 @@
 - Documentation: UC3_View_Client_Details.md
 - **Note**: Core functionality complete; unit/integration tests pending for future testing phase
 
+## Use Case 4: Update Client Information (2025-11-02)
+- Complete event-sourced client update implementation with CQRS pattern
+- Backend: ClientInformationUpdatedDomainEvent domain event for capturing state changes
+- Backend: ClientAggregate.updateInformation() method for business logic
+- Backend: UpdateClientCommand and UpdateClientHandler for command processing
+- Backend: ClientProjection updated to handle ClientInformationUpdatedDomainEvent
+- Backend API endpoint: PUT /api/clients/:id accepts UpdateClientDto and returns { id: string }
+- Frontend: ClientsService.updateClient() method for API communication
+- Frontend: NGRX actions (updateClient, updateClientSuccess, updateClientFailure)
+- Frontend: NGRX effect for orchestrating API calls and state updates
+- Frontend: NGRX reducer cases for tracking loading and error states
+- Frontend: EditClientFormComponent with reactive forms, validation, and output events
+- Frontend: ClientDetailComponent with edit mode toggle using signals
+- Frontend: "Edit Client" button in detail view that switches to edit mode
+- Frontend: Cancel and save functionality with automatic view refresh after success
+- Event sourcing: All client updates captured as immutable events in event store
+- Optimistic concurrency: Version checking prevents concurrent update conflicts
+- End-to-end verification: Complete user flow from detail view → edit → save → view updated data
+- Documentation: UC4_UPDATE_CLIENT_INFORMATION.md
+
 ## Use Case 7: Start Development Environment (2025-11-01)
 - Backend server starts successfully on http://localhost:3000/api
 - Frontend application starts successfully on http://localhost:4200
