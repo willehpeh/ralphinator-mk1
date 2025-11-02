@@ -5,10 +5,11 @@ import { Store } from '@ngrx/store';
 import { loadClients } from './store/clients.actions';
 import { selectClientById, selectClientsLoading, selectClientsError } from './store/clients.selectors';
 import { EditClientFormComponent } from './edit-client-form.component';
+import { ChangeStatusFormComponent } from './change-status-form.component';
 
 @Component({
   selector: 'app-client-detail',
-  imports: [CommonModule, EditClientFormComponent],
+  imports: [CommonModule, EditClientFormComponent, ChangeStatusFormComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="client-detail">
@@ -18,7 +19,7 @@ import { EditClientFormComponent } from './edit-client-form.component';
         </button>
         <div class="header-title-section">
           <h2>Client Details</h2>
-          @if (!isEditing() && client()) {
+          @if (!isEditing() && !isChangingStatus() && client()) {
             <div class="action-buttons">
               <button class="edit-button" (click)="toggleEditMode()">
                 Edit Client
@@ -55,6 +56,13 @@ import { EditClientFormComponent } from './edit-client-form.component';
             [clientId]="clientData.id"
             (editCancelled)="toggleEditMode()"
             (editSucceeded)="handleEditSuccess()"
+          />
+        } @else if (isChangingStatus()) {
+          <app-change-status-form
+            [clientId]="clientData.id"
+            [currentStatus]="clientData.status"
+            (statusChanged)="handleStatusChangeSuccess()"
+            (changeCancelled)="toggleStatusChangeMode()"
           />
         } @else {
           <div class="detail-card">
@@ -348,5 +356,11 @@ export class ClientDetailComponent implements OnInit {
 
   toggleStatusChangeMode(): void {
     this.isChangingStatus.update(value => !value);
+  }
+
+  handleStatusChangeSuccess(): void {
+    // Exit status change mode and reload clients to show updated data
+    this.isChangingStatus.set(false);
+    this.store.dispatch(loadClients());
   }
 }

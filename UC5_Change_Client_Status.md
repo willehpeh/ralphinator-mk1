@@ -176,3 +176,18 @@ Created dedicated form component for changing client status:
 - Emits `changeCancelled` output event when user cancels
 - Styled consistently with edit form component
 - Follows modern Angular patterns: input()/output() functions, inject(), signals
+
+### ✅ Task 13: Integrate ChangeStatusFormComponent into ClientDetailComponent
+**Completed**: 2025-11-02
+
+Integrated status change form into the client detail view:
+- File: `apps/frontend/src/app/clients/client-detail.component.ts`
+- Imported `ChangeStatusFormComponent` and added to component imports
+- Added conditional template logic using `@else if` to display form when `isChangingStatus()` is true
+- Passed `clientId` and `currentStatus` as inputs to the form component
+- Wired up `statusChanged` output to `handleStatusChangeSuccess()` method
+- Wired up `changeCancelled` output to `toggleStatusChangeMode()` method
+- Created `handleStatusChangeSuccess()` method to exit status change mode and reload clients
+- Updated button visibility condition to hide action buttons when in status change mode
+- Form displays instead of detail card when user clicks "Change Status" button
+- Follows same pattern as edit form integration
