@@ -134,6 +134,20 @@
   - Emits confirmed and cancelled events via outputs
   - Styled with red confirm button to indicate destructive action
   - No new linting errors (all accessibility requirements met)
+- [x] **Integrate confirmation dialog with delete client functionality** ✅
+  - Added ConfirmationDialogComponent import to `apps/frontend/src/app/clients/client-detail.component.ts`
+  - Added ConfirmationDialogComponent to component imports array
+  - Added showDeleteConfirmation signal to control dialog visibility
+  - Added confirmation dialog to template with @if directive
+  - Configured dialog with appropriate title, message, and button labels
+  - Updated deleteClient() method to show confirmation dialog instead of logging
+  - Added confirmDelete() method to dispatch deleteClient action and hide dialog
+  - Added cancelDelete() method to hide dialog without taking action
+  - Connected dialog (confirmed) output to confirmDelete() method
+  - Connected dialog (cancelled) output to cancelDelete() method
+  - Verified no new linting errors introduced
+  - Verified frontend builds successfully
+  - Delete button now shows confirmation dialog before dispatching delete action
 - [ ] Handle delete success (navigate to list)
 - [ ] Handle delete errors (show error message)
 - [ ] Update client list to reflect deletion

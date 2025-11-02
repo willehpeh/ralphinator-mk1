@@ -2,14 +2,15 @@ import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@ang
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { loadClients } from './store/clients.actions';
+import { loadClients, deleteClient } from './store/clients.actions';
 import { selectClientById, selectClientsLoading, selectClientsError } from './store/clients.selectors';
 import { ClientFormComponent } from './client-form.component';
 import { ChangeStatusFormComponent } from './change-status-form.component';
+import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 
 @Component({
   selector: 'app-client-detail',
-  imports: [CommonModule, ClientFormComponent, ChangeStatusFormComponent],
+  imports: [CommonModule, ClientFormComponent, ChangeStatusFormComponent, ConfirmationDialogComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './clients-common.scss',
   template: `
@@ -121,6 +122,17 @@ import { ChangeStatusFormComponent } from './change-status-form.component';
             </div>
           </div>
         }
+      }
+
+      @if (showDeleteConfirmation()) {
+        <app-confirmation-dialog
+          [title]="'Delete Client'"
+          [message]="'Are you sure you want to delete this client? This action cannot be undone.'"
+          [confirmText]="'Delete'"
+          [cancelText]="'Cancel'"
+          (confirmed)="confirmDelete()"
+          (cancelled)="cancelDelete()"
+        />
       }
     </div>
   `,
@@ -307,6 +319,9 @@ export class ClientDetailComponent implements OnInit {
   // Status change mode state
   isChangingStatus = signal(false);
 
+  // Delete confirmation dialog state
+  showDeleteConfirmation = signal(false);
+
   // Select data from store using signals
   client = this.store.selectSignal(selectClientById(this.clientId() ?? ''));
   loading = this.store.selectSignal(selectClientsLoading);
@@ -346,8 +361,23 @@ export class ClientDetailComponent implements OnInit {
   }
 
   deleteClient(): void {
-    // TODO: Show confirmation dialog before deleting
-    // Will be implemented in next task
-    console.log('Delete button clicked for client:', this.clientId());
+    // Show confirmation dialog
+    this.showDeleteConfirmation.set(true);
+  }
+
+  confirmDelete(): void {
+    // Hide confirmation dialog
+    this.showDeleteConfirmation.set(false);
+
+    // Dispatch delete action
+    const id = this.clientId();
+    if (id) {
+      this.store.dispatch(deleteClient({ id }));
+    }
+  }
+
+  cancelDelete(): void {
+    // Hide confirmation dialog
+    this.showDeleteConfirmation.set(false);
   }
 }
