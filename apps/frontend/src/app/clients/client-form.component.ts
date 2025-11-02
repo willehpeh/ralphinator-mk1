@@ -248,10 +248,10 @@ export class ClientFormComponent implements OnInit, OnDestroy {
         this.form.patchValue({
           companyName: clientData.companyName,
           email: clientData.email,
-          phone: clientData.phone || '',
-          address: clientData.address || '',
+          phone: clientData.phone ?? '',
+          address: clientData.address ?? '',
           status: clientData.status,
-          notes: clientData.notes || ''
+          notes: clientData.notes ?? ''
         });
       }
     });
@@ -281,10 +281,10 @@ export class ClientFormComponent implements OnInit, OnDestroy {
       this.form.patchValue({
         companyName: clientData.companyName,
         email: clientData.email,
-        phone: clientData.phone || '',
-        address: clientData.address || '',
+        phone: clientData.phone ?? '',
+        address: clientData.address ?? '',
         status: clientData.status,
-        notes: clientData.notes || ''
+        notes: clientData.notes ?? ''
       });
     }
   }
