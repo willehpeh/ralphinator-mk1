@@ -138,8 +138,18 @@
 
 .form-group input.ng-invalid.ng-touched,
 .form-group textarea.ng-invalid.ng-touched,
-.form-group select.ng-invalid.ng-touched {
+.form-group select.ng-invalid.ng-touched,
+.form-group input.invalid,
+.form-group textarea.invalid,
+.form-group select.invalid {
   border-color: $color-danger;
+}
+
+.validation-error {
+  margin-top: $spacing-sm;
+  color: $color-danger;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
 }
 
 .form-group textarea {

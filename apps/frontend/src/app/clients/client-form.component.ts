@@ -66,7 +66,18 @@ interface ClientFormFields {
             type="email"
             formControlName="email"
             placeholder="contact@example.com"
+            [class.invalid]="form.controls.email.invalid && form.controls.email.touched"
           />
+          @if (form.controls.email.invalid && form.controls.email.touched) {
+            <div class="validation-error">
+              @if (form.controls.email.hasError('required')) {
+                Email is required
+              }
+              @if (form.controls.email.hasError('email')) {
+                Please enter a valid email address
+              }
+            </div>
+          }
         </div>
 
         <div class="form-group">

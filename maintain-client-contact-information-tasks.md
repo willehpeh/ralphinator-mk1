@@ -66,8 +66,8 @@ This use case ensures the system has current contact methods for reaching client
 - Add proper error responses for invalid email format (optional - ValidationPipe handles this)
 
 ### Frontend Layer
-- Add email format validators to client form
-- Add email validation error messages to UI
+- ✅ Add email format validators to client form - Email validators already present (Validators.required, Validators.email)
+- ✅ Add email validation error messages to UI - Added validation error messages for required and email format errors
 - Add phone format validators to client form (optional)
 
 ### Testing Layer
@@ -96,3 +96,7 @@ This use case ensures the system has current contact methods for reaching client
 - `apps/api/src/main.ts` (modified - enabled global ValidationPipe)
 - `package.json` (modified - added class-validator and class-transformer dependencies)
 - `package-lock.json` (modified - dependency lock file updated)
+
+### Frontend Layer
+- `apps/frontend/src/app/clients/client-form.component.ts` (modified - added validation error messages to email field)
+- `apps/frontend/src/app/clients/clients-common.scss` (modified - added .validation-error and .invalid class styles)
