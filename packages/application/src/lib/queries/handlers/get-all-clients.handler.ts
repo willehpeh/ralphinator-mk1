@@ -21,13 +21,9 @@ export class GetAllClientsQueryHandler
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async execute(_query: GetAllClientsQuery): Promise<ClientReadModel[]> {
-    try {
-      return await this.readRepository.findAll();
-    } catch (error) {
-      const message = 'Failed to retrieve all clients from read model';
-      throw new Error(
-        `${message}: ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
-    }
+    return this.executeQuery(
+      () => this.readRepository.findAll(),
+      'Failed to retrieve all clients from read model'
+    );
   }
 }

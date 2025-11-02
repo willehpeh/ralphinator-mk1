@@ -20,13 +20,9 @@ export class GetClientsByStatusQueryHandler
    * @throws Error if the read repository operation fails
    */
   async execute(query: GetClientsByStatusQuery): Promise<ClientReadModel[]> {
-    try {
-      return await this.readRepository.findByStatus(query.status);
-    } catch (error) {
-      const message = `Failed to retrieve clients with status '${query.status}' from read model`;
-      throw new Error(
-        `${message}: ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
-    }
+    return this.executeQuery(
+      () => this.readRepository.findByStatus(query.status),
+      `Failed to retrieve clients with status '${query.status}' from read model`
+    );
   }
 }
