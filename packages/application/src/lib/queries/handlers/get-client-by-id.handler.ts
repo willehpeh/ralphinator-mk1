@@ -1,21 +1,23 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { Inject } from '@nestjs/common';
 import { GetClientByIdQuery } from '../get-client-by-id.query';
 import { ClientReadModel } from '../../read-models/client.read-model';
-import {
-  IClientReadRepository,
-  INJECTION_TOKENS,
-} from '../../ports';
+import { BaseQueryHandler } from '../base';
 
+/**
+ * Query handler for retrieving a client by ID.
+ * Follows CQRS pattern by querying read models.
+ */
 @QueryHandler(GetClientByIdQuery)
 export class GetClientByIdQueryHandler
+  extends BaseQueryHandler<GetClientByIdQuery, ClientReadModel | null>
   implements IQueryHandler<GetClientByIdQuery, ClientReadModel | null>
 {
-  constructor(
-    @Inject(INJECTION_TOKENS.CLIENT_READ_REPOSITORY)
-    private readonly readRepository: IClientReadRepository
-  ) {}
-
+  /**
+   * Executes the GetClientByIdQuery
+   *
+   * @param query - The get client by ID query
+   * @returns The client read model or null if not found
+   */
   async execute(query: GetClientByIdQuery): Promise<ClientReadModel | null> {
     return this.readRepository.findById(query.id);
   }

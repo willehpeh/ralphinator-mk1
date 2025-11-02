@@ -1,21 +1,23 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { Inject } from '@nestjs/common';
 import { GetAllClientsQuery } from '../get-all-clients.query';
 import { ClientReadModel } from '../../read-models/client.read-model';
-import {
-  IClientReadRepository,
-  INJECTION_TOKENS,
-} from '../../ports';
+import { BaseQueryHandler } from '../base';
 
+/**
+ * Query handler for retrieving all clients.
+ * Follows CQRS pattern by querying read models.
+ */
 @QueryHandler(GetAllClientsQuery)
 export class GetAllClientsQueryHandler
+  extends BaseQueryHandler<GetAllClientsQuery, ClientReadModel[]>
   implements IQueryHandler<GetAllClientsQuery, ClientReadModel[]>
 {
-  constructor(
-    @Inject(INJECTION_TOKENS.CLIENT_READ_REPOSITORY)
-    private readonly readRepository: IClientReadRepository
-  ) {}
-
+  /**
+   * Executes the GetAllClientsQuery
+   *
+   * @param _query - The get all clients query (unused)
+   * @returns Array of all client read models
+   */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async execute(_query: GetAllClientsQuery): Promise<ClientReadModel[]> {
     return this.readRepository.findAll();

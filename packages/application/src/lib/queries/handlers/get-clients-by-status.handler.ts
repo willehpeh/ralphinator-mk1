@@ -1,21 +1,23 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { Inject } from '@nestjs/common';
 import { GetClientsByStatusQuery } from '../get-clients-by-status.query';
 import { ClientReadModel } from '../../read-models/client.read-model';
-import {
-  IClientReadRepository,
-  INJECTION_TOKENS,
-} from '../../ports';
+import { BaseQueryHandler } from '../base';
 
+/**
+ * Query handler for retrieving clients by status.
+ * Follows CQRS pattern by querying read models.
+ */
 @QueryHandler(GetClientsByStatusQuery)
 export class GetClientsByStatusQueryHandler
+  extends BaseQueryHandler<GetClientsByStatusQuery, ClientReadModel[]>
   implements IQueryHandler<GetClientsByStatusQuery, ClientReadModel[]>
 {
-  constructor(
-    @Inject(INJECTION_TOKENS.CLIENT_READ_REPOSITORY)
-    private readonly readRepository: IClientReadRepository
-  ) {}
-
+  /**
+   * Executes the GetClientsByStatusQuery
+   *
+   * @param query - The get clients by status query
+   * @returns Array of client read models matching the specified status
+   */
   async execute(query: GetClientsByStatusQuery): Promise<ClientReadModel[]> {
     return this.readRepository.findByStatus(query.status);
   }
