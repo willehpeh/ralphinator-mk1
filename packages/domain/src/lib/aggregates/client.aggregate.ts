@@ -1,6 +1,7 @@
 import { EventSourcedAggregate } from '../base/event-sourced-aggregate';
 import { ClientStatus } from '../types/client-status.type';
 import { CLIENT_EVENT_TYPES } from '../constants/client-event-types';
+import { DOMAIN_ERRORS } from '../constants/domain-errors';
 import { ClientCreatedDomainEvent } from '../events/client-created.domain-event';
 import { ClientInformationUpdatedDomainEvent } from '../events/client-information-updated.domain-event';
 import { ClientStatusChangedDomainEvent } from '../events/client-status-changed.domain-event';
@@ -69,7 +70,7 @@ export class ClientAggregate extends EventSourcedAggregate {
    */
   private ensureInitialized(): string {
     if (!this.id) {
-      throw new Error('Cannot perform operation on a client that has not been created');
+      throw new Error(DOMAIN_ERRORS.CLIENT_NOT_INITIALIZED);
     }
     return this.id;
   }
@@ -116,11 +117,11 @@ export class ClientAggregate extends EventSourcedAggregate {
     const id = this.ensureInitialized();
 
     if (!this.status) {
-      throw new Error('Client status is not initialized');
+      throw new Error(DOMAIN_ERRORS.CLIENT_STATUS_NOT_INITIALIZED);
     }
 
     if (this.status === newStatus) {
-      throw new Error('New status must be different from current status');
+      throw new Error(DOMAIN_ERRORS.CLIENT_STATUS_UNCHANGED);
     }
 
     this.applyEvent(
