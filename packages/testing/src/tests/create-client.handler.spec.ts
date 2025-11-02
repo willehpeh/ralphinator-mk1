@@ -1,21 +1,18 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { CreateClientHandler, CreateClientCommand, ClientDataPayload } from '@angular-nest-starter/application';
+import { createMockAggregateRepository } from '../lib/mock-factories';
 
 describe('CreateClientHandler', () => {
   let handler: CreateClientHandler;
-  let mockAggregateRepository: any;
-  let savedAggregate: any;
+  let mockAggregateRepository: ReturnType<typeof createMockAggregateRepository>['mockRepository'];
+  let getSavedAggregate: ReturnType<typeof createMockAggregateRepository>['getSavedAggregate'];
+  let resetSavedAggregate: ReturnType<typeof createMockAggregateRepository>['resetSavedAggregate'];
 
   beforeEach(() => {
-    savedAggregate = null;
-
-    // Mock aggregate repository
-    mockAggregateRepository = {
-      save: vi.fn().mockImplementation(async (aggregate) => {
-        savedAggregate = aggregate;
-      }),
-      load: vi.fn(),
-    };
+    const mocks = createMockAggregateRepository();
+    mockAggregateRepository = mocks.mockRepository;
+    getSavedAggregate = mocks.getSavedAggregate;
+    resetSavedAggregate = mocks.resetSavedAggregate;
 
     handler = new CreateClientHandler(mockAggregateRepository);
   });
@@ -39,14 +36,14 @@ describe('CreateClientHandler', () => {
       // Assert
       expect(clientId).toBe('client-123');
       expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
-      expect(savedAggregate).toBeDefined();
-      expect(savedAggregate.getId()).toBe('client-123');
-      expect(savedAggregate.getCompanyName()).toBe('Acme Corporation');
-      expect(savedAggregate.getEmail()).toBe('contact@acme.com');
-      expect(savedAggregate.getPhone()).toBe('+1234567890');
-      expect(savedAggregate.getAddress()).toBe('123 Main St, City, State 12345');
-      expect(savedAggregate.getStatus()).toBe('Active');
-      expect(savedAggregate.getNotes()).toBe('Important client');
+      expect(getSavedAggregate()).toBeDefined();
+      expect(getSavedAggregate().getId()).toBe('client-123');
+      expect(getSavedAggregate().getCompanyName()).toBe('Acme Corporation');
+      expect(getSavedAggregate().getEmail()).toBe('contact@acme.com');
+      expect(getSavedAggregate().getPhone()).toBe('+1234567890');
+      expect(getSavedAggregate().getAddress()).toBe('123 Main St, City, State 12345');
+      expect(getSavedAggregate().getStatus()).toBe('Active');
+      expect(getSavedAggregate().getNotes()).toBe('Important client');
     });
 
     it('should create client with optional fields as null', async () => {
@@ -67,13 +64,13 @@ describe('CreateClientHandler', () => {
       // Assert
       expect(clientId).toBe('client-456');
       expect(mockAggregateRepository.save).toHaveBeenCalled();
-      expect(savedAggregate.getId()).toBe('client-456');
-      expect(savedAggregate.getCompanyName()).toBe('Beta Inc');
-      expect(savedAggregate.getEmail()).toBe('info@beta.com');
-      expect(savedAggregate.getPhone()).toBe(null);
-      expect(savedAggregate.getAddress()).toBe(null);
-      expect(savedAggregate.getStatus()).toBe('Prospect');
-      expect(savedAggregate.getNotes()).toBe(null);
+      expect(getSavedAggregate().getId()).toBe('client-456');
+      expect(getSavedAggregate().getCompanyName()).toBe('Beta Inc');
+      expect(getSavedAggregate().getEmail()).toBe('info@beta.com');
+      expect(getSavedAggregate().getPhone()).toBe(null);
+      expect(getSavedAggregate().getAddress()).toBe(null);
+      expect(getSavedAggregate().getStatus()).toBe('Prospect');
+      expect(getSavedAggregate().getNotes()).toBe(null);
     });
 
     it('should persist aggregate through repository', async () => {
@@ -93,9 +90,9 @@ describe('CreateClientHandler', () => {
 
       // Assert
       expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
-      expect(savedAggregate.getId()).toBe('client-789');
-      expect(savedAggregate.getCompanyName()).toBe('Gamma LLC');
-      expect(savedAggregate.getEmail()).toBe('hello@gamma.com');
+      expect(getSavedAggregate().getId()).toBe('client-789');
+      expect(getSavedAggregate().getCompanyName()).toBe('Gamma LLC');
+      expect(getSavedAggregate().getEmail()).toBe('hello@gamma.com');
     });
 
     it('should handle all valid client statuses', async () => {
@@ -109,7 +106,7 @@ describe('CreateClientHandler', () => {
       for (const status of statuses) {
         // Reset mocks
         mockAggregateRepository.save.mockClear();
-        savedAggregate = null;
+        resetSavedAggregate();
 
         const data = new ClientDataPayload(
           'Test Company',
@@ -126,7 +123,7 @@ describe('CreateClientHandler', () => {
 
         // Assert
         expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
-        expect(savedAggregate.getStatus()).toBe(status);
+        expect(getSavedAggregate().getStatus()).toBe(status);
       }
     });
   });

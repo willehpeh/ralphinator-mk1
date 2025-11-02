@@ -1,18 +1,15 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { GetAllClientsQuery, GetAllClientsQueryHandler } from '@angular-nest-starter/application';
+import { createMockReadRepository } from '../lib/mock-factories';
 
 describe('GetAllClientsQueryHandler', () => {
   let handler: GetAllClientsQueryHandler;
-  let mockReadRepository: {
-    findAll: ReturnType<typeof vi.fn>;
-  };
+  let mockReadRepository: ReturnType<typeof createMockReadRepository>;
 
   beforeEach(() => {
-    mockReadRepository = {
-      findAll: vi.fn(),
-    };
+    mockReadRepository = createMockReadRepository();
 
-    handler = new GetAllClientsQueryHandler(mockReadRepository as any);
+    handler = new GetAllClientsQueryHandler(mockReadRepository);
   });
 
   it('should retrieve all clients from read repository', async () => {

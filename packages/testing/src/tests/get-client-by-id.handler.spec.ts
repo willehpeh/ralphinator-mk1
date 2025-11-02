@@ -1,18 +1,15 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { GetClientByIdQuery, GetClientByIdQueryHandler } from '@angular-nest-starter/application';
+import { createMockReadRepository } from '../lib/mock-factories';
 
 describe('GetClientByIdQueryHandler', () => {
   let handler: GetClientByIdQueryHandler;
-  let mockReadRepository: {
-    findById: ReturnType<typeof vi.fn>;
-  };
+  let mockReadRepository: ReturnType<typeof createMockReadRepository>;
 
   beforeEach(() => {
-    mockReadRepository = {
-      findById: vi.fn(),
-    };
+    mockReadRepository = createMockReadRepository();
 
-    handler = new GetClientByIdQueryHandler(mockReadRepository as any);
+    handler = new GetClientByIdQueryHandler(mockReadRepository);
   });
 
   it('should retrieve client by id from read repository', async () => {

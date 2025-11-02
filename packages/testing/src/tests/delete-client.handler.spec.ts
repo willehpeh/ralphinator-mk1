@@ -1,26 +1,21 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { DeleteClientHandler } from '@angular-nest-starter/application';
 import { DeleteClientCommand } from '@angular-nest-starter/application';
 import {
   ClientCreatedDomainEvent,
   ClientAggregate
 } from '@angular-nest-starter/domain';
+import { createMockAggregateRepository } from '../lib/mock-factories';
 
 describe('DeleteClientHandler', () => {
   let handler: DeleteClientHandler;
-  let mockAggregateRepository: any;
-  let savedAggregate: any;
+  let mockAggregateRepository: ReturnType<typeof createMockAggregateRepository>['mockRepository'];
+  let getSavedAggregate: ReturnType<typeof createMockAggregateRepository>['getSavedAggregate'];
 
   beforeEach(() => {
-    savedAggregate = null;
-
-    // Mock aggregate repository
-    mockAggregateRepository = {
-      load: vi.fn(),
-      save: vi.fn().mockImplementation(async (aggregate) => {
-        savedAggregate = aggregate;
-      }),
-    };
+    const mocks = createMockAggregateRepository();
+    mockAggregateRepository = mocks.mockRepository;
+    getSavedAggregate = mocks.getSavedAggregate;
 
     handler = new DeleteClientHandler(mockAggregateRepository);
   });
@@ -54,7 +49,7 @@ describe('DeleteClientHandler', () => {
       expect(deletedClientId).toBe(clientId);
       expect(mockAggregateRepository.load).toHaveBeenCalledWith(clientId, ClientAggregate);
       expect(mockAggregateRepository.save).toHaveBeenCalledTimes(1);
-      expect(savedAggregate).toBe(aggregate);
+      expect(getSavedAggregate()).toBe(aggregate);
     });
 
     it('should load aggregate and save through repository', async () => {
@@ -111,8 +106,8 @@ describe('DeleteClientHandler', () => {
       await handler.execute(command);
 
       // Assert
-      expect(savedAggregate).toBe(aggregate);
-      expect(savedAggregate.getUncommittedEvents().length).toBeGreaterThan(0);
+      expect(getSavedAggregate()).toBe(aggregate);
+      expect(getSavedAggregate().getUncommittedEvents().length).toBeGreaterThan(0);
     });
 
     it('should return the client ID after successful deletion', async () => {
