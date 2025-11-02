@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { loadClients, deleteClient } from './store/clients.actions';
 import { selectClientById, selectClientsLoading, selectClientsError } from './store/clients.selectors';
@@ -8,7 +8,7 @@ import { ClientFormComponent } from './client-form.component';
 import { ChangeStatusFormComponent } from './change-status-form.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { StatusBadgeComponent } from './status-badge.component';
-import { CLIENT_ROUTES } from './client-routes.constants';
+import { ClientNavigationService } from './client-navigation.service';
 import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
 
 @Component({
@@ -141,7 +141,7 @@ import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants
 export class ClientDetailComponent implements OnInit {
   private store = inject(Store);
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  private navigation = inject(ClientNavigationService);
 
   // Get client ID from route params
   private clientId = signal<string | null>(null);
@@ -178,7 +178,7 @@ export class ClientDetailComponent implements OnInit {
   }
 
   navigateBack(): void {
-    this.router.navigate([CLIENT_ROUTES.BASE]);
+    this.navigation.toClientList();
   }
 
   toggleEditMode(): void {

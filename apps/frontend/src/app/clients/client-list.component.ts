@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { loadClients, filterClientsByStatus, filterClientsByName } from './store/clients.actions';
 import {
@@ -11,7 +10,7 @@ import {
 } from './store/clients.selectors';
 import { ClientStatus } from './client.types';
 import { CLIENT_STATUSES, FILTER_ALL_CLIENTS } from './client.constants';
-import { CLIENT_ROUTES } from './client-routes.constants';
+import { ClientNavigationService } from './client-navigation.service';
 import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
 import { StatusBadgeComponent } from './status-badge.component';
 
@@ -145,7 +144,7 @@ import { StatusBadgeComponent } from './status-badge.component';
 })
 export class ClientListComponent implements OnInit {
   private store = inject(Store);
-  private router = inject(Router);
+  private navigation = inject(ClientNavigationService);
 
   // Available status options
   readonly availableStatuses = CLIENT_STATUSES;
@@ -202,10 +201,10 @@ export class ClientListComponent implements OnInit {
   }
 
   navigateToDetail(clientId: string): void {
-    this.router.navigate([CLIENT_ROUTES.detail(clientId)]);
+    this.navigation.toClientDetail(clientId);
   }
 
   navigateToAddClient(): void {
-    this.router.navigate([CLIENT_ROUTES.ADD]);
+    this.navigation.toAddClient();
   }
 }

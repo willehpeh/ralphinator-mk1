@@ -1,11 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { ClientsService } from '../clients.service';
 import { loadClients, loadClientsSuccess, loadClientsFailure, updateClient, updateClientSuccess, updateClientFailure, changeClientStatus, changeClientStatusSuccess, changeClientStatusFailure, filterClientsByStatus, filterClientsByStatusSuccess, filterClientsByStatusFailure, deleteClient, deleteClientSuccess, deleteClientFailure } from './clients.actions';
-import { CLIENT_ROUTES } from '../client-routes.constants';
+import { ClientNavigationService } from '../client-navigation.service';
 import { CLIENT_ERROR_MESSAGES } from '../client-display.constants';
 
 /**
@@ -15,7 +14,7 @@ import { CLIENT_ERROR_MESSAGES } from '../client-display.constants';
 export class ClientsEffects {
   private actions$ = inject(Actions);
   private clientsService = inject(ClientsService);
-  private router = inject(Router);
+  private navigation = inject(ClientNavigationService);
 
   /**
    * Creates a reusable error handler for effects
@@ -128,7 +127,7 @@ export class ClientsEffects {
     () =>
       this.actions$.pipe(
         ofType(deleteClientSuccess),
-        tap(() => this.router.navigate([CLIENT_ROUTES.BASE]))
+        tap(() => this.navigation.toClientList())
       ),
     { dispatch: false }
   );
