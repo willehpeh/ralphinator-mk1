@@ -6,30 +6,32 @@ export { ClientAggregateBuilder } from './builders/client-aggregate.builder';
 /**
  * Creates a mock aggregate repository for testing command handlers.
  *
+ * @template T - The type of aggregate being managed by the repository
  * @returns Mock repository with save and load methods that can be used with Vitest
  *
  * @example
  * ```typescript
- * const { mockRepository, getSavedAggregate } = createMockAggregateRepository();
+ * const { mockRepository, getSavedAggregate } = createMockAggregateRepository<ClientAggregate>();
  * const handler = new CreateClientHandler(mockRepository);
  *
  * await handler.execute(command);
  *
  * expect(mockRepository.save).toHaveBeenCalled();
- * expect(getSavedAggregate()).toBeDefined();
+ * const aggregate = getSavedAggregate(); // Typed as ClientAggregate | null
+ * expect(aggregate).toBeDefined();
  * ```
  */
-export function createMockAggregateRepository() {
-  let savedAggregate: unknown = null;
+export function createMockAggregateRepository<T = unknown>() {
+  let savedAggregate: T | null = null;
 
   const mockRepository = {
-    save: vi.fn().mockImplementation(async (aggregate) => {
+    save: vi.fn().mockImplementation(async (aggregate: T) => {
       savedAggregate = aggregate;
     }),
     load: vi.fn(),
   };
 
-  const getSavedAggregate = () => savedAggregate;
+  const getSavedAggregate = (): T | null => savedAggregate;
   const resetSavedAggregate = () => {
     savedAggregate = null;
   };
