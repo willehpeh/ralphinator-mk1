@@ -21,6 +21,7 @@
 
 ## Notes
 - **2025-11-01**: Created `GetAllClientsQuery` class - no parameters needed as it retrieves all clients
+- **2025-11-02**: Added `findAll()` method to `IClientReadRepository` interface to support retrieving all clients
 
 ## Completion Checklist
 - [ ] Backend query handler returns all clients from read model
