@@ -61,6 +61,15 @@
 - Calls clientReadRepository.delete() to remove client from read model
 - Verified with linting
 
+### 9. Add DELETE /clients/:id endpoint in controller
+- Added Delete decorator import from @nestjs/common in `apps/api/src/app/clients/clients.controller.ts`
+- Added DeleteClientCommand import from @angular-nest-starter/application
+- Implemented deleteClient() method with @Delete(':id') decorator
+- Method accepts id parameter from URL
+- Creates DeleteClientCommand and executes via CommandBus
+- Returns object with deleted client id
+- Verified with linting
+
 ## Next Tasks (Not Started)
 
 ### Domain Layer
@@ -73,7 +82,7 @@
 - ✅ All infrastructure layer tasks complete
 
 ### API Layer
-- [ ] Add DELETE /clients/:id endpoint in controller
+- [x] Add DELETE /clients/:id endpoint in controller
 - [ ] Register DeleteClientHandler and projection in module
 
 ### Frontend Layer

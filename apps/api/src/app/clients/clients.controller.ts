@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel } from '@angular-nest-starter/application';
+import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel } from '@angular-nest-starter/application';
 import { ClientStatus } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
 
@@ -132,5 +132,16 @@ export class ClientsController {
 
     // Return the updated client to avoid unnecessary refetch
     return this.fetchClientAfterMutation(clientId, 'status change');
+  }
+
+  @Delete(':id')
+  async deleteClient(@Param('id') id: string): Promise<{ id: string }> {
+    const command = new DeleteClientCommand(id);
+
+    const clientId = await this.commandBus.execute<DeleteClientCommand, string>(
+      command
+    );
+
+    return { id: clientId };
   }
 }
