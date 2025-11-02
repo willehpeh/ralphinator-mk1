@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateClientCommand, UpdateClientCommand, GetClientByIdQuery, GetAllClientsQuery, ClientReadModel } from '@angular-nest-starter/application';
+import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, GetClientByIdQuery, GetAllClientsQuery, ClientReadModel } from '@angular-nest-starter/application';
 import { ClientStatus } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
 
@@ -20,6 +20,10 @@ export class UpdateClientDto {
   address!: string | null;
   status!: ClientStatus;
   notes!: string | null;
+}
+
+export class ChangeClientStatusDto {
+  status!: ClientStatus;
 }
 
 @Controller('clients')
@@ -79,6 +83,20 @@ export class ClientsController {
     );
 
     const clientId = await this.commandBus.execute<UpdateClientCommand, string>(
+      command
+    );
+
+    return { id: clientId };
+  }
+
+  @Patch(':id/status')
+  async changeClientStatus(
+    @Param('id') id: string,
+    @Body() dto: ChangeClientStatusDto
+  ): Promise<{ id: string }> {
+    const command = new ChangeClientStatusCommand(id, dto.status);
+
+    const clientId = await this.commandBus.execute<ChangeClientStatusCommand, string>(
       command
     );
 

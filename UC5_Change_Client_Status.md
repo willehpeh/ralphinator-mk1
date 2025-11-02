@@ -96,3 +96,16 @@ Registered the command handler in the NestJS module:
 - Added handler to `CommandHandlers` array
 - Handler is now registered as a provider via spread operator
 - Follows same pattern as other command handlers in the module
+
+### ✅ Task 7: Add PATCH endpoint for changing client status
+**Completed**: 2025-11-02
+
+Created dedicated API endpoint for status changes:
+- File: `apps/api/src/app/clients/clients.controller.ts`
+- Added `PATCH /clients/:id/status` endpoint
+- Created `ChangeClientStatusDto` with single status field
+- Imported `Patch` decorator from `@nestjs/common`
+- Imported `ChangeClientStatusCommand` from application package
+- Executes `ChangeClientStatusCommand` via command bus
+- Returns client ID on successful status change
+- Follows REST conventions: PATCH for partial updates
