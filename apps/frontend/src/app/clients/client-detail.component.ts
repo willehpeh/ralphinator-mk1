@@ -7,12 +7,13 @@ import { selectClientById, selectClientsLoading, selectClientsError } from './st
 import { ClientFormComponent } from './client-form.component';
 import { ChangeStatusFormComponent } from './change-status-form.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
+import { StatusBadgeComponent } from './status-badge.component';
 import { CLIENT_ROUTES } from './client-routes.constants';
 import { STANDARD_DATE_FORMAT } from './client-display.constants';
 
 @Component({
   selector: 'app-client-detail',
-  imports: [CommonModule, ClientFormComponent, ChangeStatusFormComponent, ConfirmationDialogComponent],
+  imports: [CommonModule, ClientFormComponent, ChangeStatusFormComponent, ConfirmationDialogComponent, StatusBadgeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./clients-common.scss', './client-detail.component.scss'],
   template: `
@@ -75,9 +76,7 @@ import { STANDARD_DATE_FORMAT } from './client-display.constants';
           <div class="detail-card">
             <div class="detail-header-section">
               <h3>{{ clientData.companyName }}</h3>
-              <span class="status-badge" [class]="'status-' + clientData.status.toLowerCase()">
-                {{ clientData.status }}
-              </span>
+              <app-status-badge [status]="clientData.status" />
             </div>
 
             <div class="detail-section">

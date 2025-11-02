@@ -13,10 +13,11 @@ import { ClientStatus } from './client.types';
 import { CLIENT_STATUSES, FILTER_ALL_CLIENTS } from './client.constants';
 import { CLIENT_ROUTES } from './client-routes.constants';
 import { STANDARD_DATE_FORMAT } from './client-display.constants';
+import { StatusBadgeComponent } from './status-badge.component';
 
 @Component({
   selector: 'app-client-list',
-  imports: [CommonModule],
+  imports: [CommonModule, StatusBadgeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./clients-common.scss', './client-list.component.scss'],
   template: `
@@ -105,9 +106,7 @@ import { STANDARD_DATE_FORMAT } from './client-display.constants';
               (keydown.space)="navigateToDetail(client.id)">
               <div class="client-header">
                 <h3>{{ client.companyName }}</h3>
-                <span class="status-badge" [class]="'status-' + client.status.toLowerCase()">
-                  {{ client.status }}
-                </span>
+                <app-status-badge [status]="client.status" />
               </div>
               <div class="client-details">
                 <div class="detail-row">

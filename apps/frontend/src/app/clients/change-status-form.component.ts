@@ -6,6 +6,7 @@ import { changeClientStatus } from './store/clients.actions';
 import { selectClientById, selectClientsError } from './store/clients.selectors';
 import { ClientStatus } from './client.types';
 import { CLIENT_STATUSES, DEFAULT_CLIENT_STATUS } from './client.constants';
+import { StatusBadgeComponent } from './status-badge.component';
 
 interface StatusForm {
   status: FormControl<ClientStatus>;
@@ -13,7 +14,7 @@ interface StatusForm {
 
 @Component({
   selector: 'app-change-status-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, StatusBadgeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./clients-common.scss', './change-status-form.component.scss'],
   template: `
@@ -34,9 +35,7 @@ interface StatusForm {
       @if (client(); as clientData) {
         <div class="current-status">
           <span class="label">Current Status:</span>
-          <span class="status-badge" [class]="'status-' + clientData.status.toLowerCase()">
-            {{ clientData.status }}
-          </span>
+          <app-status-badge [status]="clientData.status" />
         </div>
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
