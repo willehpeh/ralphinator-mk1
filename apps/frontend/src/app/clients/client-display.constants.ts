@@ -87,3 +87,15 @@ export const CLIENT_FORM_LABELS = {
   UPDATING_BUTTON: 'Updating...',
   CANCEL_BUTTON: 'Cancel',
 } as const;
+
+/**
+ * Error messages for client-related operations.
+ * These are used in NGRX effects when API calls fail.
+ */
+export const CLIENT_ERROR_MESSAGES = {
+  LOAD_CLIENTS_FAILED: 'Failed to load clients',
+  UPDATE_CLIENT_FAILED: 'Failed to update client',
+  CHANGE_STATUS_FAILED: 'Failed to change client status',
+  FILTER_BY_STATUS_FAILED: 'Failed to filter clients by status',
+  DELETE_CLIENT_FAILED: 'Failed to delete client',
+} as const;
