@@ -10,6 +10,7 @@ import {
   selectHasClients
 } from './store/clients.selectors';
 import { ClientStatus } from '@angular-nest-starter/domain';
+import { CLIENT_STATUSES } from './client.constants';
 
 @Component({
   selector: 'app-client-list',
@@ -28,10 +29,9 @@ import { ClientStatus } from '@angular-nest-starter/domain';
             (change)="onFilterChange($event)"
             [value]="selectedFilter()">
             <option value="all">All Clients</option>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-            <option value="Prospect">Prospect</option>
-            <option value="Past Client">Past Client</option>
+            @for (status of availableStatuses; track status) {
+              <option [value]="status">{{ status }}</option>
+            }
           </select>
         </div>
       </div>
@@ -225,6 +225,9 @@ import { ClientStatus } from '@angular-nest-starter/domain';
 export class ClientListComponent implements OnInit {
   private store = inject(Store);
   private router = inject(Router);
+
+  // Available status options
+  readonly availableStatuses = CLIENT_STATUSES;
 
   // Select data from store using signals
   clients = this.store.selectSignal(selectAllClients);

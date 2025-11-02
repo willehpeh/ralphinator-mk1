@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { changeClientStatus } from './store/clients.actions';
 import { selectClientById } from './store/clients.selectors';
 import { ClientStatus } from '@angular-nest-starter/domain';
+import { CLIENT_STATUSES } from './client.constants';
 
 interface StatusForm {
   status: FormControl<ClientStatus>;
@@ -192,7 +193,7 @@ export class ChangeStatusFormComponent {
   changeCancelled = output<void>();
 
   // Available status options
-  availableStatuses: ClientStatus[] = ['Active', 'Inactive', 'Prospect', 'Past Client'];
+  readonly availableStatuses = CLIENT_STATUSES;
 
   // Get client from store
   client = computed(() => {

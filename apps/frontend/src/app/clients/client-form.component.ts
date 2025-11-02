@@ -6,6 +6,7 @@ import { ClientsService, CreateClientDto } from './clients.service';
 import { updateClient } from './store/clients.actions';
 import { selectClientsError } from './store/clients.selectors';
 import { ClientStatus } from '@angular-nest-starter/domain';
+import { CLIENT_STATUSES } from './client.constants';
 
 interface Client {
   id: string;
@@ -97,10 +98,9 @@ interface ClientFormFields {
         <div class="form-group">
           <label for="status">Status *</label>
           <select id="status" formControlName="status">
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-            <option value="Prospect">Prospect</option>
-            <option value="Past Client">Past Client</option>
+            @for (status of availableStatuses; track status) {
+              <option [value]="status">{{ status }}</option>
+            }
           </select>
         </div>
 
@@ -212,6 +212,9 @@ export class ClientFormComponent implements OnInit {
   // Outputs
   formCancelled = output<void>();
   formSucceeded = output<void>();
+
+  // Available status options
+  readonly availableStatuses = CLIENT_STATUSES;
 
   // Select error from store (for edit mode)
   storeError = this.store.selectSignal(selectClientsError);
