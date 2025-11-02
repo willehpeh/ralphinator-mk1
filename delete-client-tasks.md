@@ -15,13 +15,18 @@
 - Added apply() case to handle ClientDeletedDomainEvent during event replay
 - Verified with linting
 
+### 3. Create DeleteClientCommand
+- Created `packages/application/src/lib/commands/delete-client.command.ts`
+- Simple command class with readonly id field
+- Added export to application package index
+- Verified with linting
+
 ## Next Tasks (Not Started)
 
 ### Domain Layer
 - ✅ All domain layer tasks complete
 
 ### Application Layer
-- [ ] Create DeleteClientCommand
 - [ ] Create DeleteClientHandler (load aggregate, call delete(), persist events)
 - [ ] Create ClientDeletedEvent (integration event)
 - [ ] Add test for DeleteClientHandler
