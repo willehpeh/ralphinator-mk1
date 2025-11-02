@@ -38,15 +38,22 @@
 - Added export to application package index
 - Verified with linting
 
+### 6. Add test for DeleteClientHandler
+- Created `packages/testing/src/tests/delete-client.handler.spec.ts`
+- Added test for loading existing client and persisting deletion event
+- Added test for publishing deletion event to event bus
+- Added test for optimistic concurrency control with version
+- Added test for returning client ID after deletion
+- All 4 tests passing
+- Verified with vitest
+
 ## Next Tasks (Not Started)
 
 ### Domain Layer
 - ✅ All domain layer tasks complete
 
 ### Application Layer
-- [x] Create DeleteClientHandler (load aggregate, call delete(), persist events)
-- [x] Create ClientDeletedEvent (integration event)
-- [ ] Add test for DeleteClientHandler
+- ✅ All application layer tasks complete
 
 ### Infrastructure Layer
 - [ ] Create ClientDeletedProjection to update read model
