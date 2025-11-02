@@ -47,7 +47,7 @@ export class ClientsEffects {
           status: action.status,
           notes: action.notes ?? undefined,
         }).pipe(
-          map((response) => updateClientSuccess({ id: response.id })),
+          map((client) => updateClientSuccess({ client })),
           catchError((error) =>
             of(updateClientFailure({ error: error?.message || 'Failed to update client' }))
           )
@@ -67,7 +67,7 @@ export class ClientsEffects {
         this.clientsService.changeClientStatus(action.id, {
           status: action.status,
         }).pipe(
-          map((response) => changeClientStatusSuccess({ id: response.id })),
+          map((client) => changeClientStatusSuccess({ client })),
           catchError((error) =>
             of(changeClientStatusFailure({ error: error?.message || 'Failed to change client status' }))
           )

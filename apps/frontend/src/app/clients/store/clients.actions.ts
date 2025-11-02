@@ -57,7 +57,7 @@ export const updateClient = createAction(
  */
 export const updateClientSuccess = createAction(
   '[Clients] Update Client Success',
-  props<{ id: string }>()
+  props<{ client: Client }>()
 );
 
 /**
@@ -84,7 +84,7 @@ export const changeClientStatus = createAction(
  */
 export const changeClientStatusSuccess = createAction(
   '[Clients] Change Client Status Success',
-  props<{ id: string }>()
+  props<{ client: Client }>()
 );
 
 /**

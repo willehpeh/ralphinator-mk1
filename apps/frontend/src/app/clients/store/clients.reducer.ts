@@ -69,11 +69,9 @@ export const clientsReducer = createReducer(
   })),
 
   // When client is successfully updated
-  // Note: The current implementation only receives the id in the success action.
-  // The UI should dispatch loadClients after a successful update to refresh the list,
-  // or this could be enhanced in a future task to return the full updated client.
-  on(updateClientSuccess, (state) => ({
+  on(updateClientSuccess, (state, { client }) => ({
     ...state,
+    clients: state.clients.map((c) => (c.id === client.id ? client : c)),
     loading: false,
     error: null,
   })),
@@ -93,11 +91,9 @@ export const clientsReducer = createReducer(
   })),
 
   // When client status is successfully changed
-  // Note: The current implementation only receives the id in the success action.
-  // The UI should dispatch loadClients after a successful status change to refresh the list,
-  // or this could be enhanced in a future task to return the full updated client.
-  on(changeClientStatusSuccess, (state) => ({
+  on(changeClientStatusSuccess, (state, { client }) => ({
     ...state,
+    clients: state.clients.map((c) => (c.id === client.id ? client : c)),
     loading: false,
     error: null,
   })),

@@ -78,7 +78,7 @@ export class ClientsController {
   async updateClient(
     @Param('id') id: string,
     @Body() dto: UpdateClientDto
-  ): Promise<{ id: string }> {
+  ): Promise<ClientReadModel> {
     const command = new UpdateClientCommand(
       id,
       dto.companyName,
@@ -93,20 +93,36 @@ export class ClientsController {
       command
     );
 
-    return { id: clientId };
+    // Return the updated client to avoid unnecessary refetch
+    const query = new GetClientByIdQuery(clientId);
+    const client = await this.queryBus.execute<GetClientByIdQuery, ClientReadModel | null>(query);
+
+    if (!client) {
+      throw new Error(`Client ${clientId} not found after update`);
+    }
+
+    return client;
   }
 
   @Patch(':id/status')
   async changeClientStatus(
     @Param('id') id: string,
     @Body() dto: ChangeClientStatusDto
-  ): Promise<{ id: string }> {
+  ): Promise<ClientReadModel> {
     const command = new ChangeClientStatusCommand(id, dto.status);
 
     const clientId = await this.commandBus.execute<ChangeClientStatusCommand, string>(
       command
     );
 
-    return { id: clientId };
+    // Return the updated client to avoid unnecessary refetch
+    const query = new GetClientByIdQuery(clientId);
+    const client = await this.queryBus.execute<GetClientByIdQuery, ClientReadModel | null>(query);
+
+    if (!client) {
+      throw new Error(`Client ${clientId} not found after status change`);
+    }
+
+    return client;
   }
 }

@@ -313,9 +313,8 @@ export class ClientDetailComponent implements OnInit {
   }
 
   handleEditSuccess(): void {
-    // Exit edit mode and reload clients to show updated data
+    // Exit edit mode (store is automatically updated with the returned client data)
     this.isEditing.set(false);
-    this.store.dispatch(loadClients());
   }
 
   toggleStatusChangeMode(): void {
@@ -323,8 +322,7 @@ export class ClientDetailComponent implements OnInit {
   }
 
   handleStatusChangeSuccess(): void {
-    // Exit status change mode and reload clients to show updated data
+    // Exit status change mode (store is automatically updated with the returned client data)
     this.isChangingStatus.set(false);
-    this.store.dispatch(loadClients());
   }
 }

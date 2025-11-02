@@ -26,16 +26,8 @@ export interface UpdateClientDto {
   notes?: string;
 }
 
-export interface UpdateClientResponse {
-  id: string;
-}
-
 export interface ChangeClientStatusDto {
   status: ClientStatus;
-}
-
-export interface ChangeClientStatusResponse {
-  id: string;
 }
 
 @Injectable({
@@ -49,12 +41,12 @@ export class ClientsService {
     return this.http.post<CreateClientResponse>(this.apiUrl, dto);
   }
 
-  updateClient(id: string, dto: UpdateClientDto): Observable<UpdateClientResponse> {
-    return this.http.put<UpdateClientResponse>(`${this.apiUrl}/${id}`, dto);
+  updateClient(id: string, dto: UpdateClientDto): Observable<Client> {
+    return this.http.put<Client>(`${this.apiUrl}/${id}`, dto);
   }
 
-  changeClientStatus(id: string, dto: ChangeClientStatusDto): Observable<ChangeClientStatusResponse> {
-    return this.http.patch<ChangeClientStatusResponse>(`${this.apiUrl}/${id}/status`, dto);
+  changeClientStatus(id: string, dto: ChangeClientStatusDto): Observable<Client> {
+    return this.http.patch<Client>(`${this.apiUrl}/${id}/status`, dto);
   }
 
   getAllClients(): Observable<Client[]> {
