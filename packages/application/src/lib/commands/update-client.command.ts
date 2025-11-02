@@ -5,9 +5,9 @@ export class UpdateClientCommand {
     public readonly id: string,
     public readonly companyName: string,
     public readonly email: string,
-    public readonly phone: string,
-    public readonly address: string,
+    public readonly phone: string | null,
+    public readonly address: string | null,
     public readonly status: ClientStatus,
-    public readonly notes?: string
+    public readonly notes: string | null
   ) {}
 }
