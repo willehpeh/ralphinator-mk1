@@ -45,6 +45,19 @@ Created command to represent status change requests:
 - Exported from application package
 - Follows naming convention: `{Verb}{Noun}Command`
 
+### ✅ Task 4: Create ChangeClientStatusHandler
+**Completed**: 2025-11-02
+
+Implemented command handler for changing client status:
+- File: `packages/application/src/lib/commands/handlers/change-client-status.handler.ts`
+- Loads client aggregate from event store
+- Executes `changeStatus()` domain logic
+- Persists events with optimistic concurrency control
+- Publishes domain events to event bus for projections
+- Follows CQRS + Event Sourcing pattern
+- Exported from application package
+- Returns client ID on successful status change
+
 ---
 
 ## Implementation Notes

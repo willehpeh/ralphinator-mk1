@@ -6,6 +6,7 @@ export * from './commands/change-client-status.command';
 // Command Handlers
 export * from './commands/handlers/create-client.handler';
 export * from './commands/handlers/update-client.handler';
+export * from './commands/handlers/change-client-status.handler';
 
 // Queries
 export * from './queries/get-client-by-id.query';
