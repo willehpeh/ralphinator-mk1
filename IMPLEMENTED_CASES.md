@@ -59,6 +59,27 @@
 - End-to-end verification: Complete user flow from detail view → edit → save → view updated data
 - Documentation: UC4_UPDATE_CLIENT_INFORMATION.md
 
+## Use Case 5: Change Client Status (2025-11-02)
+- Complete event-sourced status change implementation with CQRS pattern
+- Backend: ClientStatusChangedDomainEvent domain event for capturing status changes separately from general updates
+- Backend: ClientAggregate.changeStatus() method enforces business rule (status must be different from current)
+- Backend: ChangeClientStatusCommand and ChangeClientStatusHandler for command processing
+- Backend: ClientProjection updated to efficiently handle ClientStatusChangedDomainEvent (partial update)
+- Backend API endpoint: PATCH /api/clients/:id/status accepts ChangeClientStatusDto and returns { id: string }
+- Frontend: ClientsService.changeClientStatus() method for API communication
+- Frontend: NGRX actions (changeClientStatus, changeClientStatusSuccess, changeClientStatusFailure)
+- Frontend: NGRX effect for orchestrating API calls and state updates
+- Frontend: NGRX reducer cases for tracking loading and error states
+- Frontend: ChangeStatusFormComponent with reactive forms, current status display, and status dropdown
+- Frontend: ClientDetailComponent integrated with status change mode toggle using signals
+- Frontend: "Change Status" button in detail view that switches to status change form
+- Frontend: Cancel and save functionality with automatic view refresh after success
+- Event sourcing: All status changes captured as immutable events in event store with audit trail (previous/new status)
+- Optimistic concurrency: Version checking prevents concurrent update conflicts
+- Efficient read model updates: Projection updates only status field instead of full client data
+- End-to-end verification: Complete user flow from detail view → change status → save → view updated status
+- Documentation: UC5_Change_Client_Status.md
+
 ## Use Case 7: Start Development Environment (2025-11-01)
 - Backend server starts successfully on http://localhost:3000/api
 - Frontend application starts successfully on http://localhost:4200

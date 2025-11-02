@@ -1,34 +1,5 @@
 # Use Cases for Client Management System
 
-## Use Case 5: Change Client Status
-
-**Primary Actor**: Developer/Business User
-
-**Goal**: Update a client's status to reflect current business relationship
-
-**Preconditions**:
-- User has access to the client management system
-- Client exists in the system
-
-**Main Success Scenario**:
-1. User selects a client
-2. User initiates status change
-3. System presents available statuses (Active, Inactive, Prospect, Past Client)
-4. User selects new status
-5. User confirms the change
-6. System saves the new status
-7. System displays confirmation message
-8. System shows client with updated status
-
-**Extensions**:
-- 5a. If user cancels before confirming:
-  - System discards status change
-  - Client retains original status
-
-**Success Guarantee**: Client's status is updated to reflect new business relationship state
-
----
-
 ## Use Case 6: Filter Clients by Status
 
 **Primary Actor**: Developer/Business User
@@ -76,4 +47,5 @@ Each use case delivers independent business value and describes user goals in bu
 - **Use Case 2: View All Clients** - Completed 2025-11-02 (See IMPLEMENTED_CASES.md)
 - **Use Case 3: View Client Details** - Completed 2025-11-02 (See IMPLEMENTED_CASES.md)
 - **Use Case 4: Update Client Information** - Completed 2025-11-02 (See IMPLEMENTED_CASES.md)
+- **Use Case 5: Change Client Status** - Completed 2025-11-02 (See IMPLEMENTED_CASES.md)
 - **Use Case 7: Start Development Environment** - Completed 2025-11-01 (See IMPLEMENTED_CASES.md)
