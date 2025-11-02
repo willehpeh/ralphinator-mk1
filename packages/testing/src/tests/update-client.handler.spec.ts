@@ -48,7 +48,7 @@ describe('UpdateClientHandler', () => {
       expect(getSavedAggregate()).toBeDefined();
       expect(getSavedAggregate().getId()).toBe('client-123');
       expect(getSavedAggregate().getCompanyName()).toBe('New Company Name');
-      expect(getSavedAggregate().getEmail()).toBe('new@example.com');
+      expect(getSavedAggregate().getEmail()?.value).toBe('new@example.com');
       expect(getSavedAggregate().getPhone()).toBe('+2222222222');
       expect(getSavedAggregate().getAddress()).toBe('New Address');
       expect(getSavedAggregate().getStatus()).toBe('Active');
@@ -85,7 +85,7 @@ describe('UpdateClientHandler', () => {
       // Assert
       expect(clientId).toBe('client-456');
       expect(getSavedAggregate().getCompanyName()).toBe('Updated Company');
-      expect(getSavedAggregate().getEmail()).toBe('updated@example.com');
+      expect(getSavedAggregate().getEmail()?.value).toBe('updated@example.com');
       expect(getSavedAggregate().getPhone()).toBe(null);
       expect(getSavedAggregate().getAddress()).toBe(null);
       expect(getSavedAggregate().getStatus()).toBe('Inactive');
@@ -123,7 +123,7 @@ describe('UpdateClientHandler', () => {
       // Assert
       expect(clientId).toBe('client-789');
       expect(getSavedAggregate().getCompanyName()).toBe('Modified Company');
-      expect(getSavedAggregate().getEmail()).toBe('original@example.com');
+      expect(getSavedAggregate().getEmail()?.value).toBe('original@example.com');
       expect(getSavedAggregate().getPhone()).toBe('+4444444444');
       expect(getSavedAggregate().getAddress()).toBe('Original Address');
       expect(getSavedAggregate().getStatus()).toBe('Active');

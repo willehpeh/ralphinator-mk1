@@ -33,7 +33,7 @@ describe('CreateClientHandler', () => {
       expect(getSavedAggregate()).toBeDefined();
       expect(getSavedAggregate().getId()).toBe('client-123');
       expect(getSavedAggregate().getCompanyName()).toBe('Acme Corporation');
-      expect(getSavedAggregate().getEmail()).toBe('contact@acme.com');
+      expect(getSavedAggregate().getEmail()?.value).toBe('contact@acme.com');
       expect(getSavedAggregate().getPhone()).toBe('+1234567890');
       expect(getSavedAggregate().getAddress()).toBe('123 Main St, City, State 12345');
       expect(getSavedAggregate().getStatus()).toBe('Active');
@@ -60,7 +60,7 @@ describe('CreateClientHandler', () => {
       expect(mockRepository.save).toHaveBeenCalled();
       expect(getSavedAggregate().getId()).toBe('client-456');
       expect(getSavedAggregate().getCompanyName()).toBe('Beta Inc');
-      expect(getSavedAggregate().getEmail()).toBe('info@beta.com');
+      expect(getSavedAggregate().getEmail()?.value).toBe('info@beta.com');
       expect(getSavedAggregate().getPhone()).toBe(null);
       expect(getSavedAggregate().getAddress()).toBe(null);
       expect(getSavedAggregate().getStatus()).toBe('Prospect');
@@ -86,7 +86,7 @@ describe('CreateClientHandler', () => {
       expect(mockRepository.save).toHaveBeenCalledTimes(1);
       expect(getSavedAggregate().getId()).toBe('client-789');
       expect(getSavedAggregate().getCompanyName()).toBe('Gamma LLC');
-      expect(getSavedAggregate().getEmail()).toBe('hello@gamma.com');
+      expect(getSavedAggregate().getEmail()?.value).toBe('hello@gamma.com');
     });
 
     it('should handle all valid client statuses', async () => {

@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { EventSourcedAggregate } from '@angular-nest-starter/domain';
+import { EventSourcedAggregate, ClientData, Email } from '@angular-nest-starter/domain';
 import { IAggregateRepository, INJECTION_TOKENS } from '../../ports';
+import { ClientDataPayload } from '../client-data.payload';
 
 /**
  * Base class for command handlers that work with event-sourced aggregates.
@@ -70,5 +71,24 @@ export abstract class BaseCommandHandler<
     executeFn(aggregate);
     await this.saveAggregate(aggregate);
     return id;
+  }
+
+  /**
+   * Helper method to create ClientData value object from payload.
+   * Validates email and creates the ClientData with all required fields.
+   * This eliminates duplication between create and update handlers.
+   *
+   * @param payload - The raw client data payload
+   * @returns ClientData value object with validated email
+   */
+  protected createClientDataFromPayload(payload: ClientDataPayload): ClientData {
+    // Convert email string to Email value object for validation
+    const email = Email.create(payload.email);
+
+    // Create ClientData value object with validated email
+    return ClientData.fromPayload({
+      ...payload,
+      email
+    });
   }
 }
