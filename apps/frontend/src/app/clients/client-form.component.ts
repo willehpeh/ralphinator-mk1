@@ -123,13 +123,13 @@ interface ClientFormFields {
         <div class="form-actions">
           <button type="submit" [disabled]="form.invalid || submitting()">
             @if (submitting()) {
-              {{ mode() === 'create' ? 'Submitting...' : 'Updating...' }}
+              {{ mode() === 'create' ? formLabels.SUBMITTING_BUTTON : formLabels.UPDATING_BUTTON }}
             } @else {
-              {{ mode() === 'create' ? 'Add Client' : 'Update Client' }}
+              {{ mode() === 'create' ? formLabels.ADD_CLIENT_BUTTON : formLabels.UPDATE_CLIENT_BUTTON }}
             }
           </button>
           <button type="button" (click)="onCancel()" [disabled]="submitting()">
-            Cancel
+            {{ formLabels.CANCEL_BUTTON }}
           </button>
         </div>
       </form>

@@ -79,4 +79,11 @@ export const CLIENT_FORM_LABELS = {
   // Validation messages
   EMAIL_REQUIRED: 'Email is required',
   INVALID_EMAIL: 'Please enter a valid email address',
+
+  // Submit button labels
+  ADD_CLIENT_BUTTON: 'Add Client',
+  UPDATE_CLIENT_BUTTON: 'Update Client',
+  SUBMITTING_BUTTON: 'Submitting...',
+  UPDATING_BUTTON: 'Updating...',
+  CANCEL_BUTTON: 'Cancel',
 } as const;
