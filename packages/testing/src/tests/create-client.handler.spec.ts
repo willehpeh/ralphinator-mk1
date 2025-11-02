@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { CreateClientHandler, CreateClientCommand, ClientDataPayload } from '@angular-nest-starter/application';
 import { createCommandHandlerTestSetup } from '../lib/mock-factories';
+import { expectAggregateToMatch } from '../lib/test-assertions';
 
 describe('CreateClientHandler', () => {
   const { handler, mockRepository, getSavedAggregate, resetSavedAggregate } =
@@ -31,13 +32,15 @@ describe('CreateClientHandler', () => {
       expect(clientId).toBe('client-123');
       expect(mockRepository.save).toHaveBeenCalledTimes(1);
       expect(getSavedAggregate()).toBeDefined();
-      expect(getSavedAggregate().getId()).toBe('client-123');
-      expect(getSavedAggregate().getCompanyName()).toBe('Acme Corporation');
-      expect(getSavedAggregate().getEmail()?.getValue()).toBe('contact@acme.com');
-      expect(getSavedAggregate().getPhone()).toBe('+1234567890');
-      expect(getSavedAggregate().getAddress()).toBe('123 Main St, City, State 12345');
-      expect(getSavedAggregate().getStatus()).toBe('Active');
-      expect(getSavedAggregate().getNotes()).toBe('Important client');
+      expectAggregateToMatch(getSavedAggregate(), {
+        id: 'client-123',
+        companyName: 'Acme Corporation',
+        email: 'contact@acme.com',
+        phone: '+1234567890',
+        address: '123 Main St, City, State 12345',
+        status: 'Active',
+        notes: 'Important client'
+      });
     });
 
     it('should create client with optional fields as null', async () => {
@@ -58,13 +61,15 @@ describe('CreateClientHandler', () => {
       // Assert
       expect(clientId).toBe('client-456');
       expect(mockRepository.save).toHaveBeenCalled();
-      expect(getSavedAggregate().getId()).toBe('client-456');
-      expect(getSavedAggregate().getCompanyName()).toBe('Beta Inc');
-      expect(getSavedAggregate().getEmail()?.getValue()).toBe('info@beta.com');
-      expect(getSavedAggregate().getPhone()).toBe(null);
-      expect(getSavedAggregate().getAddress()).toBe(null);
-      expect(getSavedAggregate().getStatus()).toBe('Prospect');
-      expect(getSavedAggregate().getNotes()).toBe(null);
+      expectAggregateToMatch(getSavedAggregate(), {
+        id: 'client-456',
+        companyName: 'Beta Inc',
+        email: 'info@beta.com',
+        phone: null,
+        address: null,
+        status: 'Prospect',
+        notes: null
+      });
     });
 
     it('should persist aggregate through repository', async () => {
@@ -84,9 +89,11 @@ describe('CreateClientHandler', () => {
 
       // Assert
       expect(mockRepository.save).toHaveBeenCalledTimes(1);
-      expect(getSavedAggregate().getId()).toBe('client-789');
-      expect(getSavedAggregate().getCompanyName()).toBe('Gamma LLC');
-      expect(getSavedAggregate().getEmail()?.getValue()).toBe('hello@gamma.com');
+      expectAggregateToMatch(getSavedAggregate(), {
+        id: 'client-789',
+        companyName: 'Gamma LLC',
+        email: 'hello@gamma.com'
+      });
     });
 
     it('should handle all valid client statuses', async () => {

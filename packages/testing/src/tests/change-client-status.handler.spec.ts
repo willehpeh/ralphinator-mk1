@@ -3,6 +3,7 @@ import { ChangeClientStatusHandler, ChangeClientStatusCommand } from '@angular-n
 import { ClientAggregate, ClientStatus, DOMAIN_ERRORS } from '@angular-nest-starter/domain';
 import { createCommandHandlerTestSetup } from '../lib/mock-factories';
 import { ClientAggregateBuilder } from '../lib/builders/client-aggregate.builder';
+import { expectAggregateToMatch } from '../lib/test-assertions';
 
 describe('ChangeClientStatusHandler', () => {
   const { handler, mockRepository, getSavedAggregate } =
@@ -35,8 +36,10 @@ describe('ChangeClientStatusHandler', () => {
       expect(mockRepository.load).toHaveBeenCalledWith('client-123', ClientAggregate);
       expect(mockRepository.save).toHaveBeenCalledTimes(1);
       expect(getSavedAggregate()).toBeDefined();
-      expect(getSavedAggregate().getId()).toBe('client-123');
-      expect(getSavedAggregate().getStatus()).toBe('Active');
+      expectAggregateToMatch(getSavedAggregate(), {
+        id: 'client-123',
+        status: 'Active'
+      });
     });
 
     it('should change client status from Active to Inactive', async () => {
@@ -187,12 +190,15 @@ describe('ChangeClientStatusHandler', () => {
 
       // Assert
       const savedAggregate = getSavedAggregate();
-      expect(savedAggregate.getCompanyName()).toBe('Preserve Properties Inc.');
-      expect(savedAggregate.getEmail()?.getValue()).toBe('preserve@example.com');
-      expect(savedAggregate.getPhone()).toBe('+1234567890');
-      expect(savedAggregate.getAddress()).toBe('123 Main St');
-      expect(savedAggregate.getStatus()).toBe('Active');
-      expect(savedAggregate.getNotes()).toBe('Important client notes');
+      expectAggregateToMatch(savedAggregate, {
+        id: 'client-preserve',
+        companyName: 'Preserve Properties Inc.',
+        email: 'preserve@example.com',
+        phone: '+1234567890',
+        address: '123 Main St',
+        status: 'Active',
+        notes: 'Important client notes'
+      });
     });
   });
 });

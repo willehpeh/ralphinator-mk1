@@ -3,6 +3,7 @@ import { UpdateClientHandler, UpdateClientCommand, ClientDataPayload } from '@an
 import { ClientAggregate } from '@angular-nest-starter/domain';
 import { createCommandHandlerTestSetup } from '../lib/mock-factories';
 import { ClientAggregateBuilder } from '../lib/builders/client-aggregate.builder';
+import { expectAggregateToMatch } from '../lib/test-assertions';
 
 describe('UpdateClientHandler', () => {
   const { handler, mockRepository, getSavedAggregate } =
@@ -46,13 +47,15 @@ describe('UpdateClientHandler', () => {
       expect(mockRepository.load).toHaveBeenCalledWith('client-123', ClientAggregate);
       expect(mockRepository.save).toHaveBeenCalledTimes(1);
       expect(getSavedAggregate()).toBeDefined();
-      expect(getSavedAggregate().getId()).toBe('client-123');
-      expect(getSavedAggregate().getCompanyName()).toBe('New Company Name');
-      expect(getSavedAggregate().getEmail()?.getValue()).toBe('new@example.com');
-      expect(getSavedAggregate().getPhone()).toBe('+2222222222');
-      expect(getSavedAggregate().getAddress()).toBe('New Address');
-      expect(getSavedAggregate().getStatus()).toBe('Active');
-      expect(getSavedAggregate().getNotes()).toBe('Updated notes');
+      expectAggregateToMatch(getSavedAggregate(), {
+        id: 'client-123',
+        companyName: 'New Company Name',
+        email: 'new@example.com',
+        phone: '+2222222222',
+        address: 'New Address',
+        status: 'Active',
+        notes: 'Updated notes'
+      });
     });
 
     it('should update client with optional fields set to null', async () => {
@@ -84,12 +87,15 @@ describe('UpdateClientHandler', () => {
 
       // Assert
       expect(clientId).toBe('client-456');
-      expect(getSavedAggregate().getCompanyName()).toBe('Updated Company');
-      expect(getSavedAggregate().getEmail()?.getValue()).toBe('updated@example.com');
-      expect(getSavedAggregate().getPhone()).toBe(null);
-      expect(getSavedAggregate().getAddress()).toBe(null);
-      expect(getSavedAggregate().getStatus()).toBe('Inactive');
-      expect(getSavedAggregate().getNotes()).toBe(null);
+      expectAggregateToMatch(getSavedAggregate(), {
+        id: 'client-456',
+        companyName: 'Updated Company',
+        email: 'updated@example.com',
+        phone: null,
+        address: null,
+        status: 'Inactive',
+        notes: null
+      });
     });
 
     it('should update only specific fields while keeping others unchanged', async () => {
@@ -122,12 +128,15 @@ describe('UpdateClientHandler', () => {
 
       // Assert
       expect(clientId).toBe('client-789');
-      expect(getSavedAggregate().getCompanyName()).toBe('Modified Company');
-      expect(getSavedAggregate().getEmail()?.getValue()).toBe('original@example.com');
-      expect(getSavedAggregate().getPhone()).toBe('+4444444444');
-      expect(getSavedAggregate().getAddress()).toBe('Original Address');
-      expect(getSavedAggregate().getStatus()).toBe('Active');
-      expect(getSavedAggregate().getNotes()).toBe('Original notes');
+      expectAggregateToMatch(getSavedAggregate(), {
+        id: 'client-789',
+        companyName: 'Modified Company',
+        email: 'original@example.com',
+        phone: '+4444444444',
+        address: 'Original Address',
+        status: 'Active',
+        notes: 'Original notes'
+      });
     });
 
     it('should handle all valid client statuses during update', async () => {
