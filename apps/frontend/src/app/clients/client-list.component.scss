@@ -1,0 +1,187 @@
+/* Client List Component Styles */
+@use './clients-variables.scss' as *;
+
+.client-list {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-2xl;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-xl;
+  flex-wrap: wrap;
+  gap: $spacing-lg;
+}
+
+h2 {
+  margin: 0;
+  color: $color-text-primary;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xl;
+  flex-wrap: wrap;
+}
+
+.add-client-btn {
+  padding: $spacing-md $spacing-xl;
+  background-color: $color-primary;
+  color: $color-white;
+  border: none;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+}
+
+.add-client-btn:hover {
+  background-color: $color-primary-hover;
+}
+
+.search-controls {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.search-controls label {
+  font-weight: $font-weight-medium;
+  color: $color-text-secondary;
+  font-size: 0.95rem;
+}
+
+.search-input {
+  padding: $spacing-sm $spacing-lg;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  background-color: $color-white;
+  color: $color-text-primary;
+  font-size: 0.95rem;
+  min-width: 250px;
+  transition: border-color $transition-fast;
+}
+
+.search-input:hover {
+  border-color: $color-primary;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: $color-primary;
+  box-shadow: $shadow-focus;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.filter-controls {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.filter-controls label {
+  font-weight: $font-weight-medium;
+  color: $color-text-secondary;
+  font-size: 0.95rem;
+}
+
+.filter-controls select {
+  padding: $spacing-sm $spacing-lg;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  background-color: $color-white;
+  color: $color-text-primary;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color $transition-fast;
+}
+
+.filter-controls select:hover {
+  border-color: $color-primary;
+}
+
+.filter-controls select:focus {
+  outline: none;
+  border-color: $color-primary;
+  box-shadow: $shadow-focus;
+}
+
+.client-count {
+  padding: $spacing-md $spacing-lg;
+  background-color: #f5f5f5;
+  border-left: 3px solid $color-primary;
+  color: $color-text-secondary;
+  font-size: 0.95rem;
+  margin-bottom: $spacing-lg;
+  border-radius: $border-radius-sm;
+}
+
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: $color-text-secondary;
+}
+
+.empty-state p {
+  margin: $spacing-sm 0;
+  font-size: $font-size-lg;
+}
+
+.empty-state-hint {
+  color: #999;
+  font-size: 0.95rem;
+}
+
+.clients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: $spacing-xl;
+}
+
+.client-card {
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-md;
+  padding: $spacing-xl;
+  transition: all $transition-fast;
+  cursor: pointer;
+}
+
+.client-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-color: $color-primary;
+  transform: translateY(-2px);
+}
+
+.client-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-lg;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.client-header h3 {
+  margin: 0;
+  color: $color-text-primary;
+  font-size: 1.25rem;
+}
+
+.client-details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.detail-label {
+  min-width: 70px;
+}
