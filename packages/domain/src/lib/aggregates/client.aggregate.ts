@@ -1,5 +1,6 @@
 import { EventSourcedAggregate } from '../base/event-sourced-aggregate';
 import { ClientStatus } from '../types/client-status.type';
+import { CLIENT_EVENT_TYPES } from '../constants/client-event-types';
 import { ClientCreatedDomainEvent } from '../events/client-created.domain-event';
 import { ClientInformationUpdatedDomainEvent } from '../events/client-information-updated.domain-event';
 import { ClientStatusChangedDomainEvent } from '../events/client-status-changed.domain-event';
@@ -17,10 +18,10 @@ export class ClientAggregate extends EventSourcedAggregate {
   constructor() {
     super();
     // Register event handlers for all client events
-    this.registerEventHandler('ClientCreatedDomainEvent', this.onClientCreated.bind(this));
-    this.registerEventHandler('ClientInformationUpdatedDomainEvent', this.onClientInformationUpdated.bind(this));
-    this.registerEventHandler('ClientStatusChangedDomainEvent', this.onClientStatusChanged.bind(this));
-    this.registerEventHandler('ClientDeletedDomainEvent', this.onClientDeleted.bind(this));
+    this.registerEventHandler(CLIENT_EVENT_TYPES.CREATED, this.onClientCreated.bind(this));
+    this.registerEventHandler(CLIENT_EVENT_TYPES.INFORMATION_UPDATED, this.onClientInformationUpdated.bind(this));
+    this.registerEventHandler(CLIENT_EVENT_TYPES.STATUS_CHANGED, this.onClientStatusChanged.bind(this));
+    this.registerEventHandler(CLIENT_EVENT_TYPES.DELETED, this.onClientDeleted.bind(this));
   }
 
   /**

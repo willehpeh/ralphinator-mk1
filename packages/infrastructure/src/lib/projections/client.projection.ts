@@ -1,6 +1,12 @@
 import { EventsHandler } from '@nestjs/cqrs';
 import { Injectable, Inject } from '@nestjs/common';
-import { ClientCreatedDomainEvent, ClientInformationUpdatedDomainEvent, ClientStatusChangedDomainEvent, ClientDeletedDomainEvent } from '@angular-nest-starter/domain';
+import {
+  ClientCreatedDomainEvent,
+  ClientInformationUpdatedDomainEvent,
+  ClientStatusChangedDomainEvent,
+  ClientDeletedDomainEvent,
+  CLIENT_EVENT_TYPES
+} from '@angular-nest-starter/domain';
 import {
   IClientReadRepository,
   ClientReadModel
@@ -29,10 +35,10 @@ export class ClientProjection extends BaseProjectionHandler {
   ) {
     super();
     // Register event handlers for all client events
-    this.registerEventHandler('ClientCreatedDomainEvent', this.onClientCreated.bind(this));
-    this.registerEventHandler('ClientInformationUpdatedDomainEvent', this.onClientInformationUpdated.bind(this));
-    this.registerEventHandler('ClientStatusChangedDomainEvent', this.onClientStatusChanged.bind(this));
-    this.registerEventHandler('ClientDeletedDomainEvent', this.onClientDeleted.bind(this));
+    this.registerEventHandler(CLIENT_EVENT_TYPES.CREATED, this.onClientCreated.bind(this));
+    this.registerEventHandler(CLIENT_EVENT_TYPES.INFORMATION_UPDATED, this.onClientInformationUpdated.bind(this));
+    this.registerEventHandler(CLIENT_EVENT_TYPES.STATUS_CHANGED, this.onClientStatusChanged.bind(this));
+    this.registerEventHandler(CLIENT_EVENT_TYPES.DELETED, this.onClientDeleted.bind(this));
   }
 
   /**
