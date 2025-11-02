@@ -34,6 +34,12 @@ This use case ensures the system has current contact methods for reaching client
   - Updated ClientData.fromPayload() call to pass Email object instead of string
   - Email validation now happens in handler before aggregate update
 
+### Infrastructure Layer
+- Update ClientProjection to handle Email value object serialization
+  - Modified onClientCreated() to serialize Email value object using getValue()
+  - Modified onClientInformationUpdated() to serialize Email value object using getValue()
+  - Both handlers now convert Email value object to string (or null) for read model persistence
+
 ## Tasks Remaining
 
 ### Domain Layer
@@ -42,7 +48,6 @@ This use case ensures the system has current contact methods for reaching client
 ### Application Layer
 
 ### Infrastructure Layer
-- Update ClientProjection to handle Email value object serialization
 
 ### API Layer
 - Update CreateClientDto to validate email format
@@ -69,3 +74,6 @@ This use case ensures the system has current contact methods for reaching client
 ### Application Layer
 - `packages/application/src/lib/commands/handlers/create-client.handler.ts` (modified - converts email string to Email value object)
 - `packages/application/src/lib/commands/handlers/update-client.handler.ts` (modified - converts email string to Email value object)
+
+### Infrastructure Layer
+- `packages/infrastructure/src/lib/projections/client.projection.ts` (modified - serializes Email value object to string)

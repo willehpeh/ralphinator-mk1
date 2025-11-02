@@ -53,7 +53,7 @@ export class ClientProjection extends BaseProjectionHandler {
     const readModel: ClientReadModel = {
       id: event.aggregateId,
       companyName: event.clientData.companyName,
-      email: event.clientData.email,
+      email: event.clientData.email?.getValue() ?? null,
       phone: event.clientData.phone,
       address: event.clientData.address,
       status: event.clientData.status,
@@ -77,7 +77,7 @@ export class ClientProjection extends BaseProjectionHandler {
     const readModel: ClientReadModel = {
       id: event.aggregateId,
       companyName: event.clientData.companyName,
-      email: event.clientData.email,
+      email: event.clientData.email?.getValue() ?? null,
       phone: event.clientData.phone,
       address: event.clientData.address,
       status: event.clientData.status,
