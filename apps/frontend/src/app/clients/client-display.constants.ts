@@ -50,6 +50,26 @@ export const CLIENT_UI_TEXT = {
   NO_SEARCH_RESULTS: 'Try a different search term.',
   NO_FILTER_RESULTS: 'Try a different filter.',
 
+  // Search and filter
+  SEARCH_PLACEHOLDER: 'Search by company name...',
+  ALL_CLIENTS_FILTER: 'All Clients',
+  NO_CLIENTS_MATCHING_SEARCH: 'No clients found matching your search',
+  NO_CLIENTS_WITH_STATUS: 'No clients found with status',
+
+  // Client count display
+  SHOWING_PREFIX: 'Showing',
+  CLIENT_SINGULAR: 'client',
+  CLIENT_PLURAL: 'clients',
+  MATCHING_PREFIX: 'matching',
+  WITH_STATUS_PREFIX: 'with status',
+
+  // Detail labels (used in client list and detail views)
+  LABEL_EMAIL: 'Email:',
+  LABEL_PHONE: 'Phone:',
+  LABEL_ADDRESS: 'Address:',
+  LABEL_NOTES: 'Notes:',
+  LABEL_CREATED: 'Created:',
+
   // Change Status Form
   CHANGE_STATUS_TITLE: 'Change Client Status',
   CHANGE_STATUS_DESCRIPTION: 'Select a new status for this client. The change will be saved immediately.',

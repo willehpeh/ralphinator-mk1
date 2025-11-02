@@ -34,7 +34,7 @@ import { StatusBadgeComponent } from './status-badge.component';
             <input
               id="search-input"
               type="text"
-              placeholder="Search by company name..."
+              [placeholder]="uiText.SEARCH_PLACEHOLDER"
               class="search-input"
               (input)="onSearchChange($event)" />
           </div>
@@ -45,7 +45,7 @@ import { StatusBadgeComponent } from './status-badge.component';
               id="status-filter"
               (change)="onFilterChange($event)"
               [value]="selectedFilter()">
-              <option [value]="filterAllValue">All Clients</option>
+              <option [value]="filterAllValue">{{ uiText.ALL_CLIENTS_FILTER }}</option>
               @for (status of availableStatuses; track status) {
                 <option [value]="status">{{ status }}</option>
               }
@@ -56,12 +56,12 @@ import { StatusBadgeComponent } from './status-badge.component';
 
       @if (!loading() && hasClients()) {
         <div class="client-count">
-          Showing {{ clientCount() }} {{ clientCount() === 1 ? 'client' : 'clients' }}
+          {{ uiText.SHOWING_PREFIX }} {{ clientCount() }} {{ clientCount() === 1 ? uiText.CLIENT_SINGULAR : uiText.CLIENT_PLURAL }}
           @if (searchTerm()) {
-            matching "{{ searchTerm() }}"
+            {{ uiText.MATCHING_PREFIX }} "{{ searchTerm() }}"
           }
           @if (selectedFilter() !== filterAllValue) {
-            with status "{{ selectedFilter() }}"
+            {{ uiText.WITH_STATUS_PREFIX }} "{{ selectedFilter() }}"
           }
         </div>
       }
@@ -83,11 +83,11 @@ import { StatusBadgeComponent } from './status-badge.component';
           <p>{{ uiText.NO_CLIENTS_FOUND }}</p>
           <p class="empty-state-hint">
             @if (searchTerm()) {
-              No clients found matching your search "{{ searchTerm() }}". {{ uiText.NO_SEARCH_RESULTS }}
+              {{ uiText.NO_CLIENTS_MATCHING_SEARCH }} "{{ searchTerm() }}". {{ uiText.NO_SEARCH_RESULTS }}
             } @else if (selectedFilter() === filterAllValue) {
               {{ uiText.ADD_FIRST_CLIENT }}
             } @else {
-              No clients found with status "{{ selectedFilter() }}". {{ uiText.NO_FILTER_RESULTS }}
+              {{ uiText.NO_CLIENTS_WITH_STATUS }} "{{ selectedFilter() }}". {{ uiText.NO_FILTER_RESULTS }}
             }
           </p>
         </div>
@@ -109,29 +109,29 @@ import { StatusBadgeComponent } from './status-badge.component';
               </div>
               <div class="client-details">
                 <div class="detail-row">
-                  <span class="detail-label">Email:</span>
+                  <span class="detail-label">{{ uiText.LABEL_EMAIL }}</span>
                   <span class="detail-value">{{ client.email }}</span>
                 </div>
                 @if (client.phone) {
                   <div class="detail-row">
-                    <span class="detail-label">Phone:</span>
+                    <span class="detail-label">{{ uiText.LABEL_PHONE }}</span>
                     <span class="detail-value">{{ client.phone }}</span>
                   </div>
                 }
                 @if (client.address) {
                   <div class="detail-row">
-                    <span class="detail-label">Address:</span>
+                    <span class="detail-label">{{ uiText.LABEL_ADDRESS }}</span>
                     <span class="detail-value">{{ client.address }}</span>
                   </div>
                 }
                 @if (client.notes) {
                   <div class="detail-row">
-                    <span class="detail-label">Notes:</span>
+                    <span class="detail-label">{{ uiText.LABEL_NOTES }}</span>
                     <span class="detail-value">{{ client.notes }}</span>
                   </div>
                 }
                 <div class="detail-row">
-                  <span class="detail-label">Created:</span>
+                  <span class="detail-label">{{ uiText.LABEL_CREATED }}</span>
                   <span class="detail-value">{{ client.createdAt | date:dateFormat }}</span>
                 </div>
               </div>
