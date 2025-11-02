@@ -20,4 +20,9 @@ export const DOMAIN_ERRORS = {
    * Error message when attempting to change status to the same value
    */
   CLIENT_STATUS_UNCHANGED: 'New status must be different from current status',
+
+  /**
+   * Error message when email format is invalid
+   */
+  INVALID_EMAIL_FORMAT: 'Invalid email format',
 } as const;
