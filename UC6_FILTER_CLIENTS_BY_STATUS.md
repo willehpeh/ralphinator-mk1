@@ -100,6 +100,18 @@ This file will track the implementation progress for Use Case 6: Filter Clients 
   - Follows same pattern as other effects (loadClients$, updateClient$, changeClientStatus$)
   - Maintains consistency with modern Angular inject() pattern
 
+#### Task 9: Updated NGRX reducer to handle filterClientsByStatus actions (2025-11-02)
+- **File**: `apps/frontend/src/app/clients/store/clients.reducer.ts`
+- **Description**: Added reducer cases to handle filtering clients by status state changes
+- **Details**:
+  - Imported filterClientsByStatus, filterClientsByStatusSuccess, filterClientsByStatusFailure actions
+  - Added on(filterClientsByStatus) handler to set loading=true and error=null
+  - Added on(filterClientsByStatusSuccess) handler to update clients array and set loading=false
+  - Added on(filterClientsByStatusFailure) handler to set error message and loading=false
+  - Follows same pattern as existing loadClients and changeClientStatus reducers
+  - Maintains immutable state updates using spread operator
+  - Completes the NGRX state management integration for UC6
+
 
 ### Components
 

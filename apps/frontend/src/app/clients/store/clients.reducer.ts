@@ -9,7 +9,10 @@ import {
   updateClientFailure,
   changeClientStatus,
   changeClientStatusSuccess,
-  changeClientStatusFailure
+  changeClientStatusFailure,
+  filterClientsByStatus,
+  filterClientsByStatusSuccess,
+  filterClientsByStatusFailure
 } from './clients.actions';
 
 /**
@@ -101,6 +104,28 @@ export const clientsReducer = createReducer(
 
   // When changing client status fails
   on(changeClientStatusFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+
+  // When filtering clients by status is triggered
+  on(filterClientsByStatus, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  // When clients are successfully filtered by status
+  on(filterClientsByStatusSuccess, (state, { clients }) => ({
+    ...state,
+    clients,
+    loading: false,
+    error: null,
+  })),
+
+  // When filtering clients by status fails
+  on(filterClientsByStatusFailure, (state, { error }) => ({
     ...state,
     loading: false,
     error,
