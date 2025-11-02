@@ -31,3 +31,19 @@ This document tracks the implementation of Use Case 4: Update Client Information
 - Follows event sourcing pattern where every state change is represented as an event
 
 **Verification**: Linting passed successfully
+
+---
+
+### Task 2: Add updateInformation method to ClientAggregate ✅
+**Completed**: 2025-11-02
+**Files**:
+- `packages/domain/src/lib/aggregates/client.aggregate.ts`
+
+**Description**: Added the `updateInformation` method to the `ClientAggregate` to handle updating client information. This method:
+- Accepts all client properties as parameters (companyName, email, phone, address, status, notes)
+- Validates that the aggregate has been created (throws error if id is not set)
+- Applies the `ClientInformationUpdatedDomainEvent`
+- Updated the `apply` method to handle `ClientInformationUpdatedDomainEvent` for event sourcing replay
+- Follows the event sourcing pattern where business logic is executed and events are applied
+
+**Verification**: Linting passed successfully

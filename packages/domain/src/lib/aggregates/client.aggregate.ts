@@ -1,6 +1,7 @@
 import { EventSourcedAggregate } from '../base/event-sourced-aggregate';
 import { DomainEvent } from '../base/domain-event';
 import { ClientCreatedDomainEvent, ClientStatus } from '../events/client-created.domain-event';
+import { ClientInformationUpdatedDomainEvent } from '../events/client-information-updated.domain-event';
 
 export class ClientAggregate extends EventSourcedAggregate {
   private id?: string;
@@ -48,6 +49,41 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Update client information
+   *
+   * @param companyName - Updated company name
+   * @param email - Updated email
+   * @param phone - Updated phone number
+   * @param address - Updated address
+   * @param status - Updated status
+   * @param notes - Updated notes
+   */
+  updateInformation(
+    companyName: string,
+    email: string,
+    phone: string | null,
+    address: string | null,
+    status: ClientStatus,
+    notes: string | null
+  ): void {
+    if (!this.id) {
+      throw new Error('Cannot update information on a client that has not been created');
+    }
+
+    this.applyEvent(
+      new ClientInformationUpdatedDomainEvent(
+        this.id,
+        companyName,
+        email,
+        phone,
+        address,
+        status,
+        notes
+      )
+    );
+  }
+
+  /**
    * Apply domain events to rebuild aggregate state
    * This method is called when replaying events from the event store
    *
@@ -56,6 +92,13 @@ export class ClientAggregate extends EventSourcedAggregate {
   protected apply(event: DomainEvent): void {
     if (event instanceof ClientCreatedDomainEvent) {
       this.id = event.aggregateId;
+      this.companyName = event.companyName;
+      this.email = event.email;
+      this.phone = event.phone;
+      this.address = event.address;
+      this.status = event.status;
+      this.notes = event.notes;
+    } else if (event instanceof ClientInformationUpdatedDomainEvent) {
       this.companyName = event.companyName;
       this.email = event.email;
       this.phone = event.phone;
