@@ -1,6 +1,6 @@
 # Use Case 4: Update Client Information - Implementation Documentation
 
-**Status**: In Progress
+**Status**: In Progress (Backend Complete, Frontend Pending)
 **Started**: 2025-11-02
 **Completed**: TBD
 
@@ -11,6 +11,23 @@
 This document tracks the implementation of Use Case 4: Update Client Information.
 
 **Goal**: Modify existing client information when details change
+
+## Current Status Summary
+
+**Backend (✅ Complete)**:
+- Domain event: ClientInformationUpdatedDomainEvent
+- Aggregate method: ClientAggregate.updateInformation()
+- CQRS command: UpdateClientCommand
+- Command handler: UpdateClientHandler
+- API endpoint: PUT /api/clients/:id
+- Projection: ClientProjection handles ClientInformationUpdatedDomainEvent
+- Read model updates working via event-driven projections
+
+**Frontend (⏳ Pending)**:
+- Edit form component (not started)
+- NGRX update action (not started)
+- ClientsService.updateClient() method (not started)
+- UI integration with client detail view (not started)
 
 ---
 
