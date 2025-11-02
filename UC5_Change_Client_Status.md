@@ -35,6 +35,16 @@ Implemented status change business logic in the aggregate:
 - Applies `ClientStatusChangedDomainEvent` when status is changed
 - Updated `apply()` method to handle `ClientStatusChangedDomainEvent`
 
+### ✅ Task 3: Create ChangeClientStatusCommand
+**Completed**: 2025-11-02
+
+Created command to represent status change requests:
+- File: `packages/application/src/lib/commands/change-client-status.command.ts`
+- Accepts client ID and new status
+- Follows CQRS pattern as immutable data structure
+- Exported from application package
+- Follows naming convention: `{Verb}{Noun}Command`
+
 ---
 
 ## Implementation Notes
