@@ -4,10 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { loadClients } from './store/clients.actions';
 import { selectClientById, selectClientsLoading, selectClientsError } from './store/clients.selectors';
+import { EditClientFormComponent } from './edit-client-form.component';
 
 @Component({
   selector: 'app-client-detail',
-  imports: [CommonModule],
+  imports: [CommonModule, EditClientFormComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="client-detail">
@@ -15,7 +16,14 @@ import { selectClientById, selectClientsLoading, selectClientsError } from './st
         <button class="back-button" (click)="navigateBack()">
           ← Back to List
         </button>
-        <h2>Client Details</h2>
+        <div class="header-title-section">
+          <h2>Client Details</h2>
+          @if (!isEditing() && client()) {
+            <button class="edit-button" (click)="toggleEditMode()">
+              Edit Client
+            </button>
+          }
+        </div>
       </div>
 
       @if (loading()) {
@@ -37,57 +45,65 @@ import { selectClientById, selectClientsLoading, selectClientsError } from './st
       }
 
       @if (client(); as clientData) {
-        <div class="detail-card">
-          <div class="detail-header-section">
-            <h3>{{ clientData.companyName }}</h3>
-            <span class="status-badge" [class]="'status-' + clientData.status.toLowerCase()">
-              {{ clientData.status }}
-            </span>
-          </div>
-
-          <div class="detail-section">
-            <h4>Contact Information</h4>
-            <div class="detail-grid">
-              <div class="detail-item">
-                <span class="detail-label">Email:</span>
-                <span class="detail-value">{{ clientData.email }}</span>
-              </div>
-              @if (clientData.phone) {
-                <div class="detail-item">
-                  <span class="detail-label">Phone:</span>
-                  <span class="detail-value">{{ clientData.phone }}</span>
-                </div>
-              }
-              @if (clientData.address) {
-                <div class="detail-item">
-                  <span class="detail-label">Address:</span>
-                  <span class="detail-value">{{ clientData.address }}</span>
-                </div>
-              }
+        @if (isEditing()) {
+          <app-edit-client-form
+            [clientId]="clientData.id"
+            (editCancelled)="toggleEditMode()"
+            (editSucceeded)="handleEditSuccess()"
+          />
+        } @else {
+          <div class="detail-card">
+            <div class="detail-header-section">
+              <h3>{{ clientData.companyName }}</h3>
+              <span class="status-badge" [class]="'status-' + clientData.status.toLowerCase()">
+                {{ clientData.status }}
+              </span>
             </div>
-          </div>
 
-          @if (clientData.notes) {
             <div class="detail-section">
-              <h4>Notes</h4>
-              <p class="notes-content">{{ clientData.notes }}</p>
-            </div>
-          }
-
-          <div class="detail-section">
-            <h4>Metadata</h4>
-            <div class="detail-grid">
-              <div class="detail-item">
-                <span class="detail-label">Client ID:</span>
-                <span class="detail-value">{{ clientData.id }}</span>
+              <h4>Contact Information</h4>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <span class="detail-label">Email:</span>
+                  <span class="detail-value">{{ clientData.email }}</span>
+                </div>
+                @if (clientData.phone) {
+                  <div class="detail-item">
+                    <span class="detail-label">Phone:</span>
+                    <span class="detail-value">{{ clientData.phone }}</span>
+                  </div>
+                }
+                @if (clientData.address) {
+                  <div class="detail-item">
+                    <span class="detail-label">Address:</span>
+                    <span class="detail-value">{{ clientData.address }}</span>
+                  </div>
+                }
               </div>
-              <div class="detail-item">
-                <span class="detail-label">Created:</span>
-                <span class="detail-value">{{ clientData.createdAt | date:'medium' }}</span>
+            </div>
+
+            @if (clientData.notes) {
+              <div class="detail-section">
+                <h4>Notes</h4>
+                <p class="notes-content">{{ clientData.notes }}</p>
+              </div>
+            }
+
+            <div class="detail-section">
+              <h4>Metadata</h4>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <span class="detail-label">Client ID:</span>
+                  <span class="detail-value">{{ clientData.id }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Created:</span>
+                  <span class="detail-value">{{ clientData.createdAt | date:'medium' }}</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        }
       }
     </div>
   `,
@@ -100,6 +116,12 @@ import { selectClientById, selectClientsLoading, selectClientsError } from './st
 
     .detail-header {
       margin-bottom: 2rem;
+    }
+
+    .header-title-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .back-button {
@@ -125,6 +147,22 @@ import { selectClientById, selectClientsLoading, selectClientsError } from './st
       margin: 0;
       color: #333;
       font-size: 1.75rem;
+    }
+
+    .edit-button {
+      padding: 0.6rem 1.5rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .edit-button:hover {
+      background-color: #0056b3;
     }
 
     .loading-message {
@@ -246,6 +284,9 @@ export class ClientDetailComponent implements OnInit {
   // Get client ID from route params
   private clientId = signal<string | null>(null);
 
+  // Edit mode state
+  isEditing = signal(false);
+
   // Select data from store using signals
   client = this.store.selectSignal(selectClientById(this.clientId() ?? ''));
   loading = this.store.selectSignal(selectClientsLoading);
@@ -264,5 +305,15 @@ export class ClientDetailComponent implements OnInit {
 
   navigateBack(): void {
     this.router.navigate(['/clients']);
+  }
+
+  toggleEditMode(): void {
+    this.isEditing.update(value => !value);
+  }
+
+  handleEditSuccess(): void {
+    // Exit edit mode and reload clients to show updated data
+    this.isEditing.set(false);
+    this.store.dispatch(loadClients());
   }
 }

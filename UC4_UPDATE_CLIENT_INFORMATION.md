@@ -279,3 +279,32 @@ This document tracks the implementation of Use Case 4: Update Client Information
 
 ---
 
+### Task 13: Integrate edit mode into ClientDetailComponent ✅
+**Completed**: 2025-11-02
+**Files**:
+- `apps/frontend/src/app/clients/client-detail.component.ts`
+- `apps/frontend/src/app/clients/edit-client-form.component.ts` (updated to add output events)
+
+**Description**: Integrated the `EditClientFormComponent` into the `ClientDetailComponent` with toggle functionality. This implementation:
+- **Updated EditClientFormComponent**:
+  - Added `editCancelled` output event using `output<void>()`
+  - Added `editSucceeded` output event using `output<void>()`
+  - Updated `onSubmit()` to emit `editSucceeded` after successful submission
+  - Updated `onCancel()` to emit `editCancelled` when user cancels
+- **Updated ClientDetailComponent**:
+  - Imported `EditClientFormComponent` in the imports array
+  - Added `isEditing` signal to track edit mode state (default: false)
+  - Added "Edit Client" button in header (visible only when not editing and client exists)
+  - Added `toggleEditMode()` method to switch between view and edit modes
+  - Added `handleEditSuccess()` method that exits edit mode and reloads clients
+  - Template now conditionally shows either the edit form or the detail view using `@if (isEditing())`
+  - Edit form receives clientId as input and listens for editCancelled and editSucceeded events
+  - Added CSS styles for header layout and edit button
+- Enables users to click "Edit Client" to enter edit mode, make changes, and either save or cancel
+- After successful save, automatically exits edit mode and refreshes client data
+- Follows modern Angular patterns (signals, control flow syntax, output events)
+
+**Verification**: Linting passed successfully (npx eslint apps/frontend/src/app/clients/edit-client-form.component.ts apps/frontend/src/app/clients/client-detail.component.ts)
+
+---
+

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, signal, input, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, input, output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -219,6 +219,10 @@ export class EditClientFormComponent implements OnInit {
   // Input: client ID to edit
   clientId = input.required<string>();
 
+  // Output events for parent component
+  editCancelled = output<void>();
+  editSucceeded = output<void>();
+
   // Select data from store using signals
   client = this.store.selectSignal(selectClientById(this.clientId()));
   loading = this.store.selectSignal(selectClientsLoading);
@@ -266,10 +270,10 @@ export class EditClientFormComponent implements OnInit {
         notes: formValue.notes || undefined
       }));
 
-      // Note: In a real application, you would subscribe to the success/error
-      // state and handle navigation or showing messages accordingly
+      // Emit success event after a brief delay to allow the store to update
       setTimeout(() => {
         this.submitting.set(false);
+        this.editSucceeded.emit();
       }, 1000);
     }
   }
@@ -287,5 +291,8 @@ export class EditClientFormComponent implements OnInit {
         notes: clientData.notes || ''
       });
     }
+
+    // Emit cancel event to parent
+    this.editCancelled.emit();
   }
 }
