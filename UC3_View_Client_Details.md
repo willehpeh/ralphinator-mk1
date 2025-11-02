@@ -27,8 +27,8 @@ This document tracks the implementation of Use Case 3: View Client Details, whic
 - [ ] Test selectors
 
 ### Frontend - Routing
-- [ ] Add route for client detail view (/clients/:id)
-- [ ] Configure route parameters
+- [x] Add route for client detail view (/clients/:id)
+- [x] Configure route parameters
 - [ ] Add route guards if needed
 
 ### Frontend - Components
@@ -76,6 +76,14 @@ This document tracks the implementation of Use Case 3: View Client Details, whic
 - Provides "Back to List" button using `Router` for navigation
 - Styled with comprehensive CSS including status badges and responsive grid layout
 - Location: `apps/frontend/src/app/clients/client-detail.component.ts`
+
+### 2025-11-02: Added route for client detail view
+- Added route configuration for `/clients/:id` in `app.routes.ts`
+- Route correctly positioned AFTER `/clients/add` to avoid path conflicts
+- Route parameter `:id` configured to capture client UUID
+- Imported `ClientDetailComponent` into routing configuration
+- Route now enables navigation to individual client detail pages
+- Location: `apps/frontend/src/app/app.routes.ts:16-18`
 
 ---
 
