@@ -389,11 +389,14 @@ You are in Step 4 of an agentic software development workflow.
 1. Examine the codebase for refactoring opportunities
 2. If you find a refactoring:
    - Implement ONE refactoring only
+   - Run all lint and unit test tasks
+   - If there are any errors, write them to BUGS.md, creating the file if necessary
    - Commit: git add . && git commit -m "refactoring description"
    - Keep REFACTORING.md
 3. If no more useful refactorings:
    - Push: git push origin $GIT_BRANCH
    - Delete REFACTORING.md
+   - Create REFACTORING_COMPLETE.md and leave it empty
 
 ## Important:
 - Only ONE refactoring per iteration
@@ -425,6 +428,7 @@ You are in Step 5 of an agentic software development workflow.
 2. Create a summary of the completed story
 3. Send notification using curl
 4. Create STORY_COMPLETE.md
+5. Delete REFACTORING_COMPLETE.me
 
 ## Important:
 - Keep notification concise
@@ -489,13 +493,11 @@ main() {
         elif file_exists "STORY_COMPLETE.md" || \
              (! file_exists "NEXT_STORY.md" && \
               ! file_exists "NEXT_USE_CASES.md" && \
+	      ! file_exists "REFACTORING_COMPLETE.md" && \
               ! file_exists "CURRENT_USE_CASE.md" && \
               ! file_exists "REFACTORING.md"); then
             execute_step_1
-        elif ! file_exists "REFACTORING.md" && \
-             ! file_exists "NEXT_USE_CASES.md" && \
-             ! file_exists "CURRENT_USE_CASE.md" && \
-             ! file_exists "NEXT_STORY.md"; then
+        elif file_exists "REFACTORING_COMPLETE.md"; then
             execute_step_5
         else
             log_error "Unexpected state"

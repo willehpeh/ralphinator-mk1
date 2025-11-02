@@ -27,6 +27,15 @@ import { CLIENT_STATUSES } from './client.constants';
             Add New Client
           </button>
 
+          <div class="search-controls">
+            <label for="search-input">Search:</label>
+            <input
+              id="search-input"
+              type="text"
+              placeholder="Search by company name..."
+              class="search-input" />
+          </div>
+
           <div class="filter-controls">
             <label for="status-filter">Filter by Status:</label>
             <select
@@ -153,6 +162,43 @@ import { CLIENT_STATUSES } from './client.constants';
 
     .add-client-btn:hover {
       background-color: #45a049;
+    }
+
+    .search-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .search-controls label {
+      font-weight: 500;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .search-input {
+      padding: 0.5rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: white;
+      color: #333;
+      font-size: 0.95rem;
+      min-width: 250px;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:hover {
+      border-color: #4CAF50;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #4CAF50;
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+    }
+
+    .search-input::placeholder {
+      color: #999;
     }
 
     .filter-controls {
