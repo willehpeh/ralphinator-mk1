@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ClientsState } from './clients.reducer';
+import { CLIENT_STATUSES } from '../client.constants';
 
 /**
  * Feature selector for the clients state
@@ -51,7 +52,7 @@ export const selectClientsCount = createSelector(
  */
 export const selectActiveClients = createSelector(
   selectAllClients,
-  (clients) => clients.filter(client => client.status === 'Active')
+  (clients) => clients.filter(client => client.status === CLIENT_STATUSES[0])
 );
 
 /**
@@ -59,7 +60,7 @@ export const selectActiveClients = createSelector(
  */
 export const selectInactiveClients = createSelector(
   selectAllClients,
-  (clients) => clients.filter(client => client.status === 'Inactive')
+  (clients) => clients.filter(client => client.status === CLIENT_STATUSES[1])
 );
 
 /**
