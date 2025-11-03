@@ -34,4 +34,11 @@ export class ProjectsService {
   getAllProjects(): Observable<ProjectDto[]> {
     return this.http.get<ProjectDto[]>(this.projectsApiUrl);
   }
+
+  /**
+   * Get a single project by ID
+   */
+  getProjectById(projectId: string): Observable<ProjectDto> {
+    return this.http.get<ProjectDto>(`${this.projectsApiUrl}/${projectId}`);
+  }
 }
