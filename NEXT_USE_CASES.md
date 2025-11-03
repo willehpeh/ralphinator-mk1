@@ -1,41 +1,5 @@
 # Use Cases: Contact Management
 
-## Use Case 1: Add a New Contact to a Client
-
-**Primary Actor**: Developer/User
-
-**Goal**: Record a new contact person associated with a client company so that the user can maintain relationships with individuals at that organization.
-
-**Preconditions**:
-- At least one client exists in the system
-- User has access to the CRM system
-
-**Main Success Scenario**:
-1. User selects a client company from the list
-2. User enters the contact person's name, role/title, email address, and phone number
-3. System validates that all required information is provided and correctly formatted
-4. System saves the contact and associates it with the selected client
-5. System displays confirmation message with the new contact's details
-6. System returns user to a view showing the contact information
-
-**Extensions**:
-- 2a. If user does not provide required fields (name, client):
-  - 2a1. System highlights missing fields
-  - 2a2. System prompts user to complete required information
-  - 2a3. User provides missing information and continues at step 3
-- 3a. If email address format is invalid:
-  - 3a1. System displays validation error for email field
-  - 3a2. User corrects the email address
-  - 3a3. Continue at step 3
-- 3b. If selected client does not exist:
-  - 3b1. System displays error message
-  - 3b2. User selects a different client or creates a new client first
-  - 3b3. Continue at step 2
-
-**Success Guarantee**: A new contact is recorded in the system, associated with the specified client, and can be retrieved for future reference.
-
----
-
 ## Use Case 2: View Contact Details
 
 **Primary Actor**: Developer/User
@@ -67,30 +31,17 @@
 
 ## Use Case 3: View All Contacts for a Specific Client
 
-**Primary Actor**: Developer/User
+**Status**: IMPLEMENTED (as part of Use Case 1)
 
-**Goal**: See all contact persons associated with a particular client company to understand who the user works with at that organization.
+This use case is already fully implemented. See Use Case 1 implementation in IMPLEMENTED_CASES.md.
 
-**Preconditions**:
-- At least one client exists in the system
-- User has access to the CRM system
-
-**Main Success Scenario**:
-1. User views a specific client's detail page
-2. System retrieves all contacts associated with that client
-3. System displays a list of contacts showing each person's name, role, email, and phone
-4. System displays the total count of contacts for this client
-5. User can select any contact to view more details
-
-**Extensions**:
-- 2a. If no contacts exist for this client:
-  - 2a1. System displays "No contacts yet" message
-  - 2a2. System offers option to add the first contact
-- 3a. User wants to add a new contact for this client:
-  - 3a1. System pre-selects the current client in the contact form
-  - 3a2. Continue with Use Case 1 at step 2
-
-**Success Guarantee**: User has viewed all current contacts associated with the specified client.
+The ClientDetailComponent includes:
+- Contacts section that displays ContactListComponent
+- GET /api/clients/:id/contacts endpoint retrieves all contacts for a client
+- ContactListComponent shows all contacts in a responsive grid
+- Each contact card displays name, role, email (with mailto: link), phone (with tel: link)
+- Empty state message when no contacts exist
+- "Add Contact" button to create first contact
 
 ---
 
@@ -225,35 +176,16 @@
 
 ## Use Case 8: Create Contact While Viewing a Client
 
-**Primary Actor**: Developer/User
+**Status**: IMPLEMENTED (as part of Use Case 1)
 
-**Goal**: Quickly add a new contact directly from a client's detail page without navigating away.
+This use case is already fully implemented. See Use Case 1 implementation in IMPLEMENTED_CASES.md.
 
-**Preconditions**:
-- User is viewing a specific client's detail page
-- Client exists in the system
-
-**Main Success Scenario**:
-1. User is viewing a client's detail page
-2. User selects "Add Contact" option from the client page
-3. System displays contact creation form with the current client pre-selected
-4. User enters contact details (name, role, email, phone)
-5. User submits the form
-6. System validates and saves the contact associated with the current client
-7. System displays success message
-8. System updates the client page to show the new contact in the contacts list
-9. User remains on the client detail page
-
-**Extensions**:
-- 6a. If validation fails:
-  - 6a1. System highlights validation errors
-  - 6a2. User corrects errors
-  - 6a3. Continue at step 5
-- 8a. User wants to add another contact:
-  - 8a1. User selects "Add Contact" again
-  - 8a2. Continue at step 3
-
-**Success Guarantee**: A new contact is created and associated with the client, visible immediately on the client's detail page.
+The ClientDetailComponent includes:
+- "Add Contact" button in the Contacts section
+- ContactFormComponent that toggles on button click
+- Client ID is pre-populated in the form
+- Contact list updates automatically after successful submission
+- User remains on client detail page after adding contact
 
 ---
 

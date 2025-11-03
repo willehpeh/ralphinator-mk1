@@ -241,3 +241,45 @@
   - System handles empty results with helpful messages
   - System restores full list when search is cleared
 - Documentation: search-clients-tasks.md
+
+## Use Case 1: Add a New Contact to a Client (2025-11-03)
+- Complete CQRS + Event Sourcing implementation for managing client contacts
+- Domain: ContactAddedToClientDomainEvent captures contact creation with all fields
+- Domain: ClientAggregate maintains contacts Map and exposes getContacts() method
+- Domain: ClientAggregate.addContact() method applies ContactAddedToClientDomainEvent
+- Domain: Contact interface exported from domain package (contactId, name, role, email, phone)
+- Application: AddContactToClientCommand with required name field and optional role, email, phone
+- Application: AddContactToClientCommandHandler loads aggregate, adds contact, persists events
+- Application: ContactReadModel DTO for query operations (includes clientId for filtering)
+- Application: GetClientContactsQuery accepts clientId to retrieve contacts for specific client
+- Application: GetClientContactsQueryHandler queries IContactReadRepository.findByClientId()
+- Application: IContactReadRepository port interface with findByClientId(), save(), delete() methods
+- Infrastructure: InMemoryContactReadRepository implementation with Map-based storage
+- Infrastructure: ContactProjection handles ContactAddedToClientDomainEvent and builds read models
+- Backend API: POST /api/clients/:id/contacts endpoint accepts AddContactDto (name required)
+- Backend API: GET /api/clients/:id/contacts endpoint returns ContactReadModel[] array
+- Backend API: Contact DTOs defined in shared-types package (AddContactDto, AddContactResponse)
+- Frontend: ContactFormComponent with reactive forms, validation, and modern Angular patterns
+- Frontend: ContactFormComponent validates name (required) and email format (optional)
+- Frontend: ContactFormComponent emits contactAdded and formCancelled output events
+- Frontend: ContactListComponent displays contacts in responsive grid with cards
+- Frontend: ContactListComponent shows email/phone with SVG icons and clickable links (mailto:, tel:)
+- Frontend: ContactListComponent includes empty state message when no contacts exist
+- Frontend: ClientDetailComponent integrated with ContactFormComponent and ContactListComponent
+- Frontend: "Add Contact" button toggles form visibility in Contacts section
+- Frontend: HttpClient fetches contacts from GET /api/clients/:id/contacts on component init
+- Frontend: Contacts reloaded automatically after successfully adding new contact
+- Event sourcing: All contact additions captured as immutable events in event store
+- Projections: Contact read models built from ContactAddedToClientDomainEvent
+- All acceptance criteria met:
+  - User can select a client company from list (navigate to client detail)
+  - User can enter contact name, role, email, phone in form
+  - System validates required fields (name) and email format
+  - System saves contact and associates with selected client
+  - System displays contacts in list view with all details
+  - System returns user to view showing contact information
+- Extensions handled:
+  - 2a: Missing required name field shows validation error
+  - 3a: Invalid email format shows validation error
+  - 3b: Client existence validated by backend handler
+- Documentation: add-contact-to-client.md
