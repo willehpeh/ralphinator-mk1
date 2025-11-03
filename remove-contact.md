@@ -17,6 +17,8 @@ This use case allows users to delete a contact person from the system when they 
 ### Application Layer
 - [x] Create RemoveContactCommand class
 - [x] Export RemoveContactCommand
+- [x] Create RemoveContactCommandHandler
+- [x] Export RemoveContactCommandHandler
 
 ### Infrastructure Layer
 
@@ -31,8 +33,6 @@ This use case allows users to delete a contact person from the system when they 
 ### Domain Layer
 
 ### Application Layer
-- [ ] Create RemoveContactCommandHandler
-- [ ] Export RemoveContactCommandHandler
 
 ### Infrastructure Layer
 - [ ] Update ContactProjection to handle ContactDeletedDomainEvent (soft delete/mark as deleted)
@@ -67,7 +67,8 @@ This use case allows users to delete a contact person from the system when they 
 
 ### Application Layer
 - `packages/application/src/lib/commands/remove-contact.command.ts` (created - RemoveContactCommand class)
-- `packages/application/src/lib/application.ts` (modified - exported RemoveContactCommand)
+- `packages/application/src/lib/commands/handlers/remove-contact.handler.ts` (created - RemoveContactCommandHandler class)
+- `packages/application/src/lib/application.ts` (modified - exported RemoveContactCommand and RemoveContactCommandHandler)
 
 ### Infrastructure Layer
 

@@ -15,6 +15,7 @@ export * from './commands/handlers/change-client-status.handler';
 export * from './commands/handlers/delete-client.handler';
 export * from './commands/handlers/add-contact-to-client.handler';
 export * from './commands/handlers/update-contact.handler';
+export * from './commands/handlers/remove-contact.handler';
 
 // Queries
 export * from './queries/get-client-by-id.query';
