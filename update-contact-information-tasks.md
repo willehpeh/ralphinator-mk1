@@ -41,7 +41,7 @@ This use case allows users to update a contact's information (name, role, email,
 - [x] Create edit form in ContactDetailComponent
 - [x] Add edit/cancel/save buttons
 - [x] Implement saveContact() method to call API
-- [ ] Add loading state during save operation
+- [x] Add loading state during save operation
 - [ ] Add success confirmation message
 - [ ] Add error handling for save failures
 - [ ] Update NGRX actions for updating contacts
@@ -76,6 +76,6 @@ This use case allows users to update a contact's information (name, role, email,
 - `apps/api/src/app/contacts/contacts.module.ts` (modified - registered UpdateContactCommandHandler in providers)
 
 ### Frontend Layer
-- `apps/frontend/src/app/clients/contact-detail.component.ts` (modified - added isEditMode signal, enterEditMode() and cancelEdit() methods, editForm FormGroup, form template with validation)
+- `apps/frontend/src/app/clients/contact-detail.component.ts` (modified - added isEditMode signal, saving signal, enterEditMode() and cancelEdit() methods, editForm FormGroup, form template with validation, loading state during save operation)
 
 ---

@@ -402,14 +402,19 @@ interface ContactEditForm {
                 <button
                   type="button"
                   class="btn btn-primary"
-                  [disabled]="editForm.invalid"
+                  [disabled]="editForm.invalid || saving()"
                   (click)="saveContact()"
                 >
-                  Save Changes
+                  @if (saving()) {
+                    Saving...
+                  } @else {
+                    Save Changes
+                  }
                 </button>
                 <button
                   type="button"
                   class="btn btn-secondary"
+                  [disabled]="saving()"
                   (click)="cancelEdit()"
                 >
                   Cancel
@@ -500,6 +505,7 @@ export class ContactDetailComponent implements OnInit {
 
   // Edit mode state
   isEditMode = signal(false);
+  saving = signal(false);
 
   // Edit form
   editForm = new FormGroup<ContactEditForm>({
@@ -574,7 +580,7 @@ export class ContactDetailComponent implements OnInit {
   }
 
   saveContact(): void {
-    if (this.editForm.invalid) {
+    if (this.editForm.invalid || this.saving()) {
       return;
     }
 
@@ -591,15 +597,19 @@ export class ContactDetailComponent implements OnInit {
       phone: formValue.phone || null
     };
 
+    this.saving.set(true);
+
     this.http.put<ContactDetail>(`/api/contacts/${contactId}`, updateData).subscribe({
       next: (updatedContact) => {
         this.contact.set(updatedContact);
         this.isEditMode.set(false);
         this.editForm.reset();
+        this.saving.set(false);
       },
       error: (err) => {
         console.error('Failed to update contact:', err);
         this.error.set('Failed to update contact. Please try again.');
+        this.saving.set(false);
       }
     });
   }
