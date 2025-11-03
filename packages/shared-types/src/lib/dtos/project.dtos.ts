@@ -58,6 +58,7 @@ export class UpdateProjectDto extends ProjectDataDto {}
  */
 export interface CreateProjectResponse {
   id: string;
+  clientId: string;
 }
 
 /**
