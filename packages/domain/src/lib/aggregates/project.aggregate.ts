@@ -4,6 +4,7 @@ import { ProjectStatus } from '@angular-nest-starter/shared-types';
 import { PROJECT_EVENT_TYPES } from '../constants/project-event-types';
 import { DOMAIN_ERRORS } from '../constants/domain-errors';
 import { ProjectCreatedDomainEvent } from '../events/project-created.domain-event';
+import { ProjectDetailsUpdatedDomainEvent } from '../events/project-details-updated.domain-event';
 import { ProjectData } from '../value-objects/project-data.value-object';
 
 /**
@@ -27,6 +28,7 @@ export class ProjectAggregate extends EventSourcedAggregate {
     // Register event handlers for all project events
     this.registerEventHandlers({
       [PROJECT_EVENT_TYPES.CREATED]: this.onProjectCreated.bind(this),
+      [PROJECT_EVENT_TYPES.DETAILS_UPDATED]: this.onProjectDetailsUpdated.bind(this),
     } as unknown as Record<string, (event: DomainEvent) => void>);
   }
 
@@ -41,6 +43,16 @@ export class ProjectAggregate extends EventSourcedAggregate {
     const project = new ProjectAggregate();
     project.applyEvent(new ProjectCreatedDomainEvent(id, projectData));
     return project;
+  }
+
+  /**
+   * Updates project details
+   *
+   * @param projectData - Value object containing updated project data
+   */
+  updateDetails(projectData: ProjectData): void {
+    this.ensureInitialized();
+    this.applyEvent(new ProjectDetailsUpdatedDomainEvent(this.id!, projectData));
   }
 
   /**
@@ -59,6 +71,28 @@ export class ProjectAggregate extends EventSourcedAggregate {
    */
   private onProjectCreated(event: ProjectCreatedDomainEvent): void {
     this.id = event.aggregateId;
+    this.clientId = event.projectData.clientId;
+    this.name = event.projectData.name;
+    this.status = event.projectData.status;
+    this.description = event.projectData.description;
+    this.startDate = event.projectData.startDate
+      ? event.projectData.startDate.toISOString()
+      : null;
+    this.expectedEndDate = event.projectData.expectedEndDate
+      ? event.projectData.expectedEndDate.toISOString()
+      : null;
+    this.actualEndDate = event.projectData.actualEndDate
+      ? event.projectData.actualEndDate.toISOString()
+      : null;
+    this.budget = event.projectData.budget;
+    this.technicalNotes = event.projectData.technicalNotes;
+  }
+
+  /**
+   * Event handler for ProjectDetailsUpdatedDomainEvent
+   * Updates the aggregate state when project details are modified
+   */
+  private onProjectDetailsUpdated(event: ProjectDetailsUpdatedDomainEvent): void {
     this.clientId = event.projectData.clientId;
     this.name = event.projectData.name;
     this.status = event.projectData.status;

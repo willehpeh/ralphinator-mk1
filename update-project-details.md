@@ -21,10 +21,18 @@
 
 **Description**: Added the DETAILS_UPDATED constant to PROJECT_EVENT_TYPES that maps to 'ProjectDetailsUpdatedDomainEvent'. This constant is used by the aggregate and handlers to identify the event type, following the established pattern for event type constants.
 
+**Commit**: feat: Add DETAILS_UPDATED event type constant for project updates
+
+### Task 3: Add updateDetails method to ProjectAggregate
+**Date**: 2025-11-03
+**Files Modified**:
+- `packages/domain/src/lib/aggregates/project.aggregate.ts` (added updateDetails method, onProjectDetailsUpdated event handler, and registered the event handler)
+
+**Description**: Added the updateDetails method to the ProjectAggregate that accepts a ProjectData value object and applies the ProjectDetailsUpdatedDomainEvent. Also implemented the onProjectDetailsUpdated event handler that updates the aggregate state when replaying events, following the same pattern as the onProjectCreated handler.
+
 **Commit**:
 
 ## Pending Tasks
-- Add updateDetails method to ProjectAggregate
 - Create UpdateProjectDetailsCommand
 - Create UpdateProjectDetailsCommandHandler
 - Create UpdateProjectDetailsQuery
