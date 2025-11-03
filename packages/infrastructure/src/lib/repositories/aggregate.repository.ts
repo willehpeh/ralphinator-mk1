@@ -22,9 +22,18 @@ export class AggregateRepository<T extends EventSourcedAggregate> implements IAg
 
   /**
    * Loads an aggregate by replaying all events from the event store
+   *
+   * @throws Error if no events exist for the given aggregate ID
    */
   async load(aggregateId: string, aggregateType: new () => T): Promise<T> {
     const events = await this.eventStore.getEvents(aggregateId);
+
+    if (events.length === 0) {
+      throw new Error(
+        `Aggregate not found: No events exist for aggregate ID '${aggregateId}'`
+      );
+    }
+
     const aggregate = new aggregateType();
     aggregate.loadFromHistory(events);
     return aggregate;
