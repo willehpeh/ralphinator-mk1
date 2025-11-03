@@ -246,11 +246,61 @@ interface Contact {
 
     .search-section {
       margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
     }
 
     .search-input-wrapper {
       position: relative;
+      flex: 1;
+      min-width: 300px;
       max-width: 600px;
+    }
+
+    .sort-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sort-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #4b5563;
+    }
+
+    .sort-buttons {
+      display: flex;
+      gap: 0.5rem;
+      background-color: #f3f4f6;
+      border-radius: 8px;
+      padding: 0.25rem;
+    }
+
+    .sort-button {
+      padding: 0.5rem 1rem;
+      background-color: transparent;
+      color: #6b7280;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .sort-button:hover {
+      background-color: rgba(255, 255, 255, 0.6);
+      color: #374151;
+    }
+
+    .sort-button.active {
+      background-color: white;
+      color: #3b82f6;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     .search-icon {
@@ -325,6 +375,33 @@ interface Contact {
               [ngModel]="searchQuery()"
               (ngModelChange)="searchQuery.set($event)"
             />
+          </div>
+
+          <div class="sort-controls">
+            <label class="sort-label">Sort by:</label>
+            <div class="sort-buttons">
+              <button
+                class="sort-button"
+                [class.active]="sortBy() === 'name'"
+                (click)="sortBy.set('name')"
+              >
+                Name
+              </button>
+              <button
+                class="sort-button"
+                [class.active]="sortBy() === 'client'"
+                (click)="sortBy.set('client')"
+              >
+                Client
+              </button>
+              <button
+                class="sort-button"
+                [class.active]="sortBy() === 'role'"
+                (click)="sortBy.set('role')"
+              >
+                Role
+              </button>
+            </div>
           </div>
         </div>
 
@@ -403,23 +480,38 @@ export class AllContactsComponent implements OnInit {
   loading = signal<boolean>(true);
   error = signal<string | null>(null);
   searchQuery = signal<string>('');
+  sortBy = signal<'name' | 'client' | 'role'>('name');
 
-  // Computed filtered contacts based on search query
+  // Computed filtered and sorted contacts
   filteredContacts = computed(() => {
     const query = this.searchQuery().toLowerCase().trim();
     const allContacts = this.contacts();
+    const sortField = this.sortBy();
 
-    if (!query) {
-      return allContacts;
+    // Filter first
+    let filtered = allContacts;
+    if (query) {
+      filtered = allContacts.filter(contact => {
+        const matchesName = contact.name.toLowerCase().includes(query);
+        const matchesRole = contact.role?.toLowerCase().includes(query) ?? false;
+        const matchesEmail = contact.email?.toLowerCase().includes(query) ?? false;
+        const matchesClientName = contact.clientName.toLowerCase().includes(query);
+
+        return matchesName || matchesRole || matchesEmail || matchesClientName;
+      });
     }
 
-    return allContacts.filter(contact => {
-      const matchesName = contact.name.toLowerCase().includes(query);
-      const matchesRole = contact.role?.toLowerCase().includes(query) ?? false;
-      const matchesEmail = contact.email?.toLowerCase().includes(query) ?? false;
-      const matchesClientName = contact.clientName.toLowerCase().includes(query);
-
-      return matchesName || matchesRole || matchesEmail || matchesClientName;
+    // Then sort
+    return [...filtered].sort((a, b) => {
+      if (sortField === 'name') {
+        return a.name.localeCompare(b.name);
+      } else if (sortField === 'client') {
+        return a.clientName.localeCompare(b.clientName);
+      } else { // role
+        const roleA = a.role ?? '';
+        const roleB = b.role ?? '';
+        return roleA.localeCompare(roleB);
+      }
     });
   });
 

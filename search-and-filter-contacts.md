@@ -72,6 +72,17 @@
 - Filter now searches across name, role, email, and client name fields
 - Client company name is now prominently displayed on each contact card
 
-### Task 4: Add sort functionality (by name, client, role)
+### Task 4: Add sort functionality (by name, client, role) ✅
 **Description**: Add UI controls and logic to sort filtered results
-**Status**: Pending
+**Status**: Completed
+**Details**:
+- Added sortBy signal with type union 'name' | 'client' | 'role' (default: 'name')
+- Enhanced filteredContacts computed signal to apply sorting after filtering
+- Implemented localeCompare for proper string comparison in all three sort modes
+- Added responsive sort controls with label and button group UI
+- Sort buttons styled as pill-group with active state highlighting
+- Active sort button has blue color and elevated shadow
+- Sort controls placed alongside search input in flexbox layout
+- Search section wraps responsively on smaller screens (flex-wrap)
+- Sorting is reactive and updates immediately when changed
+- All three sort options (Name, Client, Role) working correctly
