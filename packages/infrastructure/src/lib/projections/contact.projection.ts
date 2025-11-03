@@ -50,13 +50,13 @@ export class ContactProjection extends BaseProjectionHandler {
     // Transform ContactAddedToClientDomainEvent into contact read model
     // Note: clientName is set to empty string as it will be populated by the repository when fetching
     const readModel = new ContactReadModel(
-      event.contactId,
+      event.contactData.contactId,
       event.aggregateId, // clientId is the aggregateId
       '', // clientName will be populated by repository on read
-      event.name,
-      event.role,
-      event.email,
-      event.phone
+      event.contactData.name,
+      event.contactData.role,
+      event.contactData.email,
+      event.contactData.phone
     );
 
     // Persist to read repository
@@ -69,25 +69,25 @@ export class ContactProjection extends BaseProjectionHandler {
    */
   private async onContactUpdated(event: ContactUpdatedDomainEvent): Promise<void> {
     // Fetch the existing contact read model
-    const existingContact = await this.contactReadRepository.findById(event.contactId);
+    const existingContact = await this.contactReadRepository.findById(event.contactData.contactId);
 
     if (!existingContact) {
       // If contact doesn't exist in read model, log warning but don't fail
       // This could happen if events are processed out of order
-      console.warn(`Contact ${event.contactId} not found in read model during update`);
+      console.warn(`Contact ${event.contactData.contactId} not found in read model during update`);
       return;
     }
 
     // Transform ContactUpdatedDomainEvent into updated contact read model
     // Preserve clientId and clientName from existing read model
     const updatedReadModel = new ContactReadModel(
-      event.contactId,
+      event.contactData.contactId,
       existingContact.clientId,
       existingContact.clientName,
-      event.name,
-      event.role,
-      event.email,
-      event.phone
+      event.contactData.name,
+      event.contactData.role,
+      event.contactData.email,
+      event.contactData.phone
     );
 
     // Persist updated read model to repository

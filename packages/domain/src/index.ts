@@ -12,4 +12,5 @@ export * from './lib/events/contact-updated.domain-event';
 export * from './lib/events/contact-deleted.domain-event';
 export * from './lib/aggregates/client.aggregate';
 export * from './lib/value-objects/client-data.value-object';
+export * from './lib/value-objects/contact-data.value-object';
 export * from './lib/value-objects/email.value-object';

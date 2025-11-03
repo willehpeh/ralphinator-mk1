@@ -2,6 +2,7 @@ import { Controller, Get, Param, Put, Body, Delete } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { GetContactByIdQuery, GetAllContactsQuery, ContactReadModel, UpdateContactCommand, RemoveContactCommand } from '@angular-nest-starter/application';
 import { UpdateContactDto } from '@angular-nest-starter/shared-types';
+import { ContactData } from '@angular-nest-starter/domain';
 
 @Controller('contacts')
 export class ContactsController {
@@ -34,14 +35,15 @@ export class ContactsController {
       throw new Error('Contact not found');
     }
 
-    const command = new UpdateContactCommand(
+    const contactData = new ContactData(
       id,
-      contact.clientId,
       dto.name,
       dto.role,
       dto.email,
       dto.phone
     );
+
+    const command = new UpdateContactCommand(contact.clientId, contactData);
     await this.commandBus.execute(command);
   }
 

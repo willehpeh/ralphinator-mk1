@@ -1,10 +1,8 @@
+import { ContactData } from '@angular-nest-starter/domain';
+
 export class AddContactToClientCommand {
   constructor(
     public readonly clientId: string,
-    public readonly contactId: string,
-    public readonly name: string,
-    public readonly role: string | null,
-    public readonly email: string | null,
-    public readonly phone: string | null
+    public readonly contactData: ContactData
   ) {}
 }

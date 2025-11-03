@@ -21,13 +21,7 @@ export class UpdateContactCommandHandler
   async execute(command: UpdateContactCommand): Promise<string> {
     return this.executeOnAggregate(command.clientId, ClientAggregate, (client) => {
       // Update contact using domain logic
-      client.updateContact(
-        command.contactId,
-        command.name,
-        command.role,
-        command.email,
-        command.phone
-      );
+      client.updateContact(command.contactData);
     });
   }
 }

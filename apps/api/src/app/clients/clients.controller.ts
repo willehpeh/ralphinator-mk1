@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Put, NotFoundExcepti
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel, ClientDataPayload, AddContactToClientCommand, GetClientContactsQuery, ContactReadModel } from '@angular-nest-starter/application';
 import { ClientDataDto, CreateClientDto, UpdateClientDto, ChangeClientStatusDto, ClientStatus, AddContactDto, AddContactResponse } from '@angular-nest-starter/shared-types';
+import { ContactData } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
 import { CLIENT_CONTROLLER_ERROR_MESSAGES } from './clients-controller.constants';
 
@@ -137,14 +138,15 @@ export class ClientsController {
     @Body() dto: AddContactDto
   ): Promise<AddContactResponse> {
     const contactId = randomUUID();
-    const command = new AddContactToClientCommand(
-      clientId,
+    const contactData = new ContactData(
       contactId,
       dto.name,
       dto.role ?? null,
       dto.email ?? null,
       dto.phone ?? null
     );
+
+    const command = new AddContactToClientCommand(clientId, contactData);
 
     await this.commandBus.execute<AddContactToClientCommand, string>(command);
 

@@ -1,4 +1,5 @@
 import { DomainEvent } from '../base/domain-event';
+import { ContactData } from '../value-objects/contact-data.value-object';
 
 /**
  * Domain event representing a contact being added to a client.
@@ -7,11 +8,7 @@ import { DomainEvent } from '../base/domain-event';
 export class ContactAddedToClientDomainEvent extends DomainEvent {
   constructor(
     aggregateId: string,
-    public readonly contactId: string,
-    public readonly name: string,
-    public readonly role: string | null,
-    public readonly email: string | null,
-    public readonly phone: string | null,
+    public readonly contactData: ContactData,
     eventVersion = 1
   ) {
     super(aggregateId, eventVersion);

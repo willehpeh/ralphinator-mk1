@@ -21,13 +21,7 @@ export class AddContactToClientHandler
   async execute(command: AddContactToClientCommand): Promise<string> {
     return this.executeOnAggregate(command.clientId, ClientAggregate, (client) => {
       // Add contact to client using domain logic
-      client.addContact(
-        command.contactId,
-        command.name,
-        command.role,
-        command.email,
-        command.phone
-      );
+      client.addContact(command.contactData);
     });
   }
 }
