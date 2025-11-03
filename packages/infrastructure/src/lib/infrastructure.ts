@@ -17,3 +17,4 @@ export * from './projections/contact.projection';
 
 // Read Model Repositories
 export * from './read-models/in-memory-client-read-repository';
+export * from './read-models/in-memory-contact-read-repository';
