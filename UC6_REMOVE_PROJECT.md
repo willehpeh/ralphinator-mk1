@@ -78,23 +78,27 @@
 - Located in `apps/frontend/src/app/projects/project-detail.component.ts:10,14,160,243-255,149-158`
 - Commit: `03517ac feat: Add confirmation dialog for project deletion`
 
+### Task 9: Integrate delete functionality in ProjectDetailComponent ✅
+- Implemented `onDeleteConfirmed()` method to call `deleteProject()`
+- Shows loading state during deletion by setting `loading` signal to `true`
+- Handles success: navigates to projects list using `router.navigate(['/projects'])`
+- Handles error: displays error message via `error` signal
+- Located in `apps/frontend/src/app/projects/project-detail.component.ts:258-280`
+- Commit: (pending)
+
 ## Tasks Remaining
 
-### Task 9: Integrate delete functionality in ProjectDetailComponent
-- Call `deleteProject()` on confirmation
-- Show loading state during deletion
-- Handle success: navigate to projects list
-- Handle error: display error message
+None - Use case is complete!
 
 ## Success Criteria
 
-- [ ] User can click "Delete Project" button on project detail page
-- [ ] System displays confirmation dialog explaining archive
-- [ ] User can confirm or cancel deletion
-- [ ] System marks project as deleted (soft delete)
-- [ ] System preserves complete project history via event sourcing
-- [ ] System displays confirmation and redirects to projects list
-- [ ] System excludes deleted project from standard project views
+- [x] User can click "Delete Project" button on project detail page
+- [x] System displays confirmation dialog explaining archive
+- [x] User can confirm or cancel deletion
+- [x] System marks project as deleted (soft delete)
+- [x] System preserves complete project history via event sourcing
+- [x] System displays confirmation and redirects to projects list
+- [x] System excludes deleted project from standard project views
 
 ## Notes
 

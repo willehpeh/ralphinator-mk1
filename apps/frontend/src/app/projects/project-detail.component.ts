@@ -256,9 +256,27 @@ export class ProjectDetailComponent {
   }
 
   onDeleteConfirmed(): void {
-    // TODO: Implement in Task 9
+    const currentProject = this.project();
+    if (!currentProject) return;
+
+    this.loading.set(true);
     this.showDeleteDialog.set(false);
-    console.log('Delete confirmed');
+
+    this.projectsService.deleteProject(
+      currentProject.clientId,
+      currentProject.id
+    ).subscribe({
+      next: () => {
+        this.loading.set(false);
+        // Navigate to projects list after successful deletion
+        this.router.navigate(['/projects']);
+      },
+      error: (err) => {
+        console.error('Error deleting project:', err);
+        this.error.set('Failed to delete project. Please try again.');
+        this.loading.set(false);
+      }
+    });
   }
 
   onDeleteCancelled(): void {
