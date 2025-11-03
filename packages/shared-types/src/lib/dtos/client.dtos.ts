@@ -1,5 +1,5 @@
 import { IsString, IsEmail, IsOptional, IsIn, IsNotEmpty } from 'class-validator';
-import { ClientStatus, CLIENT_STATUS_VALUES } from '@angular-nest-starter/domain';
+import { ClientStatus, CLIENT_STATUS_VALUES } from '../types/client-status.type';
 
 /**
  * Base DTO containing all client data fields.
@@ -15,18 +15,18 @@ export class ClientDataDto {
 
   @IsString()
   @IsOptional()
-  phone!: string | null;
+  phone?: string | null;
 
   @IsString()
   @IsOptional()
-  address!: string | null;
+  address?: string | null;
 
   @IsIn(CLIENT_STATUS_VALUES)
   status!: ClientStatus;
 
   @IsString()
   @IsOptional()
-  notes!: string | null;
+  notes?: string | null;
 }
 
 /**

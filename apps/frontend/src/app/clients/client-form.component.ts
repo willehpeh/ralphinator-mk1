@@ -4,7 +4,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 import { Subject, takeUntil } from 'rxjs';
-import { ClientsService, CreateClientDto } from './clients.service';
+import { CreateClientDto } from '@angular-nest-starter/shared-types';
+import { ClientsService } from './clients.service';
 import { updateClient, updateClientSuccess, updateClientFailure } from './store/clients.actions';
 import { selectClientsError } from './store/clients.selectors';
 import { ClientStatus, Client } from './client.types';
