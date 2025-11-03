@@ -29,8 +29,17 @@
   - Implemented onContactAdded() event handler that adds contact to contacts Map
   - Method validates aggregate is initialized before adding contact
 
+### Task 4: Create AddContactToClientCommand
+- **Files Created:**
+  - `packages/application/src/lib/commands/add-contact-to-client.command.ts`
+- **Files Modified:**
+  - `packages/application/src/lib/application.ts` - Exported new command
+- **Description:**
+  - Created AddContactToClientCommand with clientId, contactId, name, role, email, and phone fields
+  - All optional fields (role, email, phone) are nullable
+  - Command is exported from application package for use in handlers and API layer
+
 ## Next Tasks
-- Create AddContactToClientCommand
 - Create AddContactToClientCommandHandler
 - Create ContactReadModel DTO
 - Create GetClientContactsQuery and handler
