@@ -2,12 +2,11 @@ import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@ang
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { map, switchMap, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientNavigationService } from './client-navigation.service';
-import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
+import { STANDARD_DATE_FORMAT } from './client-display.constants';
 import { ContactDetail } from './client.types';
 
 interface ContactEditForm {
@@ -666,7 +665,7 @@ export class ContactDetailComponent implements OnInit {
 
     const formValue = this.editForm.value;
     const updateData = {
-      name: formValue.name!,
+      name: formValue.name ?? '',
       role: formValue.role || null,
       email: formValue.email || null,
       phone: formValue.phone || null

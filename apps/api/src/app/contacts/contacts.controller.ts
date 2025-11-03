@@ -26,9 +26,17 @@ export class ContactsController {
 
   @Put(':id')
   async updateContact(@Param('id') id: string, @Body() dto: UpdateContactDto): Promise<void> {
+    // First, get the contact to retrieve its clientId
+    const query = new GetContactByIdQuery(id);
+    const contact = await this.queryBus.execute<GetContactByIdQuery, ContactReadModel | null>(query);
+
+    if (!contact) {
+      throw new Error('Contact not found');
+    }
+
     const command = new UpdateContactCommand(
       id,
-      dto.clientId,
+      contact.clientId,
       dto.name,
       dto.role,
       dto.email,

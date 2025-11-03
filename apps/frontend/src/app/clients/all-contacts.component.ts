@@ -369,7 +369,7 @@ import { ContactWithClient } from './client.types';
           </div>
 
           <div class="sort-controls">
-            <label class="sort-label">Sort by:</label>
+            <span class="sort-label">Sort by:</span>
             <div class="sort-buttons">
               <button
                 class="sort-button"
