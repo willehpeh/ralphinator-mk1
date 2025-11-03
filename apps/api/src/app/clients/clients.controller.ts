@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, NotFoundException } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel, ClientDataPayload } from '@angular-nest-starter/application';
 import { ClientDataDto, CreateClientDto, UpdateClientDto, ChangeClientStatusDto, ClientStatus } from '@angular-nest-starter/shared-types';
@@ -14,11 +14,12 @@ export class ClientsController {
 
   /**
    * Helper method to fetch a client by ID after a mutation command.
-   * Throws an error if the client is not found.
+   * Throws a NotFoundException if the client is not found.
    *
    * @param clientId - The ID of the client to fetch
    * @param operation - Description of the operation for error message (e.g., 'update', 'status change')
    * @returns The client read model
+   * @throws NotFoundException if the client is not found after the mutation
    */
   private async fetchClientAfterMutation(
     clientId: string,
@@ -28,7 +29,9 @@ export class ClientsController {
     const client = await this.queryBus.execute<GetClientByIdQuery, ClientReadModel | null>(query);
 
     if (!client) {
-      throw new Error(CLIENT_CONTROLLER_ERROR_MESSAGES.CLIENT_NOT_FOUND_AFTER_MUTATION(clientId, operation));
+      throw new NotFoundException(
+        CLIENT_CONTROLLER_ERROR_MESSAGES.CLIENT_NOT_FOUND_AFTER_MUTATION(clientId, operation)
+      );
     }
 
     return client;
