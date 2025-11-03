@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Put, Body, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Put, Body, Delete, NotFoundException } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { GetContactByIdQuery, GetAllContactsQuery, ContactReadModel, UpdateContactCommand, RemoveContactCommand } from '@angular-nest-starter/application';
 import { UpdateContactDto } from '@angular-nest-starter/shared-types';
@@ -32,7 +32,7 @@ export class ContactsController {
     const contact = await this.queryBus.execute<GetContactByIdQuery, ContactReadModel | null>(query);
 
     if (!contact) {
-      throw new Error('Contact not found');
+      throw new NotFoundException('Contact not found');
     }
 
     const contactData = new ContactData(
@@ -54,7 +54,7 @@ export class ContactsController {
     const contact = await this.queryBus.execute<GetContactByIdQuery, ContactReadModel | null>(query);
 
     if (!contact) {
-      throw new Error('Contact not found');
+      throw new NotFoundException('Contact not found');
     }
 
     const command = new RemoveContactCommand(contact.clientId, id);
