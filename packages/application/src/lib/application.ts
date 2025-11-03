@@ -13,6 +13,7 @@ export * from './commands/handlers/update-client.handler';
 export * from './commands/handlers/change-client-status.handler';
 export * from './commands/handlers/delete-client.handler';
 export * from './commands/handlers/add-contact-to-client.handler';
+export * from './commands/handlers/update-contact.handler';
 
 // Queries
 export * from './queries/get-client-by-id.query';

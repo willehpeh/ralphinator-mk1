@@ -17,14 +17,14 @@ This use case allows users to update a contact's information (name, role, email,
 ### Application Layer
 - [x] Create UpdateContactCommand class
 - [x] Export UpdateContactCommand
+- [x] Create UpdateContactCommandHandler
+- [x] Export UpdateContactCommandHandler
 
 ## Tasks Remaining
 
 ### Domain Layer
 
 ### Application Layer
-- [ ] Create UpdateContactCommandHandler
-- [ ] Export UpdateContactCommandHandler
 
 ### Infrastructure Layer
 - [ ] Update ContactProjection to handle ContactUpdatedDomainEvent
@@ -59,6 +59,7 @@ This use case allows users to update a contact's information (name, role, email,
 
 ### Application Layer
 - `packages/application/src/lib/commands/update-contact.command.ts` (created - UpdateContactCommand class)
-- `packages/application/src/lib/application.ts` (modified - exported UpdateContactCommand)
+- `packages/application/src/lib/commands/handlers/update-contact.handler.ts` (created - UpdateContactCommandHandler)
+- `packages/application/src/lib/application.ts` (modified - exported UpdateContactCommand and UpdateContactCommandHandler)
 
 ---
