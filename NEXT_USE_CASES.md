@@ -76,33 +76,20 @@ Features include:
 
 ## Use Case 6: Remove a Contact from the System
 
-**Primary Actor**: Developer/User
+**Status**: IMPLEMENTED (2025-11-03)
 
-**Goal**: Delete a contact person from the system when they are no longer relevant (left the company, relationship ended, duplicate entry).
+This use case is now fully implemented. See Use Case 6 implementation in IMPLEMENTED_CASES.md.
 
-**Preconditions**:
-- Contact exists in the system
-- User has access to the CRM system
-
-**Main Success Scenario**:
-1. User views the contact's detail page
-2. User selects the option to delete the contact
-3. System displays confirmation dialog explaining the action
-4. User confirms the deletion
-5. System marks the contact as deleted
-6. System displays success message
-7. System returns user to the contacts list (without the deleted contact)
-
-**Extensions**:
-- 4a. If user cancels the deletion:
-  - 4a1. System closes confirmation dialog
-  - 4a2. Contact remains unchanged
-  - 4a3. User remains on contact detail page
-- 5a. If contact no longer exists:
-  - 5a1. System displays "Contact not found" message
-  - 5a2. System returns user to contacts list
-
-**Success Guarantee**: Contact is removed from the system and no longer appears in lists or searches, while the historical record of the contact's existence is preserved.
+Features include:
+- DELETE /api/contacts/:id endpoint removes contact with event sourcing
+- ContactDetailComponent with delete functionality and btn-danger styling
+- Native browser confirmation dialog before deletion
+- Loading state during delete operation
+- Error handling for failed deletions with user-friendly messages
+- Automatic navigation to client detail page after successful deletion
+- ContactDeletedDomainEvent captures all deletions in event store
+- ContactProjection removes contact from read model
+- All main success scenario steps and extensions fully implemented
 
 ---
 

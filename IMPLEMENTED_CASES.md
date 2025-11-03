@@ -402,3 +402,32 @@
   - 7a: Contact not found displays error message with proper handling
 - Documentation: update-contact-information-tasks.md
 - **Note**: NGRX integration and unit tests pending for future enhancement
+
+## Use Case 6: Remove a Contact from the System (2025-11-03)
+- Complete CQRS + Event Sourcing implementation for contact deletion
+- Domain: ContactDeletedDomainEvent captures contact deletion with contactId and timestamp
+- Domain: ClientAggregate.removeContact() method validates contact exists and applies event
+- Domain: CLIENT_EVENT_TYPES.CONTACT_DELETED constant for event type identification
+- Application: RemoveContactCommand with contactId and clientId fields
+- Application: RemoveContactCommandHandler loads aggregate, removes contact, persists events
+- Infrastructure: ContactProjection handles ContactDeletedDomainEvent and removes from read model
+- Backend API: DELETE /api/contacts/:id endpoint removes contact and returns success response
+- Frontend: ContactDetailComponent enhanced with delete functionality
+- Frontend: Delete button styled with btn-danger class (red background, white text)
+- Frontend: Native browser confirmation dialog before deletion
+- Frontend: Loading state during delete operation
+- Frontend: Error handling for failed deletions with user-friendly messages
+- Frontend: Automatic navigation to client detail page after successful deletion
+- Event sourcing: All contact deletions captured as immutable events in event store
+- All main success scenario steps met:
+  - User views contact's detail page
+  - User selects option to delete the contact (Delete button)
+  - System displays confirmation dialog explaining the action
+  - User confirms the deletion
+  - System marks the contact as deleted (event-sourced command handler)
+  - System navigates user back to client detail (without deleted contact)
+- Extensions handled:
+  - 4a: User cancels deletion - confirm dialog allows cancel
+  - 5a: Contact not found displays error message with proper handling
+- Documentation: remove-contact.md
+- **Note**: Unit tests pending for future testing phase
