@@ -254,17 +254,28 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Maps ContactData value object to Contact interface
+   * Extracts repeated mapping logic used by contact event handlers
+   */
+  private mapContactDataToContact(contactData: ContactData): Contact {
+    return {
+      contactId: contactData.contactId,
+      name: contactData.name,
+      role: contactData.role,
+      email: contactData.email,
+      phone: contactData.phone,
+    };
+  }
+
+  /**
    * Event handler for ContactAddedToClientDomainEvent
    * Adds a contact to the client's contacts map
    */
   private onContactAdded(event: ContactAddedToClientDomainEvent): void {
-    this.contacts.set(event.contactData.contactId, {
-      contactId: event.contactData.contactId,
-      name: event.contactData.name,
-      role: event.contactData.role,
-      email: event.contactData.email,
-      phone: event.contactData.phone,
-    });
+    this.contacts.set(
+      event.contactData.contactId,
+      this.mapContactDataToContact(event.contactData)
+    );
   }
 
   /**
@@ -272,13 +283,10 @@ export class ClientAggregate extends EventSourcedAggregate {
    * Updates an existing contact in the client's contacts map
    */
   private onContactUpdated(event: ContactUpdatedDomainEvent): void {
-    this.contacts.set(event.contactData.contactId, {
-      contactId: event.contactData.contactId,
-      name: event.contactData.name,
-      role: event.contactData.role,
-      email: event.contactData.email,
-      phone: event.contactData.phone,
-    });
+    this.contacts.set(
+      event.contactData.contactId,
+      this.mapContactDataToContact(event.contactData)
+    );
   }
 
   /**
