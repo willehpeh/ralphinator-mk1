@@ -13,6 +13,7 @@ import {
   ContactProjection,
   InMemoryEventStore,
   InMemoryContactReadRepository,
+  InMemoryClientReadRepository,
   AggregateRepository,
 } from '@angular-nest-starter/infrastructure';
 import { ContactsController } from './contacts.controller';
@@ -32,6 +33,10 @@ const EventHandlers = [ContactProjection];
     {
       provide: INJECTION_TOKENS.EVENT_STORE,
       useClass: InMemoryEventStore,
+    },
+    {
+      provide: INJECTION_TOKENS.CLIENT_READ_REPOSITORY,
+      useClass: InMemoryClientReadRepository,
     },
     {
       provide: INJECTION_TOKENS.CONTACT_READ_REPOSITORY,
