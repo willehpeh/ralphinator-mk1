@@ -25,4 +25,10 @@ export const DOMAIN_ERRORS = {
    * Error message when attempting to update a contact that does not exist
    */
   CONTACT_NOT_FOUND: 'Contact not found',
+
+  /**
+   * Error message when attempting to perform an operation on an aggregate
+   * that has not been initialized (created) yet
+   */
+  PROJECT_NOT_INITIALIZED: 'Cannot perform operation on a project that has not been created',
 } as const;
