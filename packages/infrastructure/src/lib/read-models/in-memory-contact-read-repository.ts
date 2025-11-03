@@ -23,6 +23,29 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
   ) {}
 
   /**
+   * Enriches a contact with client name information.
+   * Creates a new ContactReadModel instance with populated clientName.
+   *
+   * @param contact - The contact to enrich
+   * @param clientName - The client's company name
+   * @returns A new ContactReadModel with populated clientName
+   */
+  private enrichContactWithClientName(
+    contact: ContactReadModel,
+    clientName: string
+  ): ContactReadModel {
+    return new ContactReadModel(
+      contact.contactId,
+      contact.clientId,
+      clientName,
+      contact.name,
+      contact.role,
+      contact.email,
+      contact.phone
+    );
+  }
+
+  /**
    * Retrieves a specific contact by its ID.
    *
    * @param contactId - The ID of the contact
@@ -39,15 +62,7 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
     const clientName = client?.companyName ?? 'Unknown Client';
 
     // Return contact with populated clientName
-    return new ContactReadModel(
-      contact.contactId,
-      contact.clientId,
-      clientName,
-      contact.name,
-      contact.role,
-      contact.email,
-      contact.phone
-    );
+    return this.enrichContactWithClientName(contact, clientName);
   }
 
   /**
@@ -66,15 +81,9 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
     const clientName = client?.companyName ?? 'Unknown Client';
 
     // Return contacts with populated clientName
-    return contacts.map(contact => new ContactReadModel(
-      contact.contactId,
-      contact.clientId,
-      clientName,
-      contact.name,
-      contact.role,
-      contact.email,
-      contact.phone
-    ));
+    return contacts.map(contact =>
+      this.enrichContactWithClientName(contact, clientName)
+    );
   }
 
   /**
@@ -113,15 +122,12 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
     );
 
     // Return contacts with populated clientName
-    return contacts.map(contact => new ContactReadModel(
-      contact.contactId,
-      contact.clientId,
-      clientMap.get(contact.clientId) ?? 'Unknown Client',
-      contact.name,
-      contact.role,
-      contact.email,
-      contact.phone
-    ));
+    return contacts.map(contact =>
+      this.enrichContactWithClientName(
+        contact,
+        clientMap.get(contact.clientId) ?? 'Unknown Client'
+      )
+    );
   }
 
   /**
