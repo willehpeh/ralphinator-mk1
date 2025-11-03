@@ -283,3 +283,31 @@
   - 3a: Invalid email format shows validation error
   - 3b: Client existence validated by backend handler
 - Documentation: add-contact-to-client.md
+
+## Use Case 2: View Contact Details (2025-11-03)
+- Complete CQRS query implementation for retrieving individual contact details
+- Application: GetContactByIdQuery accepts contactId parameter to retrieve single contact
+- Application: GetContactByIdQueryHandler queries IContactReadRepository.findById()
+- Application: IContactReadRepository.findById() port interface method for retrieving single contact
+- Infrastructure: InMemoryContactReadRepository.findById() implementation retrieves contact by ID from Map
+- Backend API: GET /api/contacts/:id endpoint returns ContactReadModel or 404 if not found
+- Frontend: ContactDetailComponent with modern Angular patterns (standalone, signals, OnPush)
+- Frontend: ContactDetailComponent displays all contact information (name, role, email, phone)
+- Frontend: ContactDetailComponent displays metadata (contactId, createdAt, updatedAt timestamps)
+- Frontend: ContactDetailComponent includes link to associated client detail page
+- Frontend: ContactDetailComponent includes back button with navigation to client detail
+- Frontend: Contact detail route configured at /clients/:id/contacts/:contactId
+- Frontend: ContactListComponent cards made clickable with RouterLink navigation to detail view
+- Frontend: Professional hover effects on contact cards (transform, shadow, border color change)
+- Frontend: Loading, error, and not found states properly handled with styled messages
+- Frontend: Email and phone displayed as clickable links (mailto:, tel:)
+- All acceptance criteria met:
+  - User can navigate from contacts list to specific contact
+  - System retrieves the contact's information
+  - System displays complete contact details (name, role, email, phone, client company)
+  - System displays metadata (created and updated timestamps)
+  - User can navigate to associated client details via link
+- Extensions handled:
+  - 3a: Contact not found displays error message "Failed to load contact details"
+  - 4a: Link to client detail page provided for viewing associated client
+- Documentation: view-contact-details-tasks.md
