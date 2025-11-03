@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, computed, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, computed, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
@@ -323,8 +323,16 @@ export class ClientDetailComponent {
     this.navigation.toClientList();
   }
 
+  /**
+   * Helper method to create a toggle function for a signal
+   * Reduces duplication by centralizing the toggle logic
+   */
+  private toggle(s: WritableSignal<boolean>): void {
+    s.update(value => !value);
+  }
+
   toggleEditMode(): void {
-    this.isEditing.update(value => !value);
+    this.toggle(this.isEditing);
   }
 
   handleEditSuccess(): void {
@@ -333,7 +341,7 @@ export class ClientDetailComponent {
   }
 
   toggleStatusChangeMode(): void {
-    this.isChangingStatus.update(value => !value);
+    this.toggle(this.isChangingStatus);
   }
 
   handleStatusChangeSuccess(): void {
@@ -342,7 +350,7 @@ export class ClientDetailComponent {
   }
 
   toggleAddContactMode(): void {
-    this.isAddingContact.update(value => !value);
+    this.toggle(this.isAddingContact);
   }
 
   handleContactAdded(): void {
@@ -353,7 +361,7 @@ export class ClientDetailComponent {
   }
 
   toggleAddProjectMode(): void {
-    this.isAddingProject.update(value => !value);
+    this.toggle(this.isAddingProject);
   }
 
   handleProjectAdded(): void {
