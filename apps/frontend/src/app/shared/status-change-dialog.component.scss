@@ -1,0 +1,125 @@
+@use '../clients/clients-variables.scss' as *;
+@use '../clients/clients-mixins.scss' as *;
+
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $color-backdrop;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.dialog-container {
+  background: $color-white;
+  border-radius: $border-radius-md;
+  min-width: 400px;
+  max-width: 500px;
+  box-shadow: 0 4px 6px $color-shadow;
+  overflow: hidden;
+}
+
+.dialog-header {
+  padding: $spacing-xl;
+  border-bottom: 1px solid $color-border-medium;
+
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: $color-text-primary;
+  }
+}
+
+.dialog-content {
+  padding: $spacing-xl;
+
+  .status-label {
+    display: block;
+    margin-bottom: $spacing-sm;
+    color: $color-text-primary;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .status-select {
+    width: 100%;
+    padding: $spacing-md;
+    border: 1px solid $color-border-medium;
+    border-radius: $border-radius-sm;
+    font-size: 1rem;
+    color: $color-text-primary;
+    background-color: $color-white;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+
+    &:hover {
+      border-color: $color-border-dark;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+  }
+
+  .warning-message {
+    margin-top: $spacing-md;
+    padding: $spacing-md;
+    background-color: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: $border-radius-sm;
+    color: #92400e;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+}
+
+.dialog-actions {
+  padding: $spacing-xl;
+  border-top: 1px solid $color-border-medium;
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-md;
+}
+
+.cancel-button {
+  @include btn-secondary;
+  @include btn-small;
+}
+
+.confirm-button {
+  @include btn-primary;
+  @include btn-small;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: $color-primary;
+      transform: none;
+    }
+  }
+}
+
+// Responsive design for mobile
+@media (max-width: $breakpoint-mobile) {
+  .dialog-container {
+    min-width: auto;
+    width: 90%;
+    margin: $spacing-md;
+  }
+
+  .dialog-actions {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}

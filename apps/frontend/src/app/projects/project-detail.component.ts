@@ -5,11 +5,12 @@ import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ProjectsService } from './projects.service';
-import { ProjectDto } from '@angular-nest-starter/shared-types';
+import { ProjectDto, ProjectStatus } from '@angular-nest-starter/shared-types';
+import { StatusChangeDialogComponent } from '../shared/status-change-dialog.component';
 
 @Component({
   selector: 'app-project-detail',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, StatusChangeDialogComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./projects-common.scss', './project-detail.component.scss'],
   template: `
@@ -132,6 +133,14 @@ import { ProjectDto } from '@angular-nest-starter/shared-types';
           </div>
         </div>
       }
+
+      @if (showStatusDialog()) {
+        <app-status-change-dialog
+          [currentStatus]="project()!.status"
+          (statusChanged)="onStatusChanged($event)"
+          (cancelled)="onStatusDialogCancelled()"
+        />
+      }
     </div>
   `
 })
@@ -143,6 +152,7 @@ export class ProjectDetailComponent {
   // Loading and error states
   loading = signal(false);
   error = signal<string | null>(null);
+  showStatusDialog = signal(false);
 
   // Get project ID from route params using toSignal
   private projectId = toSignal(
@@ -193,7 +203,35 @@ export class ProjectDetailComponent {
   }
 
   openStatusChangeDialog(): void {
-    // TODO: Implement status change dialog
-    console.log('Change status clicked');
+    this.showStatusDialog.set(true);
+  }
+
+  onStatusChanged(newStatus: ProjectStatus): void {
+    const currentProject = this.project();
+    if (!currentProject) return;
+
+    this.loading.set(true);
+    this.showStatusDialog.set(false);
+
+    this.projectsService.changeProjectStatus(
+      currentProject.clientId,
+      currentProject.id,
+      { status: newStatus }
+    ).subscribe({
+      next: (updatedProject) => {
+        this.loading.set(false);
+        // Reload the project to get the latest data
+        window.location.reload();
+      },
+      error: (err) => {
+        console.error('Error changing project status:', err);
+        this.error.set('Failed to change project status. Please try again.');
+        this.loading.set(false);
+      }
+    });
+  }
+
+  onStatusDialogCancelled(): void {
+    this.showStatusDialog.set(false);
   }
 }

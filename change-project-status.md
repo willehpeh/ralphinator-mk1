@@ -242,9 +242,62 @@ The "Change Status" button provides a clear, accessible entry point for users to
 
 ---
 
+### Task 9: Create status change dialog component with dropdown
+**Date**: 2025-11-03
+
+**What was implemented**:
+- Created `StatusChangeDialogComponent` at `apps/frontend/src/app/shared/status-change-dialog.component.ts`
+- Created `StatusChangeDialogComponent` styles at `apps/frontend/src/app/shared/status-change-dialog.component.scss`
+- Follows the same pattern as `ConfirmationDialogComponent` for consistency
+- Dialog displays all available project statuses from `PROJECT_STATUS_VALUES` in a dropdown
+- Uses signal-based input/output API following modern Angular conventions
+- Dropdown is bound to a signal for reactive state management
+- Validates that selected status is different from current status
+- Disables "Change Status" button when current status is selected
+- Shows warning message when user selects the same status
+- Integrated dialog into `ProjectDetailComponent`:
+  - Added `showStatusDialog` signal to control dialog visibility
+  - Implemented `openStatusChangeDialog()` to show the dialog
+  - Implemented `onStatusChanged()` to call the ProjectsService and update the project
+  - Implemented `onStatusDialogCancelled()` to close the dialog
+  - Reloads the page after successful status change to show updated data
+  - Displays error message if status change fails
+- Professional styling with focus states, hover effects, and responsive design
+- Modal backdrop with click-outside-to-close functionality
+- Escape key closes the dialog
+
+**Files created**:
+- `apps/frontend/src/app/shared/status-change-dialog.component.ts`
+- `apps/frontend/src/app/shared/status-change-dialog.component.scss`
+
+**Files modified**:
+- `apps/frontend/src/app/projects/project-detail.component.ts`
+
+**Rationale**:
+The status change dialog provides a professional, user-friendly interface for changing project status:
+1. **Reusable component**: Follows the same pattern as other dialogs in the app
+2. **Type safety**: Uses TypeScript enums and signals for compile-time validation
+3. **Modern Angular**: Uses signal-based APIs, `@if`/`@for` control flow, and `inject()` function
+4. **User validation**: Prevents no-op changes and provides clear feedback
+5. **Professional UX**: Modal dialog with proper focus management, keyboard support, and visual feedback
+6. **Responsive design**: Works well on mobile and desktop devices
+7. **Separation of concerns**: Dialog component is reusable, business logic is in the service layer
+
+**User Flow**:
+1. User views project detail page
+2. User clicks "Change Status" button
+3. Dialog opens showing current status in dropdown
+4. User selects new status from dropdown (Planning, Active, On Hold, Completed, Cancelled)
+5. If user selects same status, button is disabled and warning is shown
+6. User clicks "Change Status" button to confirm
+7. Dialog closes and project status is updated
+8. Page reloads to show updated status badge
+9. If error occurs, error message is displayed
+
+---
+
 ## Next Tasks
 
-- Add status dropdown/selector component or dialog
-- Implement status change functionality in openStatusChangeDialog()
-- Add confirmation for status changes
-- Add success/error message display
+- Add success message display (toast/snackbar notification)
+- Consider adding status change confirmation for certain transitions (e.g., Cancelled, Completed)
+- Add optimistic UI update instead of full page reload
