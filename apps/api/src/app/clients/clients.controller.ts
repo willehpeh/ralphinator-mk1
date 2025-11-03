@@ -35,6 +35,8 @@ export class CreateClientDto extends ClientDataDto {}
 export class UpdateClientDto extends ClientDataDto {}
 
 export class ChangeClientStatusDto {
+  @IsIn(CLIENT_STATUS_VALUES)
+  @IsNotEmpty()
   status!: ClientStatus;
 }
 
