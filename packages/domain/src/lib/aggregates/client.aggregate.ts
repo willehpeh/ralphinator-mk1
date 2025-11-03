@@ -83,6 +83,21 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Generic helper method to get a field value after ensuring initialization.
+   * Reduces boilerplate in getter methods by centralizing the initialization check
+   * and non-null assertion pattern.
+   *
+   * @param field - The field value to return
+   * @returns The field value (non-null)
+   * @throws Error if the aggregate has not been created
+   */
+  private getInitializedField<T>(field: T | undefined): T {
+    this.ensureInitialized();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return field!;
+  }
+
+  /**
    * Gets the current status of the client.
    * This method ensures the aggregate is initialized before returning the status.
    *
@@ -90,10 +105,7 @@ export class ClientAggregate extends EventSourcedAggregate {
    * @returns The current client status
    */
   private getCurrentStatus(): ClientStatus {
-    this.ensureInitialized();
-    // Status is guaranteed to be set if aggregate is initialized
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.status!;
+    return this.getInitializedField(this.status);
   }
 
   /**
@@ -284,39 +296,27 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   getCompanyName(): string {
-    this.ensureInitialized();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.companyName!;
+    return this.getInitializedField(this.companyName);
   }
 
   getEmail(): Email {
-    this.ensureInitialized();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.email!;
+    return this.getInitializedField(this.email);
   }
 
   getPhone(): string | null {
-    this.ensureInitialized();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.phone!;
+    return this.getInitializedField(this.phone);
   }
 
   getAddress(): string | null {
-    this.ensureInitialized();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.address!;
+    return this.getInitializedField(this.address);
   }
 
   getStatus(): ClientStatus {
-    this.ensureInitialized();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.status!;
+    return this.getInitializedField(this.status);
   }
 
   getNotes(): string | null {
-    this.ensureInitialized();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this.notes!;
+    return this.getInitializedField(this.notes);
   }
 
   /**
