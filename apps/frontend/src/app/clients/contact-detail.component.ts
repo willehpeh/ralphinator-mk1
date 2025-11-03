@@ -337,6 +337,24 @@ interface ContactEditForm {
       font-weight: bold;
       font-size: 1rem;
     }
+
+    .save-error-message {
+      background-color: #fee2e2;
+      border: 1px solid #fca5a5;
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      color: #991b1b;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .error-icon {
+      font-weight: bold;
+      font-size: 1rem;
+    }
   `],
   template: `
     <div class="contact-detail">
@@ -378,6 +396,12 @@ interface ContactEditForm {
         <div class="detail-card">
           @if (isEditMode()) {
             <!-- Edit Mode: Form -->
+            @if (saveError(); as errorMsg) {
+              <div class="save-error-message">
+                <span class="error-icon">✕</span>
+                <span>{{ errorMsg }}</span>
+              </div>
+            }
             <form [formGroup]="editForm" class="edit-form">
               <div class="form-group">
                 <label class="form-label required" for="name">Name</label>
@@ -543,6 +567,7 @@ export class ContactDetailComponent implements OnInit {
   isEditMode = signal(false);
   saving = signal(false);
   successMessage = signal<string | null>(null);
+  saveError = signal<string | null>(null);
 
   // Edit form
   editForm = new FormGroup<ContactEditForm>({
@@ -607,6 +632,9 @@ export class ContactDetailComponent implements OnInit {
         phone: contact.phone || ''
       });
     }
+    // Clear any previous errors or messages
+    this.saveError.set(null);
+    this.successMessage.set(null);
     this.isEditMode.set(true);
   }
 
@@ -614,6 +642,8 @@ export class ContactDetailComponent implements OnInit {
     this.isEditMode.set(false);
     // Reset form to original values
     this.editForm.reset();
+    // Clear any error messages
+    this.saveError.set(null);
   }
 
   saveContact(): void {
@@ -634,6 +664,8 @@ export class ContactDetailComponent implements OnInit {
       phone: formValue.phone || null
     };
 
+    // Clear any previous errors before saving
+    this.saveError.set(null);
     this.saving.set(true);
 
     this.http.put<ContactDetail>(`/api/contacts/${contactId}`, updateData).subscribe({
@@ -653,7 +685,8 @@ export class ContactDetailComponent implements OnInit {
       },
       error: (err) => {
         console.error('Failed to update contact:', err);
-        this.error.set('Failed to update contact. Please try again.');
+        // Use saveError instead of error to keep it separate from loading errors
+        this.saveError.set('Failed to update contact. Please try again.');
         this.saving.set(false);
       }
     });
