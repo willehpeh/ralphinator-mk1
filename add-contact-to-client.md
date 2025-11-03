@@ -19,9 +19,17 @@
   - Added getContacts() method to retrieve all contacts as an array
   - Contact interface is exported from domain package for use in other layers
 
+### Task 3: Implement addContact() method on ClientAggregate
+- **Files Modified:**
+  - `packages/domain/src/lib/aggregates/client.aggregate.ts`
+- **Description:**
+  - Imported ContactAddedToClientDomainEvent into ClientAggregate
+  - Registered CONTACT_ADDED event handler in constructor
+  - Implemented addContact() method that applies ContactAddedToClientDomainEvent
+  - Implemented onContactAdded() event handler that adds contact to contacts Map
+  - Method validates aggregate is initialized before adding contact
+
 ## Next Tasks
-- Implement addContact() method on ClientAggregate
-- Register ContactAddedToClientDomainEvent handler in ClientAggregate
 - Create AddContactToClientCommand
 - Create AddContactToClientCommandHandler
 - Create ContactReadModel DTO

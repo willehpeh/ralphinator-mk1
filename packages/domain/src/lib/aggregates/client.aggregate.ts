@@ -7,6 +7,7 @@ import { ClientCreatedDomainEvent } from '../events/client-created.domain-event'
 import { ClientInformationUpdatedDomainEvent } from '../events/client-information-updated.domain-event';
 import { ClientStatusChangedDomainEvent } from '../events/client-status-changed.domain-event';
 import { ClientDeletedDomainEvent } from '../events/client-deleted.domain-event';
+import { ContactAddedToClientDomainEvent } from '../events/contact-added-to-client.domain-event';
 import { ClientData } from '../value-objects/client-data.value-object';
 import { Email } from '../value-objects/email.value-object';
 
@@ -40,6 +41,7 @@ export class ClientAggregate extends EventSourcedAggregate {
       [CLIENT_EVENT_TYPES.INFORMATION_UPDATED]: this.onClientInformationUpdated.bind(this),
       [CLIENT_EVENT_TYPES.STATUS_CHANGED]: this.onClientStatusChanged.bind(this),
       [CLIENT_EVENT_TYPES.DELETED]: this.onClientDeleted.bind(this),
+      [CLIENT_EVENT_TYPES.CONTACT_ADDED]: this.onContactAdded.bind(this),
     } as unknown as Record<string, (event: DomainEvent) => void>);
   }
 
@@ -137,6 +139,36 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Add a contact person to this client
+   *
+   * @param contactId - Unique identifier for the contact
+   * @param name - Contact person's name
+   * @param role - Contact person's role/title (optional)
+   * @param email - Contact person's email address (optional)
+   * @param phone - Contact person's phone number (optional)
+   */
+  addContact(
+    contactId: string,
+    name: string,
+    role: string | null,
+    email: string | null,
+    phone: string | null
+  ): void {
+    const id = this.ensureInitialized();
+
+    this.applyEvent(
+      new ContactAddedToClientDomainEvent(
+        id,
+        contactId,
+        name,
+        role,
+        email,
+        phone
+      )
+    );
+  }
+
+  /**
    * Helper method to update client fields from ClientData value object
    * Used by event handlers to apply state changes consistently
    *
@@ -183,6 +215,20 @@ export class ClientAggregate extends EventSourcedAggregate {
   private onClientDeleted(): void {
     // Mark aggregate as deleted - state is preserved for event replay
     // The aggregate maintains its ID but is logically deleted
+  }
+
+  /**
+   * Event handler for ContactAddedToClientDomainEvent
+   * Adds a contact to the client's contacts map
+   */
+  private onContactAdded(event: ContactAddedToClientDomainEvent): void {
+    this.contacts.set(event.contactId, {
+      contactId: event.contactId,
+      name: event.name,
+      role: event.role,
+      email: event.email,
+      phone: event.phone,
+    });
   }
 
   // Getters for accessing aggregate state
