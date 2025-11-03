@@ -696,17 +696,21 @@
 
 ## Use Case 2 (Project Management): Find Projects by Status or Client (2025-11-03) ✅ COMPLETE
 - Complete client-side filtering implementation using Angular signals and computed values
-- Frontend: ProjectsListComponent enhanced with dual filter dropdowns (status and client)
+- Frontend: ProjectsListComponent enhanced with triple filter controls (status, client, and name search)
 - Frontend: Status filter dropdown with all project status options (Planning, Active, On Hold, Completed, Cancelled)
 - Frontend: Client filter dropdown populated with all clients from ClientsService
+- Frontend: Name search input field with placeholder text for real-time filtering
 - Frontend: selectedStatusFilter signal tracks selected status filter state
 - Frontend: selectedClientFilter signal tracks selected client filter state
-- Frontend: projects computed signal applies sequential filtering (status first, then client)
-- Frontend: Both filters work independently and together for combined filtering
+- Frontend: searchTerm signal tracks name search input state
+- Frontend: projects computed signal applies sequential filtering (status → client → name search)
+- Frontend: Case-insensitive name search using includes() for partial matching
+- Frontend: All three filters work independently and together using AND logic
 - Frontend: Clear Filters button appears conditionally when any filter is active
-- Frontend: clearFilters() method resets both filter signals to empty string
+- Frontend: clearFilters() method resets all three filter signals to empty string
 - Frontend: Professional filter UI with flexbox layout and proper spacing
 - Frontend: Clear button styling with hover effects (white → primary color transition)
+- Frontend: Search input styling matches filter dropdowns for consistency
 - Frontend: Modern Angular patterns (@if for conditional rendering, signals, computed)
 - Frontend: Project count display updates dynamically based on filtered results
 - Frontend: Empty state handling with helpful messages when no projects match filters
@@ -714,12 +718,22 @@
   - User selects a status filter (dropdown with all status options) ✅
   - System updates the list to show only projects matching selected status ✅
   - User optionally selects a client filter to further narrow results ✅
-  - System updates list to show projects matching both filters ✅
+  - User optionally enters search term to filter by project name ✅
+  - System updates list to show projects matching all filters ✅
   - System displays count of matching projects ✅
 - All extensions handled:
   - 2a: No projects match the filter - empty state message displayed ✅
-  - 3a: User searches by project name - NOT IMPLEMENTED (optional extension)
+  - 3a: User searches by project name - IMPLEMENTED with case-insensitive partial matching ✅
   - 5a: User clears all filters - Clear Filters button implemented ✅
-- Success guarantee met: User finds the specific projects they were looking for
+- All acceptance criteria met:
+  - User can filter projects by status (single selection) ✅
+  - User can filter projects by client (single selection) ✅
+  - User can search projects by name (text input) ✅
+  - Filters work in combination (AND logic) ✅
+  - Project count updates dynamically as filters change ✅
+  - "Clear Filters" button resets all filters ✅
+  - Empty state displays when no projects match filters ✅
+  - Filter UI is intuitive and responsive ✅
+- Success guarantee met: User can quickly find specific projects from a large portfolio using multiple filter criteria
 - Documentation: find-projects-by-status-or-client.md
-- **Note**: Core filtering functionality complete. Name search is optional future enhancement.
+- **Note**: Complete implementation with all acceptance criteria satisfied including name search functionality.
