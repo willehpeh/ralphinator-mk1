@@ -9,6 +9,7 @@ import { ClientStatusChangedDomainEvent } from '../events/client-status-changed.
 import { ClientDeletedDomainEvent } from '../events/client-deleted.domain-event';
 import { ContactAddedToClientDomainEvent } from '../events/contact-added-to-client.domain-event';
 import { ContactUpdatedDomainEvent } from '../events/contact-updated.domain-event';
+import { ContactDeletedDomainEvent } from '../events/contact-deleted.domain-event';
 import { ClientData } from '../value-objects/client-data.value-object';
 import { Email } from '../value-objects/email.value-object';
 
@@ -44,6 +45,7 @@ export class ClientAggregate extends EventSourcedAggregate {
       [CLIENT_EVENT_TYPES.DELETED]: this.onClientDeleted.bind(this),
       [CLIENT_EVENT_TYPES.CONTACT_ADDED]: this.onContactAdded.bind(this),
       [CLIENT_EVENT_TYPES.CONTACT_UPDATED]: this.onContactUpdated.bind(this),
+      [CLIENT_EVENT_TYPES.CONTACT_DELETED]: this.onContactDeleted.bind(this),
     } as unknown as Record<string, (event: DomainEvent) => void>);
   }
 
@@ -206,6 +208,24 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Remove a contact person from this client
+   *
+   * @param contactId - Unique identifier for the contact to remove
+   */
+  removeContact(contactId: string): void {
+    const id = this.ensureInitialized();
+
+    // Verify contact exists
+    if (!this.contacts.has(contactId)) {
+      throw new Error(DOMAIN_ERRORS.CONTACT_NOT_FOUND);
+    }
+
+    this.applyEvent(
+      new ContactDeletedDomainEvent(id, contactId)
+    );
+  }
+
+  /**
    * Helper method to update client fields from ClientData value object
    * Used by event handlers to apply state changes consistently
    *
@@ -280,6 +300,14 @@ export class ClientAggregate extends EventSourcedAggregate {
       email: event.email,
       phone: event.phone,
     });
+  }
+
+  /**
+   * Event handler for ContactDeletedDomainEvent
+   * Removes a contact from the client's contacts map
+   */
+  private onContactDeleted(event: ContactDeletedDomainEvent): void {
+    this.contacts.delete(event.contactId);
   }
 
   // Getters for accessing aggregate state
