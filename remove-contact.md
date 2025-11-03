@@ -9,6 +9,7 @@ This use case allows users to delete a contact person from the system when they 
 ## Tasks Completed
 
 ### Domain Layer
+- [x] Add ContactDeletedDomainEvent class
 
 ### Application Layer
 
@@ -23,7 +24,6 @@ This use case allows users to delete a contact person from the system when they 
 ## Tasks Remaining
 
 ### Domain Layer
-- [ ] Add ContactDeletedDomainEvent class
 - [ ] Add removeContact method to ClientAggregate
 - [ ] Register ContactDeletedDomainEvent handler in ClientAggregate
 - [ ] Add CLIENT_EVENT_TYPES.CONTACT_DELETED constant
@@ -60,6 +60,8 @@ This use case allows users to delete a contact person from the system when they 
 ## Files Created/Modified
 
 ### Domain Layer
+- `packages/domain/src/lib/events/contact-deleted.domain-event.ts` (created - ContactDeletedDomainEvent class)
+- `packages/domain/src/index.ts` (modified - exported ContactDeletedDomainEvent)
 
 ### Application Layer
 
