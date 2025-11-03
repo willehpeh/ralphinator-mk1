@@ -64,6 +64,20 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Gets the current status of the client.
+   * This method ensures the aggregate is initialized before returning the status.
+   *
+   * @throws Error if the aggregate has not been created
+   * @returns The current client status
+   */
+  private getCurrentStatus(): ClientStatus {
+    this.ensureInitialized();
+    // Status is guaranteed to be set if aggregate is initialized
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this.status!;
+  }
+
+  /**
    * Update client information
    *
    * @param clientData - Value object containing updated client information
@@ -83,18 +97,16 @@ export class ClientAggregate extends EventSourcedAggregate {
    */
   changeStatus(newStatus: ClientStatus): void {
     const id = this.ensureInitialized();
+    const currentStatus = this.getCurrentStatus();
 
-    // Status is guaranteed to be set if aggregate is initialized
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    if (this.status! === newStatus) {
+    if (currentStatus === newStatus) {
       throw new Error(DOMAIN_ERRORS.CLIENT_STATUS_UNCHANGED);
     }
 
     this.applyEvent(
       new ClientStatusChangedDomainEvent(
         id,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        this.status!,
+        currentStatus,
         newStatus
       )
     );
