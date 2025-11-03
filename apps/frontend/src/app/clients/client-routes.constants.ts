@@ -14,6 +14,11 @@ export const CLIENT_ROUTES = {
   ADD: '/clients/add',
 
   /**
+   * Path for viewing all contacts across all clients
+   */
+  CONTACTS: '/contacts',
+
+  /**
    * Constructs the path for viewing a specific client's details
    * @param clientId - The ID of the client
    * @returns The full path to the client detail view
