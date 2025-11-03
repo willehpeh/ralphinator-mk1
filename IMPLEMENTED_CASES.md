@@ -570,3 +570,43 @@
   - Responsive layout works on all screen sizes ✅
 - Documentation: view-all-contacts.md
 - **Note**: Feature was 95% complete when formalized; only navigation constant cleanup needed
+
+## Use Case 6 (Contact Management): View All Contacts for a Specific Client (2025-11-03) ✅ COMPLETE
+- Complete CQRS query implementation embedded within client detail view
+- Backend: GetClientContactsQuery and GetClientContactsQueryHandler query contacts by clientId
+- Backend API: GET /clients/:id/contacts endpoint returns ContactReadModel[] array
+- Frontend: ClientsService.getContactsByClient(clientId) method fetches contacts
+- Frontend: ClientDetailComponent with embedded Contacts section (lines 120-139)
+- Frontend: ClientDetailComponent.loadContacts() method fetches contacts on init (lines 325-338)
+- Frontend: Signal-based contacts state management with contacts signal (line 252)
+- Frontend: ContactListComponent displays contacts in professional responsive grid layout
+- Frontend: Contact cards show name, role, email (with envelope icon), phone (with phone icon)
+- Frontend: Cards are clickable with RouterLink navigation to contact detail view
+- Frontend: Professional hover effects on cards (transform, shadow, border color change)
+- Frontend: Empty state message: "No contacts added yet. Add a contact to get started."
+- Frontend: "Add Contact" button toggles ContactFormComponent inline
+- Frontend: Automatic contact list reload after adding new contact
+- Frontend: Contact form pre-populates client ID from parent component
+- Route: /clients/:id displays ClientDetailComponent with contacts section
+- Route: /clients/:id/contacts/:contactId navigates to ContactDetailComponent
+- All main success scenario steps met:
+  - User views a client company's details ✅
+  - System displays all contacts associated with that client ✅
+  - User reviews the contacts at this client ✅
+  - User can select a specific contact to view complete details ✅
+  - User can add a new contact to this client ✅
+- All extensions handled:
+  - 2a: Empty state when client has no contacts with helpful message ✅
+  - 2a2: "Add Contact" button always visible for adding first contact ✅
+  - 4a: Contact cards link to ContactDetailComponent (Use Case 4) ✅
+  - 5a: "Add Contact" button with client pre-selected (Use Case 1) ✅
+- Success guarantee met: User can see complete picture of contacts at specific client company
+- All acceptance criteria met:
+  - View all contacts for a specific client ✅
+  - Each contact shows name, role, email, phone ✅
+  - Professional, modern UI with grid layout ✅
+  - Empty state handled gracefully ✅
+  - Add contact functionality integrated ✅
+  - Navigation to contact details working ✅
+- Documentation: view-client-contacts.md
+- **Note**: All functionality verified as already implemented; no code changes required

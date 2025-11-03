@@ -77,36 +77,6 @@ See IMPLEMENTED_CASES.md for full documentation.
 
 ---
 
-## Use Case 6: View All Contacts for a Specific Client
-
-**Primary Actor**: Developer or Agency Owner
-
-**Goal**: See all the people I interact with at a particular client company so I understand who to contact and the structure of my relationships there
-
-**Preconditions**:
-- User is viewing a specific client company's details
-- The client exists in the system
-
-**Main Success Scenario**:
-1. User views a client company's details
-2. System displays all contacts associated with that client (names, roles, email, phone)
-3. User reviews the contacts at this client
-4. User can select a specific contact to view complete details
-5. User can add a new contact to this client
-
-**Extensions**:
-- 2a. If this client has no contacts yet:
-  - 2a1. System displays message indicating no contacts have been recorded for this client
-  - 2a2. System provides option to add first contact for this client
-- 4a. If user selects a contact:
-  - 4a1. Continue with Use Case 4 (View Complete Information)
-- 5a. If user adds a new contact:
-  - 5a1. Continue with Use Case 1 (Record a New Contact)
-  - 5a2. Client is pre-selected since user came from client detail page
-
-**Success Guarantee**: User can see the complete picture of their contacts at a specific client company
-
----
 
 ## Use Case Dependencies and Flow
 
