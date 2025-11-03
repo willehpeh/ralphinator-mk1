@@ -1,0 +1,120 @@
+/* Projects List Component Styles */
+@use '../clients/clients-variables.scss' as *;
+
+.projects-list {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-2xl;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-xl;
+  flex-wrap: wrap;
+  gap: $spacing-lg;
+}
+
+h2 {
+  margin: 0;
+  color: $color-text-primary;
+}
+
+.project-count {
+  padding: $spacing-md $spacing-lg;
+  background-color: #f5f5f5;
+  border-left: 3px solid $color-primary;
+  color: $color-text-secondary;
+  font-size: 0.95rem;
+  margin-bottom: $spacing-lg;
+  border-radius: $border-radius-sm;
+}
+
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: $color-text-secondary;
+}
+
+.empty-state p {
+  margin: $spacing-sm 0;
+  font-size: $font-size-lg;
+}
+
+.empty-state-hint {
+  color: #999;
+  font-size: 0.95rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: $spacing-xl;
+}
+
+.project-card {
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-md;
+  padding: $spacing-xl;
+  transition: all $transition-fast;
+}
+
+.project-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-color: $color-primary;
+  transform: translateY(-2px);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-lg;
+  border-bottom: 1px solid $color-border-light;
+}
+
+.project-header h3 {
+  margin: 0;
+  color: $color-text-primary;
+  font-size: 1.25rem;
+  flex: 1;
+  margin-right: $spacing-md;
+}
+
+.project-details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.detail-row {
+  display: flex;
+  gap: $spacing-sm;
+  font-size: 0.9rem;
+}
+
+.detail-label {
+  font-weight: $font-weight-medium;
+  color: $color-text-secondary;
+  min-width: 110px;
+  flex-shrink: 0;
+}
+
+.detail-value {
+  color: $color-text-primary;
+  word-break: break-word;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .projects-list {
+    padding: $spacing-lg;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
