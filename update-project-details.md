@@ -56,11 +56,17 @@
 
 **Commit**: feat: Add UpdateProjectDetailsHandler for project updates
 
+### Task 6: Add projection handler for ProjectDetailsUpdatedDomainEvent
+**Date**: 2025-11-03
+**Files Modified**:
+- `packages/infrastructure/src/lib/projections/project.projection.ts` (added ProjectDetailsUpdatedDomainEvent import, added to @EventsHandler decorator, registered handler in constructor, added updateReadModel helper method, added transformProjectDataToReadModel helper method, added onProjectDetailsUpdated event handler, refactored onProjectCreated to use new helper)
+
+**Description**: Added projection handler for the ProjectDetailsUpdatedDomainEvent that updates the read model when project details change. The handler follows the same pattern as ClientProjection, using a fetch-update-save approach with helper methods. The handler preserves the original createdAt timestamp while updating all other fields. Also refactored the existing onProjectCreated handler to use a new shared helper method (transformProjectDataToReadModel) that eliminates duplication between create and update operations.
+
+**Commit**:
+
 ## Pending Tasks
-- Create UpdateProjectDetailsQuery
-- Create UpdateProjectDetailsQueryHandler
-- Add projection handler for ProjectDetailsUpdatedDomainEvent
-- Create API endpoint (controller)
+- Create API endpoint (controller) for updating project details
 - Create Angular component for editing project details
 - Add form validation
 - Add routing

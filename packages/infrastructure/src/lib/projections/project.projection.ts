@@ -2,6 +2,7 @@ import { EventsHandler } from '@nestjs/cqrs';
 import { Injectable, Inject } from '@nestjs/common';
 import {
   ProjectCreatedDomainEvent,
+  ProjectDetailsUpdatedDomainEvent,
   PROJECT_EVENT_TYPES,
 } from '@angular-nest-starter/domain';
 import {
@@ -18,47 +19,25 @@ import { BaseProjectionHandler } from '../base/base-projection.handler';
  * optimized read models for the CQRS query side.
  *
  * This projection:
- * - Subscribes to ProjectCreatedDomainEvent from the event store
+ * - Subscribes to ProjectCreatedDomainEvent and ProjectDetailsUpdatedDomainEvent from the event store
  * - Transforms domain events into ProjectReadModel DTOs
  * - Persists read models to the read repository (optimized for queries)
  * - Enables separation of write (event store) and read (read model) data stores
  * - Uses the event handler registry pattern for extensible event handling
  */
 @Injectable()
-@EventsHandler(ProjectCreatedDomainEvent)
+@EventsHandler(ProjectCreatedDomainEvent, ProjectDetailsUpdatedDomainEvent)
 export class ProjectProjection extends BaseProjectionHandler {
   constructor(
     @Inject(INJECTION_TOKENS.PROJECT_READ_REPOSITORY)
     private readonly projectReadRepository: IProjectReadRepository
   ) {
     super();
-    // Register event handler for project created event using helper method
+    // Register event handlers for project events using helper method
     this.registerEventHandlers({
       [PROJECT_EVENT_TYPES.CREATED]: this.onProjectCreated.bind(this),
+      [PROJECT_EVENT_TYPES.DETAILS_UPDATED]: this.onProjectDetailsUpdated.bind(this),
     });
-  }
-
-  /**
-   * Helper method to transform ProjectCreatedDomainEvent into a ProjectReadModel.
-   * The ProjectData within the event already contains Date objects.
-   *
-   * @param event - The ProjectCreatedDomainEvent
-   * @returns ProjectReadModel for persistence
-   */
-  private transformToReadModel(event: ProjectCreatedDomainEvent): ProjectReadModel {
-    return new ProjectReadModel(
-      event.aggregateId,
-      event.projectData.clientId,
-      event.projectData.name,
-      event.projectData.status,
-      event.projectData.description,
-      event.projectData.startDate,
-      event.projectData.expectedEndDate,
-      event.projectData.actualEndDate,
-      event.projectData.budget,
-      event.projectData.technicalNotes,
-      event.occurredOn
-    );
   }
 
   /**
@@ -67,9 +46,76 @@ export class ProjectProjection extends BaseProjectionHandler {
    */
   private async onProjectCreated(event: ProjectCreatedDomainEvent): Promise<void> {
     // Transform ProjectCreatedDomainEvent into read model using helper
-    const readModel = this.transformToReadModel(event);
+    const readModel = this.transformProjectDataToReadModel(
+      event.aggregateId,
+      event.projectData,
+      event.occurredOn
+    );
 
     // Persist to read repository
     await this.projectReadRepository.save(readModel);
+  }
+
+  /**
+   * Helper method to update an existing read model.
+   * Fetches the existing read model, applies the update function, and saves it.
+   * Consolidates the common "fetch-update-save" pattern across event handlers.
+   *
+   * @param aggregateId - The project aggregate ID
+   * @param updater - Function that transforms the existing read model into the updated version
+   */
+  private async updateReadModel(
+    aggregateId: string,
+    updater: (existing: ProjectReadModel | null) => ProjectReadModel | null
+  ): Promise<void> {
+    const existing = await this.projectReadRepository.findById(aggregateId);
+    const updated = updater(existing);
+
+    if (updated) {
+      await this.projectReadRepository.save(updated);
+    }
+  }
+
+  /**
+   * Helper method to transform ProjectData and metadata into a ProjectReadModel.
+   * Eliminates duplication between create and update event handlers.
+   *
+   * @param aggregateId - The project aggregate ID
+   * @param projectData - The project data from the domain event
+   * @param createdAt - The timestamp when the project was created
+   * @returns ProjectReadModel for persistence
+   */
+  private transformProjectDataToReadModel(
+    aggregateId: string,
+    projectData: ProjectCreatedDomainEvent['projectData'] | ProjectDetailsUpdatedDomainEvent['projectData'],
+    createdAt: Date
+  ): ProjectReadModel {
+    return new ProjectReadModel(
+      aggregateId,
+      projectData.clientId,
+      projectData.name,
+      projectData.status,
+      projectData.description,
+      projectData.startDate,
+      projectData.expectedEndDate,
+      projectData.actualEndDate,
+      projectData.budget,
+      projectData.technicalNotes,
+      createdAt
+    );
+  }
+
+  /**
+   * Event handler for ProjectDetailsUpdatedDomainEvent
+   * Updates the read model when project details change
+   */
+  private async onProjectDetailsUpdated(event: ProjectDetailsUpdatedDomainEvent): Promise<void> {
+    return this.updateReadModel(event.aggregateId, (existing) =>
+      this.transformProjectDataToReadModel(
+        event.aggregateId,
+        event.projectData,
+        existing?.createdAt ?? event.occurredOn // Preserve original createdAt
+      )
+    );
   }
 }
