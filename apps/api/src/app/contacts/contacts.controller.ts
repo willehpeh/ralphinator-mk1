@@ -3,6 +3,7 @@ import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { GetContactByIdQuery, GetAllContactsQuery, ContactReadModel, UpdateContactCommand, RemoveContactCommand } from '@angular-nest-starter/application';
 import { UpdateContactDto } from '@angular-nest-starter/shared-types';
 import { ContactData } from '@angular-nest-starter/domain';
+import { CONTACT_CONTROLLER_ERROR_MESSAGES } from './contacts-controller.constants';
 
 @Controller('contacts')
 export class ContactsController {
@@ -32,7 +33,7 @@ export class ContactsController {
     const contact = await this.queryBus.execute<GetContactByIdQuery, ContactReadModel | null>(query);
 
     if (!contact) {
-      throw new NotFoundException('Contact not found');
+      throw new NotFoundException(CONTACT_CONTROLLER_ERROR_MESSAGES.CONTACT_NOT_FOUND);
     }
 
     const contactData = new ContactData(
@@ -54,7 +55,7 @@ export class ContactsController {
     const contact = await this.queryBus.execute<GetContactByIdQuery, ContactReadModel | null>(query);
 
     if (!contact) {
-      throw new NotFoundException('Contact not found');
+      throw new NotFoundException(CONTACT_CONTROLLER_ERROR_MESSAGES.CONTACT_NOT_FOUND);
     }
 
     const command = new RemoveContactCommand(contact.clientId, id);
