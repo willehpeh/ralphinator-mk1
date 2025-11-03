@@ -16,25 +16,19 @@
 
 ### Frontend Implementation 🔄
 8. ✅ Added updateProject method to ProjectsService (commit: ff65dc5)
+9. ✅ Created project-edit.component.ts with reactive form (commit: pending)
 
 ## Remaining Tasks
 
 ### Frontend Implementation
-9. ⏳ Create project-edit.component.ts with form for updating project details
 10. ⏳ Add routing for /projects/:id/edit route
 11. ⏳ Add "Edit Project" button to project-detail.component.ts
-12. ⏳ Implement form validation and error handling in edit component
-13. ⏳ Add success/error messaging after update
-14. ⏳ Add navigation back to detail page after successful update
 
 ## Next Task
 
-**Create project-edit.component.ts with reactive form**
-- Create new component in apps/frontend/src/app/projects/
-- Use modern Angular standalone component with signals
-- Implement ReactiveFormsModule with typed form controls
-- Pre-populate form with current project data
-- Add proper styling matching the application design
+**Add routing for /projects/:id/edit route**
+- Update app.routes.ts to add the edit route
+- Ensure proper path configuration for nested route
 
 ## Notes
 
