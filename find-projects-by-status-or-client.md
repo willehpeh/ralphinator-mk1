@@ -22,13 +22,22 @@
    - Filter returns all projects when no status selected, otherwise filters by status
    - Build verified successfully
 
+4. ✅ Add client filter dropdown UI
+   - Imported ClientsService and Client type
+   - Added clients signal to hold the list of clients
+   - Injected ClientsService into component
+   - Added loadClients() method to fetch all clients
+   - Called loadClients() in ngOnInit
+   - Added client filter dropdown to template with filter-group styling
+   - Dropdown displays all clients with "All Clients" default option
+   - Build verified successfully
+
 ## Current Task
 - None (ready for next task)
 
 ## Remaining Tasks (Planned)
-- Add client filter dropdown UI
-- Add signal for selected client filter
-- Update filtering logic to include client
+- Add signal for selected client filter and wire up change event
+- Update filtering logic to include client filter
 - Add "Clear Filters" button
 - Test filtering functionality end-to-end
 

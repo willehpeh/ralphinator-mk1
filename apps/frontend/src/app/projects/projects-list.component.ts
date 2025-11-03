@@ -2,6 +2,8 @@ import { Component, ChangeDetectionStrategy, inject, OnInit, signal, computed } 
 import { CommonModule } from '@angular/common';
 import { ProjectsService } from './projects.service';
 import { ProjectDto, PROJECT_STATUS_VALUES, ProjectStatus } from '@angular-nest-starter/shared-types';
+import { ClientsService } from '../clients/clients.service';
+import { Client } from '../clients/client.types';
 
 @Component({
   selector: 'app-projects-list',
@@ -25,6 +27,18 @@ import { ProjectDto, PROJECT_STATUS_VALUES, ProjectStatus } from '@angular-nest-
             <option value="">All Statuses</option>
             @for (status of statusOptions; track status) {
               <option [value]="status">{{ status }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="client-filter" class="filter-label">Filter by Client:</label>
+          <select
+            id="client-filter"
+            class="filter-select">
+            <option value="">All Clients</option>
+            @for (client of clients(); track client.id) {
+              <option [value]="client.id">{{ client.companyName }}</option>
             }
           </select>
         </div>
@@ -104,12 +118,14 @@ import { ProjectDto, PROJECT_STATUS_VALUES, ProjectStatus } from '@angular-nest-
 })
 export class ProjectsListComponent implements OnInit {
   private projectsService = inject(ProjectsService);
+  private clientsService = inject(ClientsService);
 
   // Available status options for filtering
   readonly statusOptions = PROJECT_STATUS_VALUES;
 
   // Signals for component state
   private allProjects = signal<ProjectDto[]>([]);
+  clients = signal<Client[]>([]);
   loading = signal<boolean>(false);
   error = signal<string | null>(null);
 
@@ -132,6 +148,7 @@ export class ProjectsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProjects();
+    this.loadClients();
   }
 
   onStatusFilterChange(event: Event): void {
@@ -152,6 +169,17 @@ export class ProjectsListComponent implements OnInit {
         console.error('Error loading projects:', err);
         this.error.set('Failed to load projects. Please try again later.');
         this.loading.set(false);
+      }
+    });
+  }
+
+  private loadClients(): void {
+    this.clientsService.getAllClients().subscribe({
+      next: (clients) => {
+        this.clients.set(clients);
+      },
+      error: (err) => {
+        console.error('Error loading clients:', err);
       }
     });
   }
