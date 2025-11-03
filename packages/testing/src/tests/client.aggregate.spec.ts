@@ -229,15 +229,6 @@ describe('ClientAggregate', () => {
         .toThrow(DOMAIN_ERRORS.CLIENT_STATUS_UNCHANGED);
     });
 
-    it('should throw error when status is not initialized', () => {
-      // Arrange
-      const uninitializedClient = new ClientAggregate();
-
-      // Act & Assert
-      expect(() => uninitializedClient.changeStatus('Active'))
-        .toThrow(DOMAIN_ERRORS.CLIENT_NOT_INITIALIZED);
-    });
-
     it('should throw error when changing uninitialized aggregate', () => {
       // Arrange
       const uninitializedClient = new ClientAggregate();
