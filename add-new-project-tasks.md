@@ -23,18 +23,28 @@ This document tracks the implementation tasks for the "Add a New Project to a Cl
 **Verification**:
 - Linting passed: `nx lint shared-types`
 
+### 2. Create ProjectCreatedDomainEvent
+**Status**: Completed
+**Date**: 2025-11-03
+
+**Implementation Details**:
+- Created `packages/domain/src/lib/events/project-created.domain-event.ts`
+- Included all project fields: clientId, name, status (required), description, startDate, expectedEndDate, actualEndDate, budget, technicalNotes (optional)
+- Followed pattern from other domain events (ClientStatusChangedDomainEvent)
+- Included version field for event versioning (defaults to 1)
+- Imported ProjectStatus type from shared-types package
+- Exported from domain package via `packages/domain/src/index.ts`
+
+**Files Modified**:
+- `packages/domain/src/lib/events/project-created.domain-event.ts` (new)
+- `packages/domain/src/index.ts` (updated exports)
+
+**Verification**:
+- Linting passed: `nx lint domain`
+
 ---
 
 ## Next Tasks
-
-### 2. Create ProjectCreatedDomainEvent
-**Status**: Pending
-
-**Implementation Details**:
-- Create `packages/domain/src/lib/events/project-created.domain-event.ts`
-- Include all project fields: name, description, status, dates, budget, technical notes, clientId
-- Follow pattern from ClientCreatedDomainEvent
-- Include version field for event versioning
 
 ### 3. Create PROJECT_EVENT_TYPES Constants
 **Status**: Pending
@@ -245,6 +255,6 @@ This document tracks the implementation tasks for the "Add a New Project to a Cl
 
 ## Implementation Status
 - Total Tasks: 25
-- Completed: 1
-- Remaining: 24
-- Progress: 4%
+- Completed: 2
+- Remaining: 23
+- Progress: 8%
