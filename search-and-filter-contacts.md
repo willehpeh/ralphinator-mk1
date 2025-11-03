@@ -28,8 +28,25 @@
 
 ## Remaining Tasks
 
-### Task 3: Add client name to contacts response and filter
-**Description**: Enhance backend to include client name, update filter to search client names
+### Task 3a: Add clientName field to ContactReadModel ✅
+**Description**: Add clientName property to ContactReadModel class
+**Status**: Completed
+**Details**:
+- Added clientName field to ContactReadModel constructor
+- Field is positioned after clientId and before name
+- Field type is string (required, not nullable)
+- Updated in packages/application/src/lib/read-models/contact.read-model.ts
+
+### Task 3b: Update contact read repository to include client name
+**Description**: Modify repository query to join with clients table and fetch client name
+**Status**: Pending
+
+### Task 3c: Update query handlers to pass client name
+**Description**: Update GetAllContactsHandler and GetContactByIdHandler to pass clientName
+**Status**: Pending
+
+### Task 3d: Update frontend to display and filter by client name
+**Description**: Update Contact interface and filtering logic in AllContactsComponent
 **Status**: Pending
 
 ### Task 4: Add sort functionality (by name, client, role)
