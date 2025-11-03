@@ -57,12 +57,21 @@ export default [
                 'scope:application',
                 'scope:infrastructure',
                 'scope:domain',
+                'scope:shared',
               ]
             },
             {
               sourceTag: 'scope:frontend',
               onlyDependOnLibsWithTags: [
                 'scope:frontend',
+                'scope:shared',
+              ]
+            },
+            {
+              sourceTag: 'scope:shared',
+              onlyDependOnLibsWithTags: [
+                'scope:shared',
+                'scope:domain',
               ]
             }
           ],

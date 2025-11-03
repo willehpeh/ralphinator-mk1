@@ -7,5 +7,16 @@
     "scope:domain"
   ],
   "// targets": "to see all targets run: nx show project domain --web",
-  "targets": {}
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/domain",
+        "main": "packages/domain/src/index.ts",
+        "tsConfig": "packages/domain/tsconfig.lib.json",
+        "assets": ["packages/domain/*.md"]
+      }
+    }
+  }
 }

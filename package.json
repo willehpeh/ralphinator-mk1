@@ -72,6 +72,7 @@
     "jasmine-marbles": "~0.9.1",
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
+    "jsonc-eslint-parser": "^2.1.0",
     "nx": "22.0.1",
     "prettier": "^2.6.2",
     "tslib": "^2.3.0",

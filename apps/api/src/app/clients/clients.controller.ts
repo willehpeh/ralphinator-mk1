@@ -1,44 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel, ClientDataPayload } from '@angular-nest-starter/application';
-import { ClientStatus, CLIENT_STATUS_VALUES } from '@angular-nest-starter/domain';
+import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientDataDto, CreateClientDto, UpdateClientDto, ChangeClientStatusDto } from '@angular-nest-starter/shared-types';
 import { randomUUID } from 'crypto';
-import { IsString, IsEmail, IsOptional, IsIn, IsNotEmpty } from 'class-validator';
 import { CLIENT_CONTROLLER_ERROR_MESSAGES } from './clients-controller.constants';
-
-export class ClientDataDto {
-  @IsString()
-  @IsNotEmpty()
-  companyName!: string;
-
-  @IsEmail()
-  email!: string;
-
-  @IsString()
-  @IsOptional()
-  phone!: string | null;
-
-  @IsString()
-  @IsOptional()
-  address!: string | null;
-
-  @IsIn(CLIENT_STATUS_VALUES)
-  status!: ClientStatus;
-
-  @IsString()
-  @IsOptional()
-  notes!: string | null;
-}
-
-export class CreateClientDto extends ClientDataDto {}
-
-export class UpdateClientDto extends ClientDataDto {}
-
-export class ChangeClientStatusDto {
-  @IsIn(CLIENT_STATUS_VALUES)
-  @IsNotEmpty()
-  status!: ClientStatus;
-}
 
 @Controller('clients')
 export class ClientsController {

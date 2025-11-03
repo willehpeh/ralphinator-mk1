@@ -22,7 +22,10 @@
       "@angular-nest-starter/infrastructure": [
         "packages/infrastructure/src/index.ts"
       ],
-      "@angular-nest-starter/testing": ["packages/testing/src/index.ts"]
+      "@angular-nest-starter/testing": ["packages/testing/src/index.ts"],
+      "@angular-nest-starter/shared-types": [
+        "packages/shared-types/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

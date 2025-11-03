@@ -1,31 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Client, ClientStatus } from './client.types';
-
-interface ClientDataDto {
-  companyName: string;
-  email: string;
-  phone?: string;
-  address?: string;
-  status: ClientStatus;
-  notes?: string;
-}
-
-export type CreateClientDto = ClientDataDto;
-export type UpdateClientDto = ClientDataDto;
-
-export interface CreateClientResponse {
-  id: string;
-}
-
-export interface ChangeClientStatusDto {
-  status: ClientStatus;
-}
-
-export interface DeleteClientResponse {
-  id: string;
-}
+import { Client } from './client.types';
+import {
+  CreateClientDto,
+  UpdateClientDto,
+  ChangeClientStatusDto,
+  CreateClientResponse,
+  DeleteClientResponse
+} from '@angular-nest-starter/shared-types';
 
 @Injectable({
   providedIn: 'root'
