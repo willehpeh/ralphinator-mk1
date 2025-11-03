@@ -17,7 +17,11 @@ import { ProjectDto, PROJECT_STATUS_VALUES, ProjectStatus } from '@angular-nest-
       <div class="filters-section">
         <div class="filter-group">
           <label for="status-filter" class="filter-label">Filter by Status:</label>
-          <select id="status-filter" class="filter-select">
+          <select
+            id="status-filter"
+            class="filter-select"
+            [value]="selectedStatusFilter()"
+            (change)="onStatusFilterChange($event)">
             <option value="">All Statuses</option>
             @for (status of statusOptions; track status) {
               <option [value]="status">{{ status }}</option>
@@ -109,8 +113,16 @@ export class ProjectsListComponent implements OnInit {
   loading = signal<boolean>(false);
   error = signal<string | null>(null);
 
+  // Filter state
+  selectedStatusFilter = signal<string>('');
+
   ngOnInit(): void {
     this.loadProjects();
+  }
+
+  onStatusFilterChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.selectedStatusFilter.set(target.value);
   }
 
   private loadProjects(): void {

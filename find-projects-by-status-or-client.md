@@ -8,11 +8,16 @@
    - Added professional styling for filter controls
    - Build verified successfully
 
+2. ✅ Add signal for selected status filter and wire up change event
+   - Added selectedStatusFilter signal initialized to empty string
+   - Added onStatusFilterChange event handler
+   - Wired up [value] binding and (change) event in template
+   - Build verified successfully
+
 ## Current Task
-- Add signal for selected status filter and wire up change event
+- Implement filtering logic in component (computed signal)
 
 ## Remaining Tasks (Planned)
-- Implement filtering logic in component (computed signal)
 - Add client filter dropdown UI
 - Add signal for selected client filter
 - Update filtering logic to include client
