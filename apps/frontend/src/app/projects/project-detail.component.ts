@@ -54,6 +54,9 @@ import { StatusChangeDialogComponent } from '../shared/status-change-dialog.comp
               <button class="edit-button" (click)="navigateToEdit()">
                 Edit Project
               </button>
+              <button class="delete-button" (click)="openDeleteDialog()">
+                Delete Project
+              </button>
             </div>
           </div>
 
@@ -233,5 +236,10 @@ export class ProjectDetailComponent {
 
   onStatusDialogCancelled(): void {
     this.showStatusDialog.set(false);
+  }
+
+  openDeleteDialog(): void {
+    // TODO: Implement in Task 8
+    console.log('Delete project clicked');
   }
 }

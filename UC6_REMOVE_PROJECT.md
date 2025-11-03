@@ -56,11 +56,17 @@
 - Located in `apps/frontend/src/app/projects/projects.service.ts:62-64`
 - Commit: `15cbacf feat: Add deleteProject method to ProjectsService`
 
-## Tasks Remaining
+### Task 7: Add Delete button to ProjectDetailComponent ✅
+- Added "Delete Project" button to header actions section in template
+- Button styled with red/danger aesthetic (`.delete-button` class)
+- Button triggers `openDeleteDialog()` method when clicked
+- Added `openDeleteDialog()` method stub (to be implemented in Task 8)
+- Updated SCSS with `.delete-button` styles (red background #e53e3e, hover #c53030)
+- Updated mobile responsive styles to include delete button
+- Located in `apps/frontend/src/app/projects/project-detail.component.ts:57-59,241-244`
+- Located in `apps/frontend/src/app/projects/project-detail.component.scss:127-145,273-277`
 
-### Task 7: Add Delete button to ProjectDetailComponent
-- Add "Delete Project" button to project detail view
-- Button triggers confirmation dialog
+## Tasks Remaining
 
 ### Task 8: Implement confirmation dialog for project deletion
 - Create or reuse confirmation dialog component
