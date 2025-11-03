@@ -302,6 +302,21 @@ interface ContactEditForm {
       opacity: 0.6;
     }
 
+    .btn-danger {
+      background-color: #dc2626;
+      color: white;
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background-color: #b91c1c;
+    }
+
+    .btn-danger:disabled {
+      background-color: #fca5a5;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
     .header-actions {
       display: flex;
       gap: 0.75rem;
@@ -369,6 +384,9 @@ interface ContactEditForm {
           <div class="header-actions">
             <button class="btn btn-primary" (click)="enterEditMode()">
               Edit Contact
+            </button>
+            <button class="btn btn-danger" (click)="deleteContact()">
+              Delete Contact
             </button>
           </div>
         }
@@ -688,6 +706,39 @@ export class ContactDetailComponent implements OnInit {
         // Use saveError instead of error to keep it separate from loading errors
         this.saveError.set('Failed to update contact. Please try again.');
         this.saving.set(false);
+      }
+    });
+  }
+
+  deleteContact(): void {
+    const contactId = this.contactId();
+    const contact = this.contact();
+
+    if (!contactId || !contact) {
+      return;
+    }
+
+    // Simple confirmation
+    const confirmed = confirm(
+      `Are you sure you want to delete ${contact.name}?\n\nThis action cannot be undone.`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.loading.set(true);
+    this.error.set(null);
+
+    this.http.delete(`/api/contacts/${contactId}`).subscribe({
+      next: () => {
+        // Navigate back to the client detail page after successful deletion
+        this.navigation.toClientDetail(contact.clientId);
+      },
+      error: (err) => {
+        console.error('Failed to delete contact:', err);
+        this.error.set('Failed to delete contact. Please try again.');
+        this.loading.set(false);
       }
     });
   }

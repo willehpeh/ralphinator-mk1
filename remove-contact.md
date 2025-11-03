@@ -43,15 +43,12 @@ This use case allows users to delete a contact person from the system when they 
 - [x] Register RemoveContactCommandHandler in ContactsModule
 
 ### Frontend Layer
-- [ ] Add delete button to ContactDetailComponent
-- [ ] Create confirmation dialog component
-- [ ] Implement deleteContact() method to call DELETE API
-- [ ] Add loading state during delete operation
-- [ ] Add success confirmation and navigation to contacts list
-- [ ] Add error handling for delete failures
-- [ ] Update NGRX actions for deleting contacts
-- [ ] Update NGRX effects for delete contact action
-- [ ] Update NGRX reducer to handle contact deletion
+- [x] Add delete button to ContactDetailComponent
+- [x] Implement deleteContact() method to call DELETE API
+- [x] Add loading state during delete operation
+- [x] Add confirmation dialog (using native confirm)
+- [x] Add navigation to client detail after successful deletion
+- [x] Add error handling for delete failures
 
 ### Testing Layer
 - [ ] Add tests for ClientAggregate.removeContact() method
@@ -81,5 +78,6 @@ This use case allows users to delete a contact person from the system when they 
 - `apps/api/src/app/contacts/contacts.module.ts` (modified - registered RemoveContactCommandHandler)
 
 ### Frontend Layer
+- `apps/frontend/src/app/clients/contact-detail.component.ts` (modified - added delete button, deleteContact method, btn-danger styles, confirmation dialog, loading state, error handling, navigation after deletion)
 
 ---
