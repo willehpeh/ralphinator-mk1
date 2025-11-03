@@ -817,3 +817,47 @@
 - Success guarantee met: Project information is updated and complete history of changes is preserved
 - Documentation: TASK_UC4_UPDATE_PROJECT.md
 - **Note**: Complete end-to-end implementation with full CQRS + Event Sourcing pattern and professional UI
+
+## Use Case 5 (Project Management): Change Project Status Through Lifecycle (2025-11-03) ✅ COMPLETE
+- Complete CQRS + Event Sourcing implementation for project status changes
+- Domain: ProjectStatusChangedDomainEvent captures status changes with audit trail (previous and new status)
+- Domain: ProjectAggregate.changeStatus() method validates status is different from current
+- Domain: PROJECT_EVENT_TYPES.STATUS_CHANGED constant for event type identification
+- Domain: PROJECT_STATUS_UNCHANGED error constant for validation
+- Application: ChangeProjectStatusCommand with id and newStatus fields
+- Application: ChangeProjectStatusCommandHandler loads aggregate, changes status, persists events
+- Infrastructure: ProjectProjection handles ProjectStatusChangedDomainEvent with efficient partial updates
+- Backend API: PATCH /api/clients/:clientId/projects/:projectId/status endpoint accepts ChangeProjectStatusDto
+- Backend API: ChangeProjectStatusDto validates status using @IsIn(PROJECT_STATUS_VALUES) and @IsNotEmpty()
+- Frontend: ProjectsService.changeProjectStatus() method for API communication
+- Frontend: StatusChangeDialogComponent reusable modal dialog with dropdown selector
+- Frontend: Dialog displays all available project statuses (Planning, Active, On Hold, Completed, Cancelled)
+- Frontend: Validates that selected status is different from current status
+- Frontend: Disables "Change Status" button when same status is selected
+- Frontend: Shows warning message when user selects the same status
+- Frontend: Professional modal UI with backdrop, keyboard support (Escape to close), and click-outside-to-close
+- Frontend: "Change Status" button in ProjectDetailComponent header actions
+- Frontend: Signal-based dialog state management with showStatusDialog signal
+- Frontend: Automatic page reload after successful status change to show updated data
+- Frontend: Error handling with user-friendly error messages
+- Frontend: Modern Angular patterns (standalone, signals, OnPush, FormsModule for dropdown)
+- Frontend: Professional styling with focus states, hover effects, and responsive design
+- Event sourcing: All status changes captured as immutable events in event store with audit trail
+- Projections: Project read model updated efficiently (only status field updated, not full object)
+- All main success scenario steps met:
+  - User clicks "Change Status" action button ✅
+  - System displays status options (Planning, Active, On Hold, Completed, Cancelled) in dropdown ✅
+  - User selects new status from dropdown ✅
+  - System validates the status change (prevents same status) ✅
+  - User confirms the status change (clicks "Change Status" button) ✅
+  - System updates project status and records the change in history (event-sourced) ✅
+  - System displays updated status badge (after page reload) ✅
+- Extensions partially handled:
+  - 4a: Status transition validation - basic validation implemented (prevents same status) ✅
+  - Step 7 confirmation message - shows updated badge but no explicit success toast (future enhancement)
+  - 3a: Completed status prompts for actual end date - not implemented (future enhancement)
+  - 3b: Cancelled status prompts for actual end date and reason - not implemented (future enhancement)
+  - 6a: Status change triggers workflow - noted as future implementation ✅
+- Success guarantee met: Project status accurately reflects current state and status change is recorded in history
+- Documentation: change-project-status.md
+- **Note**: Core functionality complete and working end-to-end. Optional extensions (end date prompts, success toast) can be added in future iterations.
