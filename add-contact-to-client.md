@@ -154,6 +154,23 @@
   - Follows RESTful pattern: GET /clients/:id/contacts
   - Returns empty array if client has no contacts
 
+### Task 14: Create ContactFormComponent for adding contacts
+- **Files Created:**
+  - `apps/frontend/src/app/clients/contact-form.component.ts`
+- **Description:**
+  - Created ContactFormComponent following modern Angular patterns (standalone, signals, inject())
+  - Implemented reactive form with typed controls (ContactForm interface)
+  - Added form validation: name is required, email format validation
+  - Integrated with backend API: POST /api/clients/:id/contacts
+  - Added input() for clientId (required) to associate contact with client
+  - Added output events: contactAdded and formCancelled
+  - Implemented error handling with user-friendly error messages
+  - Added loading state with isSubmitting signal
+  - Form uses clients-common.scss for consistent styling
+  - Only includes optional fields (role, email, phone) in payload if they have values
+  - Follows OnPush change detection strategy for performance
+
 ## Next Tasks
-- Integrate frontend UI for adding contacts
-- Integrate frontend UI for viewing client contacts
+- Integrate ContactFormComponent into ClientDetailComponent
+- Create component for viewing/displaying client contacts
+- Add contacts section to client detail view
