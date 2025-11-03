@@ -12,6 +12,7 @@ export * from './lib/events/contact-added-to-client.domain-event';
 export * from './lib/events/contact-updated.domain-event';
 export * from './lib/events/contact-deleted.domain-event';
 export * from './lib/events/project-created.domain-event';
+export * from './lib/events/project-details-updated.domain-event';
 export * from './lib/aggregates/client.aggregate';
 export * from './lib/aggregates/project.aggregate';
 export * from './lib/value-objects/client-data.value-object';
