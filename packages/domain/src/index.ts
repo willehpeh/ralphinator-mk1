@@ -17,3 +17,4 @@ export * from './lib/aggregates/project.aggregate';
 export * from './lib/value-objects/client-data.value-object';
 export * from './lib/value-objects/contact-data.value-object';
 export * from './lib/value-objects/email.value-object';
+export * from './lib/value-objects/project-data.value-object';
