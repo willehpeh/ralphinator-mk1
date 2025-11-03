@@ -14,10 +14,10 @@ export class ClientAggregate extends EventSourcedAggregate {
   private id?: string;
   private companyName?: string;
   private email?: Email;
-  private phone?: string | null;
-  private address?: string | null;
+  private phone: string | null = null;
+  private address: string | null = null;
   private status?: ClientStatus;
-  private notes?: string | null;
+  private notes: string | null = null;
 
   constructor() {
     super();
