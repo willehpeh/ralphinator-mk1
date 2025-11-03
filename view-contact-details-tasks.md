@@ -4,11 +4,11 @@
 Implementing the ability to view detailed information about a specific contact.
 
 ## Tasks
-- [ ] Create ContactDetailComponent
 - [ ] Add contact detail route to routing
 - [ ] Add navigation from ContactListComponent
 
 ## Completed Tasks
+- [x] Create ContactDetailComponent (apps/frontend/src/app/clients/contact-detail.component.ts)
 - [x] Create GetContactByIdQuery class (packages/application/src/lib/queries/get-contact-by-id.query.ts)
 - [x] Create GetContactByIdQueryHandler (packages/application/src/lib/queries/handlers/get-contact-by-id.handler.ts)
 - [x] Add findById method to IContactReadRepository interface (packages/application/src/lib/ports/contact-read-repository.interface.ts)
