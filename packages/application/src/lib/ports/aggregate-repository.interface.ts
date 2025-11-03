@@ -12,7 +12,7 @@ export interface IAggregateRepository<T extends EventSourcedAggregate> {
    * @returns The reconstructed aggregate with replayed events
    * @throws Error if aggregate not found or events cannot be loaded
    */
-  load(aggregateId: string, aggregateType: new () => T): Promise<T>;
+  load<U extends EventSourcedAggregate>(aggregateId: string, aggregateType: new () => U): Promise<U>;
 
   /**
    * Persists uncommitted events from an aggregate to the event store

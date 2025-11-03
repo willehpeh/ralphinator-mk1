@@ -25,7 +25,7 @@ export class AggregateRepository<T extends EventSourcedAggregate> implements IAg
    *
    * @throws Error if no events exist for the given aggregate ID
    */
-  async load(aggregateId: string, aggregateType: new () => T): Promise<T> {
+  async load<U extends EventSourcedAggregate>(aggregateId: string, aggregateType: new () => U): Promise<U> {
     const events = await this.eventStore.getEvents(aggregateId);
 
     if (events.length === 0) {
