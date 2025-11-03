@@ -16,10 +16,13 @@ import { ClientNavigationService } from './client-navigation.service';
 import { ClientsService } from './clients.service';
 import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
 import { Contact } from './client.types';
+import { ProjectFormComponent } from '../projects/project-form.component';
+import { ProjectsService } from '../projects/projects.service';
+import { ProjectDto } from '@angular-nest-starter/shared-types';
 
 @Component({
   selector: 'app-client-detail',
-  imports: [CommonModule, ClientFormComponent, ChangeStatusFormComponent, ConfirmationDialogComponent, StatusBadgeComponent, ContactFormComponent, ContactListComponent],
+  imports: [CommonModule, ClientFormComponent, ChangeStatusFormComponent, ConfirmationDialogComponent, StatusBadgeComponent, ContactFormComponent, ContactListComponent, ProjectFormComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./clients-common.scss', './client-detail.component.scss'],
   template: `
@@ -136,6 +139,56 @@ import { Contact } from './client.types';
             </div>
 
             <div class="detail-section">
+              <div class="section-header">
+                <h4>Projects</h4>
+                @if (!isAddingProject()) {
+                  <button class="add-project-button" (click)="toggleAddProjectMode()">
+                    Add Project
+                  </button>
+                }
+              </div>
+
+              @if (isAddingProject()) {
+                <app-project-form
+                  [clientId]="clientData.id"
+                  (formSucceeded)="handleProjectAdded()"
+                  (formCancelled)="toggleAddProjectMode()"
+                />
+              } @else {
+                @if (projects().length > 0) {
+                  <div class="projects-list">
+                    @for (project of projects(); track project.id) {
+                      <div class="project-card">
+                        <div class="project-header">
+                          <h5>{{ project.name }}</h5>
+                          <span class="project-status status-{{ project.status.toLowerCase().replace(' ', '-') }}">
+                            {{ project.status }}
+                          </span>
+                        </div>
+                        @if (project.description) {
+                          <p class="project-description">{{ project.description }}</p>
+                        }
+                        <div class="project-meta">
+                          @if (project.startDate) {
+                            <span>Start: {{ project.startDate | date:'shortDate' }}</span>
+                          }
+                          @if (project.expectedEndDate) {
+                            <span>Expected End: {{ project.expectedEndDate | date:'shortDate' }}</span>
+                          }
+                          @if (project.budget) {
+                            <span>Budget: {{ project.budget | currency }}</span>
+                          }
+                        </div>
+                      </div>
+                    }
+                  </div>
+                } @else {
+                  <p class="empty-state">No projects yet. Add a project to get started.</p>
+                }
+              }
+            </div>
+
+            <div class="detail-section">
               <h4>Metadata</h4>
               <div class="detail-grid">
                 <div class="detail-item">
@@ -170,6 +223,7 @@ export class ClientDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private navigation = inject(ClientNavigationService);
   private clientsService = inject(ClientsService);
+  private projectsService = inject(ProjectsService);
 
   // Get client ID from route params using toSignal to avoid manual subscription cleanup
   private clientId = toSignal(
@@ -188,11 +242,17 @@ export class ClientDetailComponent implements OnInit {
   // Add contact mode state
   isAddingContact = signal(false);
 
+  // Add project mode state
+  isAddingProject = signal(false);
+
   // Delete confirmation dialog state
   showDeleteConfirmation = signal(false);
 
   // Contacts state
   contacts = signal<Contact[]>([]);
+
+  // Projects state
+  projects = signal<ProjectDto[]>([]);
 
   // Date format for displaying client dates
   readonly dateFormat = STANDARD_DATE_FORMAT;
@@ -214,6 +274,8 @@ export class ClientDetailComponent implements OnInit {
     this.store.dispatch(loadClients());
     // Load contacts for the current client
     this.loadContacts();
+    // Load projects for the current client
+    this.loadProjects();
   }
 
   navigateBack(): void {
@@ -249,6 +311,17 @@ export class ClientDetailComponent implements OnInit {
     this.loadContacts();
   }
 
+  toggleAddProjectMode(): void {
+    this.isAddingProject.update(value => !value);
+  }
+
+  handleProjectAdded(): void {
+    // Exit add project mode
+    this.isAddingProject.set(false);
+    // Reload projects list
+    this.loadProjects();
+  }
+
   private loadContacts(): void {
     const id = this.clientId();
     if (id) {
@@ -259,6 +332,21 @@ export class ClientDetailComponent implements OnInit {
         error: (error) => {
           console.error('Failed to load contacts:', error);
           this.contacts.set([]);
+        }
+      });
+    }
+  }
+
+  private loadProjects(): void {
+    const id = this.clientId();
+    if (id) {
+      this.projectsService.getProjectsByClientId(id).subscribe({
+        next: (projects) => {
+          this.projects.set(projects);
+        },
+        error: (error) => {
+          console.error('Failed to load projects:', error);
+          this.projects.set([]);
         }
       });
     }

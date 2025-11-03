@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, input, output, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CreateProjectDto, ProjectStatus, PROJECT_STATUS_VALUES } from '@angular-nest-starter/shared-types';
 import { ProjectsService } from './projects.service';
 import { FormState } from '../shared/form-state';
@@ -211,10 +211,10 @@ export class ProjectFormComponent {
   /**
    * Custom validator to ensure date ranges are valid
    */
-  private dateRangeValidator(form: FormGroup): { [key: string]: boolean } | null {
-    const startDate = form.get('startDate')?.value;
-    const expectedEndDate = form.get('expectedEndDate')?.value;
-    const actualEndDate = form.get('actualEndDate')?.value;
+  private dateRangeValidator(control: AbstractControl): ValidationErrors | null {
+    const startDate = control.get('startDate')?.value;
+    const expectedEndDate = control.get('expectedEndDate')?.value;
+    const actualEndDate = control.get('actualEndDate')?.value;
 
     // Check if start date is after expected end date
     if (startDate && expectedEndDate && startDate > expectedEndDate) {

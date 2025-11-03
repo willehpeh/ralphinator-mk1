@@ -137,6 +137,94 @@ h4 {
   @include btn-small;
 }
 
+.add-project-button {
+  @include btn-primary;
+  @include btn-small;
+}
+
+.projects-list {
+  display: grid;
+  gap: $spacing-lg;
+}
+
+.project-card {
+  border: 1px solid $color-border;
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  background-color: $color-white;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-md;
+
+  h5 {
+    margin: 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+  }
+}
+
+.project-status {
+  padding: $spacing-xs $spacing-md;
+  border-radius: 12px;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  white-space: nowrap;
+
+  &.status-planning {
+    background-color: #e3f2fd;
+    color: #1976d2;
+  }
+
+  &.status-active {
+    background-color: #e8f5e9;
+    color: #388e3c;
+  }
+
+  &.status-on-hold {
+    background-color: #fff3e0;
+    color: #f57c00;
+  }
+
+  &.status-completed {
+    background-color: #f3e5f5;
+    color: #7b1fa2;
+  }
+
+  &.status-cancelled {
+    background-color: #ffebee;
+    color: #c62828;
+  }
+}
+
+.project-description {
+  color: $color-text-primary;
+  line-height: 1.5;
+  margin: 0 0 $spacing-md 0;
+}
+
+.project-meta {
+  display: flex;
+  gap: $spacing-lg;
+  flex-wrap: wrap;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+}
+
 .empty-state {
   color: $color-text-secondary;
   font-style: italic;
