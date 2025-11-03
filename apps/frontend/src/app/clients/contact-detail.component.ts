@@ -9,6 +9,7 @@ import { ClientsService } from './clients.service';
 import { STANDARD_DATE_FORMAT } from './client-display.constants';
 import { ContactDetail } from './client.types';
 import { FormState } from '../shared/form-state';
+import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 
 interface ContactEditForm {
   name: FormControl<string>;
@@ -19,7 +20,7 @@ interface ContactEditForm {
 
 @Component({
   selector: 'app-contact-detail',
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, ConfirmationDialogComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./clients-common.scss'],
   styles: [`
@@ -550,6 +551,17 @@ interface ContactEditForm {
           }
         </div>
       }
+
+      @if (showDeleteConfirmation()) {
+        <app-confirmation-dialog
+          [title]="'Delete Contact'"
+          [message]="'Are you sure you want to delete ' + contact()?.name + '? This action cannot be undone.'"
+          [confirmText]="'Delete'"
+          [cancelText]="'Cancel'"
+          (confirmed)="confirmDelete()"
+          (cancelled)="cancelDelete()"
+        />
+      }
     </div>
   `
 })
@@ -574,6 +586,9 @@ export class ContactDetailComponent implements OnInit {
   // Edit mode state
   isEditMode = signal(false);
   formState = new FormState();
+
+  // Delete confirmation dialog state
+  showDeleteConfirmation = signal(false);
 
   // Edit form
   editForm = new FormGroup<ContactEditForm>({
@@ -692,19 +707,18 @@ export class ContactDetailComponent implements OnInit {
   }
 
   deleteContact(): void {
+    // Show confirmation dialog
+    this.showDeleteConfirmation.set(true);
+  }
+
+  confirmDelete(): void {
+    // Hide confirmation dialog
+    this.showDeleteConfirmation.set(false);
+
     const contactId = this.contactId();
     const contact = this.contact();
 
     if (!contactId || !contact) {
-      return;
-    }
-
-    // Simple confirmation
-    const confirmed = confirm(
-      `Are you sure you want to delete ${contact.name}?\n\nThis action cannot be undone.`
-    );
-
-    if (!confirmed) {
       return;
     }
 
@@ -722,5 +736,10 @@ export class ContactDetailComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  cancelDelete(): void {
+    // Hide confirmation dialog
+    this.showDeleteConfirmation.set(false);
   }
 }
