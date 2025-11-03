@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, signal, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
@@ -7,10 +7,11 @@ import { of } from 'rxjs';
 import { ProjectsService } from './projects.service';
 import { ProjectDto, ProjectStatus } from '@angular-nest-starter/shared-types';
 import { StatusChangeDialogComponent } from '../shared/status-change-dialog.component';
+import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 
 @Component({
   selector: 'app-project-detail',
-  imports: [CommonModule, RouterLink, StatusChangeDialogComponent],
+  imports: [CommonModule, RouterLink, StatusChangeDialogComponent, ConfirmationDialogComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./projects-common.scss', './project-detail.component.scss'],
   template: `
@@ -144,6 +145,17 @@ import { StatusChangeDialogComponent } from '../shared/status-change-dialog.comp
           (cancelled)="onStatusDialogCancelled()"
         />
       }
+
+      @if (showDeleteDialog()) {
+        <app-confirmation-dialog
+          [title]="'Delete Project'"
+          [message]="'Are you sure you want to delete this project? The project will be archived and removed from active views, but the complete history will be preserved.'"
+          [confirmText]="'Delete'"
+          [cancelText]="'Cancel'"
+          (confirmed)="onDeleteConfirmed()"
+          (cancelled)="onDeleteCancelled()"
+        />
+      }
     </div>
   `
 })
@@ -156,6 +168,7 @@ export class ProjectDetailComponent {
   loading = signal(false);
   error = signal<string | null>(null);
   showStatusDialog = signal(false);
+  showDeleteDialog = signal(false);
 
   // Get project ID from route params using toSignal
   private projectId = toSignal(
@@ -239,7 +252,16 @@ export class ProjectDetailComponent {
   }
 
   openDeleteDialog(): void {
-    // TODO: Implement in Task 8
-    console.log('Delete project clicked');
+    this.showDeleteDialog.set(true);
+  }
+
+  onDeleteConfirmed(): void {
+    // TODO: Implement in Task 9
+    this.showDeleteDialog.set(false);
+    console.log('Delete confirmed');
+  }
+
+  onDeleteCancelled(): void {
+    this.showDeleteDialog.set(false);
   }
 }

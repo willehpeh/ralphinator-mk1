@@ -66,12 +66,19 @@
 - Located in `apps/frontend/src/app/projects/project-detail.component.ts:57-59,241-244`
 - Located in `apps/frontend/src/app/projects/project-detail.component.scss:127-145,273-277`
 
-## Tasks Remaining
+### Task 8: Implement confirmation dialog for project deletion ✅
+- Imported `ConfirmationDialogComponent` (reused existing component)
+- Added `showDeleteDialog` signal to control dialog visibility
+- Implemented `openDeleteDialog()` method to show dialog
+- Implemented `onDeleteConfirmed()` method stub (calls actual delete in Task 9)
+- Implemented `onDeleteCancelled()` method to close dialog
+- Added confirmation dialog to template with appropriate message
+- Dialog displays: "Are you sure you want to delete this project? The project will be archived and removed from active views, but the complete history will be preserved."
+- Confirm button text: "Delete", Cancel button text: "Cancel"
+- Located in `apps/frontend/src/app/projects/project-detail.component.ts:10,14,160,243-255,149-158`
+- Commit: `TBD`
 
-### Task 8: Implement confirmation dialog for project deletion
-- Create or reuse confirmation dialog component
-- Dialog explains project will be archived (soft delete)
-- Confirm and Cancel buttons
+## Tasks Remaining
 
 ### Task 9: Integrate delete functionality in ProjectDetailComponent
 - Call `deleteProject()` on confirmation
