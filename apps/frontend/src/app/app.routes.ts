@@ -6,6 +6,7 @@ import { ContactDetailComponent } from './clients/contact-detail.component';
 import { AllContactsComponent } from './clients/all-contacts.component';
 import { ProjectsListComponent } from './projects/projects-list.component';
 import { ProjectDetailComponent } from './projects/project-detail.component';
+import { ProjectEditComponent } from './projects/project-edit.component';
 
 export const appRoutes: Route[] = [
   {
@@ -19,6 +20,10 @@ export const appRoutes: Route[] = [
   {
     path: 'projects',
     component: ProjectsListComponent,
+  },
+  {
+    path: 'projects/:id/edit',
+    component: ProjectEditComponent,
   },
   {
     path: 'projects/:id',

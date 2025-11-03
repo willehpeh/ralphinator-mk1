@@ -16,19 +16,19 @@
 
 ### Frontend Implementation 🔄
 8. ✅ Added updateProject method to ProjectsService (commit: ff65dc5)
-9. ✅ Created project-edit.component.ts with reactive form (commit: pending)
+9. ✅ Created project-edit.component.ts with reactive form (commit: 39c2a91)
+10. ✅ Added routing for /projects/:id/edit route (commit: pending)
 
 ## Remaining Tasks
 
 ### Frontend Implementation
-10. ⏳ Add routing for /projects/:id/edit route
 11. ⏳ Add "Edit Project" button to project-detail.component.ts
 
 ## Next Task
 
-**Add routing for /projects/:id/edit route**
-- Update app.routes.ts to add the edit route
-- Ensure proper path configuration for nested route
+**Add "Edit Project" button to project-detail.component.ts**
+- Add button to navigate to the edit route
+- Include proper styling and placement in the UI
 
 ## Notes
 
