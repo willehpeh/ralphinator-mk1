@@ -2,6 +2,7 @@ import { EventsHandler } from '@nestjs/cqrs';
 import { Injectable, Inject } from '@nestjs/common';
 import {
   ContactAddedToClientDomainEvent,
+  ContactUpdatedDomainEvent,
   CLIENT_EVENT_TYPES
 } from '@angular-nest-starter/domain';
 import {
@@ -18,14 +19,14 @@ import { BaseProjectionHandler } from '../base/base-projection.handler';
  * and builds optimized read models for the CQRS query side.
  *
  * This projection:
- * - Subscribes to ContactAddedToClientDomainEvent from the event store
+ * - Subscribes to ContactAddedToClientDomainEvent and ContactUpdatedDomainEvent from the event store
  * - Transforms domain events into ContactReadModel DTOs
  * - Persists read models to the read repository (optimized for queries)
  * - Enables separation of write (event store) and read (read model) data stores
  * - Uses the event handler registry pattern for extensible event handling
  */
 @Injectable()
-@EventsHandler(ContactAddedToClientDomainEvent)
+@EventsHandler(ContactAddedToClientDomainEvent, ContactUpdatedDomainEvent)
 export class ContactProjection extends BaseProjectionHandler {
   constructor(
     @Inject(INJECTION_TOKENS.CONTACT_READ_REPOSITORY)
@@ -35,6 +36,7 @@ export class ContactProjection extends BaseProjectionHandler {
     // Register event handlers for all contact events using helper method
     this.registerEventHandlers({
       [CLIENT_EVENT_TYPES.CONTACT_ADDED]: this.onContactAdded.bind(this),
+      [CLIENT_EVENT_TYPES.CONTACT_UPDATED]: this.onContactUpdated.bind(this),
     });
   }
 
@@ -57,5 +59,36 @@ export class ContactProjection extends BaseProjectionHandler {
 
     // Persist to read repository
     await this.contactReadRepository.save(readModel);
+  }
+
+  /**
+   * Event handler for ContactUpdatedDomainEvent
+   * Updates an existing contact read model when contact information is modified
+   */
+  private async onContactUpdated(event: ContactUpdatedDomainEvent): Promise<void> {
+    // Fetch the existing contact read model
+    const existingContact = await this.contactReadRepository.findById(event.contactId);
+
+    if (!existingContact) {
+      // If contact doesn't exist in read model, log warning but don't fail
+      // This could happen if events are processed out of order
+      console.warn(`Contact ${event.contactId} not found in read model during update`);
+      return;
+    }
+
+    // Transform ContactUpdatedDomainEvent into updated contact read model
+    // Preserve clientId and clientName from existing read model
+    const updatedReadModel = new ContactReadModel(
+      event.contactId,
+      existingContact.clientId,
+      existingContact.clientName,
+      event.name,
+      event.role,
+      event.email,
+      event.phone
+    );
+
+    // Persist updated read model to repository
+    await this.contactReadRepository.save(updatedReadModel);
   }
 }
