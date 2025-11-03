@@ -6,6 +6,7 @@
 export const INJECTION_TOKENS = {
   AGGREGATE_REPOSITORY: 'IAggregateRepository',
   CLIENT_READ_REPOSITORY: 'IClientReadRepository',
+  CONTACT_READ_REPOSITORY: 'IContactReadRepository',
   EVENT_STORE: 'IEventStore',
 } as const;
 
