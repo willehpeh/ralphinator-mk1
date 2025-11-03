@@ -79,15 +79,28 @@
      - Modern control flow (@if, @for)
      - Professional styling with proper spacing and transitions
 
+10. ✅ Add name/search filter input field to UI
+    - Added search input field to template in projects-list.component.ts:48-57
+    - Created filter-group with label "Search by Name:"
+    - Added text input with id "search-filter" and class "filter-input"
+    - Added placeholder text "Enter project name..."
+    - Bound [value] to searchTerm() signal
+    - Bound (input) event to onSearchTermChange handler
+    - Added searchTerm signal initialized to empty string in projects-list.component.ts:154
+    - Implemented onSearchTermChange event handler in projects-list.component.ts:193-196
+    - Updated clearFilters() method to reset searchTerm signal in projects-list.component.ts:201
+    - Updated Clear Filters button condition to include searchTerm() in projects-list.component.ts:59
+    - Added .filter-input styling in projects-list.component.scss:100-124
+    - Styling matches existing filter-select with consistent padding, borders, and focus states
+    - Added placeholder color styling (#999)
+    - Build verified successfully
+
 ## Current Task
 - None
 
 ## Remaining Tasks (Planned)
-- Add name/search filter input field to UI
-- Add signal for search term state
 - Update computed filtering logic to include name search (case-insensitive)
 - Ensure search filter works with status and client filters (AND logic)
-- Update Clear Filters button to clear search term as well
 - Test all three filters working together
 
 ## Manual Testing Instructions

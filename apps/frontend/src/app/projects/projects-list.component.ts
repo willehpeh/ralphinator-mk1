@@ -45,7 +45,18 @@ import { Client } from '../clients/client.types';
           </select>
         </div>
 
-        @if (selectedStatusFilter() || selectedClientFilter()) {
+        <div class="filter-group">
+          <label for="search-filter" class="filter-label">Search by Name:</label>
+          <input
+            type="text"
+            id="search-filter"
+            class="filter-input"
+            placeholder="Enter project name..."
+            [value]="searchTerm()"
+            (input)="onSearchTermChange($event)">
+        </div>
+
+        @if (selectedStatusFilter() || selectedClientFilter() || searchTerm()) {
           <button class="clear-filters-btn" (click)="clearFilters()">
             Clear Filters
           </button>
@@ -140,6 +151,7 @@ export class ProjectsListComponent implements OnInit {
   // Filter state
   selectedStatusFilter = signal<string>('');
   selectedClientFilter = signal<string>('');
+  searchTerm = signal<string>('');
 
   // Computed filtered projects based on selected filters
   projects = computed(() => {
@@ -178,9 +190,15 @@ export class ProjectsListComponent implements OnInit {
     this.selectedClientFilter.set(target.value);
   }
 
+  onSearchTermChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.searchTerm.set(target.value);
+  }
+
   clearFilters(): void {
     this.selectedStatusFilter.set('');
     this.selectedClientFilter.set('');
+    this.searchTerm.set('');
   }
 
   private loadProjects(): void {
