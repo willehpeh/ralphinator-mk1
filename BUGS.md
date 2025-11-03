@@ -1,17 +1,15 @@
 # Bugs
 
-## TypeScript Error in ClientAggregate
+## TypeScript Error in shared-types build
 
-**Location**: `packages/domain/src/lib/aggregates/client.aggregate.ts:27:7`
+**Location**: `packages/shared-types/src/lib/dtos/client.dtos.ts:2:52`
 
 **Error**:
 ```
-Type of computed property's value is '(event: ClientStatusChangedDomainEvent) => void', which is not assignable to type 'EventHandler<ClientInformationUpdatedDomainEvent>'.
-Types of parameters 'event' and 'event' are incompatible.
-Type 'ClientInformationUpdatedDomainEvent' is missing the following properties from type 'ClientStatusChangedDomainEvent': previousStatus, newStatus
+File '/home/williamalexander/ralphinator-mk1/packages/domain/src/index.ts' is not under 'rootDir' '/home/williamalexander/ralphinator-mk1/packages/shared-types'. 'rootDir' is expected to contain all source files.
 ```
 
-**Impact**: Build fails for domain package and all dependent packages
+**Impact**: Build fails for shared-types package and all dependent packages (frontend, api)
 
-**Cause**: Incorrect event handler mapping in CLIENT_EVENT_TYPES - wrong handler is associated with STATUS_CHANGED event type
+**Cause**: shared-types package imports from domain package, causing TypeScript rootDir conflict. This appears to be a TypeScript configuration issue where the compiler is including files from outside the expected rootDir.
 
