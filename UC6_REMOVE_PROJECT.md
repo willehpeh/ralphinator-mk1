@@ -46,7 +46,7 @@
 - Executes `DeleteProjectCommand` via command bus
 - Returns success response `{ id: string }`
 - Endpoint URL: `DELETE /api/clients/:clientId/projects/:projectId`
-- Commit: (pending)
+- Commit: `ec4fe3e feat: Add DELETE endpoint for project deletion`
 
 ## Tasks Remaining
 
