@@ -4,6 +4,7 @@ import {
   GetContactByIdQueryHandler,
   GetAllContactsQueryHandler,
   AddContactToClientHandler,
+  UpdateContactCommandHandler,
   GetClientContactsQueryHandler,
   INJECTION_TOKENS,
 } from '@angular-nest-starter/application';
@@ -15,7 +16,7 @@ import {
 } from '@angular-nest-starter/infrastructure';
 import { ContactsController } from './contacts.controller';
 
-const CommandHandlers = [AddContactToClientHandler];
+const CommandHandlers = [AddContactToClientHandler, UpdateContactCommandHandler];
 const QueryHandlers = [GetContactByIdQueryHandler, GetAllContactsQueryHandler, GetClientContactsQueryHandler];
 const EventHandlers = [ContactProjection];
 

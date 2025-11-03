@@ -34,7 +34,7 @@ This use case allows users to update a contact's information (name, role, email,
 ### API Layer
 - [x] Add UpdateContactDto
 - [x] Add PUT /api/contacts/:id endpoint in ContactsController
-- [ ] Register UpdateContactCommandHandler in ContactsModule
+- [x] Register UpdateContactCommandHandler in ContactsModule
 
 ### Frontend Layer
 - [ ] Add edit mode state to ContactDetailComponent
@@ -72,5 +72,6 @@ This use case allows users to update a contact's information (name, role, email,
 
 ### API Layer
 - `apps/api/src/app/contacts/contacts.controller.ts` (modified - added PUT /api/contacts/:id endpoint with UpdateContactCommand integration)
+- `apps/api/src/app/contacts/contacts.module.ts` (modified - registered UpdateContactCommandHandler in providers)
 
 ---
