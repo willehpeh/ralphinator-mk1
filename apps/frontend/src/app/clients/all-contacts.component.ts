@@ -189,6 +189,45 @@ interface Contact {
       color: #4b5563;
       font-weight: 500;
     }
+
+    .search-section {
+      margin-bottom: 2rem;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      max-width: 600px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: #9ca3af;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.875rem 1rem 0.875rem 3rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .search-input::placeholder {
+      color: #9ca3af;
+    }
   `],
   template: `
     <div class="contacts-page">
@@ -220,6 +259,20 @@ interface Contact {
       }
 
       @if (!loading() && contacts().length > 0) {
+        <div class="search-section">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search by name, role, email, or client..."
+              #searchInput
+            />
+          </div>
+        </div>
+
         <div class="contact-count">
           Showing {{ contacts().length }} {{ contacts().length === 1 ? 'contact' : 'contacts' }}
         </div>
