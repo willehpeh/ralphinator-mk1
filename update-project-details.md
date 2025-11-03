@@ -30,10 +30,21 @@
 
 **Description**: Added the updateDetails method to the ProjectAggregate that accepts a ProjectData value object and applies the ProjectDetailsUpdatedDomainEvent. Also implemented the onProjectDetailsUpdated event handler that updates the aggregate state when replaying events, following the same pattern as the onProjectCreated handler.
 
-**Commit**:
+**Commit**: feat: Add updateDetails method to ProjectAggregate
+
+### Task 4: Create UpdateProjectDetailsCommand
+**Date**: 2025-11-03
+**Files Created**:
+- `packages/application/src/lib/commands/update-project-details.command.ts`
+
+**Files Modified**:
+- `packages/application/src/lib/application.ts` (added export)
+
+**Description**: Created the UpdateProjectDetailsCommand class that accepts a project ID and ProjectDataPayload. This command will be handled by the UpdateProjectDetailsCommandHandler to execute the update operation on the ProjectAggregate. Follows the same pattern as UpdateClientCommand and reuses the ProjectDataPayload that was designed to be shared between create and update operations.
+
+**Commit**: [pending]
 
 ## Pending Tasks
-- Create UpdateProjectDetailsCommand
 - Create UpdateProjectDetailsCommandHandler
 - Create UpdateProjectDetailsQuery
 - Create UpdateProjectDetailsQueryHandler
