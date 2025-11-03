@@ -11,6 +11,7 @@ export * from './commands/project-data.payload';
 export * from './commands/create-project.command';
 export * from './commands/update-project-details.command';
 export * from './commands/change-project-status.command';
+export * from './commands/delete-project.command';
 
 // Command Handlers
 export * from './commands/handlers/create-client.handler';
@@ -23,6 +24,7 @@ export * from './commands/handlers/remove-contact.handler';
 export * from './commands/handlers/create-project.handler';
 export * from './commands/handlers/update-project-details.handler';
 export * from './commands/handlers/change-project-status.handler';
+export * from './commands/handlers/delete-project.handler';
 
 // Queries
 export * from './queries/get-client-by-id.query';

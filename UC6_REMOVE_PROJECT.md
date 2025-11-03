@@ -22,12 +22,14 @@
 - Imported `ProjectDeletedDomainEvent`
 - Commit: `622b2b3 feat: Add delete() method to ProjectAggregate for soft delete`
 
-## Tasks Remaining
+### Task 3: Create DeleteProjectCommand and Handler ✅
+- Created `packages/application/src/lib/commands/delete-project.command.ts`
+- Created `packages/application/src/lib/commands/handlers/delete-project.handler.ts`
+- Handler loads aggregate from event store, calls delete(), persists events
+- Exported command and handler from application layer
+- Commit: [pending]
 
-### Task 3: Create DeleteProjectCommand and Handler
-- Create `packages/application/src/commands/delete-project.command.ts`
-- Create `packages/application/src/commands/handlers/delete-project.handler.ts`
-- Handler loads aggregate, calls delete(), persists events
+## Tasks Remaining
 
 ### Task 4: Update ProjectProjection to handle ProjectDeletedDomainEvent
 - Add event handler to `packages/infrastructure/src/projections/project.projection.ts`
