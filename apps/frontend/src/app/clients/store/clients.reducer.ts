@@ -89,6 +89,21 @@ const filterClientsBySearchTerm = (clients: Client[], searchTerm: string): Clien
 };
 
 /**
+ * Replace a client in both the filtered clients list and all clients list
+ * Used when updating or changing client status
+ */
+const replaceClient = (state: ClientsState, updatedClient: Client): ClientsState => {
+  const updateClient = (clients: Client[]) =>
+    clients.map((c) => (c.id === updatedClient.id ? updatedClient : c));
+
+  return {
+    ...clearLoadingAndError(state),
+    clients: updateClient(state.clients),
+    allClients: updateClient(state.allClients),
+  };
+};
+
+/**
  * Clients reducer
  */
 export const clientsReducer = createReducer(
@@ -112,16 +127,7 @@ export const clientsReducer = createReducer(
   on(updateClient, setLoading),
 
   // When client is successfully updated
-  on(updateClientSuccess, (state, { client }) => {
-    const updateClient = (clients: Client[]) =>
-      clients.map((c) => (c.id === client.id ? client : c));
-
-    return {
-      ...clearLoadingAndError(state),
-      clients: updateClient(state.clients),
-      allClients: updateClient(state.allClients),
-    };
-  }),
+  on(updateClientSuccess, (state, { client }) => replaceClient(state, client)),
 
   // When updating client fails
   on(updateClientFailure, (state, { error }) => setError(state, error)),
@@ -130,16 +136,7 @@ export const clientsReducer = createReducer(
   on(changeClientStatus, setLoading),
 
   // When client status is successfully changed
-  on(changeClientStatusSuccess, (state, { client }) => {
-    const updateClient = (clients: Client[]) =>
-      clients.map((c) => (c.id === client.id ? client : c));
-
-    return {
-      ...clearLoadingAndError(state),
-      clients: updateClient(state.clients),
-      allClients: updateClient(state.allClients),
-    };
-  }),
+  on(changeClientStatusSuccess, (state, { client }) => replaceClient(state, client)),
 
   // When changing client status fails
   on(changeClientStatusFailure, (state, { error }) => setError(state, error)),
