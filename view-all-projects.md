@@ -55,6 +55,16 @@
 
 ---
 
+### Task 5: Add getAllProjects() to ProjectsService
+**Status**: ✅ Completed
+**Files Modified**:
+- `apps/frontend/src/app/projects/projects.service.ts` - Added getAllProjects() method and projectsApiUrl property
+
+**Description**: Added the `getAllProjects()` method to the ProjectsService to fetch all projects across all clients from the `/api/projects` endpoint. Also added the `projectsApiUrl` constant for better maintainability.
+
+**Pattern**: Followed existing service method pattern from getProjectsByClientId(). Returns an Observable of ProjectDto array for reactive data handling.
+
+---
+
 ## Next Tasks
-- Add getAllProjects() to ProjectsService (frontend)
 - Create ProjectsListComponent (frontend)

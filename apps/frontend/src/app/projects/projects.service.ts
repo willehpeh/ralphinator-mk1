@@ -9,6 +9,7 @@ import { CreateProjectDto, CreateProjectResponse, ProjectDto } from '@angular-ne
 export class ProjectsService {
   private http = inject(HttpClient);
   private readonly apiUrl = '/api/clients';
+  private readonly projectsApiUrl = '/api/projects';
 
   /**
    * Create a new project for a client
@@ -25,5 +26,12 @@ export class ProjectsService {
    */
   getProjectsByClientId(clientId: string): Observable<ProjectDto[]> {
     return this.http.get<ProjectDto[]>(`${this.apiUrl}/${clientId}/projects`);
+  }
+
+  /**
+   * Get all projects across all clients
+   */
+  getAllProjects(): Observable<ProjectDto[]> {
+    return this.http.get<ProjectDto[]>(this.projectsApiUrl);
   }
 }
