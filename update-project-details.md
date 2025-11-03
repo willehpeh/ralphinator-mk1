@@ -14,9 +14,16 @@
 
 **Commit**: 
 
-## Pending Tasks
+### Task 2: Add DETAILS_UPDATED event type constant
+**Date**: 2025-11-03
+**Files Modified**:
+- `packages/domain/src/lib/constants/project-event-types.ts` (added DETAILS_UPDATED constant)
 
-- Add DETAILS_UPDATED event type constant
+**Description**: Added the DETAILS_UPDATED constant to PROJECT_EVENT_TYPES that maps to 'ProjectDetailsUpdatedDomainEvent'. This constant is used by the aggregate and handlers to identify the event type, following the established pattern for event type constants.
+
+**Commit**:
+
+## Pending Tasks
 - Add updateDetails method to ProjectAggregate
 - Create UpdateProjectDetailsCommand
 - Create UpdateProjectDetailsCommandHandler
