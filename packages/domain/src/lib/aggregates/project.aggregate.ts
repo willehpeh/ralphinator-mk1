@@ -6,6 +6,7 @@ import { DOMAIN_ERRORS } from '../constants/domain-errors';
 import { ProjectCreatedDomainEvent } from '../events/project-created.domain-event';
 import { ProjectDetailsUpdatedDomainEvent } from '../events/project-details-updated.domain-event';
 import { ProjectStatusChangedDomainEvent } from '../events/project-status-changed.domain-event';
+import { ProjectDeletedDomainEvent } from '../events/project-deleted.domain-event';
 import { ProjectData } from '../value-objects/project-data.value-object';
 
 /**
@@ -23,6 +24,7 @@ export class ProjectAggregate extends EventSourcedAggregate {
   private actualEndDate: string | null = null;
   private budget: number | null = null;
   private technicalNotes: string | null = null;
+  private deleted = false;
 
   constructor() {
     super();
@@ -31,6 +33,7 @@ export class ProjectAggregate extends EventSourcedAggregate {
       [PROJECT_EVENT_TYPES.CREATED]: this.onProjectCreated.bind(this),
       [PROJECT_EVENT_TYPES.DETAILS_UPDATED]: this.onProjectDetailsUpdated.bind(this),
       [PROJECT_EVENT_TYPES.STATUS_CHANGED]: this.onProjectStatusChanged.bind(this),
+      [PROJECT_EVENT_TYPES.DELETED]: this.onProjectDeleted.bind(this),
     } as unknown as Record<string, (event: DomainEvent) => void>);
   }
 
@@ -74,6 +77,15 @@ export class ProjectAggregate extends EventSourcedAggregate {
     this.applyEvent(
       new ProjectStatusChangedDomainEvent(id, currentStatus, newStatus)
     );
+  }
+
+  /**
+   * Marks the project as deleted (soft delete)
+   * The project remains in the event store but will be excluded from active views
+   */
+  delete(): void {
+    const id = this.ensureInitialized();
+    this.applyEvent(new ProjectDeletedDomainEvent(id));
   }
 
   /**
@@ -139,6 +151,14 @@ export class ProjectAggregate extends EventSourcedAggregate {
     this.status = event.newStatus;
   }
 
+  /**
+   * Event handler for ProjectDeletedDomainEvent
+   * Marks the project as deleted when the delete event is replayed
+   */
+  private onProjectDeleted(_event: ProjectDeletedDomainEvent): void {
+    this.deleted = true;
+  }
+
   // Getters for accessing aggregate state
   // All getters ensure the aggregate is initialized before returning values
   getId(): string {
@@ -185,5 +205,10 @@ export class ProjectAggregate extends EventSourcedAggregate {
   getTechnicalNotes(): string | null {
     this.ensureInitialized();
     return this.technicalNotes;
+  }
+
+  isDeleted(): boolean {
+    this.ensureInitialized();
+    return this.deleted;
   }
 }
