@@ -1,4 +1,5 @@
 import { EventSourcedAggregate } from '../base/event-sourced-aggregate';
+import { DomainEvent } from '../base/domain-event';
 import { ClientStatus } from '@angular-nest-starter/shared-types';
 import { CLIENT_EVENT_TYPES } from '../constants/client-event-types';
 import { DOMAIN_ERRORS } from '../constants/domain-errors';
@@ -21,10 +22,13 @@ export class ClientAggregate extends EventSourcedAggregate {
   constructor() {
     super();
     // Register event handlers for all client events
-    this.registerEventHandler(CLIENT_EVENT_TYPES.CREATED, this.onClientCreated.bind(this));
-    this.registerEventHandler(CLIENT_EVENT_TYPES.INFORMATION_UPDATED, this.onClientInformationUpdated.bind(this));
-    this.registerEventHandler(CLIENT_EVENT_TYPES.STATUS_CHANGED, this.onClientStatusChanged.bind(this));
-    this.registerEventHandler(CLIENT_EVENT_TYPES.DELETED, this.onClientDeleted.bind(this));
+    // Type assertion needed because handlers have heterogeneous event types
+    this.registerEventHandlers({
+      [CLIENT_EVENT_TYPES.CREATED]: this.onClientCreated.bind(this),
+      [CLIENT_EVENT_TYPES.INFORMATION_UPDATED]: this.onClientInformationUpdated.bind(this),
+      [CLIENT_EVENT_TYPES.STATUS_CHANGED]: this.onClientStatusChanged.bind(this),
+      [CLIENT_EVENT_TYPES.DELETED]: this.onClientDeleted.bind(this),
+    } as unknown as Record<string, (event: DomainEvent) => void>);
   }
 
   /**
