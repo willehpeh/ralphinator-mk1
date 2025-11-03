@@ -14,11 +14,19 @@
 - Updated contact count to reflect filtered results
 - Search is real-time and reactive using Angular signals
 
-## Remaining Tasks
-
-### Task 2: Display "no results" message when search yields no matches
+### Task 2: Display "no results" message when search yields no matches ✅
 **Description**: Show helpful message when search filter returns empty results
-**Status**: Pending
+**Status**: Completed
+**Details**:
+- Added conditional rendering for empty search results (line 330-342)
+- Shows search icon and "No contacts found" heading
+- Displays the search query that yielded no results
+- Provides helpful suggestions to adjust search or clear filter
+- Includes styled "Clear Search" button that calls clearSearch() method
+- Professional styling with dashed border and soft background color
+- Only shows when filteredContacts is empty AND searchQuery has value
+
+## Remaining Tasks
 
 ### Task 3: Add client name to contacts response and filter
 **Description**: Enhance backend to include client name, update filter to search client names
