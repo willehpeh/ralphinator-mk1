@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientNavigationService } from './client-navigation.service';
 import { ClientsService } from './clients.service';
-import { STANDARD_DATE_FORMAT } from './client-display.constants';
+import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT, CLIENT_UI_TEXT_HELPERS } from './client-display.constants';
 import { ContactDetail } from './client.types';
 import { FormState } from '../shared/form-state';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
@@ -554,10 +554,10 @@ interface ContactEditForm {
 
       @if (showDeleteConfirmation()) {
         <app-confirmation-dialog
-          [title]="'Delete Contact'"
-          [message]="'Are you sure you want to delete ' + contact()?.name + '? This action cannot be undone.'"
-          [confirmText]="'Delete'"
-          [cancelText]="'Cancel'"
+          [title]="CLIENT_UI_TEXT.DELETE_CONTACT_CONFIRMATION_TITLE"
+          [message]="getDeleteContactMessage()"
+          [confirmText]="CLIENT_UI_TEXT.DELETE_CONTACT_CONFIRM_BUTTON"
+          [cancelText]="CLIENT_UI_TEXT.DELETE_CONTACT_CANCEL_BUTTON"
           (confirmed)="confirmDelete()"
           (cancelled)="cancelDelete()"
         />
@@ -590,6 +590,10 @@ export class ContactDetailComponent implements OnInit {
   // Delete confirmation dialog state
   showDeleteConfirmation = signal(false);
 
+  // Constants for template
+  protected readonly CLIENT_UI_TEXT = CLIENT_UI_TEXT;
+  protected readonly dateFormat = STANDARD_DATE_FORMAT;
+
   // Edit form
   editForm = new FormGroup<ContactEditForm>({
     name: new FormControl('', {
@@ -603,9 +607,6 @@ export class ContactDetailComponent implements OnInit {
     }),
     phone: new FormControl('', { nonNullable: true })
   });
-
-  // Date format for displaying timestamps
-  readonly dateFormat = STANDARD_DATE_FORMAT;
 
   ngOnInit(): void {
     this.loadContact();
@@ -741,5 +742,10 @@ export class ContactDetailComponent implements OnInit {
   cancelDelete(): void {
     // Hide confirmation dialog
     this.showDeleteConfirmation.set(false);
+  }
+
+  getDeleteContactMessage(): string {
+    const contactName = this.contact()?.name ?? 'this contact';
+    return CLIENT_UI_TEXT_HELPERS.getDeleteContactMessage(contactName);
   }
 }

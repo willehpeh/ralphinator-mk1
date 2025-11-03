@@ -32,7 +32,7 @@ export const CLIENT_UI_TEXT = {
   ADD_CLIENT_TITLE: 'Add New Client',
   EDIT_CLIENT_TITLE: 'Edit Client',
 
-  // Messages
+  // Messages - Client
   DELETE_CONFIRMATION_TITLE: 'Delete Client',
   DELETE_CONFIRMATION_MESSAGE: 'Are you sure you want to delete this client? This action cannot be undone.',
   DELETE_CONFIRM_BUTTON: 'Delete',
@@ -40,6 +40,11 @@ export const CLIENT_UI_TEXT = {
 
   CLIENT_CREATED_SUCCESS: 'Client created successfully!',
   CLIENT_UPDATED_SUCCESS: 'Client updated successfully!',
+
+  // Messages - Contact
+  DELETE_CONTACT_CONFIRMATION_TITLE: 'Delete Contact',
+  DELETE_CONTACT_CONFIRM_BUTTON: 'Delete',
+  DELETE_CONTACT_CANCEL_BUTTON: 'Cancel',
 
   // Loading and error states
   LOADING_CLIENTS: 'Loading clients...',
@@ -124,4 +129,18 @@ export const CLIENT_ERROR_MESSAGES = {
   CHANGE_STATUS_FAILED: 'Failed to change client status',
   FILTER_BY_STATUS_FAILED: 'Failed to filter clients by status',
   DELETE_CLIENT_FAILED: 'Failed to delete client',
+} as const;
+
+/**
+ * Helper functions for generating dynamic UI text
+ */
+export const CLIENT_UI_TEXT_HELPERS = {
+  /**
+   * Generates a delete contact confirmation message with the contact name
+   * @param contactName The name of the contact to be deleted
+   * @returns Formatted confirmation message
+   */
+  getDeleteContactMessage: (contactName: string): string => {
+    return `Are you sure you want to delete ${contactName}? This action cannot be undone.`;
+  },
 } as const;
