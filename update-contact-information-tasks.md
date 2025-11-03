@@ -38,7 +38,7 @@ This use case allows users to update a contact's information (name, role, email,
 
 ### Frontend Layer
 - [x] Add edit mode state to ContactDetailComponent
-- [ ] Create edit form in ContactDetailComponent
+- [x] Create edit form in ContactDetailComponent
 - [ ] Add edit/cancel/save buttons
 - [ ] Add form validation
 - [ ] Add validation error messages
@@ -75,6 +75,6 @@ This use case allows users to update a contact's information (name, role, email,
 - `apps/api/src/app/contacts/contacts.module.ts` (modified - registered UpdateContactCommandHandler in providers)
 
 ### Frontend Layer
-- `apps/frontend/src/app/clients/contact-detail.component.ts` (modified - added isEditMode signal, enterEditMode() and cancelEdit() methods)
+- `apps/frontend/src/app/clients/contact-detail.component.ts` (modified - added isEditMode signal, enterEditMode() and cancelEdit() methods, editForm FormGroup, form template with validation)
 
 ---

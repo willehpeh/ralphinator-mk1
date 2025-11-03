@@ -5,6 +5,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientNavigationService } from './client-navigation.service';
 import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
 
@@ -19,9 +20,16 @@ interface ContactDetail {
   updatedAt: string;
 }
 
+interface ContactEditForm {
+  name: FormControl<string>;
+  role: FormControl<string>;
+  email: FormControl<string>;
+  phone: FormControl<string>;
+}
+
 @Component({
   selector: 'app-contact-detail',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./clients-common.scss'],
   styles: [`
@@ -178,6 +186,68 @@ interface ContactDetail {
       border: 1px solid #fecaca;
       border-radius: 8px;
     }
+
+    .edit-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .form-label.required::after {
+      content: ' *';
+      color: #dc2626;
+    }
+
+    .form-input {
+      padding: 0.625rem 0.875rem;
+      font-size: 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-input:disabled {
+      background-color: #f9fafb;
+      cursor: not-allowed;
+    }
+
+    .form-input.error {
+      border-color: #dc2626;
+    }
+
+    .form-input.error:focus {
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    }
+
+    .form-help-text {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+
+    .form-error {
+      font-size: 0.875rem;
+      color: #dc2626;
+      margin-top: 0.25rem;
+    }
   `],
   template: `
     <div class="contact-detail">
@@ -204,62 +274,123 @@ interface ContactDetail {
 
       @if (!loading() && !error() && contact(); as contactData) {
         <div class="detail-card">
-          <div class="contact-header">
-            <h3 class="contact-name">{{ contactData.name }}</h3>
-            @if (contactData.role) {
-              <p class="contact-role">{{ contactData.role }}</p>
-            }
-          </div>
+          @if (isEditMode()) {
+            <!-- Edit Mode: Form -->
+            <form [formGroup]="editForm" class="edit-form">
+              <div class="form-group">
+                <label class="form-label required" for="name">Name</label>
+                <input
+                  id="name"
+                  type="text"
+                  formControlName="name"
+                  class="form-input"
+                  [class.error]="editForm.controls.name.invalid && editForm.controls.name.touched"
+                  placeholder="Enter contact name"
+                />
+                @if (editForm.controls.name.invalid && editForm.controls.name.touched) {
+                  <span class="form-error">Name is required</span>
+                }
+              </div>
 
-          <div class="detail-section">
-            <h4>Contact Information</h4>
-            <div class="detail-grid">
-              @if (contactData.email) {
-                <div class="detail-item">
-                  <span class="detail-label">Email:</span>
-                  <a [href]="'mailto:' + contactData.email" class="detail-value detail-link">
-                    {{ contactData.email }}
-                  </a>
-                </div>
+              <div class="form-group">
+                <label class="form-label" for="role">Role</label>
+                <input
+                  id="role"
+                  type="text"
+                  formControlName="role"
+                  class="form-input"
+                  placeholder="Enter role (e.g., CTO, Product Manager)"
+                />
+                <span class="form-help-text">Optional - Contact's position or role</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  formControlName="email"
+                  class="form-input"
+                  [class.error]="editForm.controls.email.invalid && editForm.controls.email.touched"
+                  placeholder="contact@example.com"
+                />
+                @if (editForm.controls.email.invalid && editForm.controls.email.touched) {
+                  <span class="form-error">Please enter a valid email address</span>
+                }
+                <span class="form-help-text">Optional - Contact's email address</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="phone">Phone</label>
+                <input
+                  id="phone"
+                  type="tel"
+                  formControlName="phone"
+                  class="form-input"
+                  placeholder="+1 (555) 123-4567"
+                />
+                <span class="form-help-text">Optional - Contact's phone number</span>
+              </div>
+            </form>
+          } @else {
+            <!-- View Mode: Read-only display -->
+            <div class="contact-header">
+              <h3 class="contact-name">{{ contactData.name }}</h3>
+              @if (contactData.role) {
+                <p class="contact-role">{{ contactData.role }}</p>
               }
-              @if (contactData.phone) {
+            </div>
+
+            <div class="detail-section">
+              <h4>Contact Information</h4>
+              <div class="detail-grid">
+                @if (contactData.email) {
+                  <div class="detail-item">
+                    <span class="detail-label">Email:</span>
+                    <a [href]="'mailto:' + contactData.email" class="detail-value detail-link">
+                      {{ contactData.email }}
+                    </a>
+                  </div>
+                }
+                @if (contactData.phone) {
+                  <div class="detail-item">
+                    <span class="detail-label">Phone:</span>
+                    <a [href]="'tel:' + contactData.phone" class="detail-value detail-link">
+                      {{ contactData.phone }}
+                    </a>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <h4>Associated Client</h4>
+              <div class="client-link-section">
+                <div class="client-link-label">Client Company</div>
+                <a [routerLink]="['/clients', contactData.clientId]" class="client-link">
+                  View Client Details →
+                </a>
+              </div>
+            </div>
+
+            <div class="detail-section">
+              <h4>Metadata</h4>
+              <div class="detail-grid">
                 <div class="detail-item">
-                  <span class="detail-label">Phone:</span>
-                  <a [href]="'tel:' + contactData.phone" class="detail-value detail-link">
-                    {{ contactData.phone }}
-                  </a>
+                  <span class="detail-label">Contact ID:</span>
+                  <span class="detail-value">{{ contactData.contactId }}</span>
                 </div>
-              }
-            </div>
-          </div>
-
-          <div class="detail-section">
-            <h4>Associated Client</h4>
-            <div class="client-link-section">
-              <div class="client-link-label">Client Company</div>
-              <a [routerLink]="['/clients', contactData.clientId]" class="client-link">
-                View Client Details →
-              </a>
-            </div>
-          </div>
-
-          <div class="detail-section">
-            <h4>Metadata</h4>
-            <div class="detail-grid">
-              <div class="detail-item">
-                <span class="detail-label">Contact ID:</span>
-                <span class="detail-value">{{ contactData.contactId }}</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Created:</span>
-                <span class="detail-value">{{ contactData.createdAt | date:dateFormat }}</span>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Last Updated:</span>
-                <span class="detail-value">{{ contactData.updatedAt | date:dateFormat }}</span>
+                <div class="detail-item">
+                  <span class="detail-label">Created:</span>
+                  <span class="detail-value">{{ contactData.createdAt | date:dateFormat }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Last Updated:</span>
+                  <span class="detail-value">{{ contactData.updatedAt | date:dateFormat }}</span>
+                </div>
               </div>
             </div>
-          </div>
+          }
         </div>
       }
     </div>
@@ -285,6 +416,20 @@ export class ContactDetailComponent implements OnInit {
 
   // Edit mode state
   isEditMode = signal(false);
+
+  // Edit form
+  editForm = new FormGroup<ContactEditForm>({
+    name: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required]
+    }),
+    role: new FormControl('', { nonNullable: true }),
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.email]
+    }),
+    phone: new FormControl('', { nonNullable: true })
+  });
 
   // Date format for displaying timestamps
   readonly dateFormat = STANDARD_DATE_FORMAT;
@@ -325,10 +470,22 @@ export class ContactDetailComponent implements OnInit {
   }
 
   enterEditMode(): void {
+    const contact = this.contact();
+    if (contact) {
+      // Populate form with current contact data
+      this.editForm.patchValue({
+        name: contact.name,
+        role: contact.role || '',
+        email: contact.email || '',
+        phone: contact.phone || ''
+      });
+    }
     this.isEditMode.set(true);
   }
 
   cancelEdit(): void {
     this.isEditMode.set(false);
+    // Reset form to original values
+    this.editForm.reset();
   }
 }
