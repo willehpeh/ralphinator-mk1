@@ -1,3 +1,5 @@
+import { Email } from './email.value-object';
+
 /**
  * Value object encapsulating contact information.
  * Used to reduce parameter duplication across domain events, commands, and aggregates.
@@ -37,11 +39,13 @@ export class ContactData {
   /**
    * Factory method to create ContactData from DTOs (AddContactDto or UpdateContactDto).
    * Normalizes optional fields (undefined or null) to explicit null values.
+   * Validates email format if provided.
    * Reduces duplication in controllers and ensures consistent null handling.
    *
    * @param contactId - The unique identifier for the contact
    * @param dto - DTO containing contact data (from API request)
    * @returns New ContactData instance with normalized null values
+   * @throws Error if the email format is invalid (when email is provided)
    */
   static fromDto(
     contactId: string,
@@ -52,11 +56,15 @@ export class ContactData {
       phone?: string | null;
     }
   ): ContactData {
+    // Validate email if provided
+    const emailObject = Email.createOptional(dto.email ?? null);
+    const emailValue = emailObject?.getValue() ?? null;
+
     return new ContactData(
       contactId,
       dto.name,
       dto.role ?? null,
-      dto.email ?? null,
+      emailValue,
       dto.phone ?? null
     );
   }
