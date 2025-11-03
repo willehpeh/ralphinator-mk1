@@ -574,8 +574,33 @@ export class ContactDetailComponent implements OnInit {
   }
 
   saveContact(): void {
-    // TODO: Implement save functionality in next task
-    // This will call the update contact API endpoint
-    console.log('Save contact clicked', this.editForm.value);
+    if (this.editForm.invalid) {
+      return;
+    }
+
+    const contactId = this.contactId();
+    if (!contactId) {
+      return;
+    }
+
+    const formValue = this.editForm.value;
+    const updateData = {
+      name: formValue.name!,
+      role: formValue.role || null,
+      email: formValue.email || null,
+      phone: formValue.phone || null
+    };
+
+    this.http.put<ContactDetail>(`/api/contacts/${contactId}`, updateData).subscribe({
+      next: (updatedContact) => {
+        this.contact.set(updatedContact);
+        this.isEditMode.set(false);
+        this.editForm.reset();
+      },
+      error: (err) => {
+        console.error('Failed to update contact:', err);
+        this.error.set('Failed to update contact. Please try again.');
+      }
+    });
   }
 }

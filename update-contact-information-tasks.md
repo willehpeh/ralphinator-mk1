@@ -40,7 +40,7 @@ This use case allows users to update a contact's information (name, role, email,
 - [x] Add edit mode state to ContactDetailComponent
 - [x] Create edit form in ContactDetailComponent
 - [x] Add edit/cancel/save buttons
-- [ ] Implement saveContact() method to call API
+- [x] Implement saveContact() method to call API
 - [ ] Add loading state during save operation
 - [ ] Add success confirmation message
 - [ ] Add error handling for save failures
