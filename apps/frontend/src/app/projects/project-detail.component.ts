@@ -43,9 +43,14 @@ import { ProjectDto } from '@angular-nest-starter/shared-types';
         <div class="detail-card">
           <div class="detail-header-section">
             <h3>{{ projectData.name }}</h3>
-            <span class="status-badge status-{{ projectData.status.toLowerCase().replace(' ', '-') }}">
-              {{ projectData.status }}
-            </span>
+            <div class="header-actions">
+              <span class="status-badge status-{{ projectData.status.toLowerCase().replace(' ', '-') }}">
+                {{ projectData.status }}
+              </span>
+              <button class="edit-button" (click)="navigateToEdit()">
+                Edit Project
+              </button>
+            </div>
           </div>
 
           @if (projectData.description) {
@@ -175,5 +180,12 @@ export class ProjectDetailComponent {
 
   navigateBack(): void {
     this.router.navigate(['/projects']);
+  }
+
+  navigateToEdit(): void {
+    const id = this.projectId();
+    if (id) {
+      this.router.navigate(['/projects', id, 'edit']);
+    }
   }
 }
