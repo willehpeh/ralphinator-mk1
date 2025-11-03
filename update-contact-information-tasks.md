@@ -14,14 +14,17 @@ This use case allows users to update a contact's information (name, role, email,
 - [x] Add CLIENT_EVENT_TYPES.CONTACT_UPDATED constant
 - [x] Add CONTACT_NOT_FOUND error constant
 
+### Application Layer
+- [x] Create UpdateContactCommand class
+- [x] Export UpdateContactCommand
+
 ## Tasks Remaining
 
 ### Domain Layer
 
 ### Application Layer
-- [ ] Create UpdateContactCommand class
 - [ ] Create UpdateContactCommandHandler
-- [ ] Export UpdateContactCommand and handler
+- [ ] Export UpdateContactCommandHandler
 
 ### Infrastructure Layer
 - [ ] Update ContactProjection to handle ContactUpdatedDomainEvent
@@ -53,5 +56,9 @@ This use case allows users to update a contact's information (name, role, email,
 - `packages/domain/src/lib/aggregates/client.aggregate.ts` (modified - added updateContact method, onContactUpdated event handler)
 - `packages/domain/src/lib/constants/client-event-types.ts` (modified - added CONTACT_UPDATED constant)
 - `packages/domain/src/lib/constants/domain-errors.ts` (modified - added CONTACT_NOT_FOUND error)
+
+### Application Layer
+- `packages/application/src/lib/commands/update-contact.command.ts` (created - UpdateContactCommand class)
+- `packages/application/src/lib/application.ts` (modified - exported UpdateContactCommand)
 
 ---
