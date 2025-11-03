@@ -139,14 +139,22 @@ export class ProjectsListComponent implements OnInit {
   projects = computed(() => {
     const allProjectsList = this.allProjects();
     const statusFilter = this.selectedStatusFilter();
+    const clientFilter = this.selectedClientFilter();
 
-    // If no status filter selected, return all projects
-    if (!statusFilter) {
-      return allProjectsList;
+    // Start with all projects
+    let filteredProjects = allProjectsList;
+
+    // Apply status filter if selected
+    if (statusFilter) {
+      filteredProjects = filteredProjects.filter(project => project.status === statusFilter);
     }
 
-    // Filter by status
-    return allProjectsList.filter(project => project.status === statusFilter);
+    // Apply client filter if selected
+    if (clientFilter) {
+      filteredProjects = filteredProjects.filter(project => project.clientId === clientFilter);
+    }
+
+    return filteredProjects;
   });
 
   ngOnInit(): void {

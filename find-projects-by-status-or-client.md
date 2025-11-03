@@ -39,11 +39,18 @@
    - Wired up (change) event to onClientFilterChange handler
    - Build verified successfully
 
+6. ✅ Update filtering logic to include client filter
+   - Modified projects computed signal to include clientFilter variable
+   - Refactored filtering logic to use sequential approach (starts with all projects)
+   - Apply status filter first if statusFilter is selected
+   - Apply client filter next if clientFilter is selected
+   - Both filters now work independently and together
+   - Build verified successfully
+
 ## Current Task
 - None (ready for next task)
 
 ## Remaining Tasks (Planned)
-- Update filtering logic to include client filter
 - Add "Clear Filters" button
 - Test filtering functionality end-to-end
 
