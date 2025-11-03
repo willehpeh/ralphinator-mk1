@@ -3,20 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ClientNavigationService } from './client-navigation.service';
 import { ClientsService } from './clients.service';
 import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT, CLIENT_UI_TEXT_HELPERS } from './client-display.constants';
 import { ContactDetail } from './client.types';
 import { FormState } from '../shared/form-state';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
-
-interface ContactEditForm {
-  name: FormControl<string>;
-  role: FormControl<string>;
-  email: FormControl<string>;
-  phone: FormControl<string>;
-}
+import { createContactFormGroup } from './contact-form-builder';
 
 @Component({
   selector: 'app-contact-detail',
@@ -595,18 +589,7 @@ export class ContactDetailComponent implements OnInit {
   protected readonly dateFormat = STANDARD_DATE_FORMAT;
 
   // Edit form
-  editForm = new FormGroup<ContactEditForm>({
-    name: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required]
-    }),
-    role: new FormControl('', { nonNullable: true }),
-    email: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.email]
-    }),
-    phone: new FormControl('', { nonNullable: true })
-  });
+  editForm = createContactFormGroup();
 
   ngOnInit(): void {
     this.loadContact();

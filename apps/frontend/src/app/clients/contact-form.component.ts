@@ -1,15 +1,9 @@
 import { Component, ChangeDetectionStrategy, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ClientsService } from './clients.service';
 import { FormState } from '../shared/form-state';
-
-interface ContactForm {
-  name: FormControl<string>;
-  role: FormControl<string>;
-  email: FormControl<string>;
-  phone: FormControl<string>;
-}
+import { createContactFormGroup } from './contact-form-builder';
 
 interface AddContactDto {
   name: string;
@@ -129,18 +123,7 @@ export class ContactFormComponent {
   formState = new FormState();
 
   // Reactive form with typed controls
-  form = new FormGroup<ContactForm>({
-    name: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required]
-    }),
-    role: new FormControl('', { nonNullable: true }),
-    email: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.email]
-    }),
-    phone: new FormControl('', { nonNullable: true })
-  });
+  form = createContactFormGroup();
 
   onSubmit(): void {
     if (this.form.invalid) {
