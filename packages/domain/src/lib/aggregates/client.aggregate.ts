@@ -140,9 +140,19 @@ export class ClientAggregate extends EventSourcedAggregate {
    * Add a contact person to this client
    *
    * @param contactData - Value object containing contact information
+   * @throws Error if a contact with the same name already exists for this client
    */
   addContact(contactData: ContactData): void {
     const id = this.ensureInitialized();
+
+    // Check for duplicate contact name
+    const isDuplicate = Array.from(this.contacts.values()).some(
+      contact => contact.name.toLowerCase() === contactData.name.toLowerCase()
+    );
+
+    if (isDuplicate) {
+      throw new Error(DOMAIN_ERRORS.DUPLICATE_CONTACT_NAME);
+    }
 
     this.applyEvent(
       new ContactAddedToClientDomainEvent(id, contactData)

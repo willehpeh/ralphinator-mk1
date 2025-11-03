@@ -27,6 +27,11 @@ export const DOMAIN_ERRORS = {
   CONTACT_NOT_FOUND: 'Contact not found',
 
   /**
+   * Error message when attempting to add a duplicate contact to a client
+   */
+  DUPLICATE_CONTACT_NAME: 'A contact with this name already exists for this client',
+
+  /**
    * Error message when attempting to perform an operation on an aggregate
    * that has not been initialized (created) yet
    */
