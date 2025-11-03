@@ -18,6 +18,7 @@ export * from './queries/get-client-by-id.query';
 export * from './queries/get-all-clients.query';
 export * from './queries/get-clients-by-status.query';
 export * from './queries/get-client-contacts.query';
+export * from './queries/get-contact-by-id.query';
 
 // Query Handlers
 export * from './queries/handlers/get-client-by-id.handler';
