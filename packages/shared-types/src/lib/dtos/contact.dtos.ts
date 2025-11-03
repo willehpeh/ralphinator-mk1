@@ -22,6 +22,27 @@ export class AddContactDto {
 }
 
 /**
+ * DTO for updating a contact's information.
+ */
+export class UpdateContactDto {
+  @IsString()
+  @IsNotEmpty()
+  name!: string;
+
+  @IsString()
+  @IsOptional()
+  role?: string | null;
+
+  @IsEmail()
+  @IsOptional()
+  email?: string | null;
+
+  @IsString()
+  @IsOptional()
+  phone?: string | null;
+}
+
+/**
  * Response DTO for contact creation.
  */
 export interface AddContactResponse {

@@ -32,7 +32,7 @@ This use case allows users to update a contact's information (name, role, email,
 ### Infrastructure Layer
 
 ### API Layer
-- [ ] Add UpdateContactDto
+- [x] Add UpdateContactDto
 - [ ] Add PUT /api/contacts/:id endpoint in ContactsController
 - [ ] Register UpdateContactCommandHandler in ContactsModule
 
@@ -66,5 +66,8 @@ This use case allows users to update a contact's information (name, role, email,
 
 ### Infrastructure Layer
 - `packages/infrastructure/src/lib/projections/contact.projection.ts` (modified - added ContactUpdatedDomainEvent handler to update read model)
+
+### Shared Types Layer
+- `packages/shared-types/src/lib/dtos/contact.dtos.ts` (modified - added UpdateContactDto class with validation)
 
 ---
