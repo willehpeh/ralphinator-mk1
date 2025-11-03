@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetClientByIdQuery } from '../get-client-by-id.query';
 import { ClientReadModel } from '../../read-models/client.read-model';
-import { BaseQueryHandler } from '../base';
+import { ClientQueryHandler } from '../base';
 
 /**
  * Query handler for retrieving a client by ID.
@@ -9,7 +9,7 @@ import { BaseQueryHandler } from '../base';
  */
 @QueryHandler(GetClientByIdQuery)
 export class GetClientByIdQueryHandler
-  extends BaseQueryHandler<GetClientByIdQuery, ClientReadModel | null>
+  extends ClientQueryHandler<GetClientByIdQuery, ClientReadModel | null>
   implements IQueryHandler<GetClientByIdQuery, ClientReadModel | null>
 {
   /**

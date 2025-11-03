@@ -1,17 +1,14 @@
-import { Inject } from '@nestjs/common';
-import { IClientReadRepository, INJECTION_TOKENS } from '../../ports';
-
 /**
- * Base class for query handlers that work with client read models.
- * Provides common constructor injection and access to the read repository.
+ * Base class for query handlers that work with read models.
+ * Provides common error handling through the executeQuery helper method.
  *
  * @template TQuery - The query type this handler processes
  * @template TResult - The return type of the query execution
+ * @template TRepository - The read repository type this handler uses
  */
-export abstract class BaseQueryHandler<TQuery, TResult> {
+export abstract class BaseQueryHandler<TQuery, TResult, TRepository = unknown> {
   constructor(
-    @Inject(INJECTION_TOKENS.CLIENT_READ_REPOSITORY)
-    protected readonly readRepository: IClientReadRepository
+    protected readonly readRepository: TRepository
   ) {}
 
   /**

@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetClientsByStatusQuery } from '../get-clients-by-status.query';
 import { ClientReadModel } from '../../read-models/client.read-model';
-import { BaseQueryHandler } from '../base';
+import { ClientQueryHandler } from '../base';
 
 /**
  * Query handler for retrieving clients by status.
@@ -9,7 +9,7 @@ import { BaseQueryHandler } from '../base';
  */
 @QueryHandler(GetClientsByStatusQuery)
 export class GetClientsByStatusQueryHandler
-  extends BaseQueryHandler<GetClientsByStatusQuery, ClientReadModel[]>
+  extends ClientQueryHandler<GetClientsByStatusQuery, ClientReadModel[]>
   implements IQueryHandler<GetClientsByStatusQuery, ClientReadModel[]>
 {
   /**

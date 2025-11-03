@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetProjectsByClientIdQuery } from '../get-projects-by-client-id.query';
 import { ProjectReadModel } from '../../read-models/project.read-model';
-import { IProjectReadRepository, INJECTION_TOKENS } from '../../ports';
+import { ProjectQueryHandler } from '../base';
 
 /**
  * Query handler for retrieving all projects associated with a specific client.
@@ -10,13 +9,9 @@ import { IProjectReadRepository, INJECTION_TOKENS } from '../../ports';
  */
 @QueryHandler(GetProjectsByClientIdQuery)
 export class GetProjectsByClientIdQueryHandler
+  extends ProjectQueryHandler<GetProjectsByClientIdQuery, ProjectReadModel[]>
   implements IQueryHandler<GetProjectsByClientIdQuery, ProjectReadModel[]>
 {
-  constructor(
-    @Inject(INJECTION_TOKENS.PROJECT_READ_REPOSITORY)
-    private readonly projectReadRepository: IProjectReadRepository
-  ) {}
-
   /**
    * Executes the GetProjectsByClientIdQuery
    *
@@ -25,12 +20,9 @@ export class GetProjectsByClientIdQueryHandler
    * @throws Error if the read repository operation fails
    */
   async execute(query: GetProjectsByClientIdQuery): Promise<ProjectReadModel[]> {
-    try {
-      return await this.projectReadRepository.findByClientId(query.clientId);
-    } catch (error) {
-      throw new Error(
-        `Failed to retrieve projects for client with ID ${query.clientId} from read model: ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
-    }
+    return this.executeQuery(
+      () => this.readRepository.findByClientId(query.clientId),
+      `Failed to retrieve projects for client with ID ${query.clientId} from read model`
+    );
   }
 }

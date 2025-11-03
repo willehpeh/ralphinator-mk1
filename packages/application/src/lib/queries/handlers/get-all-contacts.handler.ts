@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetAllContactsQuery } from '../get-all-contacts.query';
 import { ContactReadModel } from '../../read-models/contact.read-model';
-import { IContactReadRepository, INJECTION_TOKENS } from '../../ports';
+import { ContactQueryHandler } from '../base';
 
 /**
  * Query handler for retrieving all contacts from all clients.
@@ -10,13 +9,9 @@ import { IContactReadRepository, INJECTION_TOKENS } from '../../ports';
  */
 @QueryHandler(GetAllContactsQuery)
 export class GetAllContactsQueryHandler
+  extends ContactQueryHandler<GetAllContactsQuery, ContactReadModel[]>
   implements IQueryHandler<GetAllContactsQuery, ContactReadModel[]>
 {
-  constructor(
-    @Inject(INJECTION_TOKENS.CONTACT_READ_REPOSITORY)
-    private readonly contactReadRepository: IContactReadRepository
-  ) {}
-
   /**
    * Executes the GetAllContactsQuery
    *
@@ -24,12 +19,9 @@ export class GetAllContactsQueryHandler
    * @throws Error if the read repository operation fails
    */
   async execute(): Promise<ContactReadModel[]> {
-    try {
-      return await this.contactReadRepository.findAll();
-    } catch (error) {
-      throw new Error(
-        `Failed to retrieve all contacts from read model: ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
-    }
+    return this.executeQuery(
+      () => this.readRepository.findAll(),
+      'Failed to retrieve all contacts from read model'
+    );
   }
 }

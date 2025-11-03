@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetClientContactsQuery } from '../get-client-contacts.query';
 import { ContactReadModel } from '../../read-models/contact.read-model';
-import { IContactReadRepository, INJECTION_TOKENS } from '../../ports';
+import { ContactQueryHandler } from '../base';
 
 /**
  * Query handler for retrieving all contacts associated with a specific client.
@@ -10,13 +9,9 @@ import { IContactReadRepository, INJECTION_TOKENS } from '../../ports';
  */
 @QueryHandler(GetClientContactsQuery)
 export class GetClientContactsQueryHandler
+  extends ContactQueryHandler<GetClientContactsQuery, ContactReadModel[]>
   implements IQueryHandler<GetClientContactsQuery, ContactReadModel[]>
 {
-  constructor(
-    @Inject(INJECTION_TOKENS.CONTACT_READ_REPOSITORY)
-    private readonly contactReadRepository: IContactReadRepository
-  ) {}
-
   /**
    * Executes the GetClientContactsQuery
    *
@@ -25,12 +20,9 @@ export class GetClientContactsQueryHandler
    * @throws Error if the read repository operation fails
    */
   async execute(query: GetClientContactsQuery): Promise<ContactReadModel[]> {
-    try {
-      return await this.contactReadRepository.findByClientId(query.clientId);
-    } catch (error) {
-      throw new Error(
-        `Failed to retrieve contacts for client with ID ${query.clientId} from read model: ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
-    }
+    return this.executeQuery(
+      () => this.readRepository.findByClientId(query.clientId),
+      `Failed to retrieve contacts for client with ID ${query.clientId} from read model`
+    );
   }
 }
