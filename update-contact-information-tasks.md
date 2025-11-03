@@ -37,7 +37,7 @@ This use case allows users to update a contact's information (name, role, email,
 - [x] Register UpdateContactCommandHandler in ContactsModule
 
 ### Frontend Layer
-- [ ] Add edit mode state to ContactDetailComponent
+- [x] Add edit mode state to ContactDetailComponent
 - [ ] Create edit form in ContactDetailComponent
 - [ ] Add edit/cancel/save buttons
 - [ ] Add form validation
@@ -73,5 +73,8 @@ This use case allows users to update a contact's information (name, role, email,
 ### API Layer
 - `apps/api/src/app/contacts/contacts.controller.ts` (modified - added PUT /api/contacts/:id endpoint with UpdateContactCommand integration)
 - `apps/api/src/app/contacts/contacts.module.ts` (modified - registered UpdateContactCommandHandler in providers)
+
+### Frontend Layer
+- `apps/frontend/src/app/clients/contact-detail.component.ts` (modified - added isEditMode signal, enterEditMode() and cancelEdit() methods)
 
 ---

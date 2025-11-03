@@ -283,6 +283,9 @@ export class ContactDetailComponent implements OnInit {
   loading = signal(false);
   error = signal<string | null>(null);
 
+  // Edit mode state
+  isEditMode = signal(false);
+
   // Date format for displaying timestamps
   readonly dateFormat = STANDARD_DATE_FORMAT;
 
@@ -319,5 +322,13 @@ export class ContactDetailComponent implements OnInit {
       // Fallback to client list
       this.navigation.toClientList();
     }
+  }
+
+  enterEditMode(): void {
+    this.isEditMode.set(true);
+  }
+
+  cancelEdit(): void {
+    this.isEditMode.set(false);
   }
 }
