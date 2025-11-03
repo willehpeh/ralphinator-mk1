@@ -1,7 +1,8 @@
-import { Component, ChangeDetectionStrategy, inject, input, output, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientsService } from './clients.service';
+import { FormState } from '../shared/form-state';
 
 interface ContactForm {
   name: FormControl<string>;
@@ -83,9 +84,9 @@ interface AddContactDto {
           />
         </div>
 
-        @if (error()) {
+        @if (formState.error()) {
           <div class="error-message">
-            {{ error() }}
+            {{ formState.error() }}
           </div>
         }
 
@@ -93,9 +94,9 @@ interface AddContactDto {
           <button
             type="submit"
             class="submit-button"
-            [disabled]="form.invalid || isSubmitting()"
+            [disabled]="form.invalid || formState.isSubmitting()"
           >
-            @if (isSubmitting()) {
+            @if (formState.isSubmitting()) {
               Adding Contact...
             } @else {
               Add Contact
@@ -105,7 +106,7 @@ interface AddContactDto {
             type="button"
             class="cancel-button"
             (click)="onCancel()"
-            [disabled]="isSubmitting()"
+            [disabled]="formState.isSubmitting()"
           >
             Cancel
           </button>
@@ -125,8 +126,7 @@ export class ContactFormComponent {
   formCancelled = output<void>();
 
   // Form state
-  isSubmitting = signal(false);
-  error = signal<string | null>(null);
+  formState = new FormState();
 
   // Reactive form with typed controls
   form = new FormGroup<ContactForm>({
@@ -151,8 +151,8 @@ export class ContactFormComponent {
       return;
     }
 
-    this.isSubmitting.set(true);
-    this.error.set(null);
+    this.formState.setSubmitting(true);
+    this.formState.clearMessages();
 
     const formValue = this.form.getRawValue();
     const payload: AddContactDto = {
@@ -165,13 +165,13 @@ export class ContactFormComponent {
 
     this.clientsService.addContactToClient(this.clientId(), payload).subscribe({
       next: () => {
-        this.isSubmitting.set(false);
+        this.formState.setSubmitting(false);
         this.form.reset();
         this.contactAdded.emit();
       },
       error: (err) => {
-        this.isSubmitting.set(false);
-        this.error.set(
+        this.formState.setSubmitting(false);
+        this.formState.setError(
           err.error?.message || 'Failed to add contact. Please try again.'
         );
       }

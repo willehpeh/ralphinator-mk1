@@ -8,6 +8,7 @@ import { ClientNavigationService } from './client-navigation.service';
 import { ClientsService } from './clients.service';
 import { STANDARD_DATE_FORMAT } from './client-display.constants';
 import { ContactDetail } from './client.types';
+import { FormState } from '../shared/form-state';
 
 interface ContactEditForm {
   name: FormControl<string>;
@@ -394,7 +395,7 @@ interface ContactEditForm {
       }
 
       @if (!loading() && !error() && contact(); as contactData) {
-        @if (successMessage(); as message) {
+        @if (formState.successMessage(); as message) {
           <div class="success-message">
             <span class="success-icon">✓</span>
             <span>{{ message }}</span>
@@ -403,7 +404,7 @@ interface ContactEditForm {
         <div class="detail-card">
           @if (isEditMode()) {
             <!-- Edit Mode: Form -->
-            @if (saveError(); as errorMsg) {
+            @if (formState.error(); as errorMsg) {
               <div class="save-error-message">
                 <span class="error-icon">✕</span>
                 <span>{{ errorMsg }}</span>
@@ -469,10 +470,10 @@ interface ContactEditForm {
                 <button
                   type="button"
                   class="btn btn-primary"
-                  [disabled]="editForm.invalid || saving()"
+                  [disabled]="editForm.invalid || formState.isSubmitting()"
                   (click)="saveContact()"
                 >
-                  @if (saving()) {
+                  @if (formState.isSubmitting()) {
                     Saving...
                   } @else {
                     Save Changes
@@ -481,7 +482,7 @@ interface ContactEditForm {
                 <button
                   type="button"
                   class="btn btn-secondary"
-                  [disabled]="saving()"
+                  [disabled]="formState.isSubmitting()"
                   (click)="cancelEdit()"
                 >
                   Cancel
@@ -572,9 +573,7 @@ export class ContactDetailComponent implements OnInit {
 
   // Edit mode state
   isEditMode = signal(false);
-  saving = signal(false);
-  successMessage = signal<string | null>(null);
-  saveError = signal<string | null>(null);
+  formState = new FormState();
 
   // Edit form
   editForm = new FormGroup<ContactEditForm>({
@@ -640,8 +639,7 @@ export class ContactDetailComponent implements OnInit {
       });
     }
     // Clear any previous errors or messages
-    this.saveError.set(null);
-    this.successMessage.set(null);
+    this.formState.clearMessages();
     this.isEditMode.set(true);
   }
 
@@ -650,11 +648,11 @@ export class ContactDetailComponent implements OnInit {
     // Reset form to original values
     this.editForm.reset();
     // Clear any error messages
-    this.saveError.set(null);
+    this.formState.clearMessages();
   }
 
   saveContact(): void {
-    if (this.editForm.invalid || this.saving()) {
+    if (this.editForm.invalid || this.formState.isSubmitting()) {
       return;
     }
 
@@ -672,29 +670,23 @@ export class ContactDetailComponent implements OnInit {
     };
 
     // Clear any previous errors before saving
-    this.saveError.set(null);
-    this.saving.set(true);
+    this.formState.setSubmitting(true);
+    this.formState.clearMessages();
 
     this.clientsService.updateContact(contactId, updateData).subscribe({
       next: (updatedContact) => {
         this.contact.set(updatedContact);
         this.isEditMode.set(false);
         this.editForm.reset();
-        this.saving.set(false);
+        this.formState.setSubmitting(false);
 
-        // Show success message
-        this.successMessage.set('Contact updated successfully!');
-
-        // Auto-hide success message after 3 seconds
-        setTimeout(() => {
-          this.successMessage.set(null);
-        }, 3000);
+        // Show success message with auto-hide after 3 seconds
+        this.formState.setSuccess('Contact updated successfully!', 3000);
       },
       error: (err) => {
         console.error('Failed to update contact:', err);
-        // Use saveError instead of error to keep it separate from loading errors
-        this.saveError.set('Failed to update contact. Please try again.');
-        this.saving.set(false);
+        this.formState.setError('Failed to update contact. Please try again.');
+        this.formState.setSubmitting(false);
       }
     });
   }

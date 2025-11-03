@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, signal, input, output, effect, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, input, output, effect, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -11,6 +11,7 @@ import { selectClientsError } from './store/clients.selectors';
 import { ClientStatus, Client } from './client.types';
 import { CLIENT_STATUSES, DEFAULT_CLIENT_STATUS } from './client.constants';
 import { CLIENT_UI_TEXT, CLIENT_FORM_LABELS, SUCCESS_MESSAGE_DISMISS_DURATION_MS } from './client-display.constants';
+import { FormState } from '../shared/form-state';
 
 interface ClientFormFields {
   companyName: FormControl<string>;
@@ -30,15 +31,15 @@ interface ClientFormFields {
     <div class="client-form">
       <h2>{{ mode() === 'create' ? uiText.ADD_CLIENT_TITLE : uiText.EDIT_CLIENT_TITLE }}</h2>
 
-      @if (submitSuccess()) {
+      @if (formState.successMessage()) {
         <div class="success-message">
           {{ mode() === 'create' ? uiText.CLIENT_CREATED_SUCCESS : uiText.CLIENT_UPDATED_SUCCESS }}
         </div>
       }
 
-      @if (submitError()) {
+      @if (formState.error()) {
         <div class="error-message">
-          {{ submitError() }}
+          {{ formState.error() }}
         </div>
       }
 
@@ -128,14 +129,14 @@ interface ClientFormFields {
         </div>
 
         <div class="form-actions">
-          <button type="submit" [disabled]="form.invalid || submitting()">
-            @if (submitting()) {
+          <button type="submit" [disabled]="form.invalid || formState.isSubmitting()">
+            @if (formState.isSubmitting()) {
               {{ mode() === 'create' ? formLabels.SUBMITTING_BUTTON : formLabels.UPDATING_BUTTON }}
             } @else {
               {{ mode() === 'create' ? formLabels.ADD_CLIENT_BUTTON : formLabels.UPDATE_CLIENT_BUTTON }}
             }
           </button>
-          <button type="button" (click)="onCancel()" [disabled]="submitting()">
+          <button type="button" (click)="onCancel()" [disabled]="formState.isSubmitting()">
             {{ formLabels.CANCEL_BUTTON }}
           </button>
         </div>
@@ -178,9 +179,7 @@ export class ClientFormComponent implements OnDestroy {
     notes: new FormControl('', { nonNullable: true })
   });
 
-  submitting = signal(false);
-  submitSuccess = signal(false);
-  submitError = signal<string | null>(null);
+  formState = new FormState();
 
   constructor() {
     // Watch for client changes in edit mode and populate form
@@ -198,7 +197,7 @@ export class ClientFormComponent implements OnDestroy {
       ofType(updateClientSuccess),
       takeUntil(this.destroy$)
     ).subscribe(() => {
-      this.submitting.set(false);
+      this.formState.setSubmitting(false);
       this.formSucceeded.emit();
     });
 
@@ -207,7 +206,7 @@ export class ClientFormComponent implements OnDestroy {
       ofType(updateClientFailure),
       takeUntil(this.destroy$)
     ).subscribe(() => {
-      this.submitting.set(false);
+      this.formState.setSubmitting(false);
     });
   }
 
@@ -217,9 +216,9 @@ export class ClientFormComponent implements OnDestroy {
   }
 
   onSubmit(): void {
-    if (this.form.valid && !this.submitting()) {
-      this.submitting.set(true);
-      this.submitError.set(null);
+    if (this.form.valid && !this.formState.isSubmitting()) {
+      this.formState.setSubmitting(true);
+      this.formState.clearMessages();
 
       const formValue = this.form.getRawValue();
 
@@ -254,17 +253,16 @@ export class ClientFormComponent implements OnDestroy {
 
     this.clientsService.createClient(dto).subscribe({
       next: () => {
-        this.submitSuccess.set(true);
-        this.submitting.set(false);
+        this.formState.setSuccess('Success', SUCCESS_MESSAGE_DISMISS_DURATION_MS);
+        this.formState.setSubmitting(false);
         this.form.reset({ status: DEFAULT_CLIENT_STATUS });
         setTimeout(() => {
-          this.submitSuccess.set(false);
           this.formSucceeded.emit();
         }, SUCCESS_MESSAGE_DISMISS_DURATION_MS);
       },
       error: (error) => {
-        this.submitError.set(error.message || 'Failed to create client');
-        this.submitting.set(false);
+        this.formState.setError(error.message || 'Failed to create client');
+        this.formState.setSubmitting(false);
       }
     });
   }
@@ -272,8 +270,8 @@ export class ClientFormComponent implements OnDestroy {
   private handleUpdate(formValue: ReturnType<typeof this.form.getRawValue>): void {
     const clientData = this.client();
     if (!clientData) {
-      this.submitError.set('Client data not found');
-      this.submitting.set(false);
+      this.formState.setError('Client data not found');
+      this.formState.setSubmitting(false);
       return;
     }
 
@@ -292,8 +290,7 @@ export class ClientFormComponent implements OnDestroy {
   onCancel(): void {
     if (this.mode() === 'create') {
       this.form.reset({ status: DEFAULT_CLIENT_STATUS });
-      this.submitSuccess.set(false);
-      this.submitError.set(null);
+      this.formState.reset();
     } else {
       // Reset form to original client data in edit mode
       const clientData = this.client();
