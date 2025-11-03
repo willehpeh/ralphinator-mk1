@@ -5,4 +5,5 @@ export interface IProjectReadRepository {
   findByClientId(clientId: string): Promise<ProjectReadModel[]>;
   findAll(): Promise<ProjectReadModel[]>;
   save(project: ProjectReadModel): Promise<void>;
+  delete(id: string): Promise<void>;
 }

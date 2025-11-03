@@ -62,6 +62,18 @@ export class InMemoryProjectReadRepository implements IProjectReadRepository {
   }
 
   /**
+   * Deletes a project from the read model
+   *
+   * This method removes the project from the in-memory store (soft delete).
+   * The project remains in the event store for audit trail purposes.
+   *
+   * @param id - The project ID (UUID) to delete
+   */
+  async delete(id: string): Promise<void> {
+    this.projects.delete(id);
+  }
+
+  /**
    * Utility method to clear all projects (useful for testing)
    *
    * Note: This method is not part of the IProjectReadRepository interface

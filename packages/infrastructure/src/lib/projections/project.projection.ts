@@ -4,6 +4,7 @@ import {
   ProjectCreatedDomainEvent,
   ProjectDetailsUpdatedDomainEvent,
   ProjectStatusChangedDomainEvent,
+  ProjectDeletedDomainEvent,
   PROJECT_EVENT_TYPES,
 } from '@angular-nest-starter/domain';
 import {
@@ -27,7 +28,7 @@ import { BaseProjectionHandler } from '../base/base-projection.handler';
  * - Uses the event handler registry pattern for extensible event handling
  */
 @Injectable()
-@EventsHandler(ProjectCreatedDomainEvent, ProjectDetailsUpdatedDomainEvent, ProjectStatusChangedDomainEvent)
+@EventsHandler(ProjectCreatedDomainEvent, ProjectDetailsUpdatedDomainEvent, ProjectStatusChangedDomainEvent, ProjectDeletedDomainEvent)
 export class ProjectProjection extends BaseProjectionHandler {
   constructor(
     @Inject(INJECTION_TOKENS.PROJECT_READ_REPOSITORY)
@@ -39,6 +40,7 @@ export class ProjectProjection extends BaseProjectionHandler {
       [PROJECT_EVENT_TYPES.CREATED]: this.onProjectCreated.bind(this),
       [PROJECT_EVENT_TYPES.DETAILS_UPDATED]: this.onProjectDetailsUpdated.bind(this),
       [PROJECT_EVENT_TYPES.STATUS_CHANGED]: this.onProjectStatusChanged.bind(this),
+      [PROJECT_EVENT_TYPES.DELETED]: this.onProjectDeleted.bind(this),
     });
   }
 
@@ -147,5 +149,14 @@ export class ProjectProjection extends BaseProjectionHandler {
         existing.createdAt
       );
     });
+  }
+
+  /**
+   * Event handler for ProjectDeletedDomainEvent
+   * Removes the project from the read model when a project is deleted (soft delete).
+   * The project remains in the event store for audit trail purposes.
+   */
+  private async onProjectDeleted(event: ProjectDeletedDomainEvent): Promise<void> {
+    await this.projectReadRepository.delete(event.aggregateId);
   }
 }

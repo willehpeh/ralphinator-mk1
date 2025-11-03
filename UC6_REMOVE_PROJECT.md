@@ -29,12 +29,16 @@
 - Exported command and handler from application layer
 - Commit: `27ab4d1 feat: Add DeleteProjectCommand and handler for soft delete`
 
-## Tasks Remaining
+### Task 4: Update ProjectProjection to handle ProjectDeletedDomainEvent ✅
+- Added `delete(id: string)` method to `IProjectReadRepository` interface
+- Implemented `delete()` method in `InMemoryProjectReadRepository`
+- Imported `ProjectDeletedDomainEvent` in `ProjectProjection`
+- Added `ProjectDeletedDomainEvent` to `@EventsHandler` decorator
+- Registered event handler in constructor: `[PROJECT_EVENT_TYPES.DELETED]: this.onProjectDeleted.bind(this)`
+- Implemented `onProjectDeleted()` event handler to call `projectReadRepository.delete()`
+- Commit: (pending)
 
-### Task 4: Update ProjectProjection to handle ProjectDeletedDomainEvent
-- Add event handler to `packages/infrastructure/src/projections/project.projection.ts`
-- Remove project from read model when ProjectDeletedDomainEvent is received
-- Use `IProjectReadRepository.delete()` method
+## Tasks Remaining
 
 ### Task 5: Add DELETE API endpoint
 - Add `DELETE /api/projects/:id` endpoint to `ProjectsController`
