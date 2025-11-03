@@ -61,9 +61,16 @@
 - ContactsController returns ContactReadModel directly, which NestJS serializes to JSON
 - Frontend will receive clientName field in API responses
 
-### Task 3d: Update frontend to display and filter by client name
+### Task 3d: Update frontend to display and filter by client name ✅
 **Description**: Update Contact interface and filtering logic in AllContactsComponent
-**Status**: Pending
+**Status**: Completed
+**Details**:
+- Added clientName field to Contact interface (line 10)
+- Updated filteredContacts computed signal to filter by clientName instead of clientId
+- Changed client badge display to show clientName instead of truncated clientId
+- Updated search input placeholder to mention "client name" instead of "client"
+- Filter now searches across name, role, email, and client name fields
+- Client company name is now prominently displayed on each contact card
 
 ### Task 4: Add sort functionality (by name, client, role)
 **Description**: Add UI controls and logic to sort filtered results

@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 interface Contact {
   contactId: string;
   clientId: string;
+  clientName: string;
   name: string;
   role: string | null;
   email: string | null;
@@ -320,7 +321,7 @@ interface Contact {
             <input
               type="text"
               class="search-input"
-              placeholder="Search by name, role, email, or client..."
+              placeholder="Search by name, role, email, or client name..."
               [ngModel]="searchQuery()"
               (ngModelChange)="searchQuery.set($event)"
             />
@@ -383,7 +384,7 @@ interface Contact {
                   <svg class="client-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                   </svg>
-                  <span>Client: {{ contact.clientId.substring(0, 8) }}...</span>
+                  <span>{{ contact.clientName }}</span>
                 </div>
               </a>
             }
@@ -416,9 +417,9 @@ export class AllContactsComponent implements OnInit {
       const matchesName = contact.name.toLowerCase().includes(query);
       const matchesRole = contact.role?.toLowerCase().includes(query) ?? false;
       const matchesEmail = contact.email?.toLowerCase().includes(query) ?? false;
-      const matchesClientId = contact.clientId.toLowerCase().includes(query);
+      const matchesClientName = contact.clientName.toLowerCase().includes(query);
 
-      return matchesName || matchesRole || matchesEmail || matchesClientId;
+      return matchesName || matchesRole || matchesEmail || matchesClientName;
     });
   });
 
