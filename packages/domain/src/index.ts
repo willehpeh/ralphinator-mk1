@@ -2,6 +2,7 @@ export * from './lib/domain';
 export * from './lib/base/event-sourced-aggregate';
 export * from './lib/base/domain-event';
 export * from './lib/constants/client-event-types';
+export * from './lib/constants/project-event-types';
 export * from './lib/constants/domain-errors';
 export * from './lib/events/client-created.domain-event';
 export * from './lib/events/client-information-updated.domain-event';

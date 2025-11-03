@@ -42,17 +42,28 @@ This document tracks the implementation tasks for the "Add a New Project to a Cl
 **Verification**:
 - Linting passed: `nx lint domain`
 
+### 3. Create PROJECT_EVENT_TYPES Constants
+**Status**: Completed
+**Date**: 2025-11-03
+
+**Implementation Details**:
+- Created `packages/domain/src/lib/constants/project-event-types.ts`
+- Defined PROJECT_EVENT_TYPES constant object with CREATED event type
+- Followed pattern from CLIENT_EVENT_TYPES for consistency
+- Event type name matches the class name: 'ProjectCreatedDomainEvent'
+- Used `as const` for type safety
+- Exported from domain package via `packages/domain/src/index.ts`
+
+**Files Modified**:
+- `packages/domain/src/lib/constants/project-event-types.ts` (new)
+- `packages/domain/src/index.ts` (updated exports)
+
+**Verification**:
+- Linting passed: `nx lint domain`
+
 ---
 
 ## Next Tasks
-
-### 3. Create PROJECT_EVENT_TYPES Constants
-**Status**: Pending
-
-**Implementation Details**:
-- Create `packages/domain/src/lib/constants/project-event-types.ts`
-- Define event type constants for project domain events
-- Start with CREATED event type
 
 ### 4. Create ProjectAggregate
 **Status**: Pending
@@ -255,6 +266,6 @@ This document tracks the implementation tasks for the "Add a New Project to a Cl
 
 ## Implementation Status
 - Total Tasks: 25
-- Completed: 2
-- Remaining: 23
-- Progress: 8%
+- Completed: 3
+- Remaining: 22
+- Progress: 12%
