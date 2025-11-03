@@ -5,6 +5,7 @@ import { PROJECT_EVENT_TYPES } from '../constants/project-event-types';
 import { DOMAIN_ERRORS } from '../constants/domain-errors';
 import { ProjectCreatedDomainEvent } from '../events/project-created.domain-event';
 import { ProjectDetailsUpdatedDomainEvent } from '../events/project-details-updated.domain-event';
+import { ProjectStatusChangedDomainEvent } from '../events/project-status-changed.domain-event';
 import { ProjectData } from '../value-objects/project-data.value-object';
 
 /**
@@ -29,6 +30,7 @@ export class ProjectAggregate extends EventSourcedAggregate {
     this.registerEventHandlers({
       [PROJECT_EVENT_TYPES.CREATED]: this.onProjectCreated.bind(this),
       [PROJECT_EVENT_TYPES.DETAILS_UPDATED]: this.onProjectDetailsUpdated.bind(this),
+      [PROJECT_EVENT_TYPES.STATUS_CHANGED]: this.onProjectStatusChanged.bind(this),
     } as unknown as Record<string, (event: DomainEvent) => void>);
   }
 
@@ -53,6 +55,25 @@ export class ProjectAggregate extends EventSourcedAggregate {
   updateDetails(projectData: ProjectData): void {
     this.ensureInitialized();
     this.applyEvent(new ProjectDetailsUpdatedDomainEvent(this.id!, projectData));
+  }
+
+  /**
+   * Changes the status of the project
+   *
+   * @param newStatus - The new status to assign to the project
+   * @throws {Error} If new status is the same as current status
+   */
+  changeStatus(newStatus: ProjectStatus): void {
+    const id = this.ensureInitialized();
+    const currentStatus = this.getStatus();
+
+    if (currentStatus === newStatus) {
+      throw new Error(DOMAIN_ERRORS.PROJECT_STATUS_UNCHANGED);
+    }
+
+    this.applyEvent(
+      new ProjectStatusChangedDomainEvent(id, currentStatus, newStatus)
+    );
   }
 
   /**
@@ -108,6 +129,14 @@ export class ProjectAggregate extends EventSourcedAggregate {
       : null;
     this.budget = event.projectData.budget;
     this.technicalNotes = event.projectData.technicalNotes;
+  }
+
+  /**
+   * Event handler for ProjectStatusChangedDomainEvent
+   * Updates the project status when a status change event is replayed
+   */
+  private onProjectStatusChanged(event: ProjectStatusChangedDomainEvent): void {
+    this.status = event.newStatus;
   }
 
   // Getters for accessing aggregate state

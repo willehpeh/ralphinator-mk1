@@ -36,4 +36,9 @@ export const DOMAIN_ERRORS = {
    * that has not been initialized (created) yet
    */
   PROJECT_NOT_INITIALIZED: 'Cannot perform operation on a project that has not been created',
+
+  /**
+   * Error message when attempting to change project status to the same value
+   */
+  PROJECT_STATUS_UNCHANGED: 'New status must be different from current status',
 } as const;

@@ -6,4 +6,5 @@
 export const PROJECT_EVENT_TYPES = {
   CREATED: 'ProjectCreatedDomainEvent',
   DETAILS_UPDATED: 'ProjectDetailsUpdatedDomainEvent',
+  STATUS_CHANGED: 'ProjectStatusChangedDomainEvent',
 } as const;
