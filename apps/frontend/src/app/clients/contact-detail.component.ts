@@ -8,17 +8,7 @@ import { of } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientNavigationService } from './client-navigation.service';
 import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
-
-interface ContactDetail {
-  contactId: string;
-  clientId: string;
-  name: string;
-  role: string | null;
-  email: string | null;
-  phone: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
+import { ContactDetail } from './client.types';
 
 interface ContactEditForm {
   name: FormControl<string>;

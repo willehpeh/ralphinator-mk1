@@ -15,15 +15,7 @@ import { ContactFormComponent } from './contact-form.component';
 import { ContactListComponent } from './contact-list.component';
 import { ClientNavigationService } from './client-navigation.service';
 import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
-
-interface Contact {
-  contactId: string;
-  clientId: string;
-  name: string;
-  role: string | null;
-  email: string | null;
-  phone: string | null;
-}
+import { Contact } from './client.types';
 
 @Component({
   selector: 'app-client-detail',

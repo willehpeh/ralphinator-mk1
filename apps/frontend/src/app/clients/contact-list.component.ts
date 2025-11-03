@@ -1,15 +1,7 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-
-interface Contact {
-  contactId: string;
-  clientId: string;
-  name: string;
-  role: string | null;
-  email: string | null;
-  phone: string | null;
-}
+import { Contact } from './client.types';
 
 @Component({
   selector: 'app-contact-list',

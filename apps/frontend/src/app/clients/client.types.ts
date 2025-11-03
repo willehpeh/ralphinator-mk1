@@ -20,3 +20,33 @@ export interface Client {
   notes: string | null;
   createdAt: string;
 }
+
+/**
+ * Base Contact interface with core fields used across all contact views.
+ * This is the single source of truth for Contact types in the frontend.
+ */
+export interface Contact {
+  contactId: string;
+  clientId: string;
+  name: string;
+  role: string | null;
+  email: string | null;
+  phone: string | null;
+}
+
+/**
+ * Contact with additional timestamp metadata.
+ * Used in detail views where audit information is displayed.
+ */
+export interface ContactDetail extends Contact {
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * Contact with client context information.
+ * Used in views that display contacts from multiple clients (e.g., all-contacts view).
+ */
+export interface ContactWithClient extends Contact {
+  clientName: string;
+}

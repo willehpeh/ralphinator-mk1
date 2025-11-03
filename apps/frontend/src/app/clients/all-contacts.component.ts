@@ -3,16 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-
-interface Contact {
-  contactId: string;
-  clientId: string;
-  clientName: string;
-  name: string;
-  role: string | null;
-  email: string | null;
-  phone: string | null;
-}
+import { ContactWithClient } from './client.types';
 
 @Component({
   selector: 'app-all-contacts',
@@ -476,7 +467,7 @@ export class AllContactsComponent implements OnInit {
   private readonly apiUrl = '/api/contacts';
 
   // Component state using signals
-  contacts = signal<Contact[]>([]);
+  contacts = signal<ContactWithClient[]>([]);
   loading = signal<boolean>(true);
   error = signal<string | null>(null);
   searchQuery = signal<string>('');
@@ -527,7 +518,7 @@ export class AllContactsComponent implements OnInit {
     this.loading.set(true);
     this.error.set(null);
 
-    this.http.get<Contact[]>(this.apiUrl).subscribe({
+    this.http.get<ContactWithClient[]>(this.apiUrl).subscribe({
       next: (contacts) => {
         this.contacts.set(contacts);
         this.loading.set(false);
