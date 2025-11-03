@@ -128,7 +128,21 @@
   - Repository is exported from infrastructure package and ready for module registration
   - Follows same pattern as InMemoryClientReadRepository
 
+### Task 12: Add API endpoint for adding contacts to a client
+- **Files Created:**
+  - `packages/shared-types/src/lib/dtos/contact.dtos.ts`
+- **Files Modified:**
+  - `packages/shared-types/src/index.ts` - Exported contact DTOs
+  - `apps/api/src/app/clients/clients.controller.ts` - Added addContactToClient endpoint
+- **Description:**
+  - Created AddContactDto with name (required), role, email, and phone (all optional) fields
+  - Created AddContactResponse interface with contactId and clientId fields
+  - Added POST /:id/contacts endpoint to ClientsController
+  - Endpoint generates contactId using randomUUID()
+  - Endpoint creates AddContactToClientCommand with all contact data
+  - Endpoint executes command via CommandBus and returns AddContactResponse
+  - Follows RESTful pattern: POST /clients/:id/contacts
+
 ## Next Tasks
-- Add API endpoint for adding contacts
 - Add API endpoint for retrieving client contacts
 - Integrate frontend UI for adding contacts
