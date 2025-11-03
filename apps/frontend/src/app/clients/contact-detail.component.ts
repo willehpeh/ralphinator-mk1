@@ -307,6 +307,36 @@ interface ContactEditForm {
       gap: 0.75rem;
       margin-top: 1rem;
     }
+
+    .success-message {
+      background-color: #d1fae5;
+      border: 1px solid #6ee7b7;
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      color: #065f46;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .success-icon {
+      font-weight: bold;
+      font-size: 1rem;
+    }
   `],
   template: `
     <div class="contact-detail">
@@ -339,6 +369,12 @@ interface ContactEditForm {
       }
 
       @if (!loading() && !error() && contact(); as contactData) {
+        @if (successMessage(); as message) {
+          <div class="success-message">
+            <span class="success-icon">✓</span>
+            <span>{{ message }}</span>
+          </div>
+        }
         <div class="detail-card">
           @if (isEditMode()) {
             <!-- Edit Mode: Form -->
@@ -506,6 +542,7 @@ export class ContactDetailComponent implements OnInit {
   // Edit mode state
   isEditMode = signal(false);
   saving = signal(false);
+  successMessage = signal<string | null>(null);
 
   // Edit form
   editForm = new FormGroup<ContactEditForm>({
@@ -605,6 +642,14 @@ export class ContactDetailComponent implements OnInit {
         this.isEditMode.set(false);
         this.editForm.reset();
         this.saving.set(false);
+
+        // Show success message
+        this.successMessage.set('Contact updated successfully!');
+
+        // Auto-hide success message after 3 seconds
+        setTimeout(() => {
+          this.successMessage.set(null);
+        }, 3000);
       },
       error: (err) => {
         console.error('Failed to update contact:', err);
