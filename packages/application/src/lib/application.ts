@@ -20,6 +20,7 @@ export * from './commands/handlers/add-contact-to-client.handler';
 export * from './commands/handlers/update-contact.handler';
 export * from './commands/handlers/remove-contact.handler';
 export * from './commands/handlers/create-project.handler';
+export * from './commands/handlers/update-project-details.handler';
 
 // Queries
 export * from './queries/get-client-by-id.query';

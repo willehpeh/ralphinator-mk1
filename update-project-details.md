@@ -42,10 +42,21 @@
 
 **Description**: Created the UpdateProjectDetailsCommand class that accepts a project ID and ProjectDataPayload. This command will be handled by the UpdateProjectDetailsCommandHandler to execute the update operation on the ProjectAggregate. Follows the same pattern as UpdateClientCommand and reuses the ProjectDataPayload that was designed to be shared between create and update operations.
 
-**Commit**: [pending]
+**Commit**: feat: Add UpdateProjectDetailsCommand for project updates
+
+### Task 5: Create UpdateProjectDetailsHandler
+**Date**: 2025-11-03
+**Files Created**:
+- `packages/application/src/lib/commands/handlers/update-project-details.handler.ts`
+
+**Files Modified**:
+- `packages/application/src/lib/application.ts` (added export)
+
+**Description**: Created the UpdateProjectDetailsHandler command handler that loads the ProjectAggregate, calls the updateDetails method with the ProjectData value object, and persists the events. Follows the same pattern as UpdateClientHandler using the executeOnAggregate helper method from BaseCommandHandler for the load-execute-save pattern.
+
+**Commit**: feat: Add UpdateProjectDetailsHandler for project updates
 
 ## Pending Tasks
-- Create UpdateProjectDetailsCommandHandler
 - Create UpdateProjectDetailsQuery
 - Create UpdateProjectDetailsQueryHandler
 - Add projection handler for ProjectDetailsUpdatedDomainEvent
