@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectsService } from './projects.service';
-import { ProjectDto } from '@ralphinator-mk1/shared-types';
+import { ProjectDto, PROJECT_STATUS_VALUES, ProjectStatus } from '@angular-nest-starter/shared-types';
 
 @Component({
   selector: 'app-projects-list',
@@ -12,6 +12,18 @@ import { ProjectDto } from '@ralphinator-mk1/shared-types';
     <div class="projects-list">
       <div class="list-header">
         <h2>All Projects</h2>
+      </div>
+
+      <div class="filters-section">
+        <div class="filter-group">
+          <label for="status-filter" class="filter-label">Filter by Status:</label>
+          <select id="status-filter" class="filter-select">
+            <option value="">All Statuses</option>
+            @for (status of statusOptions; track status) {
+              <option [value]="status">{{ status }}</option>
+            }
+          </select>
+        </div>
       </div>
 
       @if (loading()) {
@@ -88,6 +100,9 @@ import { ProjectDto } from '@ralphinator-mk1/shared-types';
 })
 export class ProjectsListComponent implements OnInit {
   private projectsService = inject(ProjectsService);
+
+  // Available status options for filtering
+  readonly statusOptions = PROJECT_STATUS_VALUES;
 
   // Signals for component state
   projects = signal<ProjectDto[]>([]);

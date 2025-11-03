@@ -21,6 +21,50 @@ h2 {
   color: $color-text-primary;
 }
 
+.filters-section {
+  background-color: #f9fafb;
+  border: 1px solid $color-border-light;
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-xl;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.filter-label {
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.filter-select {
+  flex: 1;
+  max-width: 250px;
+  padding: $spacing-sm $spacing-md;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  background-color: $color-white;
+  color: $color-text-primary;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: $color-primary;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+}
+
 .project-count {
   padding: $spacing-md $spacing-lg;
   background-color: #f5f5f5;
