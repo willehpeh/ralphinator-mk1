@@ -1,35 +1,5 @@
 # Use Cases: Client Management Foundation
 
-## Use Case 2: View List of All Clients
-
-**Primary Actor**: Developer/User
-
-**Goal**: See an overview of all clients in the system to understand their current client base and select clients for further action.
-
-**Preconditions**:
-- User has access to the CRM system
-- At least one client exists in the system (or none, showing empty state)
-
-**Main Success Scenario**:
-1. User navigates to the clients section
-2. System retrieves all client records
-3. System displays a list showing each client's name, status, and key contact information
-4. User can see at a glance all clients in the system
-
-**Extensions**:
-- 2a. If no clients exist:
-  - System displays empty state message
-  - System offers option to create first client
-- 3a. If user wants to filter by status:
-  - User selects status filter (Active, Inactive, Prospect, Past Client)
-  - System displays only clients matching selected status
-- 4a. If user wants to view a specific client:
-  - Continue to Use Case 3: View Client Details
-
-**Success Guarantee**: User has visibility into all clients (or filtered subset) currently in the system.
-
----
-
 ## Use Case 3: View Client Details
 
 **Primary Actor**: Developer/User

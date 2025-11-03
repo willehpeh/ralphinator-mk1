@@ -164,7 +164,7 @@ You are in Step 2 of an agentic software development workflow.
 1. Read NEXT_STORY.md to understand the user story
 2. Break it down into BUSINESS-DRIVEN use cases in Alistair Cockburn style
 3. Write all use cases to NEXT_USE_CASES.md
-4. Delete NEXT_STORY.md
+4. Copy the contents of NEXT_STORY.md to CURRENT_STORY.md, and delete NEXT_STORY.md
 
 ## Use Case Format (Alistair Cockburn)
 
@@ -243,6 +243,7 @@ You are in Step 3 of an agentic software development workflow.
 1. Delete NEXT_USE_CASES.md
 2. Do NOT create CURRENT_USE_CASE.md
 3. Create REFACTORING.md and leave it empty.
+3a. Add the current story from CURRENT_STORY.md to IMPLEMENTED_STORIES.md, and delete CURRENT_STORY.md.
 4. The workflow will move to refactoring (Step 4)
 
 ## If Use Cases Remain:
