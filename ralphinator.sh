@@ -359,6 +359,7 @@ Break it down further. Do ONE thing.
 
 Remember: The workflow will loop. You will be called again. There's no rush to do everything now.
 Focus on doing ONE SMALL THING WELL.
+If your task involves the frontend, ensure the interface is modern and professional. Do not be negligent with styling.
 EOF
 
     log_info "Invoking Claude Code for Step 3.5..."

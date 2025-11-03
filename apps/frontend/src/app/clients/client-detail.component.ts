@@ -1,6 +1,8 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { loadClients, deleteClient } from './store/clients.actions';
 import { selectClientById, selectClientsLoading, selectClientsError } from './store/clients.selectors';
@@ -143,8 +145,13 @@ export class ClientDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private navigation = inject(ClientNavigationService);
 
-  // Get client ID from route params
-  private clientId = signal<string | null>(null);
+  // Get client ID from route params using toSignal to avoid manual subscription cleanup
+  private clientId = toSignal(
+    this.route.paramMap.pipe(
+      map(params => params.get('id'))
+    ),
+    { initialValue: null }
+  );
 
   // Edit mode state
   isEditing = signal(false);
@@ -161,20 +168,18 @@ export class ClientDetailComponent implements OnInit {
   // UI text labels
   readonly uiText = CLIENT_UI_TEXT;
 
-  // Select data from store using signals
-  client = this.store.selectSignal(selectClientById(this.clientId() ?? ''));
+  // Select data from store using computed signal that updates when clientId changes
+  client = computed(() => {
+    const id = this.clientId();
+    return id ? this.store.selectSignal(selectClientById(id))() : null;
+  });
+
   loading = this.store.selectSignal(selectClientsLoading);
   error = this.store.selectSignal(selectClientsError);
 
   ngOnInit(): void {
-    // Get the client ID from route parameters
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      this.clientId.set(id);
-
-      // Load clients if not already loaded
-      this.store.dispatch(loadClients());
-    });
+    // Load clients if not already loaded
+    this.store.dispatch(loadClients());
   }
 
   navigateBack(): void {
