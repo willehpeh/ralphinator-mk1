@@ -24,6 +24,7 @@ This use case allows users to delete a contact person from the system when they 
 - [x] Update ContactProjection to handle ContactDeletedDomainEvent (soft delete/mark as deleted)
 
 ### API Layer
+- `apps/api/src/app/contacts/contacts.module.ts` (modified - registered RemoveContactCommandHandler)
 
 ### Frontend Layer
 
@@ -39,7 +40,7 @@ This use case allows users to delete a contact person from the system when they 
 
 ### API Layer
 - [x] Add DELETE /api/contacts/:id endpoint in ContactsController
-- [ ] Register RemoveContactCommandHandler in ContactsModule
+- [x] Register RemoveContactCommandHandler in ContactsModule
 
 ### Frontend Layer
 - [ ] Add delete button to ContactDetailComponent
@@ -77,6 +78,7 @@ This use case allows users to delete a contact person from the system when they 
 
 ### API Layer
 - `apps/api/src/app/contacts/contacts.controller.ts` (modified - added DELETE endpoint for removing contacts)
+- `apps/api/src/app/contacts/contacts.module.ts` (modified - registered RemoveContactCommandHandler)
 
 ### Frontend Layer
 
