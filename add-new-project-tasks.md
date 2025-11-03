@@ -298,14 +298,31 @@ This document tracks the implementation tasks for the "Add a New Project to a Cl
 - Add GET /api/clients/:id/projects endpoint
 
 ### 17. Create Project DTOs
-**Status**: Pending
+**Status**: Completed
+**Date**: 2025-11-03
 
 **Implementation Details**:
-- Create `packages/shared-types/src/lib/dtos/project.dtos.ts`
-- Define CreateProjectDto with validation decorators
-- Define CreateProjectResponse
-- Define ProjectDto (read model representation)
-- Export from shared-types package
+- Created `packages/shared-types/src/lib/dtos/project.dtos.ts`
+- Defined ProjectDataDto base class with all project fields and validation decorators:
+  - clientId (required, string)
+  - name (required, string)
+  - status (required, enum validation using PROJECT_STATUS_VALUES)
+  - description, startDate, expectedEndDate, actualEndDate, technicalNotes (optional, string)
+  - budget (optional, number with @Min(0) validation)
+  - Date fields use @IsDateString() validation
+- Defined CreateProjectDto extending ProjectDataDto
+- Defined UpdateProjectDto extending ProjectDataDto
+- Defined CreateProjectResponse interface
+- Defined ProjectDto interface matching ProjectReadModel structure
+- Exported from shared-types package via `packages/shared-types/src/index.ts`
+- Followed ClientDataDto pattern for consistency
+
+**Files Modified**:
+- `packages/shared-types/src/lib/dtos/project.dtos.ts` (new)
+- `packages/shared-types/src/index.ts` (updated exports)
+
+**Verification**:
+- Linting passed: `nx lint shared-types`
 
 ### 18. Wire ProjectsModule into AppModule
 **Status**: Pending
@@ -388,6 +405,6 @@ This document tracks the implementation tasks for the "Add a New Project to a Cl
 
 ## Implementation Status
 - Total Tasks: 25
-- Completed: 15 (Tasks 1-15, with Task 5 merged into Task 4)
-- Remaining: 10
-- Progress: 60%
+- Completed: 16 (Tasks 1-15 and 17, with Task 5 merged into Task 4)
+- Remaining: 9
+- Progress: 64%
