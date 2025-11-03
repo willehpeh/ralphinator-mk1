@@ -49,6 +49,7 @@ export class ContactProjection extends BaseProjectionHandler {
   private async onContactAdded(event: ContactAddedToClientDomainEvent): Promise<void> {
     // Transform ContactAddedToClientDomainEvent into contact read model
     // Note: clientName is set to empty string as it will be populated by the repository when fetching
+    const now = new Date();
     const readModel = new ContactReadModel(
       event.contactData.contactId,
       event.aggregateId, // clientId is the aggregateId
@@ -56,7 +57,9 @@ export class ContactProjection extends BaseProjectionHandler {
       event.contactData.name,
       event.contactData.role,
       event.contactData.email,
-      event.contactData.phone
+      event.contactData.phone,
+      now, // createdAt
+      now  // updatedAt
     );
 
     // Persist to read repository
@@ -79,7 +82,7 @@ export class ContactProjection extends BaseProjectionHandler {
     }
 
     // Transform ContactUpdatedDomainEvent into updated contact read model
-    // Preserve clientId and clientName from existing read model
+    // Preserve clientId, clientName, and createdAt from existing read model
     const updatedReadModel = new ContactReadModel(
       event.contactData.contactId,
       existingContact.clientId,
@@ -87,7 +90,9 @@ export class ContactProjection extends BaseProjectionHandler {
       event.contactData.name,
       event.contactData.role,
       event.contactData.email,
-      event.contactData.phone
+      event.contactData.phone,
+      existingContact.createdAt, // Preserve original createdAt
+      new Date()                  // Update updatedAt to now
     );
 
     // Persist updated read model to repository

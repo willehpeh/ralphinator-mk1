@@ -46,7 +46,9 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
       contact.name,
       contact.role,
       contact.email,
-      contact.phone
+      contact.phone,
+      contact.createdAt,
+      contact.updatedAt
     );
   }
 
