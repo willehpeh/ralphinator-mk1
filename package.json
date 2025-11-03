@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "GPL-3.0-or-later",
   "scripts": {
-    "dev": "nx run-many --target=serve --projects=api,frontend --parallel=2"
+    "dev": "nx run-many --target=serve --projects=api,frontend --host 0.0.0.0 --parallel=2"
   },
   "private": true,
   "dependencies": {
