@@ -10,9 +10,16 @@
   - `packages/domain/src/index.ts` - Exported new event
 - **Description:** Created the domain event that will be raised when a contact is added to a client. The event includes contactId, name, role, email, and phone fields.
 
-## Next Tasks
+### Task 2: Add contact state to ClientAggregate
+- **Files Modified:**
+  - `packages/domain/src/lib/aggregates/client.aggregate.ts`
+- **Description:**
+  - Added Contact interface to represent contact person data (contactId, name, role, email, phone)
+  - Added private contacts Map to ClientAggregate to store contacts by contactId
+  - Added getContacts() method to retrieve all contacts as an array
+  - Contact interface is exported from domain package for use in other layers
 
-- Add contact state to ClientAggregate
+## Next Tasks
 - Implement addContact() method on ClientAggregate
 - Register ContactAddedToClientDomainEvent handler in ClientAggregate
 - Create AddContactToClientCommand

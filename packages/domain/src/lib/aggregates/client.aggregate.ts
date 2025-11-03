@@ -10,6 +10,17 @@ import { ClientDeletedDomainEvent } from '../events/client-deleted.domain-event'
 import { ClientData } from '../value-objects/client-data.value-object';
 import { Email } from '../value-objects/email.value-object';
 
+/**
+ * Represents a contact person associated with a client
+ */
+export interface Contact {
+  contactId: string;
+  name: string;
+  role: string | null;
+  email: string | null;
+  phone: string | null;
+}
+
 export class ClientAggregate extends EventSourcedAggregate {
   private id?: string;
   private companyName?: string;
@@ -18,6 +29,7 @@ export class ClientAggregate extends EventSourcedAggregate {
   private address: string | null = null;
   private status?: ClientStatus;
   private notes: string | null = null;
+  private contacts: Map<string, Contact> = new Map();
 
   constructor() {
     super();
@@ -213,5 +225,14 @@ export class ClientAggregate extends EventSourcedAggregate {
     this.ensureInitialized();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.notes!;
+  }
+
+  /**
+   * Get all contacts associated with this client
+   * Returns a copy of the contacts array to prevent external mutation
+   */
+  getContacts(): Contact[] {
+    this.ensureInitialized();
+    return Array.from(this.contacts.values());
   }
 }
