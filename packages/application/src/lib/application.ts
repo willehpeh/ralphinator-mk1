@@ -36,6 +36,7 @@ export * from './queries/handlers/get-clients-by-status.handler';
 export * from './queries/handlers/get-client-contacts.handler';
 export * from './queries/handlers/get-contact-by-id.handler';
 export * from './queries/handlers/get-all-contacts.handler';
+export * from './queries/handlers/get-projects-by-client-id.handler';
 
 // Integration Events
 export * from './events/client-created.event';

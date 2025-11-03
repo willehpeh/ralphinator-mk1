@@ -209,12 +209,25 @@ This document tracks the implementation tasks for the "Add a New Project to a Cl
 - Linting passed: `nx lint application`
 
 ### 12. Create GetProjectsByClientIdQueryHandler
-**Status**: Pending
+**Status**: Completed
+**Date**: 2025-11-03
 
 **Implementation Details**:
-- Create `packages/application/src/lib/queries/handlers/get-projects-by-client-id.handler.ts`
-- Use IProjectReadRepository to fetch projects
-- Return ProjectReadModel[]
+- Created `packages/application/src/lib/queries/handlers/get-projects-by-client-id.handler.ts`
+- Uses IProjectReadRepository to fetch projects via findByClientId method
+- Returns ProjectReadModel[]
+- Followed GetClientContactsQueryHandler pattern for consistency
+- Added PROJECT_READ_REPOSITORY injection token to `packages/application/src/lib/ports/injection-tokens.ts`
+- Exported from application package via `packages/application/src/lib/application.ts`
+- Includes proper error handling with descriptive messages
+
+**Files Modified**:
+- `packages/application/src/lib/queries/handlers/get-projects-by-client-id.handler.ts` (new)
+- `packages/application/src/lib/ports/injection-tokens.ts` (added PROJECT_READ_REPOSITORY token)
+- `packages/application/src/lib/application.ts` (updated exports)
+
+**Verification**:
+- Linting passed: `nx lint application`
 
 ### 13. Create ProjectProjection
 **Status**: Pending
@@ -342,6 +355,6 @@ This document tracks the implementation tasks for the "Add a New Project to a Cl
 
 ## Implementation Status
 - Total Tasks: 25
-- Completed: 11 (Tasks 1-11, with Task 5 merged into Task 4)
-- Remaining: 14
-- Progress: 44%
+- Completed: 12 (Tasks 1-12, with Task 5 merged into Task 4)
+- Remaining: 13
+- Progress: 48%
