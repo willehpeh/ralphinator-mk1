@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import {
   CreateProjectHandler,
+  UpdateProjectDetailsHandler,
   GetProjectsByClientIdQueryHandler,
   GetAllProjectsQueryHandler,
   GetProjectByIdQueryHandler,
@@ -16,7 +17,7 @@ import {
 import { ProjectsController } from './projects.controller';
 import { AllProjectsController } from './all-projects.controller';
 
-const CommandHandlers = [CreateProjectHandler];
+const CommandHandlers = [CreateProjectHandler, UpdateProjectDetailsHandler];
 const QueryHandlers = [
   GetProjectsByClientIdQueryHandler,
   GetAllProjectsQueryHandler,

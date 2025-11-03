@@ -63,10 +63,25 @@
 
 **Description**: Added projection handler for the ProjectDetailsUpdatedDomainEvent that updates the read model when project details change. The handler follows the same pattern as ClientProjection, using a fetch-update-save approach with helper methods. The handler preserves the original createdAt timestamp while updating all other fields. Also refactored the existing onProjectCreated handler to use a new shared helper method (transformProjectDataToReadModel) that eliminates duplication between create and update operations.
 
+**Commit**: feat: Add projection handler for ProjectDetailsUpdatedDomainEvent
+
+### Task 7: Create PUT endpoint in ProjectsController for updating project details
+**Date**: 2025-11-03
+**Files Modified**:
+- `apps/api/src/app/projects/projects.controller.ts` (added imports for Put, NotFoundException, UpdateProjectDetailsCommand, GetProjectByIdQuery, UpdateProjectDto; added fetchProjectAfterMutation helper method; updated createProjectDataPayload to accept UpdateProjectDto; added PUT :projectId endpoint)
+- `apps/api/src/app/projects/projects.module.ts` (added UpdateProjectDetailsHandler import and registration)
+
+**Description**: Added the PUT endpoint to the ProjectsController for updating project details. The endpoint follows the same pattern as the ClientsController's update endpoint, using the UpdateProjectDetailsCommand to execute the update operation and then fetching the updated project using GetProjectByIdQuery. The endpoint includes:
+- Route: PUT /clients/:clientId/projects/:projectId
+- Request body: UpdateProjectDto with validation
+- Response: ProjectReadModel with updated data
+- Helper method: fetchProjectAfterMutation to retrieve updated project and throw NotFoundException if not found
+- Updated createProjectDataPayload to accept both CreateProjectDto and UpdateProjectDto
+- Registered UpdateProjectDetailsHandler in ProjectsModule
+
 **Commit**:
 
 ## Pending Tasks
-- Create API endpoint (controller) for updating project details
 - Create Angular component for editing project details
 - Add form validation
 - Add routing
