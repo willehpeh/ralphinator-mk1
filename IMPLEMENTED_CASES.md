@@ -693,3 +693,33 @@
 - Success guarantee met: User has a clear overview of all projects in the system
 - Documentation: view-all-projects.md
 - **Note**: Complete implementation with full CQRS query pattern and professional UI
+
+## Use Case 2 (Project Management): Find Projects by Status or Client (2025-11-03) ✅ COMPLETE
+- Complete client-side filtering implementation using Angular signals and computed values
+- Frontend: ProjectsListComponent enhanced with dual filter dropdowns (status and client)
+- Frontend: Status filter dropdown with all project status options (Planning, Active, On Hold, Completed, Cancelled)
+- Frontend: Client filter dropdown populated with all clients from ClientsService
+- Frontend: selectedStatusFilter signal tracks selected status filter state
+- Frontend: selectedClientFilter signal tracks selected client filter state
+- Frontend: projects computed signal applies sequential filtering (status first, then client)
+- Frontend: Both filters work independently and together for combined filtering
+- Frontend: Clear Filters button appears conditionally when any filter is active
+- Frontend: clearFilters() method resets both filter signals to empty string
+- Frontend: Professional filter UI with flexbox layout and proper spacing
+- Frontend: Clear button styling with hover effects (white → primary color transition)
+- Frontend: Modern Angular patterns (@if for conditional rendering, signals, computed)
+- Frontend: Project count display updates dynamically based on filtered results
+- Frontend: Empty state handling with helpful messages when no projects match filters
+- All main success scenario steps met:
+  - User selects a status filter (dropdown with all status options) ✅
+  - System updates the list to show only projects matching selected status ✅
+  - User optionally selects a client filter to further narrow results ✅
+  - System updates list to show projects matching both filters ✅
+  - System displays count of matching projects ✅
+- All extensions handled:
+  - 2a: No projects match the filter - empty state message displayed ✅
+  - 3a: User searches by project name - NOT IMPLEMENTED (optional extension)
+  - 5a: User clears all filters - Clear Filters button implemented ✅
+- Success guarantee met: User finds the specific projects they were looking for
+- Documentation: find-projects-by-status-or-client.md
+- **Note**: Core filtering functionality complete. Name search is optional future enhancement.
