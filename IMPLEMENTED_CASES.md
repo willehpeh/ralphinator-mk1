@@ -773,3 +773,47 @@
 - Success guarantee met: User has complete understanding of project status, timeline, and context
 - Documentation: view-project-details-tasks.md
 - **Note**: Complete implementation with all acceptance criteria satisfied and professional UI design
+
+## Use Case 4 (Project Management): Update Project Details (2025-11-03) ✅ COMPLETE
+- Complete CQRS + Event Sourcing implementation for updating project information
+- Domain: ProjectDetailsUpdatedDomainEvent captures project updates with all fields
+- Domain: ProjectAggregate.updateDetails() method validates and applies event
+- Domain: PROJECT_EVENT_TYPES.DETAILS_UPDATED constant for event type identification
+- Application: UpdateProjectDetailsCommand with all project fields (name, description, dates, budget, status, technicalNotes)
+- Application: UpdateProjectDetailsCommandHandler loads aggregate, updates details, persists events
+- Infrastructure: ProjectProjection handles ProjectDetailsUpdatedDomainEvent and updates read model
+- Backend API: PUT /api/projects/:id endpoint accepts UpdateProjectDetailsDto
+- Backend API: UpdateProjectDetailsDto validates dates (start <= expected), positive budget, required fields
+- Frontend: ProjectsService.updateProject() method for API communication
+- Frontend: ProjectEditComponent at /projects/:id/edit route with reactive forms
+- Frontend: Form pre-populated with current project data using toSignal and switchMap
+- Frontend: Comprehensive validation (name required, dates validation, budget positivity, status required)
+- Frontend: Date range validators (startDate <= expectedEndDate, expectedEndDate <= actualEndDate)
+- Frontend: Conditional actualEndDate field (only for Completed/Cancelled status)
+- Frontend: "Edit Project" button added to ProjectDetailComponent for navigation to edit form
+- Frontend: Professional button styling with primary color scheme (blue background, white text)
+- Frontend: Cancel and Save buttons with proper navigation flow
+- Frontend: Automatic navigation to project detail view after successful save
+- Frontend: Loading states with isSubmitting signal during save operation
+- Frontend: Error handling with user-friendly error messages
+- Frontend: Modern Angular patterns (standalone, signals, OnPush, reactive forms)
+- Frontend: Responsive layout with mobile support via CSS media queries
+- Event sourcing: All project updates captured as immutable events in event store
+- Projections: Project read model updated with all changed fields
+- All main success scenario steps met:
+  - User clicks "Edit Project" button on detail page ✅
+  - System displays update form pre-populated with current project data ✅
+  - User modifies project fields (name, description, dates, budget, status) ✅
+  - User submits the updated information ✅
+  - System validates the changes (date logic, positive budget, required fields) ✅
+  - System saves the changes and records the update in project history ✅
+  - System displays confirmation message (via navigation to detail view) ✅
+  - System returns user to project detail page with updated information ✅
+- All extensions handled:
+  - 5a: Start date after expected end date - validation error displayed ✅
+  - 5b: Budget is negative or zero - validation error displayed ✅
+  - 5c: Required fields are empty - validation highlights missing fields ✅
+  - 6a: System error occurs - error message displayed, changes retained in form ✅
+- Success guarantee met: Project information is updated and complete history of changes is preserved
+- Documentation: TASK_UC4_UPDATE_PROJECT.md
+- **Note**: Complete end-to-end implementation with full CQRS + Event Sourcing pattern and professional UI
