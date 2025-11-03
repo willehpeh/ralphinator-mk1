@@ -340,3 +340,29 @@
   - 2a: Empty state message "No Contacts Yet" when no contacts exist
   - Professional UI with polished design and smooth interactions
 - Documentation: view-complete-contact-list.md
+
+## Use Case 4: Search and Filter Contacts (2025-11-03)
+- Complete client-side search and filter implementation for contacts
+- Frontend: Real-time search functionality using Angular signals
+- Frontend: Search input filters by name, role, email, and client name (case-insensitive)
+- Frontend: searchQuery signal tracks current search input
+- Frontend: filteredContacts computed signal applies both filtering and sorting
+- Frontend: Sort functionality with three options: name, client, role
+- Frontend: sortBy signal with type union 'name' | 'client' | 'role' (default: 'name')
+- Frontend: Professional pill-group UI for sort controls with active state highlighting
+- Frontend: Responsive layout with flex-wrap for mobile devices
+- Frontend: "No contacts found" empty state with clear messaging when search yields no results
+- Frontend: Clear search button in empty state to reset search
+- Frontend: Dynamic contact count showing number of filtered results
+- Application: ContactReadModel enhanced with clientName field
+- Infrastructure: InMemoryContactReadRepository populates clientName from client companyName
+- Infrastructure: Repository queries fetch client data and populate clientName on all reads
+- All main success scenario steps met:
+  - User can enter search criteria (name, role, email, client company)
+  - System filters the contacts list in real-time
+  - System displays filtered results with relevant details
+  - User can select a contact to view details
+- Extensions handled:
+  - 4a: "No contacts found" message when no matches, with suggestions and clear button
+  - 4b: Sort results by name, client, or role with reactive UI controls
+- Documentation: search-and-filter-contacts.md
