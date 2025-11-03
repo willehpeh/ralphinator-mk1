@@ -47,6 +47,9 @@ import { ProjectDto } from '@angular-nest-starter/shared-types';
               <span class="status-badge status-{{ projectData.status.toLowerCase().replace(' ', '-') }}">
                 {{ projectData.status }}
               </span>
+              <button class="secondary-button" (click)="openStatusChangeDialog()">
+                Change Status
+              </button>
               <button class="edit-button" (click)="navigateToEdit()">
                 Edit Project
               </button>
@@ -187,5 +190,10 @@ export class ProjectDetailComponent {
     if (id) {
       this.router.navigate(['/projects', id, 'edit']);
     }
+  }
+
+  openStatusChangeDialog(): void {
+    // TODO: Implement status change dialog
+    console.log('Change status clicked');
   }
 }

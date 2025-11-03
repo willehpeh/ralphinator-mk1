@@ -209,8 +209,42 @@ This method is now available for the component layer to use when implementing th
 
 ---
 
+### Task 8: Add Change Status button to project detail component
+**Date**: 2025-11-03
+
+**What was implemented**:
+- Added "Change Status" button to project detail component header actions
+- Button appears between the status badge and "Edit Project" button
+- Added `openStatusChangeDialog()` method stub (logs to console for now)
+- Created `.secondary-button` CSS class with modern styling:
+  - Light gray background (#e2e8f0) with border
+  - Hover effect darkens background and border
+  - Active state adds subtle press effect
+  - Professional appearance that complements primary blue "Edit Project" button
+- Added responsive styling for mobile devices (button stretches to full width)
+
+**Files modified**:
+- `apps/frontend/src/app/projects/project-detail.component.ts`
+- `apps/frontend/src/app/projects/project-detail.component.scss`
+
+**Rationale**:
+The "Change Status" button provides a clear, accessible entry point for users to update project status:
+1. **Visual hierarchy**: Secondary button styling (gray) vs primary button (blue) indicates "Edit Project" is the main action
+2. **Logical placement**: Status badge → Change Status button → Edit Project flows naturally left to right
+3. **Responsive design**: Mobile layout stacks buttons vertically with full width for easy touch targets
+4. **Professional appearance**: Consistent with modern UI patterns, not cluttered or distracting
+5. **Separation of concerns**: Status changes are separate from full project edits (different use cases)
+
+**User Flow**:
+1. User views project detail page
+2. User sees current status badge and "Change Status" button in header
+3. User clicks "Change Status" (currently logs to console - next task will implement dialog)
+
+---
+
 ## Next Tasks
 
-- Add change status UI to project detail component
-- Add status dropdown/selector component
-- Add confirmation dialog for status changes
+- Add status dropdown/selector component or dialog
+- Implement status change functionality in openStatusChangeDialog()
+- Add confirmation for status changes
+- Add success/error message display
