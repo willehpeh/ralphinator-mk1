@@ -33,6 +33,36 @@ export abstract class EventSourcedAggregate {
   }
 
   /**
+   * Ensures that the aggregate has been initialized (created).
+   * Throws an error if the aggregate ID is not set.
+   *
+   * @throws Error if the aggregate has not been created
+   * @returns The aggregate ID
+   */
+  protected ensureInitialized(): string {
+    const id = this.getId();
+    if (!id) {
+      throw new Error('Aggregate has not been initialized');
+    }
+    return id;
+  }
+
+  /**
+   * Generic helper method to get a field value after ensuring initialization.
+   * Reduces boilerplate in getter methods by centralizing the initialization check
+   * and non-null assertion pattern.
+   *
+   * @param field - The field value to return
+   * @returns The field value (non-null)
+   * @throws Error if the aggregate has not been created
+   */
+  protected getInitializedField<T>(field: T | undefined): T {
+    this.ensureInitialized();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return field!;
+  }
+
+  /**
    * Gets all uncommitted events that need to be persisted.
    */
   getUncommittedEvents(): DomainEvent[] {

@@ -69,32 +69,13 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
-   * Ensures that the aggregate has been initialized (created).
-   * Throws an error if the aggregate ID is not set.
-   *
-   * @throws Error if the aggregate has not been created
-   * @returns The aggregate ID
+   * Override base ensureInitialized to provide client-specific error message
    */
-  private ensureInitialized(): string {
+  protected override ensureInitialized(): string {
     if (!this.id) {
       throw new Error(DOMAIN_ERRORS.CLIENT_NOT_INITIALIZED);
     }
     return this.id;
-  }
-
-  /**
-   * Generic helper method to get a field value after ensuring initialization.
-   * Reduces boilerplate in getter methods by centralizing the initialization check
-   * and non-null assertion pattern.
-   *
-   * @param field - The field value to return
-   * @returns The field value (non-null)
-   * @throws Error if the aggregate has not been created
-   */
-  private getInitializedField<T>(field: T | undefined): T {
-    this.ensureInitialized();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return field!;
   }
 
   /**
