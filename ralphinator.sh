@@ -130,7 +130,7 @@ You are in Step 1 of an agentic software development workflow.
    - What requirements remain from PROMPT.md
    - What has already been implemented (in IMPLEMENTED_STORIES.md)
    - Logical progression of features
-2. Write the user story to NEXT_STORY.md
+2. Write the user story to NEXT_STORY.md in the monorepo root folder.
 
 ## Important:
 - You must choose ONE path: either create PROJECT_COMPLETE.md OR create NEXT_STORY.md
