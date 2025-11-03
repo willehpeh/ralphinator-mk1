@@ -184,6 +184,33 @@ Response: ProjectReadModel with updated status
 
 ---
 
+### Task 7: Add changeProjectStatus method to ProjectsService
+**Date**: 2025-11-03
+
+**What was implemented**:
+- Added `changeProjectStatus` method to `ProjectsService` in `apps/frontend/src/app/projects/projects.service.ts`
+- Imported `ChangeProjectStatusDto` from `@angular-nest-starter/shared-types`
+- Method signature: `changeProjectStatus(clientId: string, projectId: string, dto: ChangeProjectStatusDto): Observable<ProjectDto>`
+- Uses HTTP PATCH to call `/api/clients/:clientId/projects/:projectId/status` endpoint
+- Returns the updated `ProjectDto` with the new status
+
+**Files modified**:
+- `apps/frontend/src/app/projects/projects.service.ts`
+
+**Rationale**:
+The `changeProjectStatus` method provides the service layer functionality to call the backend API:
+1. **Type safety**: Uses `ChangeProjectStatusDto` for request body validation
+2. **REST convention**: Uses PATCH for partial updates (status only)
+3. **API consistency**: Follows the nested route pattern `/clients/:clientId/projects/:projectId/status`
+4. **Return value**: Returns the updated project for immediate UI updates
+5. **Observable pattern**: Returns `Observable<ProjectDto>` consistent with other service methods
+
+This method is now available for the component layer to use when implementing the status change UI.
+
+---
+
 ## Next Tasks
 
-- Add frontend change status functionality
+- Add change status UI to project detail component
+- Add status dropdown/selector component
+- Add confirmation dialog for status changes
