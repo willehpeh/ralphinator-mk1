@@ -35,7 +35,9 @@ import { Client } from '../clients/client.types';
           <label for="client-filter" class="filter-label">Filter by Client:</label>
           <select
             id="client-filter"
-            class="filter-select">
+            class="filter-select"
+            [value]="selectedClientFilter()"
+            (change)="onClientFilterChange($event)">
             <option value="">All Clients</option>
             @for (client of clients(); track client.id) {
               <option [value]="client.id">{{ client.companyName }}</option>
@@ -131,6 +133,7 @@ export class ProjectsListComponent implements OnInit {
 
   // Filter state
   selectedStatusFilter = signal<string>('');
+  selectedClientFilter = signal<string>('');
 
   // Computed filtered projects based on selected filters
   projects = computed(() => {
@@ -154,6 +157,11 @@ export class ProjectsListComponent implements OnInit {
   onStatusFilterChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
     this.selectedStatusFilter.set(target.value);
+  }
+
+  onClientFilterChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.selectedClientFilter.set(target.value);
   }
 
   private loadProjects(): void {

@@ -32,11 +32,17 @@
    - Dropdown displays all clients with "All Clients" default option
    - Build verified successfully
 
+5. ✅ Add signal for selected client filter and wire up change event
+   - Added selectedClientFilter signal initialized to empty string
+   - Added onClientFilterChange event handler to update signal
+   - Wired up [value] binding to selectedClientFilter()
+   - Wired up (change) event to onClientFilterChange handler
+   - Build verified successfully
+
 ## Current Task
 - None (ready for next task)
 
 ## Remaining Tasks (Planned)
-- Add signal for selected client filter and wire up change event
 - Update filtering logic to include client filter
 - Add "Clear Filters" button
 - Test filtering functionality end-to-end
