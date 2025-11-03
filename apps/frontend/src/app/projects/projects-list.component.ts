@@ -44,6 +44,12 @@ import { Client } from '../clients/client.types';
             }
           </select>
         </div>
+
+        @if (selectedStatusFilter() || selectedClientFilter()) {
+          <button class="clear-filters-btn" (click)="clearFilters()">
+            Clear Filters
+          </button>
+        }
       </div>
 
       @if (loading()) {
@@ -170,6 +176,11 @@ export class ProjectsListComponent implements OnInit {
   onClientFilterChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
     this.selectedClientFilter.set(target.value);
+  }
+
+  clearFilters(): void {
+    this.selectedStatusFilter.set('');
+    this.selectedClientFilter.set('');
   }
 
   private loadProjects(): void {
