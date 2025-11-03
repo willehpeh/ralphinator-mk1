@@ -1,8 +1,9 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs/operators';
+import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { map, switchMap, catchError } from 'rxjs/operators';
+import { of, combineLatest } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { loadClients, deleteClient } from './store/clients.actions';
 import { selectClientById, selectClientsLoading, selectClientsError } from './store/clients.selectors';
@@ -218,12 +219,17 @@ import { ProjectDto } from '@angular-nest-starter/shared-types';
     </div>
   `
 })
-export class ClientDetailComponent implements OnInit {
+export class ClientDetailComponent {
   private store = inject(Store);
   private route = inject(ActivatedRoute);
   private navigation = inject(ClientNavigationService);
   private clientsService = inject(ClientsService);
   private projectsService = inject(ProjectsService);
+
+  constructor() {
+    // Load clients on component initialization
+    this.store.dispatch(loadClients());
+  }
 
   // Get client ID from route params using toSignal to avoid manual subscription cleanup
   private clientId = toSignal(
@@ -248,11 +254,55 @@ export class ClientDetailComponent implements OnInit {
   // Delete confirmation dialog state
   showDeleteConfirmation = signal(false);
 
-  // Contacts state
-  contacts = signal<Contact[]>([]);
+  // Signal to trigger reloading of contacts
+  private contactsReloadTrigger = signal(0);
 
-  // Projects state
-  projects = signal<ProjectDto[]>([]);
+  // Signal to trigger reloading of projects
+  private projectsReloadTrigger = signal(0);
+
+  // Contacts loaded from service using toSignal
+  // Combines clientId and reload trigger to reactively fetch contacts
+  contacts = toSignal(
+    combineLatest([
+      toObservable(this.clientId),
+      toObservable(this.contactsReloadTrigger)
+    ]).pipe(
+      switchMap(([id]) => {
+        if (!id) {
+          return of([]);
+        }
+        return this.clientsService.getContactsByClient(id).pipe(
+          catchError(error => {
+            console.error('Failed to load contacts:', error);
+            return of([]);
+          })
+        );
+      })
+    ),
+    { initialValue: [] }
+  );
+
+  // Projects loaded from service using toSignal
+  // Combines clientId and reload trigger to reactively fetch projects
+  projects = toSignal(
+    combineLatest([
+      toObservable(this.clientId),
+      toObservable(this.projectsReloadTrigger)
+    ]).pipe(
+      switchMap(([id]) => {
+        if (!id) {
+          return of([]);
+        }
+        return this.projectsService.getProjectsByClientId(id).pipe(
+          catchError(error => {
+            console.error('Failed to load projects:', error);
+            return of([]);
+          })
+        );
+      })
+    ),
+    { initialValue: [] }
+  );
 
   // Date format for displaying client dates
   readonly dateFormat = STANDARD_DATE_FORMAT;
@@ -268,15 +318,6 @@ export class ClientDetailComponent implements OnInit {
 
   loading = this.store.selectSignal(selectClientsLoading);
   error = this.store.selectSignal(selectClientsError);
-
-  ngOnInit(): void {
-    // Load clients if not already loaded
-    this.store.dispatch(loadClients());
-    // Load contacts for the current client
-    this.loadContacts();
-    // Load projects for the current client
-    this.loadProjects();
-  }
 
   navigateBack(): void {
     this.navigation.toClientList();
@@ -307,8 +348,8 @@ export class ClientDetailComponent implements OnInit {
   handleContactAdded(): void {
     // Exit add contact mode
     this.isAddingContact.set(false);
-    // Reload contacts list
-    this.loadContacts();
+    // Trigger contacts reload by incrementing the trigger signal
+    this.contactsReloadTrigger.update(v => v + 1);
   }
 
   toggleAddProjectMode(): void {
@@ -318,38 +359,8 @@ export class ClientDetailComponent implements OnInit {
   handleProjectAdded(): void {
     // Exit add project mode
     this.isAddingProject.set(false);
-    // Reload projects list
-    this.loadProjects();
-  }
-
-  private loadContacts(): void {
-    const id = this.clientId();
-    if (id) {
-      this.clientsService.getContactsByClient(id).subscribe({
-        next: (contacts) => {
-          this.contacts.set(contacts);
-        },
-        error: (error) => {
-          console.error('Failed to load contacts:', error);
-          this.contacts.set([]);
-        }
-      });
-    }
-  }
-
-  private loadProjects(): void {
-    const id = this.clientId();
-    if (id) {
-      this.projectsService.getProjectsByClientId(id).subscribe({
-        next: (projects) => {
-          this.projects.set(projects);
-        },
-        error: (error) => {
-          console.error('Failed to load projects:', error);
-          this.projects.set([]);
-        }
-      });
-    }
+    // Trigger projects reload by incrementing the trigger signal
+    this.projectsReloadTrigger.update(v => v + 1);
   }
 
   deleteClient(): void {
