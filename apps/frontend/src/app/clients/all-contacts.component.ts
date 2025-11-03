@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ClientsService } from './clients.service';
 import { ContactWithClient } from './client.types';
+import { AsyncStateManager } from '../shared/async-state-manager';
 
 @Component({
   selector: 'app-all-contacts',
@@ -343,7 +344,7 @@ import { ContactWithClient } from './client.types';
         </div>
       }
 
-      @if (!loading() && contacts().length === 0) {
+      @if (!loading() && (contacts()?.length ?? 0) === 0) {
         <div class="empty-state">
           <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -353,7 +354,7 @@ import { ContactWithClient } from './client.types';
         </div>
       }
 
-      @if (!loading() && contacts().length > 0) {
+      @if (!loading() && (contacts()?.length ?? 0) > 0) {
         <div class="search-section">
           <div class="search-input-wrapper">
             <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -466,16 +467,17 @@ export class AllContactsComponent implements OnInit {
   private clientsService = inject(ClientsService);
 
   // Component state using signals
-  contacts = signal<ContactWithClient[]>([]);
-  loading = signal<boolean>(true);
-  error = signal<string | null>(null);
+  contactsState = new AsyncStateManager<ContactWithClient[]>();
+  contacts = this.contactsState.data;
+  loading = this.contactsState.loading;
+  error = this.contactsState.error;
   searchQuery = signal<string>('');
   sortBy = signal<'name' | 'client' | 'role'>('name');
 
   // Computed filtered and sorted contacts
   filteredContacts = computed(() => {
     const query = this.searchQuery().toLowerCase().trim();
-    const allContacts = this.contacts();
+    const allContacts = this.contacts() ?? [];
     const sortField = this.sortBy();
 
     // Filter first
@@ -514,19 +516,9 @@ export class AllContactsComponent implements OnInit {
   }
 
   private loadContacts(): void {
-    this.loading.set(true);
-    this.error.set(null);
-
-    this.clientsService.getAllContacts().subscribe({
-      next: (contacts) => {
-        this.contacts.set(contacts);
-        this.loading.set(false);
-      },
-      error: (err) => {
-        this.error.set('Failed to load contacts. Please try again later.');
-        this.loading.set(false);
-        console.error('Error loading contacts:', err);
-      }
-    });
+    this.contactsState.execute(
+      this.clientsService.getAllContacts(),
+      'Failed to load contacts. Please try again later.'
+    );
   }
 }

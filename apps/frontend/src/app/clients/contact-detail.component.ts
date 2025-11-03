@@ -11,6 +11,7 @@ import { ContactDetail } from './client.types';
 import { FormState } from '../shared/form-state';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { createContactFormGroup } from './contact-form-builder';
+import { AsyncStateManager } from '../shared/async-state-manager';
 
 @Component({
   selector: 'app-contact-detail',
@@ -573,9 +574,10 @@ export class ContactDetailComponent implements OnInit {
   );
 
   // Contact data state
-  contact = signal<ContactDetail | null>(null);
-  loading = signal(false);
-  error = signal<string | null>(null);
+  contactState = new AsyncStateManager<ContactDetail>();
+  contact = this.contactState.data;
+  loading = this.contactState.loading;
+  error = this.contactState.error;
 
   // Edit mode state
   isEditMode = signal(false);
@@ -598,20 +600,10 @@ export class ContactDetailComponent implements OnInit {
   private loadContact(): void {
     const id = this.contactId();
     if (id) {
-      this.loading.set(true);
-      this.error.set(null);
-
-      this.clientsService.getContactById(id).subscribe({
-        next: (contact) => {
-          this.contact.set(contact);
-          this.loading.set(false);
-        },
-        error: (err) => {
-          console.error('Failed to load contact:', err);
-          this.error.set('Failed to load contact details. The contact may not exist.');
-          this.loading.set(false);
-        }
-      });
+      this.contactState.execute(
+        this.clientsService.getContactById(id),
+        'Failed to load contact details. The contact may not exist.'
+      );
     }
   }
 
