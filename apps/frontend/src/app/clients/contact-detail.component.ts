@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ClientNavigationService } from './client-navigation.service';
 import { ClientsService } from './clients.service';
-import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT, CLIENT_UI_TEXT_HELPERS } from './client-display.constants';
+import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT, CLIENT_UI_TEXT_HELPERS, SUCCESS_MESSAGE_DISMISS_DURATION_MS } from './client-display.constants';
 import { ContactDetail } from './client.types';
 import { FormState } from '../shared/form-state';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
@@ -671,8 +671,8 @@ export class ContactDetailComponent implements OnInit {
         this.editForm.reset();
         this.formState.setSubmitting(false);
 
-        // Show success message with auto-hide after 3 seconds
-        this.formState.setSuccess('Contact updated successfully!', 3000);
+        // Show success message with auto-hide
+        this.formState.setSuccess('Contact updated successfully!', SUCCESS_MESSAGE_DISMISS_DURATION_MS);
       },
       error: (err) => {
         console.error('Failed to update contact:', err);
