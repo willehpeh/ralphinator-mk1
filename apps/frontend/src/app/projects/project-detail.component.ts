@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -9,7 +9,7 @@ import { ProjectDto } from '@angular-nest-starter/shared-types';
 
 @Component({
   selector: 'app-project-detail',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./projects-common.scss', './project-detail.component.scss'],
   template: `
@@ -92,6 +92,18 @@ import { ProjectDto } from '@angular-nest-starter/shared-types';
               <p class="technical-notes-content">{{ projectData.technicalNotes }}</p>
             </div>
           }
+
+          <div class="detail-section">
+            <h4>Client Information</h4>
+            <div class="detail-grid">
+              <div class="detail-item">
+                <span class="detail-label">Client:</span>
+                <a [routerLink]="['/clients', projectData.clientId]" class="client-link">
+                  View Client Details →
+                </a>
+              </div>
+            </div>
+          </div>
 
           <div class="detail-section">
             <h4>Metadata</h4>

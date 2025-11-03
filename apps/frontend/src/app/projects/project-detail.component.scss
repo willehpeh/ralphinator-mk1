@@ -161,6 +161,27 @@
   word-break: break-word;
 }
 
+.client-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  background-color: #ebf4ff;
+  color: #2c5282;
+  border: 1px solid #bee3f8;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #bee3f8;
+    color: #1a365d;
+    transform: translateX(2px);
+  }
+}
+
 @media (max-width: 768px) {
   .project-detail {
     padding: 1rem;
