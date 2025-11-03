@@ -37,9 +37,17 @@
 - Field type is string (required, not nullable)
 - Updated in packages/application/src/lib/read-models/contact.read-model.ts
 
-### Task 3b: Update contact read repository to include client name
+### Task 3b: Update contact read repository to include client name ✅
 **Description**: Modify repository query to join with clients table and fetch client name
-**Status**: Pending
+**Status**: Completed
+**Details**:
+- Injected IClientReadRepository into InMemoryContactReadRepository constructor
+- Updated findById to fetch client and populate clientName from companyName field
+- Updated findByClientId to fetch client once and populate all contacts with clientName
+- Updated findAll to fetch all clients, create a clientMap, and populate clientName for all contacts
+- Updated ContactProjection to save contacts with empty string clientName (populated on read)
+- All methods return ContactReadModel with proper clientName populated
+- Falls back to 'Unknown Client' if client is not found
 
 ### Task 3c: Update query handlers to pass client name
 **Description**: Update GetAllContactsHandler and GetContactByIdHandler to pass clientName

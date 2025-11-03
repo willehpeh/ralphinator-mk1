@@ -44,9 +44,11 @@ export class ContactProjection extends BaseProjectionHandler {
    */
   private async onContactAdded(event: ContactAddedToClientDomainEvent): Promise<void> {
     // Transform ContactAddedToClientDomainEvent into contact read model
+    // Note: clientName is set to empty string as it will be populated by the repository when fetching
     const readModel = new ContactReadModel(
       event.contactId,
       event.aggregateId, // clientId is the aggregateId
+      '', // clientName will be populated by repository on read
       event.name,
       event.role,
       event.email,

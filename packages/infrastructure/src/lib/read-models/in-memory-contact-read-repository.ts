@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { IContactReadRepository, ContactReadModel } from '@angular-nest-starter/application';
+import { Injectable, Inject } from '@nestjs/common';
+import { IContactReadRepository, ContactReadModel, IClientReadRepository } from '@angular-nest-starter/application';
 
 /**
  * In-memory implementation of IContactReadRepository
@@ -17,6 +17,11 @@ import { IContactReadRepository, ContactReadModel } from '@angular-nest-starter/
 export class InMemoryContactReadRepository implements IContactReadRepository {
   private readonly contacts = new Map<string, ContactReadModel>();
 
+  constructor(
+    @Inject('IClientReadRepository')
+    private readonly clientRepository: IClientReadRepository
+  ) {}
+
   /**
    * Retrieves a specific contact by its ID.
    *
@@ -24,7 +29,25 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
    * @returns The contact read model or null if not found
    */
   async findById(contactId: string): Promise<ContactReadModel | null> {
-    return this.contacts.get(contactId) ?? null;
+    const contact = this.contacts.get(contactId);
+    if (!contact) {
+      return null;
+    }
+
+    // Fetch client name from client repository
+    const client = await this.clientRepository.findById(contact.clientId);
+    const clientName = client?.companyName ?? 'Unknown Client';
+
+    // Return contact with populated clientName
+    return new ContactReadModel(
+      contact.contactId,
+      contact.clientId,
+      clientName,
+      contact.name,
+      contact.role,
+      contact.email,
+      contact.phone
+    );
   }
 
   /**
@@ -34,9 +57,24 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
    * @returns Array of contact read models for the client
    */
   async findByClientId(clientId: string): Promise<ContactReadModel[]> {
-    return Array.from(this.contacts.values()).filter(
+    const contacts = Array.from(this.contacts.values()).filter(
       (contact) => contact.clientId === clientId
     );
+
+    // Fetch client name once for all contacts
+    const client = await this.clientRepository.findById(clientId);
+    const clientName = client?.companyName ?? 'Unknown Client';
+
+    // Return contacts with populated clientName
+    return contacts.map(contact => new ContactReadModel(
+      contact.contactId,
+      contact.clientId,
+      clientName,
+      contact.name,
+      contact.role,
+      contact.email,
+      contact.phone
+    ));
   }
 
   /**
@@ -66,7 +104,24 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
    * @returns Array of all contact read models
    */
   async findAll(): Promise<ContactReadModel[]> {
-    return Array.from(this.contacts.values());
+    const contacts = Array.from(this.contacts.values());
+
+    // Fetch all clients to map clientId to clientName
+    const clients = await this.clientRepository.findAll();
+    const clientMap = new Map(
+      clients.map(client => [client.id, client.companyName])
+    );
+
+    // Return contacts with populated clientName
+    return contacts.map(contact => new ContactReadModel(
+      contact.contactId,
+      contact.clientId,
+      clientMap.get(contact.clientId) ?? 'Unknown Client',
+      contact.name,
+      contact.role,
+      contact.email,
+      contact.phone
+    ));
   }
 
   /**
