@@ -1,3 +1,4 @@
 # Bugs
 
-No bugs currently tracked.
+The form for adding contacts has no working labels and does not submit anything
+

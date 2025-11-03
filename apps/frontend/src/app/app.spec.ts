@@ -1,4 +1,4 @@
-describe('App', () => {
+describe('AppComponent', () => {
   it('placeholder', () => {
     expect(true).toBeTruthy();
   });
