@@ -71,6 +71,20 @@
   - Created GetClientContactsQuery with clientId field to retrieve contacts for a specific client
   - Query is exported from application package for use in query handlers and API layer
 
+### Task 8: Create IContactReadRepository port interface
+- **Files Created:**
+  - `packages/application/src/lib/ports/contact-read-repository.interface.ts`
+- **Files Modified:**
+  - `packages/application/src/lib/ports/index.ts` - Exported new interface
+  - `packages/application/src/lib/ports/injection-tokens.ts` - Added CONTACT_READ_REPOSITORY injection token
+- **Description:**
+  - Created IContactReadRepository interface for contact read model operations
+  - Added findByClientId() method to retrieve contacts for a specific client
+  - Added save() method to persist contact read models
+  - Added delete() method to remove contacts from repository
+  - Added CONTACT_READ_REPOSITORY injection token for dependency injection
+  - Interface follows the same pattern as IClientReadRepository
+
 ## Next Tasks
 - Create GetClientContactsQueryHandler
 - Create projection to build contact read models
