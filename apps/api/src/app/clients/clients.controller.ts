@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, NotFoundException } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel, ClientDataPayload, AddContactToClientCommand } from '@angular-nest-starter/application';
+import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel, ClientDataPayload, AddContactToClientCommand, GetClientContactsQuery, ContactReadModel } from '@angular-nest-starter/application';
 import { ClientDataDto, CreateClientDto, UpdateClientDto, ChangeClientStatusDto, ClientStatus, AddContactDto, AddContactResponse } from '@angular-nest-starter/shared-types';
 import { randomUUID } from 'crypto';
 import { CLIENT_CONTROLLER_ERROR_MESSAGES } from './clients-controller.constants';
@@ -149,5 +149,12 @@ export class ClientsController {
     await this.commandBus.execute<AddContactToClientCommand, string>(command);
 
     return { contactId, clientId };
+  }
+
+  @Get(':id/contacts')
+  async getClientContacts(@Param('id') clientId: string): Promise<ContactReadModel[]> {
+    const query = new GetClientContactsQuery(clientId);
+    const contacts = await this.queryBus.execute<GetClientContactsQuery, ContactReadModel[]>(query);
+    return contacts;
   }
 }

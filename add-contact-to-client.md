@@ -143,6 +143,17 @@
   - Endpoint executes command via CommandBus and returns AddContactResponse
   - Follows RESTful pattern: POST /clients/:id/contacts
 
+### Task 13: Add API endpoint for retrieving client contacts
+- **Files Modified:**
+  - `apps/api/src/app/clients/clients.controller.ts`
+- **Description:**
+  - Added GetClientContactsQuery and ContactReadModel imports to controller
+  - Added GET /:id/contacts endpoint to ClientsController
+  - Endpoint creates GetClientContactsQuery with clientId parameter
+  - Endpoint executes query via QueryBus and returns ContactReadModel[] array
+  - Follows RESTful pattern: GET /clients/:id/contacts
+  - Returns empty array if client has no contacts
+
 ## Next Tasks
-- Add API endpoint for retrieving client contacts
 - Integrate frontend UI for adding contacts
+- Integrate frontend UI for viewing client contacts
