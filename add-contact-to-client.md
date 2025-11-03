@@ -39,8 +39,19 @@
   - All optional fields (role, email, phone) are nullable
   - Command is exported from application package for use in handlers and API layer
 
+### Task 5: Create AddContactToClientCommandHandler
+- **Files Created:**
+  - `packages/application/src/lib/commands/handlers/add-contact-to-client.handler.ts`
+- **Files Modified:**
+  - `packages/application/src/lib/application.ts` - Exported new handler
+- **Description:**
+  - Created AddContactToClientCommandHandler extending BaseCommandHandler
+  - Uses executeOnAggregate helper to load client, add contact, and save
+  - Calls ClientAggregate.addContact() method with all contact parameters
+  - Returns clientId on successful execution
+  - Handler is exported from application package and ready for registration in module
+
 ## Next Tasks
-- Create AddContactToClientCommandHandler
 - Create ContactReadModel DTO
 - Create GetClientContactsQuery and handler
 - Create projection to build contact read models
