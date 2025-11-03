@@ -110,8 +110,35 @@ The `ChangeProjectStatusCommandHandler` follows the CQRS pattern and event sourc
 
 ---
 
+### Task 5: Update ProjectProjection to handle ProjectStatusChangedDomainEvent
+**Date**: 2025-11-03
+
+**What was implemented**:
+- Added `ProjectStatusChangedDomainEvent` import to `ProjectProjection`
+- Added `ProjectStatusChangedDomainEvent` to the `@EventsHandler` decorator
+- Registered `onProjectStatusChanged` handler in the event handlers registry with `PROJECT_EVENT_TYPES.STATUS_CHANGED`
+- Implemented `onProjectStatusChanged` event handler method that:
+  - Uses the `updateReadModel` helper to fetch existing read model
+  - Returns null if project doesn't exist (cannot update non-existent project)
+  - Creates new `ProjectReadModel` with updated status while preserving all other fields
+  - Only updates the `status` field for efficiency (partial update pattern)
+
+**Files modified**:
+- `packages/infrastructure/src/lib/projections/project.projection.ts`
+
+**Rationale**:
+The `onProjectStatusChanged` handler follows the projection pattern for efficient read model updates:
+1. **Partial updates**: Only updates the status field, not all fields (more efficient than full replacement)
+2. **Immutability**: Creates new ProjectReadModel instance rather than mutating existing one
+3. **Null safety**: Checks if project exists before attempting update
+4. **Separation of concerns**: Status changes update read model separately from full detail updates
+5. **Performance**: Avoids unnecessary reads/writes for fields that haven't changed
+
+This completes the projection layer for the change project status feature. The read model will now be automatically updated whenever a ProjectStatusChangedDomainEvent is published.
+
+---
+
 ## Next Tasks
 
-- Update ProjectProjection to handle ProjectStatusChangedDomainEvent
 - Add PATCH /api/projects/:id/status endpoint
 - Add frontend change status functionality

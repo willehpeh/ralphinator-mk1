@@ -3,6 +3,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import {
   ProjectCreatedDomainEvent,
   ProjectDetailsUpdatedDomainEvent,
+  ProjectStatusChangedDomainEvent,
   PROJECT_EVENT_TYPES,
 } from '@angular-nest-starter/domain';
 import {
@@ -26,7 +27,7 @@ import { BaseProjectionHandler } from '../base/base-projection.handler';
  * - Uses the event handler registry pattern for extensible event handling
  */
 @Injectable()
-@EventsHandler(ProjectCreatedDomainEvent, ProjectDetailsUpdatedDomainEvent)
+@EventsHandler(ProjectCreatedDomainEvent, ProjectDetailsUpdatedDomainEvent, ProjectStatusChangedDomainEvent)
 export class ProjectProjection extends BaseProjectionHandler {
   constructor(
     @Inject(INJECTION_TOKENS.PROJECT_READ_REPOSITORY)
@@ -37,6 +38,7 @@ export class ProjectProjection extends BaseProjectionHandler {
     this.registerEventHandlers({
       [PROJECT_EVENT_TYPES.CREATED]: this.onProjectCreated.bind(this),
       [PROJECT_EVENT_TYPES.DETAILS_UPDATED]: this.onProjectDetailsUpdated.bind(this),
+      [PROJECT_EVENT_TYPES.STATUS_CHANGED]: this.onProjectStatusChanged.bind(this),
     });
   }
 
@@ -117,5 +119,33 @@ export class ProjectProjection extends BaseProjectionHandler {
         existing?.createdAt ?? event.occurredOn // Preserve original createdAt
       )
     );
+  }
+
+  /**
+   * Event handler for ProjectStatusChangedDomainEvent
+   * Updates only the status field in the read model when project status changes.
+   * This is more efficient than updating all fields since only status has changed.
+   */
+  private async onProjectStatusChanged(event: ProjectStatusChangedDomainEvent): Promise<void> {
+    return this.updateReadModel(event.aggregateId, (existing) => {
+      if (!existing) {
+        return null; // Cannot update status if project doesn't exist
+      }
+
+      // Create new read model with updated status, preserving all other fields
+      return new ProjectReadModel(
+        existing.id,
+        existing.clientId,
+        existing.name,
+        event.newStatus, // Only update the status field
+        existing.description,
+        existing.startDate,
+        existing.expectedEndDate,
+        existing.actualEndDate,
+        existing.budget,
+        existing.technicalNotes,
+        existing.createdAt
+      );
+    });
   }
 }
