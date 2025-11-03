@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CreateProjectDto, CreateProjectResponse, ProjectDto } from '@angular-nest-starter/shared-types';
+import { CreateProjectDto, CreateProjectResponse, ProjectDto, UpdateProjectDto } from '@angular-nest-starter/shared-types';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +40,12 @@ export class ProjectsService {
    */
   getProjectById(projectId: string): Observable<ProjectDto> {
     return this.http.get<ProjectDto>(`${this.projectsApiUrl}/${projectId}`);
+  }
+
+  /**
+   * Update an existing project
+   */
+  updateProject(projectId: string, dto: UpdateProjectDto): Observable<void> {
+    return this.http.put<void>(`${this.projectsApiUrl}/${projectId}`, dto);
   }
 }
