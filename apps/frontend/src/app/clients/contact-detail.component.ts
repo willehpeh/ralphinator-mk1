@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -621,6 +621,14 @@ export class ContactDetailComponent implements OnInit {
     }
   }
 
+  /**
+   * Helper method to create a toggle function for a signal
+   * Reduces duplication by centralizing the toggle logic
+   */
+  private toggle(s: WritableSignal<boolean>): void {
+    s.update(value => !value);
+  }
+
   enterEditMode(): void {
     const contact = this.contact();
     if (contact) {
@@ -687,12 +695,12 @@ export class ContactDetailComponent implements OnInit {
 
   deleteContact(): void {
     // Show confirmation dialog
-    this.showDeleteConfirmation.set(true);
+    this.toggle(this.showDeleteConfirmation);
   }
 
   confirmDelete(): void {
     // Hide confirmation dialog
-    this.showDeleteConfirmation.set(false);
+    this.toggle(this.showDeleteConfirmation);
 
     const contactId = this.contactId();
     const contact = this.contact();
@@ -719,7 +727,7 @@ export class ContactDetailComponent implements OnInit {
 
   cancelDelete(): void {
     // Hide confirmation dialog
-    this.showDeleteConfirmation.set(false);
+    this.toggle(this.showDeleteConfirmation);
   }
 
   getDeleteContactMessage(): string {
