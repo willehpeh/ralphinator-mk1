@@ -54,7 +54,7 @@
 - Returns `Observable<{ id: string }>`
 - Added JSDoc comment documenting soft delete behavior
 - Located in `apps/frontend/src/app/projects/projects.service.ts:62-64`
-- Commit: [pending]
+- Commit: `15cbacf feat: Add deleteProject method to ProjectsService`
 
 ## Tasks Remaining
 
