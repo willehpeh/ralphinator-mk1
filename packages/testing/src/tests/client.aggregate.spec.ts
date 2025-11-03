@@ -423,17 +423,17 @@ describe('ClientAggregate', () => {
       expect(client.getNotes()).toBe('Important client');
     });
 
-    it('should return undefined for uninitialized optional fields', () => {
+    it('should throw when getters called on uninitialized aggregate', () => {
       // Arrange
       const uninitializedClient = new ClientAggregate();
 
-      // Assert
-      expect(uninitializedClient.getCompanyName()).toBeUndefined();
-      expect(uninitializedClient.getEmail()).toBeUndefined();
-      expect(uninitializedClient.getPhone()).toBeUndefined();
-      expect(uninitializedClient.getAddress()).toBeUndefined();
-      expect(uninitializedClient.getStatus()).toBeUndefined();
-      expect(uninitializedClient.getNotes()).toBeUndefined();
+      // Assert - All getters should throw when aggregate is not initialized
+      expect(() => uninitializedClient.getCompanyName()).toThrow(DOMAIN_ERRORS.CLIENT_NOT_INITIALIZED);
+      expect(() => uninitializedClient.getEmail()).toThrow(DOMAIN_ERRORS.CLIENT_NOT_INITIALIZED);
+      expect(() => uninitializedClient.getPhone()).toThrow(DOMAIN_ERRORS.CLIENT_NOT_INITIALIZED);
+      expect(() => uninitializedClient.getAddress()).toThrow(DOMAIN_ERRORS.CLIENT_NOT_INITIALIZED);
+      expect(() => uninitializedClient.getStatus()).toThrow(DOMAIN_ERRORS.CLIENT_NOT_INITIALIZED);
+      expect(() => uninitializedClient.getNotes()).toThrow(DOMAIN_ERRORS.CLIENT_NOT_INITIALIZED);
     });
 
     it('should throw when getId called on uninitialized aggregate', () => {

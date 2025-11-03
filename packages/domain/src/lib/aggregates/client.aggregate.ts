@@ -174,31 +174,44 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   // Getters for accessing aggregate state
+  // All getters ensure the aggregate is initialized before returning values
   getId(): string {
     return this.ensureInitialized();
   }
 
-  getCompanyName(): string | undefined {
-    return this.companyName;
+  getCompanyName(): string {
+    this.ensureInitialized();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this.companyName!;
   }
 
-  getEmail(): Email | undefined {
-    return this.email;
+  getEmail(): Email {
+    this.ensureInitialized();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this.email!;
   }
 
-  getPhone(): string | null | undefined {
-    return this.phone;
+  getPhone(): string | null {
+    this.ensureInitialized();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this.phone!;
   }
 
-  getAddress(): string | null | undefined {
-    return this.address;
+  getAddress(): string | null {
+    this.ensureInitialized();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this.address!;
   }
 
-  getStatus(): ClientStatus | undefined {
-    return this.status;
+  getStatus(): ClientStatus {
+    this.ensureInitialized();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this.status!;
   }
 
-  getNotes(): string | null | undefined {
-    return this.notes;
+  getNotes(): string | null {
+    this.ensureInitialized();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this.notes!;
   }
 }
