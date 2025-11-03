@@ -165,6 +165,58 @@ interface Contact {
       color: #6b7280;
     }
 
+    .no-results-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      background-color: #f9fafb;
+      border-radius: 12px;
+      border: 2px dashed #d1d5db;
+    }
+
+    .no-results-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 1rem;
+      color: #9ca3af;
+    }
+
+    .no-results-state h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .no-results-state p {
+      margin: 0;
+      font-size: 0.9375rem;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    .clear-search-btn {
+      margin-top: 1.25rem;
+      padding: 0.625rem 1.25rem;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .clear-search-btn:hover {
+      background-color: #2563eb;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+    }
+
+    .clear-search-btn:active {
+      transform: translateY(0);
+    }
+
     .loading-state {
       text-align: center;
       padding: 4rem 2rem;
@@ -275,52 +327,68 @@ interface Contact {
           </div>
         </div>
 
-        <div class="contact-count">
-          Showing {{ filteredContacts().length }} {{ filteredContacts().length === 1 ? 'contact' : 'contacts' }}
-        </div>
+        @if (filteredContacts().length === 0 && searchQuery().trim()) {
+          <div class="no-results-state">
+            <svg class="no-results-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <h3>No contacts found</h3>
+            <p>No contacts match your search criteria "{{ searchQuery() }}".</p>
+            <p>Try adjusting your search or clearing the filter.</p>
+            <button class="clear-search-btn" (click)="clearSearch()">
+              Clear Search
+            </button>
+          </div>
+        }
 
-        <div class="contacts-grid">
-          @for (contact of filteredContacts(); track contact.contactId) {
-            <a
-              [routerLink]="['/clients', contact.clientId, 'contacts', contact.contactId]"
-              class="contact-card"
-            >
-              <div class="contact-header">
-                <h3 class="contact-name">{{ contact.name }}</h3>
-                @if (contact.role) {
-                  <p class="contact-role">{{ contact.role }}</p>
-                }
-              </div>
+        @if (filteredContacts().length > 0) {
+          <div class="contact-count">
+            Showing {{ filteredContacts().length }} {{ filteredContacts().length === 1 ? 'contact' : 'contacts' }}
+          </div>
 
-              <div class="contact-details">
-                @if (contact.email) {
-                  <div class="contact-detail">
-                    <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    <span class="contact-link">{{ contact.email }}</span>
-                  </div>
-                }
+          <div class="contacts-grid">
+            @for (contact of filteredContacts(); track contact.contactId) {
+              <a
+                [routerLink]="['/clients', contact.clientId, 'contacts', contact.contactId]"
+                class="contact-card"
+              >
+                <div class="contact-header">
+                  <h3 class="contact-name">{{ contact.name }}</h3>
+                  @if (contact.role) {
+                    <p class="contact-role">{{ contact.role }}</p>
+                  }
+                </div>
 
-                @if (contact.phone) {
-                  <div class="contact-detail">
-                    <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    <span class="contact-link">{{ contact.phone }}</span>
-                  </div>
-                }
-              </div>
+                <div class="contact-details">
+                  @if (contact.email) {
+                    <div class="contact-detail">
+                      <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      <span class="contact-link">{{ contact.email }}</span>
+                    </div>
+                  }
 
-              <div class="client-badge">
-                <svg class="client-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-                <span>Client: {{ contact.clientId.substring(0, 8) }}...</span>
-              </div>
-            </a>
-          }
-        </div>
+                  @if (contact.phone) {
+                    <div class="contact-detail">
+                      <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                      <span class="contact-link">{{ contact.phone }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="client-badge">
+                  <svg class="client-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                  <span>Client: {{ contact.clientId.substring(0, 8) }}...</span>
+                </div>
+              </a>
+            }
+          </div>
+        }
       }
     </div>
   `
@@ -356,6 +424,10 @@ export class AllContactsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadContacts();
+  }
+
+  clearSearch(): void {
+    this.searchQuery.set('');
   }
 
   private loadContacts(): void {
