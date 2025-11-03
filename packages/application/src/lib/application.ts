@@ -28,6 +28,7 @@ export * from './queries/get-client-contacts.query';
 export * from './queries/get-contact-by-id.query';
 export * from './queries/get-all-contacts.query';
 export * from './queries/get-projects-by-client-id.query';
+export * from './queries/get-all-projects.query';
 
 // Query Handlers
 export * from './queries/handlers/get-client-by-id.handler';
