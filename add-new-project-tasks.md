@@ -192,11 +192,21 @@ This document tracks the implementation tasks for the "Add a New Project to a Cl
 - Linting passed: `nx lint application`
 
 ### 11. Create GetProjectsByClientIdQuery
-**Status**: Pending
+**Status**: Completed
+**Date**: 2025-11-03
 
 **Implementation Details**:
-- Create `packages/application/src/lib/queries/get-projects-by-client-id.query.ts`
-- Accept clientId parameter
+- Created `packages/application/src/lib/queries/get-projects-by-client-id.query.ts`
+- Accepts clientId parameter as readonly property
+- Followed GetClientContactsQuery pattern for consistency
+- Exported from application package via `packages/application/src/lib/application.ts`
+
+**Files Modified**:
+- `packages/application/src/lib/queries/get-projects-by-client-id.query.ts` (new)
+- `packages/application/src/lib/application.ts` (updated exports)
+
+**Verification**:
+- Linting passed: `nx lint application`
 
 ### 12. Create GetProjectsByClientIdQueryHandler
 **Status**: Pending
@@ -332,6 +342,6 @@ This document tracks the implementation tasks for the "Add a New Project to a Cl
 
 ## Implementation Status
 - Total Tasks: 25
-- Completed: 10 (Tasks 1-10, with Task 5 merged into Task 4)
-- Remaining: 15
-- Progress: 40%
+- Completed: 11 (Tasks 1-11, with Task 5 merged into Task 4)
+- Remaining: 14
+- Progress: 44%
