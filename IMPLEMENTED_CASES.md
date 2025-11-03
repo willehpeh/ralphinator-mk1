@@ -366,3 +366,39 @@
   - 4a: "No contacts found" message when no matches, with suggestions and clear button
   - 4b: Sort results by name, client, or role with reactive UI controls
 - Documentation: search-and-filter-contacts.md
+
+## Use Case 5: Update Contact Information (2025-11-03)
+- Complete CQRS + Event Sourcing implementation for updating contact information
+- Domain: ContactUpdatedDomainEvent captures contact updates with all fields
+- Domain: ClientAggregate.updateContact() method validates contact exists and applies event
+- Domain: CLIENT_EVENT_TYPES.CONTACT_UPDATED constant for event type identification
+- Domain: CONTACT_NOT_FOUND domain error constant for validation
+- Application: UpdateContactCommand with contactId, name, role, email, phone fields
+- Application: UpdateContactCommandHandler loads aggregate, updates contact, persists events
+- Infrastructure: ContactProjection handles ContactUpdatedDomainEvent and updates read model
+- Backend API: PUT /api/contacts/:id endpoint accepts UpdateContactDto
+- Backend API: UpdateContactDto validates name (required) and email format (optional)
+- Frontend: ContactDetailComponent enhanced with edit mode using signals
+- Frontend: Edit form with reactive forms validation (name required, email format)
+- Frontend: Edit/Save/Cancel buttons with proper state management
+- Frontend: Loading state during save operation (saving signal)
+- Frontend: Success confirmation message with auto-hide after 3 seconds
+- Frontend: Error handling for save failures with separate error display (saveError signal)
+- Frontend: Separate error states for loading errors vs save errors for better UX
+- Frontend: Professional styling with consistent design language
+- Event sourcing: All contact updates captured as immutable events in event store
+- All main success scenario steps met:
+  - User views contact's detail page
+  - User selects option to edit the contact (Edit button)
+  - System displays editable form with current contact information
+  - User modifies fields (name, role, email, phone)
+  - User submits changes (Save button)
+  - System validates the updated information (form validation)
+  - System saves the changes (event-sourced command handler)
+  - System displays confirmation message (success banner)
+  - System shows updated contact information
+- Extensions handled:
+  - 6a: Validation failures highlighted with error messages (name required, email format)
+  - 7a: Contact not found displays error message with proper handling
+- Documentation: update-contact-information-tasks.md
+- **Note**: NGRX integration and unit tests pending for future enhancement

@@ -54,38 +54,23 @@ Features include:
 
 ## Use Case 5: Update Contact Information
 
-**Primary Actor**: Developer/User
+**Status**: IMPLEMENTED (2025-11-03)
 
-**Goal**: Modify a contact's information when their details change (new role, updated email, different phone number).
+This use case is now fully implemented. See Use Case 5 implementation in IMPLEMENTED_CASES.md.
 
-**Preconditions**:
-- Contact exists in the system
-- User has access to the CRM system
+Features include:
+- PUT /api/contacts/:id endpoint with UpdateContactDto validation
+- ContactDetailComponent with edit mode using signals
+- Edit form with reactive forms validation (name required, email format)
+- Edit/Save/Cancel buttons with proper state management
+- Loading state during save operation
+- Success confirmation message with auto-hide after 3 seconds
+- Error handling for save failures with separate error display
+- Event sourcing with ContactUpdatedDomainEvent
+- Contact read model updates via ContactProjection
+- Professional UI with consistent design language
 
-**Main Success Scenario**:
-1. User views the contact's detail page
-2. User selects the option to edit the contact
-3. System displays an editable form with current contact information
-4. User modifies one or more fields (name, role, email, phone)
-5. User submits the changes
-6. System validates the updated information
-7. System saves the changes
-8. System displays confirmation message with updated details
-9. System shows the updated contact information
-
-**Extensions**:
-- 6a. If validation fails (invalid email format, missing required fields):
-  - 6a1. System highlights validation errors
-  - 6a2. User corrects the errors
-  - 6a3. Continue at step 5
-- 7a. If contact no longer exists:
-  - 7a1. System displays "Contact not found" error
-  - 7a2. System returns user to contacts list
-- 8a. User wants to change the associated client:
-  - 8a1. User selects a different client from the dropdown
-  - 8a2. Continue at step 5
-
-**Success Guarantee**: Contact information is updated with the new values, preserving the history of what changed and when.
+**Note**: Extension 8a (changing associated client) is not implemented as it's considered an advanced feature for future enhancement.
 
 ---
 
