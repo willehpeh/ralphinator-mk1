@@ -36,7 +36,7 @@
 - Added `ProjectDeletedDomainEvent` to `@EventsHandler` decorator
 - Registered event handler in constructor: `[PROJECT_EVENT_TYPES.DELETED]: this.onProjectDeleted.bind(this)`
 - Implemented `onProjectDeleted()` event handler to call `projectReadRepository.delete()`
-- Commit: (pending)
+- Commit: `98dbb94 feat: Add ProjectProjection handler for ProjectDeletedDomainEvent`
 
 ## Tasks Remaining
 
