@@ -273,7 +273,7 @@ export class ContactDetailComponent implements OnInit {
   // Get contact ID from route params
   private contactId = toSignal(
     this.route.paramMap.pipe(
-      map(params => params.get('id'))
+      map(params => params.get('contactId'))
     ),
     { initialValue: null }
   );
