@@ -1,5 +1,5 @@
 import { DomainEvent } from '../base/domain-event';
-import { ProjectStatus } from '@angular-nest-starter/shared-types';
+import { ProjectData } from '../value-objects/project-data.value-object';
 
 /**
  * Domain event representing the creation of a new project.
@@ -8,15 +8,7 @@ import { ProjectStatus } from '@angular-nest-starter/shared-types';
 export class ProjectCreatedDomainEvent extends DomainEvent {
   constructor(
     aggregateId: string,
-    public readonly clientId: string,
-    public readonly name: string,
-    public readonly status: ProjectStatus,
-    public readonly description: string | null,
-    public readonly startDate: string | null,
-    public readonly expectedEndDate: string | null,
-    public readonly actualEndDate: string | null,
-    public readonly budget: number | null,
-    public readonly technicalNotes: string | null,
+    public readonly projectData: ProjectData,
     eventVersion = 1
   ) {
     super(aggregateId, eventVersion);

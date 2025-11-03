@@ -4,6 +4,7 @@ import { ProjectStatus } from '@angular-nest-starter/shared-types';
 import { PROJECT_EVENT_TYPES } from '../constants/project-event-types';
 import { DOMAIN_ERRORS } from '../constants/domain-errors';
 import { ProjectCreatedDomainEvent } from '../events/project-created.domain-event';
+import { ProjectData } from '../value-objects/project-data.value-object';
 
 /**
  * Project aggregate root
@@ -33,44 +34,12 @@ export class ProjectAggregate extends EventSourcedAggregate {
    * Factory method to create a new Project aggregate
    *
    * @param id - Unique identifier for the project
-   * @param clientId - The client this project belongs to
-   * @param name - Project name
-   * @param status - Initial project status
-   * @param description - Optional project description
-   * @param startDate - Optional start date (ISO string)
-   * @param expectedEndDate - Optional expected end date (ISO string)
-   * @param actualEndDate - Optional actual end date (ISO string)
-   * @param budget - Optional budget amount
-   * @param technicalNotes - Optional technical notes
+   * @param projectData - Value object containing project data
    * @returns A new ProjectAggregate instance with ProjectCreatedDomainEvent applied
    */
-  static create(
-    id: string,
-    clientId: string,
-    name: string,
-    status: ProjectStatus,
-    description: string | null = null,
-    startDate: string | null = null,
-    expectedEndDate: string | null = null,
-    actualEndDate: string | null = null,
-    budget: number | null = null,
-    technicalNotes: string | null = null
-  ): ProjectAggregate {
+  static create(id: string, projectData: ProjectData): ProjectAggregate {
     const project = new ProjectAggregate();
-    project.applyEvent(
-      new ProjectCreatedDomainEvent(
-        id,
-        clientId,
-        name,
-        status,
-        description,
-        startDate,
-        expectedEndDate,
-        actualEndDate,
-        budget,
-        technicalNotes
-      )
-    );
+    project.applyEvent(new ProjectCreatedDomainEvent(id, projectData));
     return project;
   }
 
@@ -109,15 +78,21 @@ export class ProjectAggregate extends EventSourcedAggregate {
    */
   private onProjectCreated(event: ProjectCreatedDomainEvent): void {
     this.id = event.aggregateId;
-    this.clientId = event.clientId;
-    this.name = event.name;
-    this.status = event.status;
-    this.description = event.description;
-    this.startDate = event.startDate;
-    this.expectedEndDate = event.expectedEndDate;
-    this.actualEndDate = event.actualEndDate;
-    this.budget = event.budget;
-    this.technicalNotes = event.technicalNotes;
+    this.clientId = event.projectData.clientId;
+    this.name = event.projectData.name;
+    this.status = event.projectData.status;
+    this.description = event.projectData.description;
+    this.startDate = event.projectData.startDate
+      ? event.projectData.startDate.toISOString()
+      : null;
+    this.expectedEndDate = event.projectData.expectedEndDate
+      ? event.projectData.expectedEndDate.toISOString()
+      : null;
+    this.actualEndDate = event.projectData.actualEndDate
+      ? event.projectData.actualEndDate.toISOString()
+      : null;
+    this.budget = event.projectData.budget;
+    this.technicalNotes = event.projectData.technicalNotes;
   }
 
   // Getters for accessing aggregate state

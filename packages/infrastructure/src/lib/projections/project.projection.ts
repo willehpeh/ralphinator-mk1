@@ -40,7 +40,7 @@ export class ProjectProjection extends BaseProjectionHandler {
 
   /**
    * Helper method to transform ProjectCreatedDomainEvent into a ProjectReadModel.
-   * Converts string dates from event to Date objects for the read model.
+   * The ProjectData within the event already contains Date objects.
    *
    * @param event - The ProjectCreatedDomainEvent
    * @returns ProjectReadModel for persistence
@@ -48,15 +48,15 @@ export class ProjectProjection extends BaseProjectionHandler {
   private transformToReadModel(event: ProjectCreatedDomainEvent): ProjectReadModel {
     return new ProjectReadModel(
       event.aggregateId,
-      event.clientId,
-      event.name,
-      event.status,
-      event.description,
-      event.startDate ? new Date(event.startDate) : null,
-      event.expectedEndDate ? new Date(event.expectedEndDate) : null,
-      event.actualEndDate ? new Date(event.actualEndDate) : null,
-      event.budget,
-      event.technicalNotes,
+      event.projectData.clientId,
+      event.projectData.name,
+      event.projectData.status,
+      event.projectData.description,
+      event.projectData.startDate,
+      event.projectData.expectedEndDate,
+      event.projectData.actualEndDate,
+      event.projectData.budget,
+      event.projectData.technicalNotes,
       event.occurredOn
     );
   }

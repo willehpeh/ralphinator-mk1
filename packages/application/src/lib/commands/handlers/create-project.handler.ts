@@ -37,18 +37,7 @@ export class CreateProjectHandler
     const projectData = ProjectData.fromPayload(command.data);
 
     // Create new project aggregate using domain logic
-    const project = ProjectAggregate.create(
-      command.id,
-      projectData.clientId,
-      projectData.name,
-      projectData.status,
-      projectData.description,
-      projectData.startDate ? projectData.startDate.toISOString() : null,
-      projectData.expectedEndDate ? projectData.expectedEndDate.toISOString() : null,
-      projectData.actualEndDate ? projectData.actualEndDate.toISOString() : null,
-      projectData.budget,
-      projectData.technicalNotes
-    );
+    const project = ProjectAggregate.create(command.id, projectData);
 
     // Persist aggregate (saves events and publishes to event bus)
     await this.saveAggregate(project);
