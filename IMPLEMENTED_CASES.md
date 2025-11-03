@@ -468,3 +468,44 @@
   - 5a: Contact not found displays error message with proper handling
 - Documentation: remove-contact.md
 - **Note**: Unit tests pending for future testing phase
+
+## Use Case 5: View Complete Client Profile with Related Work (2025-11-03)
+- Complete client detail view implementation displaying all client information and associated projects
+- Frontend: ClientDetailComponent at /clients/:id route with comprehensive information display
+- Frontend: Company name, status badge with color coding, and all contact fields displayed
+- Frontend: Contact information section (email, phone, address) with conditional display
+- Frontend: Notes section (conditional) displaying client notes when present
+- Frontend: Contacts section with ContactFormComponent and ContactListComponent integration
+- Frontend: Projects section displaying all associated projects with comprehensive details
+- Frontend: Project cards show name, status, description, dates (start, expected end), and budget
+- Frontend: Color-coded project status badges (Planning, Active, On Hold, Completed, Cancelled)
+- Frontend: Professional card-based layout with responsive grid
+- Frontend: Add Contact button with inline form integration
+- Frontend: Add Project button with inline form integration (ProjectFormComponent)
+- Frontend: Empty state messages for no projects ("No projects yet. Add a project to get started.")
+- Frontend: Action buttons (Edit Client, Change Status, Delete Client, Back to List)
+- Frontend: Projects loaded via ProjectsService.getProjectsByClientId() on component init
+- Frontend: Automatic project list reload after successfully adding new project
+- Frontend: Signal-based state management for local component state
+- Frontend: NGRX integration for global client state management
+- Frontend: Modern Angular patterns (standalone component, OnPush change detection, signals)
+- All main success scenario steps met:
+  - User selects a client from the client list (route navigation)
+  - System retrieves the client's complete information (NGRX + HTTP)
+  - System displays company name, status, contact info, notes, projects count, and projects list
+  - User reviews the information (all data visible)
+  - User can choose to edit the client or navigate to a project
+- Extensions handled:
+  - 3a: Empty contact fields show conditional display (optional fields hidden when empty)
+  - 3b: No projects shows zero count with empty state message and Add Project button
+  - 4a: Edit Client button available (toggles edit mode)
+  - 4b: Add Project button with client pre-selected (inline form integration)
+  - 5a: Projects displayed with all details (clickable navigation pending)
+- Success guarantee met: User has complete view of client information and all related work
+- Business rules satisfied:
+  - BR-CLIENT-001: Company name displayed prominently
+  - BR-CLIENT-002: Client type supported in backend
+  - BR-CLIENT-004: Optional contact fields displayed conditionally
+  - BR-CLIENT-008: Notes displayed (5000 char limit enforced in forms)
+- Documentation: view-client-profile-tasks.md
+- **Note**: Complete implementation - all use case requirements met

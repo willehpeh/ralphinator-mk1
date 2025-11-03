@@ -108,48 +108,6 @@
 
 ---
 
-## Use Case 5: View Complete Client Profile with Related Work
-
-**Primary Actor**: Software Developer or Agency Owner
-
-**Goal**: See all information about a client including their contact details, status, notes, and all associated projects in one place
-
-**Preconditions**:
-- User has access to the application
-- User is authenticated
-- The client exists in the system
-
-**Main Success Scenario**:
-1. User selects a client from the client list or search results
-2. System retrieves the client's complete information
-3. System displays:
-   - Company name and type
-   - Current status with visual indicator
-   - All contact information (email, phone, address, website)
-   - Notes about the client
-   - Count of associated projects
-   - List of projects associated with this client
-4. User reviews the information
-5. User can choose to edit the client or navigate to a project
-
-**Extensions**:
-- 3a. If some contact fields are empty:
-  - System shows "Not provided" or similar indicator
-  - Continue with step 4
-- 3b. If no projects are associated:
-  - System shows zero projects count
-  - User can add a project from this view
-- 4a. User chooses to edit the client:
-  - Go to Use Case 2: Update Client Information
-- 4b. User chooses to add a new project for this client:
-  - System presents project creation form with client pre-selected
-- 5a. User selects a project to view:
-  - System navigates to project details
-
-**Success Guarantee**: User has a complete view of the client's information and all related work, enabling informed decisions about the business relationship.
-
----
-
 ## Use Case 6: Track Client Lifecycle with Status Changes
 
 **Primary Actor**: Software Developer or Agency Owner
