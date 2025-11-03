@@ -248,6 +248,65 @@ interface ContactEditForm {
       color: #dc2626;
       margin-top: 0.25rem;
     }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .btn {
+      padding: 0.625rem 1.25rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background-color: #1d4ed8;
+    }
+
+    .btn-primary:disabled {
+      background-color: #93c5fd;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .btn-secondary {
+      background-color: white;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background-color: #f9fafb;
+      border-color: #9ca3af;
+    }
+
+    .btn-secondary:disabled {
+      background-color: #f9fafb;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
   `],
   template: `
     <div class="contact-detail">
@@ -258,6 +317,13 @@ interface ContactEditForm {
         <div class="header-title-section">
           <h2>Contact Details</h2>
         </div>
+        @if (!loading() && !error() && contact() && !isEditMode()) {
+          <div class="header-actions">
+            <button class="btn btn-primary" (click)="enterEditMode()">
+              Edit Contact
+            </button>
+          </div>
+        }
       </div>
 
       @if (loading()) {
@@ -330,6 +396,24 @@ interface ContactEditForm {
                   placeholder="+1 (555) 123-4567"
                 />
                 <span class="form-help-text">Optional - Contact's phone number</span>
+              </div>
+
+              <div class="action-buttons">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  [disabled]="editForm.invalid"
+                  (click)="saveContact()"
+                >
+                  Save Changes
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  (click)="cancelEdit()"
+                >
+                  Cancel
+                </button>
               </div>
             </form>
           } @else {
@@ -487,5 +571,11 @@ export class ContactDetailComponent implements OnInit {
     this.isEditMode.set(false);
     // Reset form to original values
     this.editForm.reset();
+  }
+
+  saveContact(): void {
+    // TODO: Implement save functionality in next task
+    // This will call the update contact API endpoint
+    console.log('Save contact clicked', this.editForm.value);
   }
 }

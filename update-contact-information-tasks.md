@@ -39,10 +39,11 @@ This use case allows users to update a contact's information (name, role, email,
 ### Frontend Layer
 - [x] Add edit mode state to ContactDetailComponent
 - [x] Create edit form in ContactDetailComponent
-- [ ] Add edit/cancel/save buttons
-- [ ] Add form validation
-- [ ] Add validation error messages
+- [x] Add edit/cancel/save buttons
+- [ ] Implement saveContact() method to call API
+- [ ] Add loading state during save operation
 - [ ] Add success confirmation message
+- [ ] Add error handling for save failures
 - [ ] Update NGRX actions for updating contacts
 - [ ] Update NGRX effects for update contact action
 - [ ] Update NGRX reducer to handle contact updates
