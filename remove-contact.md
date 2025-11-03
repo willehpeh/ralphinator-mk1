@@ -38,7 +38,7 @@ This use case allows users to delete a contact person from the system when they 
 ### Infrastructure Layer
 
 ### API Layer
-- [ ] Add DELETE /api/contacts/:id endpoint in ContactsController
+- [x] Add DELETE /api/contacts/:id endpoint in ContactsController
 - [ ] Register RemoveContactCommandHandler in ContactsModule
 
 ### Frontend Layer
@@ -76,6 +76,7 @@ This use case allows users to delete a contact person from the system when they 
 ### Shared Types Layer
 
 ### API Layer
+- `apps/api/src/app/contacts/contacts.controller.ts` (modified - added DELETE endpoint for removing contacts)
 
 ### Frontend Layer
 
