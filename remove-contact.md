@@ -21,6 +21,7 @@ This use case allows users to delete a contact person from the system when they 
 - [x] Export RemoveContactCommandHandler
 
 ### Infrastructure Layer
+- [x] Update ContactProjection to handle ContactDeletedDomainEvent (soft delete/mark as deleted)
 
 ### API Layer
 
@@ -35,7 +36,6 @@ This use case allows users to delete a contact person from the system when they 
 ### Application Layer
 
 ### Infrastructure Layer
-- [ ] Update ContactProjection to handle ContactDeletedDomainEvent (soft delete/mark as deleted)
 
 ### API Layer
 - [ ] Add DELETE /api/contacts/:id endpoint in ContactsController
@@ -71,6 +71,7 @@ This use case allows users to delete a contact person from the system when they 
 - `packages/application/src/lib/application.ts` (modified - exported RemoveContactCommand and RemoveContactCommandHandler)
 
 ### Infrastructure Layer
+- `packages/infrastructure/src/lib/projections/contact.projection.ts` (modified - added onContactDeleted handler for ContactDeletedDomainEvent)
 
 ### Shared Types Layer
 

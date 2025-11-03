@@ -3,6 +3,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import {
   ContactAddedToClientDomainEvent,
   ContactUpdatedDomainEvent,
+  ContactDeletedDomainEvent,
   CLIENT_EVENT_TYPES
 } from '@angular-nest-starter/domain';
 import {
@@ -19,14 +20,14 @@ import { BaseProjectionHandler } from '../base/base-projection.handler';
  * and builds optimized read models for the CQRS query side.
  *
  * This projection:
- * - Subscribes to ContactAddedToClientDomainEvent and ContactUpdatedDomainEvent from the event store
+ * - Subscribes to ContactAddedToClientDomainEvent, ContactUpdatedDomainEvent, and ContactDeletedDomainEvent from the event store
  * - Transforms domain events into ContactReadModel DTOs
  * - Persists read models to the read repository (optimized for queries)
  * - Enables separation of write (event store) and read (read model) data stores
  * - Uses the event handler registry pattern for extensible event handling
  */
 @Injectable()
-@EventsHandler(ContactAddedToClientDomainEvent, ContactUpdatedDomainEvent)
+@EventsHandler(ContactAddedToClientDomainEvent, ContactUpdatedDomainEvent, ContactDeletedDomainEvent)
 export class ContactProjection extends BaseProjectionHandler {
   constructor(
     @Inject(INJECTION_TOKENS.CONTACT_READ_REPOSITORY)
@@ -37,6 +38,7 @@ export class ContactProjection extends BaseProjectionHandler {
     this.registerEventHandlers({
       [CLIENT_EVENT_TYPES.CONTACT_ADDED]: this.onContactAdded.bind(this),
       [CLIENT_EVENT_TYPES.CONTACT_UPDATED]: this.onContactUpdated.bind(this),
+      [CLIENT_EVENT_TYPES.CONTACT_DELETED]: this.onContactDeleted.bind(this),
     });
   }
 
@@ -90,5 +92,14 @@ export class ContactProjection extends BaseProjectionHandler {
 
     // Persist updated read model to repository
     await this.contactReadRepository.save(updatedReadModel);
+  }
+
+  /**
+   * Event handler for ContactDeletedDomainEvent
+   * Removes a contact read model when a contact is deleted from a client
+   */
+  private async onContactDeleted(event: ContactDeletedDomainEvent): Promise<void> {
+    // Delete the contact from the read repository
+    await this.contactReadRepository.delete(event.contactId);
   }
 }
