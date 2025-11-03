@@ -225,3 +225,19 @@
   - System displays the list with key information
   - System handles empty list case (displays empty array)
 - Documentation: list-all-clients-tasks.md
+
+## Use Case 3: Search for Specific Clients (2025-11-03)
+- This use case is the same as "Search for Clients by Name" (Use Case 8) - already fully implemented
+- Frontend: Search input field in ClientListComponent with real-time filtering as user types
+- Frontend: Case-insensitive search on company name field with support for partial matches
+- Frontend: Combined filtering support - search works together with status filter simultaneously
+- Frontend: NGRX state management with searchTerm tracking and allClients cache
+- Frontend: Context-aware empty state messages when no results found
+- Frontend: Dynamic client count display showing active search term and result count
+- All acceptance criteria met:
+  - User can search by company name or partial name
+  - System filters the list in real-time as user types
+  - System displays only matching clients
+  - System handles empty results with helpful messages
+  - System restores full list when search is cleared
+- Documentation: search-clients-tasks.md
