@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectsService } from './projects.service';
 import { ProjectDto, PROJECT_STATUS_VALUES, ProjectStatus } from '@angular-nest-starter/shared-types';
@@ -109,12 +109,26 @@ export class ProjectsListComponent implements OnInit {
   readonly statusOptions = PROJECT_STATUS_VALUES;
 
   // Signals for component state
-  projects = signal<ProjectDto[]>([]);
+  private allProjects = signal<ProjectDto[]>([]);
   loading = signal<boolean>(false);
   error = signal<string | null>(null);
 
   // Filter state
   selectedStatusFilter = signal<string>('');
+
+  // Computed filtered projects based on selected filters
+  projects = computed(() => {
+    const allProjectsList = this.allProjects();
+    const statusFilter = this.selectedStatusFilter();
+
+    // If no status filter selected, return all projects
+    if (!statusFilter) {
+      return allProjectsList;
+    }
+
+    // Filter by status
+    return allProjectsList.filter(project => project.status === statusFilter);
+  });
 
   ngOnInit(): void {
     this.loadProjects();
@@ -131,7 +145,7 @@ export class ProjectsListComponent implements OnInit {
 
     this.projectsService.getAllProjects().subscribe({
       next: (projects) => {
-        this.projects.set(projects);
+        this.allProjects.set(projects);
         this.loading.set(false);
       },
       error: (err) => {

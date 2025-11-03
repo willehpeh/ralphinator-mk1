@@ -14,8 +14,16 @@
    - Wired up [value] binding and (change) event in template
    - Build verified successfully
 
+3. ✅ Implement filtering logic in component (computed signal)
+   - Imported computed function from @angular/core
+   - Renamed projects signal to allProjects (private)
+   - Created new projects computed signal that filters based on selectedStatusFilter
+   - Updated loadProjects to set allProjects instead of projects
+   - Filter returns all projects when no status selected, otherwise filters by status
+   - Build verified successfully
+
 ## Current Task
-- Implement filtering logic in component (computed signal)
+- None (ready for next task)
 
 ## Remaining Tasks (Planned)
 - Add client filter dropdown UI
