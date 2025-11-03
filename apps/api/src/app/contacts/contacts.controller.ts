@@ -26,15 +26,28 @@ export class ContactsController {
     return contact;
   }
 
-  @Put(':id')
-  async updateContact(@Param('id') id: string, @Body() dto: UpdateContactDto): Promise<void> {
-    // First, get the contact to retrieve its clientId
+  /**
+   * Helper method to fetch and validate a contact exists before mutation operations.
+   * Retrieves the contact and throws NotFoundException if not found.
+   *
+   * @param id - The contact ID to fetch and validate
+   * @returns The contact read model including clientId needed for commands
+   * @throws NotFoundException if the contact is not found
+   */
+  private async fetchAndValidateContact(id: string): Promise<ContactReadModel> {
     const query = new GetContactByIdQuery(id);
     const contact = await this.queryBus.execute<GetContactByIdQuery, ContactReadModel | null>(query);
 
     if (!contact) {
       throw new NotFoundException(CONTACT_CONTROLLER_ERROR_MESSAGES.CONTACT_NOT_FOUND);
     }
+
+    return contact;
+  }
+
+  @Put(':id')
+  async updateContact(@Param('id') id: string, @Body() dto: UpdateContactDto): Promise<void> {
+    const contact = await this.fetchAndValidateContact(id);
 
     const contactData = new ContactData(
       id,
@@ -50,13 +63,7 @@ export class ContactsController {
 
   @Delete(':id')
   async deleteContact(@Param('id') id: string): Promise<void> {
-    // First, get the contact to retrieve its clientId
-    const query = new GetContactByIdQuery(id);
-    const contact = await this.queryBus.execute<GetContactByIdQuery, ContactReadModel | null>(query);
-
-    if (!contact) {
-      throw new NotFoundException(CONTACT_CONTROLLER_ERROR_MESSAGES.CONTACT_NOT_FOUND);
-    }
+    const contact = await this.fetchAndValidateContact(id);
 
     const command = new RemoveContactCommand(contact.clientId, id);
     await this.commandBus.execute(command);
