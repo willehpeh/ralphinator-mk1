@@ -7,6 +7,8 @@ export * from './commands/delete-client.command';
 export * from './commands/add-contact-to-client.command';
 export * from './commands/update-contact.command';
 export * from './commands/remove-contact.command';
+export * from './commands/project-data.payload';
+export * from './commands/create-project.command';
 
 // Command Handlers
 export * from './commands/handlers/create-client.handler';
