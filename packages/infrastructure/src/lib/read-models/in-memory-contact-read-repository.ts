@@ -18,6 +18,16 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
   private readonly contacts = new Map<string, ContactReadModel>();
 
   /**
+   * Retrieves a specific contact by its ID.
+   *
+   * @param contactId - The ID of the contact
+   * @returns The contact read model or null if not found
+   */
+  async findById(contactId: string): Promise<ContactReadModel | null> {
+    return this.contacts.get(contactId) ?? null;
+  }
+
+  /**
    * Retrieves all contacts associated with a specific client.
    *
    * @param clientId - The ID of the client

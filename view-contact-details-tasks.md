@@ -4,7 +4,6 @@
 Implementing the ability to view detailed information about a specific contact.
 
 ## Tasks
-- [ ] Create GetContactByIdQueryHandler
 - [ ] Add GET /api/contacts/:id endpoint
 - [ ] Create ContactDetailComponent
 - [ ] Add contact detail route to routing
@@ -12,6 +11,9 @@ Implementing the ability to view detailed information about a specific contact.
 
 ## Completed Tasks
 - [x] Create GetContactByIdQuery class (packages/application/src/lib/queries/get-contact-by-id.query.ts)
+- [x] Create GetContactByIdQueryHandler (packages/application/src/lib/queries/handlers/get-contact-by-id.handler.ts)
+- [x] Add findById method to IContactReadRepository interface (packages/application/src/lib/ports/contact-read-repository.interface.ts)
+- [x] Implement findById in InMemoryContactReadRepository (packages/infrastructure/src/lib/read-models/in-memory-contact-read-repository.ts)
 
 ## Notes
 - Following CQRS pattern with dedicated query for contact retrieval

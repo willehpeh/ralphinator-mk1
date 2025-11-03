@@ -7,6 +7,14 @@ import { ContactReadModel } from '../read-models/contact.read-model';
  */
 export interface IContactReadRepository {
   /**
+   * Retrieves a specific contact by its ID.
+   *
+   * @param contactId - The ID of the contact
+   * @returns The contact read model or null if not found
+   */
+  findById(contactId: string): Promise<ContactReadModel | null>;
+
+  /**
    * Retrieves all contacts associated with a specific client.
    *
    * @param clientId - The ID of the client
