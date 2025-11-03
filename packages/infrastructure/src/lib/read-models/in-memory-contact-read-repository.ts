@@ -2,6 +2,11 @@ import { Injectable, Inject } from '@nestjs/common';
 import { IContactReadRepository, ContactReadModel, IClientReadRepository } from '@angular-nest-starter/application';
 
 /**
+ * Default client name used when a client cannot be found
+ */
+const UNKNOWN_CLIENT_NAME = 'Unknown Client';
+
+/**
  * In-memory implementation of IContactReadRepository
  *
  * This implementation stores contact read models in memory using a Map.
@@ -59,7 +64,7 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
 
     // Fetch client name from client repository
     const client = await this.clientRepository.findById(contact.clientId);
-    const clientName = client?.companyName ?? 'Unknown Client';
+    const clientName = client?.companyName ?? UNKNOWN_CLIENT_NAME;
 
     // Return contact with populated clientName
     return this.enrichContactWithClientName(contact, clientName);
@@ -78,7 +83,7 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
 
     // Fetch client name once for all contacts
     const client = await this.clientRepository.findById(clientId);
-    const clientName = client?.companyName ?? 'Unknown Client';
+    const clientName = client?.companyName ?? UNKNOWN_CLIENT_NAME;
 
     // Return contacts with populated clientName
     return contacts.map(contact =>
@@ -125,7 +130,7 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
     return contacts.map(contact =>
       this.enrichContactWithClientName(
         contact,
-        clientMap.get(contact.clientId) ?? 'Unknown Client'
+        clientMap.get(contact.clientId) ?? UNKNOWN_CLIENT_NAME
       )
     );
   }
