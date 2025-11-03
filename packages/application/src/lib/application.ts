@@ -29,6 +29,7 @@ export * from './queries/get-contact-by-id.query';
 export * from './queries/get-all-contacts.query';
 export * from './queries/get-projects-by-client-id.query';
 export * from './queries/get-all-projects.query';
+export * from './queries/get-project-by-id.query';
 
 // Query Handlers
 export * from './queries/handlers/get-client-by-id.handler';
@@ -39,6 +40,7 @@ export * from './queries/handlers/get-contact-by-id.handler';
 export * from './queries/handlers/get-all-contacts.handler';
 export * from './queries/handlers/get-projects-by-client-id.handler';
 export * from './queries/handlers/get-all-projects.handler';
+export * from './queries/handlers/get-project-by-id.handler';
 
 // Integration Events
 export * from './events/client-created.event';
