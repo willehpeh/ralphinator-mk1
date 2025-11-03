@@ -80,18 +80,17 @@ export class ClientAggregate extends EventSourcedAggregate {
   changeStatus(newStatus: ClientStatus): void {
     const id = this.ensureInitialized();
 
-    if (!this.status) {
-      throw new Error(DOMAIN_ERRORS.CLIENT_STATUS_NOT_INITIALIZED);
-    }
-
-    if (this.status === newStatus) {
+    // Status is guaranteed to be set if aggregate is initialized
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    if (this.status! === newStatus) {
       throw new Error(DOMAIN_ERRORS.CLIENT_STATUS_UNCHANGED);
     }
 
     this.applyEvent(
       new ClientStatusChangedDomainEvent(
         id,
-        this.status,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.status!,
         newStatus
       )
     );

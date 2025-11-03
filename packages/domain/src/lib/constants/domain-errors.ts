@@ -12,11 +12,6 @@ export const DOMAIN_ERRORS = {
   CLIENT_NOT_INITIALIZED: 'Cannot perform operation on a client that has not been created',
 
   /**
-   * Error message when client status property is unexpectedly undefined
-   */
-  CLIENT_STATUS_NOT_INITIALIZED: 'Client status is not initialized',
-
-  /**
    * Error message when attempting to change status to the same value
    */
   CLIENT_STATUS_UNCHANGED: 'New status must be different from current status',
