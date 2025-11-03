@@ -62,8 +62,17 @@
   - Read model is exported from application package for use in query handlers and projections
   - ContactReadModel includes clientId to support querying contacts by client
 
+### Task 7: Create GetClientContactsQuery
+- **Files Created:**
+  - `packages/application/src/lib/queries/get-client-contacts.query.ts`
+- **Files Modified:**
+  - `packages/application/src/lib/application.ts` - Exported new query
+- **Description:**
+  - Created GetClientContactsQuery with clientId field to retrieve contacts for a specific client
+  - Query is exported from application package for use in query handlers and API layer
+
 ## Next Tasks
-- Create GetClientContactsQuery and handler
+- Create GetClientContactsQueryHandler
 - Create projection to build contact read models
 - Add API endpoint for adding contacts
 - Add API endpoint for retrieving client contacts
