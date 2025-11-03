@@ -170,7 +170,24 @@
   - Only includes optional fields (role, email, phone) in payload if they have values
   - Follows OnPush change detection strategy for performance
 
+### Task 15: Integrate ContactFormComponent into ClientDetailComponent
+- **Files Modified:**
+  - `apps/frontend/src/app/clients/client-detail.component.ts`
+  - `apps/frontend/src/app/clients/client-detail.component.scss`
+- **Description:**
+  - Imported ContactFormComponent into ClientDetailComponent
+  - Added isAddingContact signal to track add contact mode state
+  - Added toggleAddContactMode() method to show/hide contact form
+  - Added handleContactAdded() method to close form after successful submission
+  - Added Contacts section to template with "Add Contact" button
+  - Contact form conditionally displayed when isAddingContact is true
+  - Added empty state message when no contacts exist
+  - Added section-header, add-contact-button, and empty-state styles
+  - Section-header uses flexbox to position heading and button
+  - Contacts section placed between Notes and Metadata sections
+  - Form is pre-populated with clientId from current client
+
 ## Next Tasks
-- Integrate ContactFormComponent into ClientDetailComponent
-- Create component for viewing/displaying client contacts
-- Add contacts section to client detail view
+- Create component for displaying list of client contacts
+- Integrate contact list component to show existing contacts
+- Load and display contacts when viewing client details

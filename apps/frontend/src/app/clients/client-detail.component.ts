@@ -10,12 +10,13 @@ import { ClientFormComponent } from './client-form.component';
 import { ChangeStatusFormComponent } from './change-status-form.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { StatusBadgeComponent } from './status-badge.component';
+import { ContactFormComponent } from './contact-form.component';
 import { ClientNavigationService } from './client-navigation.service';
 import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
 
 @Component({
   selector: 'app-client-detail',
-  imports: [CommonModule, ClientFormComponent, ChangeStatusFormComponent, ConfirmationDialogComponent, StatusBadgeComponent],
+  imports: [CommonModule, ClientFormComponent, ChangeStatusFormComponent, ConfirmationDialogComponent, StatusBadgeComponent, ContactFormComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./clients-common.scss', './client-detail.component.scss'],
   template: `
@@ -111,6 +112,27 @@ import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants
             }
 
             <div class="detail-section">
+              <div class="section-header">
+                <h4>Contacts</h4>
+                @if (!isAddingContact()) {
+                  <button class="add-contact-button" (click)="toggleAddContactMode()">
+                    Add Contact
+                  </button>
+                }
+              </div>
+
+              @if (isAddingContact()) {
+                <app-contact-form
+                  [clientId]="clientData.id"
+                  (contactAdded)="handleContactAdded()"
+                  (formCancelled)="toggleAddContactMode()"
+                />
+              } @else {
+                <p class="empty-state">No contacts yet. Click "Add Contact" to create the first contact for this client.</p>
+              }
+            </div>
+
+            <div class="detail-section">
               <h4>Metadata</h4>
               <div class="detail-grid">
                 <div class="detail-item">
@@ -159,6 +181,9 @@ export class ClientDetailComponent implements OnInit {
   // Status change mode state
   isChangingStatus = signal(false);
 
+  // Add contact mode state
+  isAddingContact = signal(false);
+
   // Delete confirmation dialog state
   showDeleteConfirmation = signal(false);
 
@@ -202,6 +227,16 @@ export class ClientDetailComponent implements OnInit {
   handleStatusChangeSuccess(): void {
     // Exit status change mode (store is automatically updated with the returned client data)
     this.isChangingStatus.set(false);
+  }
+
+  toggleAddContactMode(): void {
+    this.isAddingContact.update(value => !value);
+  }
+
+  handleContactAdded(): void {
+    // Exit add contact mode
+    this.isAddingContact.set(false);
+    // TODO: Reload contacts list when contact list component is implemented
   }
 
   deleteClient(): void {
