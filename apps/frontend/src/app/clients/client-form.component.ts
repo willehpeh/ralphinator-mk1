@@ -55,7 +55,15 @@ interface ClientFormFields {
             type="text"
             formControlName="companyName"
             [placeholder]="formLabels.COMPANY_NAME_PLACEHOLDER"
+            [class.invalid]="form.controls.companyName.invalid && form.controls.companyName.touched"
           />
+          @if (form.controls.companyName.invalid && form.controls.companyName.touched) {
+            <div class="validation-error">
+              @if (form.controls.companyName.hasError('required')) {
+                {{ formLabels.COMPANY_NAME_REQUIRED }}
+              }
+            </div>
+          }
         </div>
 
         <div class="form-group">

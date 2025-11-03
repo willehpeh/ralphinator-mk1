@@ -102,6 +102,7 @@ export const CLIENT_FORM_LABELS = {
   NOTES_PLACEHOLDER: 'Additional notes about the client',
 
   // Validation messages
+  COMPANY_NAME_REQUIRED: 'Company name is required',
   EMAIL_REQUIRED: 'Email is required',
   INVALID_EMAIL: 'Please enter a valid email address',
 
