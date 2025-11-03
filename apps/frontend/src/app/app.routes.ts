@@ -4,6 +4,7 @@ import { ClientListComponent } from './clients/client-list.component';
 import { ClientDetailComponent } from './clients/client-detail.component';
 import { ContactDetailComponent } from './clients/contact-detail.component';
 import { AllContactsComponent } from './clients/all-contacts.component';
+import { ProjectsListComponent } from './projects/projects-list.component';
 
 export const appRoutes: Route[] = [
   {
@@ -13,6 +14,10 @@ export const appRoutes: Route[] = [
   {
     path: 'clients/add',
     component: AddClientPageComponent,
+  },
+  {
+    path: 'projects',
+    component: ProjectsListComponent,
   },
   {
     path: 'contacts',

@@ -84,6 +84,16 @@
 
 ---
 
+### Task 7: Add routing to ProjectsListComponent
+**Status**: ✅ Completed
+**Files Modified**:
+- `apps/frontend/src/app/app.routes.ts` - Added ProjectsListComponent import and route configuration
+
+**Description**: Added the `/projects` route to the application routing configuration. The route maps to ProjectsListComponent and is positioned appropriately in the route order (after clients routes, before contacts routes).
+
+**Pattern**: Followed existing routing pattern from other components. The route is simple and direct: `{ path: 'projects', component: ProjectsListComponent }`.
+
+---
+
 ## Next Tasks
-- Add routing to ProjectsListComponent
 - Add navigation to Projects section in main navigation
