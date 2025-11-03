@@ -371,12 +371,13 @@
   - 4b: Sort results by name, client, or role with reactive UI controls
 - Documentation: search-and-filter-contacts.md
 
-## Use Case 5: Update Contact Information (2025-11-03)
+## Use Case 5: Update Contact Information (2025-11-03) ✅ COMPLETE
 - Complete CQRS + Event Sourcing implementation for updating contact information
 - Domain: ContactUpdatedDomainEvent captures contact updates with all fields
 - Domain: ClientAggregate.updateContact() method validates contact exists and applies event
 - Domain: CLIENT_EVENT_TYPES.CONTACT_UPDATED constant for event type identification
 - Domain: CONTACT_NOT_FOUND domain error constant for validation
+- Domain: Duplicate name validation enforced (prevents duplicate contact names per client)
 - Application: UpdateContactCommand with contactId, name, role, email, phone fields
 - Application: UpdateContactCommandHandler loads aggregate, updates contact, persists events
 - Infrastructure: ContactProjection handles ContactUpdatedDomainEvent and updates read model
@@ -385,27 +386,37 @@
 - Frontend: ContactDetailComponent enhanced with edit mode using signals
 - Frontend: Edit form with reactive forms validation (name required, email format)
 - Frontend: Edit/Save/Cancel buttons with proper state management
-- Frontend: Loading state during save operation (saving signal)
-- Frontend: Success confirmation message with auto-hide after 3 seconds
-- Frontend: Error handling for save failures with separate error display (saveError signal)
+- Frontend: Loading state during save operation with isSubmitting signal
+- Frontend: Success confirmation message with auto-hide after 3 seconds (FormState)
+- Frontend: Error handling for save failures with separate error display (FormState)
 - Frontend: Separate error states for loading errors vs save errors for better UX
 - Frontend: Professional styling with consistent design language
+- Frontend: Contact data refreshed immediately after successful save
 - Event sourcing: All contact updates captured as immutable events in event store
+- Projections: Contact read model updated with updatedAt timestamp
 - All main success scenario steps met:
-  - User views contact's detail page
-  - User selects option to edit the contact (Edit button)
-  - System displays editable form with current contact information
-  - User modifies fields (name, role, email, phone)
-  - User submits changes (Save button)
-  - System validates the updated information (form validation)
-  - System saves the changes (event-sourced command handler)
-  - System displays confirmation message (success banner)
-  - System shows updated contact information
+  - User views contact's detail page ✅
+  - User selects option to edit the contact (Edit button) ✅
+  - System displays editable form with current contact information ✅
+  - User modifies fields (name, role, email, phone) ✅
+  - User submits changes (Save button) ✅
+  - System validates the updated information (form validation) ✅
+  - System saves the changes (event-sourced command handler) ✅
+  - System displays confirmation message (success banner) ✅
+  - System shows updated contact information ✅
+- All acceptance criteria met:
+  - User can edit name, role, email, phone fields for an existing contact ✅
+  - Email validation enforced on updates ✅
+  - Duplicate name validation within same client enforced ✅
+  - System records updatedAt timestamp ✅
+  - Changes reflected immediately in all views ✅
+  - Cancel operation discards changes ✅
 - Extensions handled:
-  - 6a: Validation failures highlighted with error messages (name required, email format)
-  - 7a: Contact not found displays error message with proper handling
+  - 5a: Invalid email format shows validation error in form ✅
+  - 5b: Duplicate name shows error message from domain layer ✅
+  - 4a: Cancel button discards changes and exits edit mode ✅
 - Documentation: update-contact-information-tasks.md
-- **Note**: NGRX integration and unit tests pending for future enhancement
+- **Note**: Core functionality complete. NGRX integration optional (direct API calls are a valid pattern). Unit tests pending for future testing phase.
 
 ## UC-PROJECT-001-01: Add a New Project to a Client (2025-11-03)
 - Complete CQRS + Event Sourcing implementation for project management
