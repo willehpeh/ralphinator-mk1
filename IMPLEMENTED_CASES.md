@@ -242,11 +242,13 @@
   - System restores full list when search is cleared
 - Documentation: search-clients-tasks.md
 
-## Use Case 1: Add a New Contact to a Client (2025-11-03)
+## Use Case 1: Add a New Contact to a Client / Record a New Contact for a Client (2025-11-03)
 - Complete CQRS + Event Sourcing implementation for managing client contacts
 - Domain: ContactAddedToClientDomainEvent captures contact creation with all fields
 - Domain: ClientAggregate maintains contacts Map and exposes getContacts() method
 - Domain: ClientAggregate.addContact() method applies ContactAddedToClientDomainEvent
+- Domain: **Duplicate contact name validation** (case-insensitive) prevents duplicate contacts per client
+- Domain: DUPLICATE_CONTACT_NAME error constant for validation feedback
 - Domain: Contact interface exported from domain package (contactId, name, role, email, phone)
 - Application: AddContactToClientCommand with required name field and optional role, email, phone
 - Application: AddContactToClientCommandHandler loads aggregate, adds contact, persists events
@@ -278,11 +280,13 @@
   - System saves contact and associates with selected client
   - System displays contacts in list view with all details
   - System returns user to view showing contact information
+  - **System prevents duplicate contacts with same name per client**
 - Extensions handled:
   - 2a: Missing required name field shows validation error
   - 3a: Invalid email format shows validation error
   - 3b: Client existence validated by backend handler
-- Documentation: add-contact-to-client.md
+  - **6b: Duplicate contact name displays error "A contact with this name already exists for this client"**
+- Documentation: add-contact-to-client.md, record-new-contact.md
 
 ## Use Case 2: View Contact Details (2025-11-03)
 - Complete CQRS query implementation for retrieving individual contact details
