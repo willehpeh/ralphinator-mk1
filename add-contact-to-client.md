@@ -187,7 +187,22 @@
   - Contacts section placed between Notes and Metadata sections
   - Form is pre-populated with clientId from current client
 
+### Task 16: Create ContactListComponent for displaying client contacts
+- **Files Created:**
+  - `apps/frontend/src/app/clients/contact-list.component.ts`
+- **Description:**
+  - Created ContactListComponent following modern Angular patterns (standalone, signals, inject())
+  - Component accepts contacts array as required input using input.required<Contact[]>()
+  - Implemented responsive grid layout that adapts to screen size (auto-fill minmax pattern)
+  - Each contact displayed in a card with hover effect for better UX
+  - Contact cards show name (bold heading), optional role (italic subtitle)
+  - Contact details (email, phone) displayed with SVG icons for visual clarity
+  - Email and phone are clickable links (mailto: and tel: protocols)
+  - Added empty state message when no contacts exist
+  - Uses OnPush change detection strategy for performance
+  - Follows same styling patterns as other client components
+  - Component is ready to be integrated into ClientDetailComponent
+
 ## Next Tasks
-- Create component for displaying list of client contacts
 - Integrate contact list component to show existing contacts
 - Load and display contacts when viewing client details
