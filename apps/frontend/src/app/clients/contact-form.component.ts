@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ClientsService } from './clients.service';
 import { FormState } from '../shared/form-state';
 import { createContactFormGroup } from './contact-form-builder';
+import { CONTACT_FORM_LABELS, CLIENT_ERROR_MESSAGES } from './client-display.constants';
 
 interface AddContactDto {
   name: string;
@@ -19,62 +20,62 @@ interface AddContactDto {
   styleUrls: ['./clients-common.scss'],
   template: `
     <div class="form-container">
-      <h3>Add Contact Person</h3>
+      <h3>{{ labels.ADD_CONTACT_TITLE }}</h3>
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-field">
-          <label for="name">Name *</label>
+          <label for="name">{{ labels.NAME }}</label>
           <input
             id="name"
             type="text"
             formControlName="name"
             [class.invalid]="form.controls.name.invalid && form.controls.name.touched"
-            placeholder="Enter contact name"
+            [placeholder]="labels.NAME_PLACEHOLDER"
           />
           @if (form.controls.name.invalid && form.controls.name.touched) {
             <div class="validation-error">
               @if (form.controls.name.errors?.['required']) {
-                <span>Contact name is required</span>
+                <span>{{ labels.NAME_REQUIRED }}</span>
               }
             </div>
           }
         </div>
 
         <div class="form-field">
-          <label for="role">Role / Title</label>
+          <label for="role">{{ labels.ROLE }}</label>
           <input
             id="role"
             type="text"
             formControlName="role"
-            placeholder="e.g., CEO, Project Manager"
+            [placeholder]="labels.ROLE_PLACEHOLDER"
           />
         </div>
 
         <div class="form-field">
-          <label for="email">Email</label>
+          <label for="email">{{ labels.EMAIL }}</label>
           <input
             id="email"
             type="email"
             formControlName="email"
             [class.invalid]="form.controls.email.invalid && form.controls.email.touched"
-            placeholder="contact@company.com"
+            [placeholder]="labels.EMAIL_PLACEHOLDER"
           />
           @if (form.controls.email.invalid && form.controls.email.touched) {
             <div class="validation-error">
               @if (form.controls.email.errors?.['email']) {
-                <span>Please enter a valid email address</span>
+                <span>{{ labels.INVALID_EMAIL }}</span>
               }
             </div>
           }
         </div>
 
         <div class="form-field">
-          <label for="phone">Phone</label>
+          <label for="phone">{{ labels.PHONE }}</label>
           <input
             id="phone"
             type="tel"
             formControlName="phone"
-            placeholder="+1 (555) 123-4567"
+            [placeholder]="labels.PHONE_PLACEHOLDER"
           />
         </div>
 
@@ -91,9 +92,9 @@ interface AddContactDto {
             [disabled]="form.invalid || formState.isSubmitting()"
           >
             @if (formState.isSubmitting()) {
-              Adding Contact...
+              {{ labels.ADDING_CONTACT_BUTTON }}
             } @else {
-              Add Contact
+              {{ labels.ADD_CONTACT_BUTTON }}
             }
           </button>
           <button
@@ -102,7 +103,7 @@ interface AddContactDto {
             (click)="onCancel()"
             [disabled]="formState.isSubmitting()"
           >
-            Cancel
+            {{ labels.CANCEL_BUTTON }}
           </button>
         </div>
       </form>
@@ -111,6 +112,9 @@ interface AddContactDto {
 })
 export class ContactFormComponent {
   private clientsService = inject(ClientsService);
+
+  // Constants for labels and messages
+  protected readonly labels = CONTACT_FORM_LABELS;
 
   // Input: clientId is required to associate the contact with a client
   clientId = input.required<string>();
@@ -155,7 +159,7 @@ export class ContactFormComponent {
       error: (err) => {
         this.formState.setSubmitting(false);
         this.formState.setError(
-          err.error?.message || 'Failed to add contact. Please try again.'
+          err.error?.message || CLIENT_ERROR_MESSAGES.ADD_CONTACT_FAILED
         );
       }
     });

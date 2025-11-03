@@ -120,6 +120,36 @@ export const CLIENT_FORM_LABELS = {
 } as const;
 
 /**
+ * Form field labels and placeholders for contact forms.
+ * This ensures consistent labeling across all contact form instances.
+ */
+export const CONTACT_FORM_LABELS = {
+  // Field labels
+  NAME: 'Name *',
+  ROLE: 'Role / Title',
+  EMAIL: 'Email',
+  PHONE: 'Phone',
+
+  // Placeholders
+  NAME_PLACEHOLDER: 'Enter contact name',
+  ROLE_PLACEHOLDER: 'e.g., CEO, Project Manager',
+  EMAIL_PLACEHOLDER: 'contact@company.com',
+  PHONE_PLACEHOLDER: '+1 (555) 123-4567',
+
+  // Validation messages
+  NAME_REQUIRED: 'Contact name is required',
+  INVALID_EMAIL: 'Please enter a valid email address',
+
+  // Submit button labels
+  ADD_CONTACT_BUTTON: 'Add Contact',
+  ADDING_CONTACT_BUTTON: 'Adding Contact...',
+  CANCEL_BUTTON: 'Cancel',
+
+  // Titles
+  ADD_CONTACT_TITLE: 'Add Contact Person',
+} as const;
+
+/**
  * Error messages for client-related operations.
  * These are used in NGRX effects when API calls fail.
  */
@@ -129,6 +159,7 @@ export const CLIENT_ERROR_MESSAGES = {
   CHANGE_STATUS_FAILED: 'Failed to change client status',
   FILTER_BY_STATUS_FAILED: 'Failed to filter clients by status',
   DELETE_CLIENT_FAILED: 'Failed to delete client',
+  ADD_CONTACT_FAILED: 'Failed to add contact. Please try again.',
 } as const;
 
 /**
