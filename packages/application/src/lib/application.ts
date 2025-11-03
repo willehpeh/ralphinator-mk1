@@ -36,6 +36,7 @@ export * from './ports/injection-tokens';
 
 // Read Models
 export * from './read-models/client.read-model';
+export * from './read-models/contact.read-model';
 
 export function application(): string {
   return 'application';

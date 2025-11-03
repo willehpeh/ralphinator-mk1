@@ -51,8 +51,18 @@
   - Returns clientId on successful execution
   - Handler is exported from application package and ready for registration in module
 
+### Task 6: Create ContactReadModel DTO
+- **Files Created:**
+  - `packages/application/src/lib/read-models/contact.read-model.ts`
+- **Files Modified:**
+  - `packages/application/src/lib/application.ts` - Exported new read model
+- **Description:**
+  - Created ContactReadModel class following the same pattern as ClientReadModel
+  - Includes contactId, clientId, name, role (nullable), email (nullable), and phone (nullable) fields
+  - Read model is exported from application package for use in query handlers and projections
+  - ContactReadModel includes clientId to support querying contacts by client
+
 ## Next Tasks
-- Create ContactReadModel DTO
 - Create GetClientContactsQuery and handler
 - Create projection to build contact read models
 - Add API endpoint for adding contacts
