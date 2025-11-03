@@ -112,10 +112,16 @@ export const clientsReducer = createReducer(
   on(updateClient, setLoading),
 
   // When client is successfully updated
-  on(updateClientSuccess, (state, { client }) => ({
-    ...clearLoadingAndError(state),
-    clients: state.clients.map((c) => (c.id === client.id ? client : c)),
-  })),
+  on(updateClientSuccess, (state, { client }) => {
+    const updateClient = (clients: Client[]) =>
+      clients.map((c) => (c.id === client.id ? client : c));
+
+    return {
+      ...clearLoadingAndError(state),
+      clients: updateClient(state.clients),
+      allClients: updateClient(state.allClients),
+    };
+  }),
 
   // When updating client fails
   on(updateClientFailure, (state, { error }) => setError(state, error)),
@@ -124,10 +130,16 @@ export const clientsReducer = createReducer(
   on(changeClientStatus, setLoading),
 
   // When client status is successfully changed
-  on(changeClientStatusSuccess, (state, { client }) => ({
-    ...clearLoadingAndError(state),
-    clients: state.clients.map((c) => (c.id === client.id ? client : c)),
-  })),
+  on(changeClientStatusSuccess, (state, { client }) => {
+    const updateClient = (clients: Client[]) =>
+      clients.map((c) => (c.id === client.id ? client : c));
+
+    return {
+      ...clearLoadingAndError(state),
+      clients: updateClient(state.clients),
+      allClients: updateClient(state.allClients),
+    };
+  }),
 
   // When changing client status fails
   on(changeClientStatusFailure, (state, { error }) => setError(state, error)),
