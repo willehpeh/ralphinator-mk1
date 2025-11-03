@@ -38,12 +38,17 @@
 - Implemented `onProjectDeleted()` event handler to call `projectReadRepository.delete()`
 - Commit: `98dbb94 feat: Add ProjectProjection handler for ProjectDeletedDomainEvent`
 
-## Tasks Remaining
+### Task 5: Add DELETE API endpoint ✅
+- Added `Delete` decorator import from `@nestjs/common`
+- Imported `DeleteProjectCommand` from `@angular-nest-starter/application`
+- Added `@Delete(':projectId')` endpoint to `ProjectsController`
+- Accepts project ID from URL params
+- Executes `DeleteProjectCommand` via command bus
+- Returns success response `{ id: string }`
+- Endpoint URL: `DELETE /api/clients/:clientId/projects/:projectId`
+- Commit: (pending)
 
-### Task 5: Add DELETE API endpoint
-- Add `DELETE /api/projects/:id` endpoint to `ProjectsController`
-- Accept project ID in URL params
-- Return success response `{ id: string }`
+## Tasks Remaining
 
 ### Task 6: Add deleteProject method to ProjectsService (Frontend)
 - Add `deleteProject(id: string)` method to `ProjectsService`

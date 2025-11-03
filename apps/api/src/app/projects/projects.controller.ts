@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Patch, Post, Put, NotFoundException } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, NotFoundException } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateProjectCommand, UpdateProjectDetailsCommand, ChangeProjectStatusCommand, GetProjectsByClientIdQuery, GetProjectByIdQuery, ProjectReadModel, ProjectDataPayload } from '@angular-nest-starter/application';
+import { CreateProjectCommand, UpdateProjectDetailsCommand, ChangeProjectStatusCommand, DeleteProjectCommand, GetProjectsByClientIdQuery, GetProjectByIdQuery, ProjectReadModel, ProjectDataPayload } from '@angular-nest-starter/application';
 import { CreateProjectDto, UpdateProjectDto, ChangeProjectStatusDto, CreateProjectResponse } from '@angular-nest-starter/shared-types';
 import { randomUUID } from 'crypto';
 
@@ -111,5 +111,18 @@ export class ProjectsController {
 
     // Return the updated project to avoid unnecessary refetch
     return this.fetchProjectAfterMutation(updatedProjectId, 'status change');
+  }
+
+  @Delete(':projectId')
+  async deleteProject(
+    @Param('projectId') projectId: string
+  ): Promise<{ id: string }> {
+    const command = new DeleteProjectCommand(projectId);
+
+    const deletedProjectId = await this.commandBus.execute<DeleteProjectCommand, string>(
+      command
+    );
+
+    return { id: deletedProjectId };
   }
 }
