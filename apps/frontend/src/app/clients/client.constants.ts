@@ -1,15 +1,10 @@
-import { ClientStatus } from './client.types';
+import { ClientStatus, CLIENT_STATUS_VALUES } from '@angular-nest-starter/shared-types';
 
 /**
  * Available client status values.
  * This is the single source of truth for available client statuses in the UI.
  */
-export const CLIENT_STATUSES: readonly ClientStatus[] = [
-  'Active',
-  'Inactive',
-  'Prospect',
-  'Past Client'
-] as const;
+export const CLIENT_STATUSES: readonly ClientStatus[] = CLIENT_STATUS_VALUES;
 
 /**
  * Default client status used when creating new clients or resetting forms.

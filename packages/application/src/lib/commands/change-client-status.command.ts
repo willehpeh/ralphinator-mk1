@@ -1,4 +1,4 @@
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus } from '@angular-nest-starter/shared-types';
 
 export class ChangeClientStatusCommand {
   constructor(

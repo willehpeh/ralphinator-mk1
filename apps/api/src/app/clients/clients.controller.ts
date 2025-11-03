@@ -1,8 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel, ClientDataPayload } from '@angular-nest-starter/application';
-import { ClientStatus } from '@angular-nest-starter/domain';
-import { ClientDataDto, CreateClientDto, UpdateClientDto, ChangeClientStatusDto } from '@angular-nest-starter/shared-types';
+import { ClientDataDto, CreateClientDto, UpdateClientDto, ChangeClientStatusDto, ClientStatus } from '@angular-nest-starter/shared-types';
 import { randomUUID } from 'crypto';
 import { CLIENT_CONTROLLER_ERROR_MESSAGES } from './clients-controller.constants';
 

@@ -1,5 +1,5 @@
 import { ClientReadModel } from '../read-models/client.read-model';
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus } from '@angular-nest-starter/shared-types';
 
 export interface IClientReadRepository {
   findById(id: string): Promise<ClientReadModel | null>;

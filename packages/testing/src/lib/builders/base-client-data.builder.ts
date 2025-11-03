@@ -1,4 +1,4 @@
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus } from '@angular-nest-starter/shared-types';
 
 /**
  * Abstract base builder containing common client data properties and fluent methods.

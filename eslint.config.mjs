@@ -23,7 +23,8 @@ export default [
             {
               sourceTag: 'scope:domain',
               onlyDependOnLibsWithTags: [
-                'scope:domain'
+                'scope:domain',
+                'scope:shared',
               ],
             },
             {
@@ -31,6 +32,7 @@ export default [
               onlyDependOnLibsWithTags: [
                 'scope:application',
                 'scope:domain',
+                'scope:shared',
               ],
             },
             {
@@ -39,6 +41,7 @@ export default [
                 'scope:infrastructure',
                 'scope:application',
                 'scope:domain',
+                'scope:shared',
               ],
             },
             {
@@ -48,6 +51,7 @@ export default [
                 'scope:application',
                 'scope:domain',
                 'scope:infrastructure',
+                'scope:shared',
               ]
             },
             {

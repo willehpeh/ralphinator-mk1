@@ -1,5 +1,5 @@
 import { ClientAggregate } from '@angular-nest-starter/domain';
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus } from '@angular-nest-starter/shared-types';
 
 /**
  * All valid client statuses for comprehensive status testing.

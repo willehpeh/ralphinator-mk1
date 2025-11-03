@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ChangeClientStatusHandler, ChangeClientStatusCommand } from '@angular-nest-starter/application';
-import { ClientAggregate, ClientStatus, DOMAIN_ERRORS } from '@angular-nest-starter/domain';
+import { ClientAggregate, DOMAIN_ERRORS } from '@angular-nest-starter/domain';
+import { ClientStatus } from '@angular-nest-starter/shared-types';
 import { createCommandHandlerTestSetup } from '../lib/mock-factories';
 import { ClientAggregateBuilder } from '../lib/builders/client-aggregate.builder';
 import { expectAggregateToMatch } from '../lib/test-assertions';

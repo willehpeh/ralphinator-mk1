@@ -1,4 +1,4 @@
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus } from '@angular-nest-starter/shared-types';
 
 /**
  * Shared payload for client data used by create and update commands.

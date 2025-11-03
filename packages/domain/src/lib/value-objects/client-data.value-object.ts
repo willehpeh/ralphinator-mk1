@@ -1,4 +1,4 @@
-import { ClientStatus } from '../types/client-status.type';
+import { ClientStatus } from '@angular-nest-starter/shared-types';
 import { Email } from './email.value-object';
 
 /**

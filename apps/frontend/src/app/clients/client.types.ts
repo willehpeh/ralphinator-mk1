@@ -1,9 +1,10 @@
+import { ClientStatus } from '@angular-nest-starter/shared-types';
+
 /**
- * Client status type representing all possible client states.
- * This is duplicated from the domain layer to respect module boundaries.
- * Frontend can only depend on scope:frontend tagged packages.
+ * Re-export ClientStatus from shared-types for convenience.
+ * This allows frontend components to import from a local file while maintaining a single source of truth.
  */
-export type ClientStatus = 'Active' | 'Inactive' | 'Prospect' | 'Past Client';
+export type { ClientStatus };
 
 /**
  * Client interface matching the backend ClientReadModel.

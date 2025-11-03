@@ -1,5 +1,5 @@
 import { IEvent } from '@nestjs/cqrs';
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus } from '@angular-nest-starter/shared-types';
 
 /**
  * Integration event published when client information is updated.

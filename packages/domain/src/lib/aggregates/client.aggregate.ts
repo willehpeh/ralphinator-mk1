@@ -1,5 +1,5 @@
 import { EventSourcedAggregate } from '../base/event-sourced-aggregate';
-import { ClientStatus } from '../types/client-status.type';
+import { ClientStatus } from '@angular-nest-starter/shared-types';
 import { CLIENT_EVENT_TYPES } from '../constants/client-event-types';
 import { DOMAIN_ERRORS } from '../constants/domain-errors';
 import { ClientCreatedDomainEvent } from '../events/client-created.domain-event';

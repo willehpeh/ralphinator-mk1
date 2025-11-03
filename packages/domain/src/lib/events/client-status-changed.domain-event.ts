@@ -1,5 +1,5 @@
 import { DomainEvent } from '../base/domain-event';
-import { ClientStatus } from '../types/client-status.type';
+import { ClientStatus } from '@angular-nest-starter/shared-types';
 
 /**
  * Domain event representing a change to a client's status.

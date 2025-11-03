@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IClientReadRepository, ClientReadModel } from '@angular-nest-starter/application';
-import { ClientStatus } from '@angular-nest-starter/domain';
+import { ClientStatus } from '@angular-nest-starter/shared-types';
 
 /**
  * In-memory implementation of IClientReadRepository
