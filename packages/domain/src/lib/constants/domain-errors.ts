@@ -20,4 +20,9 @@ export const DOMAIN_ERRORS = {
    * Error message when email format is invalid
    */
   INVALID_EMAIL_FORMAT: 'Invalid email format',
+
+  /**
+   * Error message when attempting to update a contact that does not exist
+   */
+  CONTACT_NOT_FOUND: 'Contact not found',
 } as const;

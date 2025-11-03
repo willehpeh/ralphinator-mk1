@@ -9,4 +9,5 @@ export const CLIENT_EVENT_TYPES = {
   STATUS_CHANGED: 'ClientStatusChangedDomainEvent',
   DELETED: 'ClientDeletedDomainEvent',
   CONTACT_ADDED: 'ContactAddedToClientDomainEvent',
+  CONTACT_UPDATED: 'ContactUpdatedDomainEvent',
 } as const;

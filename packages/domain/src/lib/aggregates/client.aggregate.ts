@@ -8,6 +8,7 @@ import { ClientInformationUpdatedDomainEvent } from '../events/client-informatio
 import { ClientStatusChangedDomainEvent } from '../events/client-status-changed.domain-event';
 import { ClientDeletedDomainEvent } from '../events/client-deleted.domain-event';
 import { ContactAddedToClientDomainEvent } from '../events/contact-added-to-client.domain-event';
+import { ContactUpdatedDomainEvent } from '../events/contact-updated.domain-event';
 import { ClientData } from '../value-objects/client-data.value-object';
 import { Email } from '../value-objects/email.value-object';
 
@@ -42,6 +43,7 @@ export class ClientAggregate extends EventSourcedAggregate {
       [CLIENT_EVENT_TYPES.STATUS_CHANGED]: this.onClientStatusChanged.bind(this),
       [CLIENT_EVENT_TYPES.DELETED]: this.onClientDeleted.bind(this),
       [CLIENT_EVENT_TYPES.CONTACT_ADDED]: this.onContactAdded.bind(this),
+      [CLIENT_EVENT_TYPES.CONTACT_UPDATED]: this.onContactUpdated.bind(this),
     } as unknown as Record<string, (event: DomainEvent) => void>);
   }
 
@@ -169,6 +171,41 @@ export class ClientAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Update an existing contact's information
+   *
+   * @param contactId - Unique identifier for the contact to update
+   * @param name - Updated contact person's name
+   * @param role - Updated contact person's role/title (optional)
+   * @param email - Updated contact person's email address (optional)
+   * @param phone - Updated contact person's phone number (optional)
+   */
+  updateContact(
+    contactId: string,
+    name: string,
+    role: string | null,
+    email: string | null,
+    phone: string | null
+  ): void {
+    const id = this.ensureInitialized();
+
+    // Verify contact exists
+    if (!this.contacts.has(contactId)) {
+      throw new Error(DOMAIN_ERRORS.CONTACT_NOT_FOUND);
+    }
+
+    this.applyEvent(
+      new ContactUpdatedDomainEvent(
+        id,
+        contactId,
+        name,
+        role,
+        email,
+        phone
+      )
+    );
+  }
+
+  /**
    * Helper method to update client fields from ClientData value object
    * Used by event handlers to apply state changes consistently
    *
@@ -222,6 +259,20 @@ export class ClientAggregate extends EventSourcedAggregate {
    * Adds a contact to the client's contacts map
    */
   private onContactAdded(event: ContactAddedToClientDomainEvent): void {
+    this.contacts.set(event.contactId, {
+      contactId: event.contactId,
+      name: event.name,
+      role: event.role,
+      email: event.email,
+      phone: event.phone,
+    });
+  }
+
+  /**
+   * Event handler for ContactUpdatedDomainEvent
+   * Updates an existing contact in the client's contacts map
+   */
+  private onContactUpdated(event: ContactUpdatedDomainEvent): void {
     this.contacts.set(event.contactId, {
       contactId: event.contactId,
       name: event.name,
