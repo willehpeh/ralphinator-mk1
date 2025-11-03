@@ -203,6 +203,21 @@
   - Follows same styling patterns as other client components
   - Component is ready to be integrated into ClientDetailComponent
 
+### Task 17: Integrate ContactListComponent and load contacts in ClientDetailComponent
+- **Files Modified:**
+  - `apps/frontend/src/app/clients/client-detail.component.ts`
+- **Description:**
+  - Imported HttpClient to fetch contacts from API
+  - Imported ContactListComponent and added it to component imports
+  - Added Contact interface matching ContactReadModel structure
+  - Added contacts signal to store contact list state
+  - Created loadContacts() method that fetches contacts from GET /api/clients/:id/contacts
+  - Contacts are loaded on component initialization (ngOnInit)
+  - Contacts are reloaded after successfully adding a new contact (handleContactAdded)
+  - Replaced empty state message with app-contact-list component in template
+  - ContactListComponent receives contacts array via input binding
+  - Component displays ContactListComponent's built-in empty state when no contacts exist
+  - Follows modern Angular patterns (signals, inject(), OnPush change detection)
+
 ## Next Tasks
-- Integrate contact list component to show existing contacts
-- Load and display contacts when viewing client details
+- None - Use case is complete!

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { HttpClient } from '@angular/common/http';
 import { loadClients, deleteClient } from './store/clients.actions';
 import { selectClientById, selectClientsLoading, selectClientsError } from './store/clients.selectors';
 import { ClientFormComponent } from './client-form.component';
@@ -11,12 +12,22 @@ import { ChangeStatusFormComponent } from './change-status-form.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { StatusBadgeComponent } from './status-badge.component';
 import { ContactFormComponent } from './contact-form.component';
+import { ContactListComponent } from './contact-list.component';
 import { ClientNavigationService } from './client-navigation.service';
 import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
 
+interface Contact {
+  contactId: string;
+  clientId: string;
+  name: string;
+  role: string | null;
+  email: string | null;
+  phone: string | null;
+}
+
 @Component({
   selector: 'app-client-detail',
-  imports: [CommonModule, ClientFormComponent, ChangeStatusFormComponent, ConfirmationDialogComponent, StatusBadgeComponent, ContactFormComponent],
+  imports: [CommonModule, ClientFormComponent, ChangeStatusFormComponent, ConfirmationDialogComponent, StatusBadgeComponent, ContactFormComponent, ContactListComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./clients-common.scss', './client-detail.component.scss'],
   template: `
@@ -128,7 +139,7 @@ import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants
                   (formCancelled)="toggleAddContactMode()"
                 />
               } @else {
-                <p class="empty-state">No contacts yet. Click "Add Contact" to create the first contact for this client.</p>
+                <app-contact-list [contacts]="contacts()" />
               }
             </div>
 
@@ -166,6 +177,7 @@ export class ClientDetailComponent implements OnInit {
   private store = inject(Store);
   private route = inject(ActivatedRoute);
   private navigation = inject(ClientNavigationService);
+  private http = inject(HttpClient);
 
   // Get client ID from route params using toSignal to avoid manual subscription cleanup
   private clientId = toSignal(
@@ -187,6 +199,9 @@ export class ClientDetailComponent implements OnInit {
   // Delete confirmation dialog state
   showDeleteConfirmation = signal(false);
 
+  // Contacts state
+  contacts = signal<Contact[]>([]);
+
   // Date format for displaying client dates
   readonly dateFormat = STANDARD_DATE_FORMAT;
 
@@ -205,6 +220,8 @@ export class ClientDetailComponent implements OnInit {
   ngOnInit(): void {
     // Load clients if not already loaded
     this.store.dispatch(loadClients());
+    // Load contacts for the current client
+    this.loadContacts();
   }
 
   navigateBack(): void {
@@ -236,7 +253,23 @@ export class ClientDetailComponent implements OnInit {
   handleContactAdded(): void {
     // Exit add contact mode
     this.isAddingContact.set(false);
-    // TODO: Reload contacts list when contact list component is implemented
+    // Reload contacts list
+    this.loadContacts();
+  }
+
+  private loadContacts(): void {
+    const id = this.clientId();
+    if (id) {
+      this.http.get<Contact[]>(`/api/clients/${id}/contacts`).subscribe({
+        next: (contacts) => {
+          this.contacts.set(contacts);
+        },
+        error: (error) => {
+          console.error('Failed to load contacts:', error);
+          this.contacts.set([]);
+        }
+      });
+    }
   }
 
   deleteClient(): void {
