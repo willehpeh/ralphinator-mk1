@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, signal, input, output, OnInit, effect, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, input, output, effect, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -142,7 +142,7 @@ interface ClientFormFields {
     </div>
   `
 })
-export class ClientFormComponent implements OnInit, OnDestroy {
+export class ClientFormComponent implements OnDestroy {
   private clientsService = inject(ClientsService);
   private store = inject(Store);
   private actions$ = inject(Actions);
@@ -208,14 +208,6 @@ export class ClientFormComponent implements OnInit, OnDestroy {
     ).subscribe(() => {
       this.submitting.set(false);
     });
-  }
-
-  ngOnInit(): void {
-    // Initial form population for edit mode
-    const clientData = this.client();
-    if (this.mode() === 'edit' && clientData) {
-      this.populateFormWithClientData(clientData);
-    }
   }
 
   ngOnDestroy(): void {
