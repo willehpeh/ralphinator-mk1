@@ -290,12 +290,29 @@ This document tracks the implementation tasks for the "Add a New Project to a Cl
 - Linting passed: `nx lint api`
 
 ### 16. Create ProjectsController
-**Status**: Pending
+**Status**: Completed
+**Date**: 2025-11-03
 
 **Implementation Details**:
-- Create `apps/api/src/app/projects/projects.controller.ts`
-- Add POST /api/clients/:id/projects endpoint
-- Add GET /api/clients/:id/projects endpoint
+- Created `apps/api/src/app/projects/projects.controller.ts`
+- Implemented POST /api/clients/:clientId/projects endpoint:
+  - Accepts CreateProjectDto in request body
+  - Generates UUID for project ID
+  - Maps DTO to ProjectDataPayload using helper method
+  - Executes CreateProjectCommand via CommandBus
+  - Returns CreateProjectResponse with project ID and client ID
+- Implemented GET /api/clients/:clientId/projects endpoint:
+  - Accepts clientId as route parameter
+  - Executes GetProjectsByClientIdQuery via QueryBus
+  - Returns array of ProjectReadModel
+- Followed ClientsController pattern with helper method for payload mapping
+- Used nested route pattern: `/clients/:clientId/projects` to properly represent the resource relationship
+
+**Files Modified**:
+- `apps/api/src/app/projects/projects.controller.ts` (new)
+
+**Verification**:
+- Linting passed: `nx lint api`
 
 ### 17. Create Project DTOs
 **Status**: Completed
@@ -405,6 +422,6 @@ This document tracks the implementation tasks for the "Add a New Project to a Cl
 
 ## Implementation Status
 - Total Tasks: 25
-- Completed: 16 (Tasks 1-15 and 17, with Task 5 merged into Task 4)
-- Remaining: 9
-- Progress: 64%
+- Completed: 17 (Tasks 1-17, with Task 5 merged into Task 4)
+- Remaining: 8
+- Progress: 68%
