@@ -18,10 +18,22 @@
   - Follows existing CQRS pattern consistent with GetClientByIdQuery
 - **Testing**: Manual testing pending (will test with API endpoint)
 
+### Task 2: Add GET /api/projects/:id endpoint to controller (2025-11-03)
+- **Status**: ✅ COMPLETE
+- **Files Modified**:
+  - `apps/api/src/app/projects/all-projects.controller.ts`
+- **Description**: Added GET /:id endpoint to AllProjectsController
+- **Implementation Details**:
+  - Added @Get(':id') decorated method `getProjectById()`
+  - Accepts id parameter from route
+  - Creates GetProjectByIdQuery and executes via QueryBus
+  - Returns ProjectReadModel | null
+  - Follows same pattern as ClientsController.getClientById()
+- **Testing**: Pending integration with frontend
+
 ## Remaining Tasks
 
 ### Backend Tasks
-- [ ] Add GET /api/projects/:id endpoint to controller
 - [ ] Register GetProjectByIdQueryHandler in ProjectsModule providers
 
 ### Frontend Tasks
