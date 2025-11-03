@@ -35,4 +35,11 @@ export interface IContactReadRepository {
    * @param contactId - The ID of the contact to delete
    */
   delete(contactId: string): Promise<void>;
+
+  /**
+   * Retrieves all contacts from all clients.
+   *
+   * @returns Array of all contact read models
+   */
+  findAll(): Promise<ContactReadModel[]>;
 }

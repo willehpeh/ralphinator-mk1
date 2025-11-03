@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import {
   GetContactByIdQueryHandler,
+  GetAllContactsQueryHandler,
   AddContactToClientHandler,
   GetClientContactsQueryHandler,
   INJECTION_TOKENS,
@@ -15,7 +16,7 @@ import {
 import { ContactsController } from './contacts.controller';
 
 const CommandHandlers = [AddContactToClientHandler];
-const QueryHandlers = [GetContactByIdQueryHandler, GetClientContactsQueryHandler];
+const QueryHandlers = [GetContactByIdQueryHandler, GetAllContactsQueryHandler, GetClientContactsQueryHandler];
 const EventHandlers = [ContactProjection];
 
 @Module({

@@ -61,6 +61,15 @@ export class InMemoryContactReadRepository implements IContactReadRepository {
   }
 
   /**
+   * Retrieves all contacts from all clients.
+   *
+   * @returns Array of all contact read models
+   */
+  async findAll(): Promise<ContactReadModel[]> {
+    return Array.from(this.contacts.values());
+  }
+
+  /**
    * Utility method to clear all contacts (useful for testing)
    *
    * Note: This method is not part of the IContactReadRepository interface

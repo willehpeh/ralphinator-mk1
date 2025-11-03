@@ -19,6 +19,7 @@ export * from './queries/get-all-clients.query';
 export * from './queries/get-clients-by-status.query';
 export * from './queries/get-client-contacts.query';
 export * from './queries/get-contact-by-id.query';
+export * from './queries/get-all-contacts.query';
 
 // Query Handlers
 export * from './queries/handlers/get-client-by-id.handler';
@@ -26,6 +27,7 @@ export * from './queries/handlers/get-all-clients.handler';
 export * from './queries/handlers/get-clients-by-status.handler';
 export * from './queries/handlers/get-client-contacts.handler';
 export * from './queries/handlers/get-contact-by-id.handler';
+export * from './queries/handlers/get-all-contacts.handler';
 
 // Integration Events
 export * from './events/client-created.event';
