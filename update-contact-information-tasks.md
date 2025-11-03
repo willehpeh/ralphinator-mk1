@@ -33,7 +33,7 @@ This use case allows users to update a contact's information (name, role, email,
 
 ### API Layer
 - [x] Add UpdateContactDto
-- [ ] Add PUT /api/contacts/:id endpoint in ContactsController
+- [x] Add PUT /api/contacts/:id endpoint in ContactsController
 - [ ] Register UpdateContactCommandHandler in ContactsModule
 
 ### Frontend Layer
@@ -69,5 +69,8 @@ This use case allows users to update a contact's information (name, role, email,
 
 ### Shared Types Layer
 - `packages/shared-types/src/lib/dtos/contact.dtos.ts` (modified - added UpdateContactDto class with validation)
+
+### API Layer
+- `apps/api/src/app/contacts/contacts.controller.ts` (modified - added PUT /api/contacts/:id endpoint with UpdateContactCommand integration)
 
 ---

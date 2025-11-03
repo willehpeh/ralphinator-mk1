@@ -1,11 +1,13 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { QueryBus } from '@nestjs/cqrs';
-import { GetContactByIdQuery, GetAllContactsQuery, ContactReadModel } from '@angular-nest-starter/application';
+import { Controller, Get, Param, Put, Body } from '@nestjs/common';
+import { QueryBus, CommandBus } from '@nestjs/cqrs';
+import { GetContactByIdQuery, GetAllContactsQuery, ContactReadModel, UpdateContactCommand } from '@angular-nest-starter/application';
+import { UpdateContactDto } from '@angular-nest-starter/shared-types';
 
 @Controller('contacts')
 export class ContactsController {
   constructor(
-    private readonly queryBus: QueryBus
+    private readonly queryBus: QueryBus,
+    private readonly commandBus: CommandBus
   ) {}
 
   @Get()
@@ -20,5 +22,18 @@ export class ContactsController {
     const query = new GetContactByIdQuery(id);
     const contact = await this.queryBus.execute<GetContactByIdQuery, ContactReadModel | null>(query);
     return contact;
+  }
+
+  @Put(':id')
+  async updateContact(@Param('id') id: string, @Body() dto: UpdateContactDto): Promise<void> {
+    const command = new UpdateContactCommand(
+      id,
+      dto.clientId,
+      dto.name,
+      dto.role,
+      dto.email,
+      dto.phone
+    );
+    await this.commandBus.execute(command);
   }
 }
