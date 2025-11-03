@@ -15,6 +15,8 @@ This use case allows users to delete a contact person from the system when they 
 - [x] Register ContactDeletedDomainEvent handler in ClientAggregate
 
 ### Application Layer
+- [x] Create RemoveContactCommand class
+- [x] Export RemoveContactCommand
 
 ### Infrastructure Layer
 
@@ -29,8 +31,6 @@ This use case allows users to delete a contact person from the system when they 
 ### Domain Layer
 
 ### Application Layer
-- [ ] Create RemoveContactCommand class
-- [ ] Export RemoveContactCommand
 - [ ] Create RemoveContactCommandHandler
 - [ ] Export RemoveContactCommandHandler
 
@@ -66,6 +66,8 @@ This use case allows users to delete a contact person from the system when they 
 - `packages/domain/src/lib/aggregates/client.aggregate.ts` (modified - added removeContact method and onContactDeleted event handler)
 
 ### Application Layer
+- `packages/application/src/lib/commands/remove-contact.command.ts` (created - RemoveContactCommand class)
+- `packages/application/src/lib/application.ts` (modified - exported RemoveContactCommand)
 
 ### Infrastructure Layer
 

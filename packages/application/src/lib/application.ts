@@ -6,6 +6,7 @@ export * from './commands/change-client-status.command';
 export * from './commands/delete-client.command';
 export * from './commands/add-contact-to-client.command';
 export * from './commands/update-contact.command';
+export * from './commands/remove-contact.command';
 
 // Command Handlers
 export * from './commands/handlers/create-client.handler';
