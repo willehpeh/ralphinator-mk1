@@ -52,9 +52,33 @@ The `changeStatus()` method follows the same pattern as `ClientAggregate.changeS
 
 ---
 
+### Task 3: Create ChangeProjectStatusCommand
+**Date**: 2025-11-03
+
+**What was implemented**:
+- Created `ChangeProjectStatusCommand` at `packages/application/src/lib/commands/change-project-status.command.ts`
+- Follows the same pattern as `ChangeClientStatusCommand` for consistency
+- Takes two parameters: `id` (string) and `newStatus` (ProjectStatus)
+- Added export to `packages/application/src/lib/application.ts` for proper module resolution
+- Command is immutable (all fields are readonly) following CQRS best practices
+
+**Files created**:
+- `packages/application/src/lib/commands/change-project-status.command.ts`
+
+**Files modified**:
+- `packages/application/src/lib/application.ts`
+
+**Rationale**:
+Commands in CQRS represent the intent to perform an action. The `ChangeProjectStatusCommand`:
+1. **Immutable**: Uses readonly fields to ensure command cannot be modified after creation
+2. **Simple data structure**: Just carries data with no behavior (following command pattern)
+3. **Type-safe**: Uses `ProjectStatus` enum from shared-types for compile-time validation
+4. **Focused**: Single responsibility - changing project status only
+
+---
+
 ## Next Tasks
 
-- Create ChangeProjectStatusCommand
 - Create ChangeProjectStatusCommandHandler
 - Update ProjectProjection to handle status changed event
 - Add PATCH /api/projects/:id/status endpoint
