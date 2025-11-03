@@ -20,6 +20,7 @@ export class ProjectData {
   /**
    * Factory method to create ProjectData from payload objects.
    * Reduces duplication in command handlers.
+   * Converts string dates to Date objects.
    *
    * @param payload - Object containing project data properties
    * @returns New ProjectData instance
@@ -29,9 +30,9 @@ export class ProjectData {
     name: string;
     status: ProjectStatus;
     description?: string | null;
-    startDate?: Date | null;
-    expectedEndDate?: Date | null;
-    actualEndDate?: Date | null;
+    startDate?: string | Date | null;
+    expectedEndDate?: string | Date | null;
+    actualEndDate?: string | Date | null;
     budget?: number | null;
     technicalNotes?: string | null;
   }): ProjectData {
@@ -40,9 +41,9 @@ export class ProjectData {
       payload.name,
       payload.status,
       payload.description ?? null,
-      payload.startDate ?? null,
-      payload.expectedEndDate ?? null,
-      payload.actualEndDate ?? null,
+      payload.startDate ? (typeof payload.startDate === 'string' ? new Date(payload.startDate) : payload.startDate) : null,
+      payload.expectedEndDate ? (typeof payload.expectedEndDate === 'string' ? new Date(payload.expectedEndDate) : payload.expectedEndDate) : null,
+      payload.actualEndDate ? (typeof payload.actualEndDate === 'string' ? new Date(payload.actualEndDate) : payload.actualEndDate) : null,
       payload.budget ?? null,
       payload.technicalNotes ?? null
     );
