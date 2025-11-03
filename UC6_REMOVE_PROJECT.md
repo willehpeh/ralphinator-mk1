@@ -27,7 +27,7 @@
 - Created `packages/application/src/lib/commands/handlers/delete-project.handler.ts`
 - Handler loads aggregate from event store, calls delete(), persists events
 - Exported command and handler from application layer
-- Commit: [pending]
+- Commit: `27ab4d1 feat: Add DeleteProjectCommand and handler for soft delete`
 
 ## Tasks Remaining
 
