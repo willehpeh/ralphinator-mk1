@@ -54,6 +54,15 @@ export class CreateProjectDto extends ProjectDataDto {}
 export class UpdateProjectDto extends ProjectDataDto {}
 
 /**
+ * DTO for changing a project's status.
+ */
+export class ChangeProjectStatusDto {
+  @IsIn(PROJECT_STATUS_VALUES)
+  @IsNotEmpty()
+  status!: ProjectStatus;
+}
+
+/**
  * Response DTO for project creation.
  */
 export interface CreateProjectResponse {

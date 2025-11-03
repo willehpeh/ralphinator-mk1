@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Post, Put, NotFoundException } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Put, NotFoundException } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateProjectCommand, UpdateProjectDetailsCommand, GetProjectsByClientIdQuery, GetProjectByIdQuery, ProjectReadModel, ProjectDataPayload } from '@angular-nest-starter/application';
-import { CreateProjectDto, UpdateProjectDto, CreateProjectResponse } from '@angular-nest-starter/shared-types';
+import { CreateProjectCommand, UpdateProjectDetailsCommand, ChangeProjectStatusCommand, GetProjectsByClientIdQuery, GetProjectByIdQuery, ProjectReadModel, ProjectDataPayload } from '@angular-nest-starter/application';
+import { CreateProjectDto, UpdateProjectDto, ChangeProjectStatusDto, CreateProjectResponse } from '@angular-nest-starter/shared-types';
 import { randomUUID } from 'crypto';
 
 @Controller('clients/:clientId/projects')
@@ -96,5 +96,20 @@ export class ProjectsController {
 
     // Return the updated project to avoid unnecessary refetch
     return this.fetchProjectAfterMutation(updatedProjectId, 'update');
+  }
+
+  @Patch(':projectId/status')
+  async changeProjectStatus(
+    @Param('projectId') projectId: string,
+    @Body() dto: ChangeProjectStatusDto
+  ): Promise<ProjectReadModel> {
+    const command = new ChangeProjectStatusCommand(projectId, dto.status);
+
+    const updatedProjectId = await this.commandBus.execute<ChangeProjectStatusCommand, string>(
+      command
+    );
+
+    // Return the updated project to avoid unnecessary refetch
+    return this.fetchProjectAfterMutation(updatedProjectId, 'status change');
   }
 }

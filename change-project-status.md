@@ -138,7 +138,52 @@ This completes the projection layer for the change project status feature. The r
 
 ---
 
+### Task 6: Add PATCH endpoint for changing project status
+**Date**: 2025-11-03
+
+**What was implemented**:
+- Created `ChangeProjectStatusDto` in `packages/shared-types/src/lib/dtos/project.dtos.ts`
+  - Validates status field using `@IsIn(PROJECT_STATUS_VALUES)` and `@IsNotEmpty()` decorators
+  - Follows the same pattern as `ChangeClientStatusDto` for consistency
+- Added `PATCH /api/clients/:clientId/projects/:projectId/status` endpoint to projects controller
+  - Accepts `ChangeProjectStatusDto` in request body
+  - Executes `ChangeProjectStatusCommand` via command bus
+  - Returns updated `ProjectReadModel` with new status
+  - Uses `fetchProjectAfterMutation` helper for consistent response handling
+- Added `ProjectStatusChangedDomainEvent` export to domain package index
+- Imported `Patch` decorator, `ChangeProjectStatusCommand`, and `ChangeProjectStatusDto` in controller
+
+**Files created**:
+- None (only modifications)
+
+**Files modified**:
+- `packages/shared-types/src/lib/dtos/project.dtos.ts` (added ChangeProjectStatusDto)
+- `packages/domain/src/index.ts` (added ProjectStatusChangedDomainEvent export)
+- `apps/api/src/app/projects/projects.controller.ts` (added endpoint and imports)
+
+**Rationale**:
+The PATCH endpoint follows REST conventions and existing patterns in the codebase:
+1. **REST semantics**: PATCH is used for partial updates (status only, not full project)
+2. **Consistent pattern**: Follows the same pattern as `PATCH /api/clients/:id/status`
+3. **Type safety**: DTO validation ensures only valid status values are accepted
+4. **CQRS**: Controller delegates to command bus, keeping concerns separated
+5. **DRY**: Reuses `fetchProjectAfterMutation` helper for consistent response handling
+6. **API design**: Nested route `/clients/:clientId/projects/:projectId/status` maintains resource hierarchy
+
+**API Endpoint**:
+```
+PATCH /api/clients/:clientId/projects/:projectId/status
+Content-Type: application/json
+
+{
+  "status": "Active" | "Planning" | "On Hold" | "Completed" | "Cancelled"
+}
+
+Response: ProjectReadModel with updated status
+```
+
+---
+
 ## Next Tasks
 
-- Add PATCH /api/projects/:id/status endpoint
 - Add frontend change status functionality
