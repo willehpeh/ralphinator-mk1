@@ -138,13 +138,7 @@ export class ClientsController {
     @Body() dto: AddContactDto
   ): Promise<AddContactResponse> {
     const contactId = randomUUID();
-    const contactData = new ContactData(
-      contactId,
-      dto.name,
-      dto.role ?? null,
-      dto.email ?? null,
-      dto.phone ?? null
-    );
+    const contactData = ContactData.fromDto(contactId, dto);
 
     const command = new AddContactToClientCommand(clientId, contactData);
 

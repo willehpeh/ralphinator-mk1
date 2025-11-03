@@ -33,4 +33,31 @@ export class ContactData {
       payload.phone
     );
   }
+
+  /**
+   * Factory method to create ContactData from DTOs (AddContactDto or UpdateContactDto).
+   * Normalizes optional fields (undefined or null) to explicit null values.
+   * Reduces duplication in controllers and ensures consistent null handling.
+   *
+   * @param contactId - The unique identifier for the contact
+   * @param dto - DTO containing contact data (from API request)
+   * @returns New ContactData instance with normalized null values
+   */
+  static fromDto(
+    contactId: string,
+    dto: {
+      name: string;
+      role?: string | null;
+      email?: string | null;
+      phone?: string | null;
+    }
+  ): ContactData {
+    return new ContactData(
+      contactId,
+      dto.name,
+      dto.role ?? null,
+      dto.email ?? null,
+      dto.phone ?? null
+    );
+  }
 }

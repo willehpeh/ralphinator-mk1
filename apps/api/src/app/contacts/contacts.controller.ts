@@ -49,13 +49,7 @@ export class ContactsController {
   async updateContact(@Param('id') id: string, @Body() dto: UpdateContactDto): Promise<void> {
     const contact = await this.fetchAndValidateContact(id);
 
-    const contactData = new ContactData(
-      id,
-      dto.name,
-      dto.role,
-      dto.email,
-      dto.phone
-    );
+    const contactData = ContactData.fromDto(id, dto);
 
     const command = new UpdateContactCommand(contact.clientId, contactData);
     await this.commandBus.execute(command);
