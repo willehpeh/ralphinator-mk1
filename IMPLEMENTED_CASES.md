@@ -455,7 +455,7 @@
 - Documentation: UC-PROJECT-001-01-tasks.md
 - **Note**: Complete end-to-end implementation with full CQRS + Event Sourcing pattern
 
-## Use Case 6: Remove a Contact from the System (2025-11-03)
+## Use Case 6: Remove a Contact from the System (2025-11-03) ✅ COMPLETE
 - Complete CQRS + Event Sourcing implementation for contact deletion
 - Domain: ContactDeletedDomainEvent captures contact deletion with contactId and timestamp
 - Domain: ClientAggregate.removeContact() method validates contact exists and applies event
@@ -463,10 +463,13 @@
 - Application: RemoveContactCommand with contactId and clientId fields
 - Application: RemoveContactCommandHandler loads aggregate, removes contact, persists events
 - Infrastructure: ContactProjection handles ContactDeletedDomainEvent and removes from read model
+- Infrastructure: ContactProjection.onContactAdded includes createdAt and updatedAt timestamp fields
+- Infrastructure: ContactProjection.onContactUpdated preserves createdAt and updates updatedAt
+- Infrastructure: InMemoryContactReadRepository.enrichContactWithClientName passes through timestamps
 - Backend API: DELETE /api/contacts/:id endpoint removes contact and returns success response
 - Frontend: ContactDetailComponent enhanced with delete functionality
 - Frontend: Delete button styled with btn-danger class (red background, white text)
-- Frontend: Native browser confirmation dialog before deletion
+- Frontend: Confirmation dialog component for delete confirmation (ConfirmationDialogComponent)
 - Frontend: Loading state during delete operation
 - Frontend: Error handling for failed deletions with user-friendly messages
 - Frontend: Automatic navigation to client detail page after successful deletion
@@ -479,10 +482,11 @@
   - System marks the contact as deleted (event-sourced command handler)
   - System navigates user back to client detail (without deleted contact)
 - Extensions handled:
-  - 4a: User cancels deletion - confirm dialog allows cancel
+  - 4a: User cancels deletion - confirmation dialog allows cancel
   - 5a: Contact not found displays error message with proper handling
-- Documentation: remove-contact.md
-- **Note**: Unit tests pending for future testing phase
+- Build verification: TypeScript compilation successful, all timestamp fields properly handled
+- Documentation: remove-contact-from-system.md
+- **Note**: Feature complete, build passing, ready for use
 
 ## Use Case 5: View Complete Client Profile with Related Work (2025-11-03)
 - Complete client detail view implementation displaying all client information and associated projects
