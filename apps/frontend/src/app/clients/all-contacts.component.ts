@@ -1,7 +1,8 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 interface Contact {
   contactId: string;
@@ -14,7 +15,7 @@ interface Contact {
 
 @Component({
   selector: 'app-all-contacts',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./clients-common.scss'],
   styles: [`
@@ -268,17 +269,18 @@ interface Contact {
               type="text"
               class="search-input"
               placeholder="Search by name, role, email, or client..."
-              #searchInput
+              [ngModel]="searchQuery()"
+              (ngModelChange)="searchQuery.set($event)"
             />
           </div>
         </div>
 
         <div class="contact-count">
-          Showing {{ contacts().length }} {{ contacts().length === 1 ? 'contact' : 'contacts' }}
+          Showing {{ filteredContacts().length }} {{ filteredContacts().length === 1 ? 'contact' : 'contacts' }}
         </div>
 
         <div class="contacts-grid">
-          @for (contact of contacts(); track contact.contactId) {
+          @for (contact of filteredContacts(); track contact.contactId) {
             <a
               [routerLink]="['/clients', contact.clientId, 'contacts', contact.contactId]"
               class="contact-card"
@@ -331,6 +333,26 @@ export class AllContactsComponent implements OnInit {
   contacts = signal<Contact[]>([]);
   loading = signal<boolean>(true);
   error = signal<string | null>(null);
+  searchQuery = signal<string>('');
+
+  // Computed filtered contacts based on search query
+  filteredContacts = computed(() => {
+    const query = this.searchQuery().toLowerCase().trim();
+    const allContacts = this.contacts();
+
+    if (!query) {
+      return allContacts;
+    }
+
+    return allContacts.filter(contact => {
+      const matchesName = contact.name.toLowerCase().includes(query);
+      const matchesRole = contact.role?.toLowerCase().includes(query) ?? false;
+      const matchesEmail = contact.email?.toLowerCase().includes(query) ?? false;
+      const matchesClientId = contact.clientId.toLowerCase().includes(query);
+
+      return matchesName || matchesRole || matchesEmail || matchesClientId;
+    });
+  });
 
   ngOnInit(): void {
     this.loadContacts();
