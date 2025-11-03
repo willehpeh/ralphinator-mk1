@@ -19,3 +19,4 @@ export * from './projections/project.projection';
 // Read Model Repositories
 export * from './read-models/in-memory-client-read-repository';
 export * from './read-models/in-memory-contact-read-repository';
+export * from './read-models/in-memory-project-read-repository';
