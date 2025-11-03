@@ -41,7 +41,20 @@
 
 ---
 
+### Task 4: Add GET /api/projects endpoint
+**Status**: ✅ Completed
+**Files Created**:
+- `apps/api/src/app/projects/all-projects.controller.ts` - New controller for all-projects endpoint
+
+**Files Modified**:
+- `apps/api/src/app/projects/projects.module.ts` - Added AllProjectsController import and registered in controllers array
+
+**Description**: Created a new AllProjectsController with a GET endpoint at `/api/projects` that retrieves all projects across all clients using the GetAllProjectsQuery. The controller follows the established NestJS pattern with QueryBus execution.
+
+**Pattern**: Followed existing controller pattern from ClientsController and ProjectsController. Separated concerns by creating a dedicated controller for the root `/projects` endpoint rather than mixing it with the client-scoped `/clients/:clientId/projects` endpoint.
+
+---
+
 ## Next Tasks
-- Add GET /api/projects endpoint (create new all-projects.controller.ts)
-- Add getAllProjects() to ProjectService
-- Create ProjectsListComponent
+- Add getAllProjects() to ProjectsService (frontend)
+- Create ProjectsListComponent (frontend)

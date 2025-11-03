@@ -13,6 +13,7 @@ import {
   AggregateRepository,
 } from '@angular-nest-starter/infrastructure';
 import { ProjectsController } from './projects.controller';
+import { AllProjectsController } from './all-projects.controller';
 
 const CommandHandlers = [CreateProjectHandler];
 const QueryHandlers = [GetProjectsByClientIdQueryHandler, GetAllProjectsQueryHandler];
@@ -20,7 +21,7 @@ const EventHandlers = [ProjectProjection];
 
 @Module({
   imports: [CqrsModule],
-  controllers: [ProjectsController],
+  controllers: [ProjectsController, AllProjectsController],
   providers: [
     ...CommandHandlers,
     ...QueryHandlers,
