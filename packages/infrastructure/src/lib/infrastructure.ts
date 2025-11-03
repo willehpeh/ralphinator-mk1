@@ -13,6 +13,7 @@ export * from './repositories/aggregate.repository';
 
 // Projections
 export * from './projections/client.projection';
+export * from './projections/contact.projection';
 
 // Read Model Repositories
 export * from './read-models/in-memory-client-read-repository';

@@ -98,8 +98,22 @@
   - Includes comprehensive error handling with descriptive error messages
   - Handler is exported from application package and ready for module registration
 
+### Task 10: Create ContactProjection to build contact read models
+- **Files Created:**
+  - `packages/infrastructure/src/lib/projections/contact.projection.ts`
+- **Files Modified:**
+  - `packages/infrastructure/src/lib/infrastructure.ts` - Exported ContactProjection
+- **Description:**
+  - Created ContactProjection extending BaseProjectionHandler
+  - Registered ContactAddedToClientDomainEvent in @EventsHandler decorator
+  - Implemented onContactAdded() event handler that creates ContactReadModel
+  - Handler transforms event data (contactId, clientId, name, role, email, phone) into ContactReadModel
+  - Calls contactReadRepository.save() to persist read model
+  - Projection is exported from infrastructure package and ready for module registration
+  - Follows same pattern as ClientProjection with event handler registry
+
 ## Next Tasks
-- Create projection to build contact read models
+- Create InMemoryContactReadRepository implementation
 - Add API endpoint for adding contacts
 - Add API endpoint for retrieving client contacts
 - Integrate frontend UI for adding contacts
