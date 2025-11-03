@@ -15,19 +15,22 @@
 
 **Description**: Created the CQRS query and handler for retrieving all contacts from all clients. The query follows the established pattern and uses the IContactReadRepository port interface.
 
+### 2. Add GET /api/contacts endpoint in controller
+**Status**: âœ… Completed
+
+**Files modified**:
+- `apps/api/src/app/contacts/contacts.controller.ts` - Added GET /api/contacts endpoint
+
+**Description**: Added GET endpoint to ContactsController that executes GetAllContactsQuery and returns all contacts.
+
 ## Pending Tasks
 
-### 2. Add GET /api/contacts endpoint in controller
-**Status**: ó Pending
-
-**Description**: Add a new GET endpoint to ContactsController that executes GetAllContactsQuery.
-
 ### 3. Create all-contacts route in Angular
-**Status**: ó Pending
+**Status**: ï¿½ Pending
 
 **Description**: Add route configuration for the all-contacts page.
 
 ### 4. Create AllContactsComponent to display contacts list
-**Status**: ó Pending
+**Status**: ï¿½ Pending
 
 **Description**: Create Angular component to display all contacts in a professional, modern interface with client information.

@@ -1,12 +1,19 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { GetContactByIdQuery, ContactReadModel } from '@angular-nest-starter/application';
+import { GetContactByIdQuery, GetAllContactsQuery, ContactReadModel } from '@angular-nest-starter/application';
 
 @Controller('contacts')
 export class ContactsController {
   constructor(
     private readonly queryBus: QueryBus
   ) {}
+
+  @Get()
+  async getAllContacts(): Promise<ContactReadModel[]> {
+    const query = new GetAllContactsQuery();
+    const contacts = await this.queryBus.execute<GetAllContactsQuery, ContactReadModel[]>(query);
+    return contacts;
+  }
 
   @Get(':id')
   async getContactById(@Param('id') id: string): Promise<ContactReadModel | null> {
