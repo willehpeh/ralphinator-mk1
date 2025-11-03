@@ -1,42 +1,5 @@
 # Use Cases: Client Management Foundation
 
-## Use Case 3: View Client Details
-
-**Primary Actor**: Developer/User
-
-**Goal**: See complete information about a specific client to understand their details, status, and history.
-
-**Preconditions**:
-- User has access to the CRM system
-- The client record exists in the system
-- User knows which client they want to view (from list or search)
-
-**Main Success Scenario**:
-1. User selects a client from the client list
-2. System retrieves the client's complete information
-3. System displays all client details including:
-   - Company/person name
-   - Current status
-   - Contact information (email, phone, website)
-   - Address
-   - Notes
-   - When the client was added
-   - When the client was last updated
-4. User reviews the client information
-
-**Extensions**:
-- 2a. If client no longer exists:
-  - System displays error message
-  - User is returned to client list
-- 4a. If user wants to edit client information:
-  - Continue to Use Case 4: Update Client Information
-- 4b. If user wants to change client status:
-  - Continue to Use Case 5: Change Client Status
-
-**Success Guarantee**: User has viewed complete, current information about the selected client.
-
----
-
 ## Use Case 4: Update Client Information
 
 **Primary Actor**: Developer/User
