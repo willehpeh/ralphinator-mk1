@@ -5,6 +5,7 @@ import { ClientsService } from './clients.service';
 import { FormState } from '../shared/form-state';
 import { createContactFormGroup } from './contact-form-builder';
 import { CONTACT_FORM_LABELS, CLIENT_ERROR_MESSAGES } from './client-display.constants';
+import { ValidationErrorComponent } from '../shared/validation-error.component';
 
 interface AddContactDto {
   name: string;
@@ -15,7 +16,7 @@ interface AddContactDto {
 
 @Component({
   selector: 'app-contact-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ValidationErrorComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./clients-common.scss'],
   template: `
@@ -32,13 +33,9 @@ interface AddContactDto {
             [class.invalid]="form.controls.name.invalid && form.controls.name.touched"
             [placeholder]="labels.NAME_PLACEHOLDER"
           />
-          @if (form.controls.name.invalid && form.controls.name.touched) {
-            <div class="validation-error">
-              @if (form.controls.name.errors?.['required']) {
-                <span>{{ labels.NAME_REQUIRED }}</span>
-              }
-            </div>
-          }
+          <app-validation-error
+            [control]="form.controls.name"
+            [requiredMessage]="labels.NAME_REQUIRED" />
         </div>
 
         <div class="form-field">
@@ -60,13 +57,9 @@ interface AddContactDto {
             [class.invalid]="form.controls.email.invalid && form.controls.email.touched"
             [placeholder]="labels.EMAIL_PLACEHOLDER"
           />
-          @if (form.controls.email.invalid && form.controls.email.touched) {
-            <div class="validation-error">
-              @if (form.controls.email.errors?.['email']) {
-                <span>{{ labels.INVALID_EMAIL }}</span>
-              }
-            </div>
-          }
+          <app-validation-error
+            [control]="form.controls.email"
+            [emailMessage]="labels.INVALID_EMAIL" />
         </div>
 
         <div class="form-field">

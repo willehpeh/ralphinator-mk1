@@ -12,6 +12,7 @@ import { ClientStatus, Client } from './client.types';
 import { CLIENT_STATUSES, DEFAULT_CLIENT_STATUS } from './client.constants';
 import { CLIENT_UI_TEXT, CLIENT_FORM_LABELS, SUCCESS_MESSAGE_DISMISS_DURATION_MS } from './client-display.constants';
 import { FormState } from '../shared/form-state';
+import { ValidationErrorComponent } from '../shared/validation-error.component';
 
 interface ClientFormFields {
   companyName: FormControl<string>;
@@ -24,7 +25,7 @@ interface ClientFormFields {
 
 @Component({
   selector: 'app-client-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ValidationErrorComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./clients-common.scss', './client-form.component.scss'],
   template: `
@@ -59,13 +60,9 @@ interface ClientFormFields {
             [placeholder]="formLabels.COMPANY_NAME_PLACEHOLDER"
             [class.invalid]="form.controls.companyName.invalid && form.controls.companyName.touched"
           />
-          @if (form.controls.companyName.invalid && form.controls.companyName.touched) {
-            <div class="validation-error">
-              @if (form.controls.companyName.hasError('required')) {
-                {{ formLabels.COMPANY_NAME_REQUIRED }}
-              }
-            </div>
-          }
+          <app-validation-error
+            [control]="form.controls.companyName"
+            [requiredMessage]="formLabels.COMPANY_NAME_REQUIRED" />
         </div>
 
         <div class="form-group">
@@ -77,16 +74,10 @@ interface ClientFormFields {
             [placeholder]="formLabels.EMAIL_PLACEHOLDER"
             [class.invalid]="form.controls.email.invalid && form.controls.email.touched"
           />
-          @if (form.controls.email.invalid && form.controls.email.touched) {
-            <div class="validation-error">
-              @if (form.controls.email.hasError('required')) {
-                {{ formLabels.EMAIL_REQUIRED }}
-              }
-              @if (form.controls.email.hasError('email')) {
-                {{ formLabels.INVALID_EMAIL }}
-              }
-            </div>
-          }
+          <app-validation-error
+            [control]="form.controls.email"
+            [requiredMessage]="formLabels.EMAIL_REQUIRED"
+            [emailMessage]="formLabels.INVALID_EMAIL" />
         </div>
 
         <div class="form-group">

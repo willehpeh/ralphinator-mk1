@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators, AbstractContro
 import { CreateProjectDto, ProjectStatus, PROJECT_STATUS_VALUES } from '@angular-nest-starter/shared-types';
 import { ProjectsService } from './projects.service';
 import { FormState } from '../shared/form-state';
+import { ValidationErrorComponent } from '../shared/validation-error.component';
 
 interface ProjectFormFields {
   name: FormControl<string>;
@@ -18,7 +19,7 @@ interface ProjectFormFields {
 
 @Component({
   selector: 'app-project-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ValidationErrorComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./projects-common.scss', './project-form.component.scss'],
   template: `
@@ -47,13 +48,9 @@ interface ProjectFormFields {
             placeholder="Enter project name"
             [class.invalid]="form.controls.name.invalid && form.controls.name.touched"
           />
-          @if (form.controls.name.invalid && form.controls.name.touched) {
-            <div class="validation-error">
-              @if (form.controls.name.hasError('required')) {
-                Project name is required
-              }
-            </div>
-          }
+          <app-validation-error
+            [control]="form.controls.name"
+            requiredMessage="Project name is required" />
         </div>
 
         <div class="form-group">
@@ -134,13 +131,9 @@ interface ProjectFormFields {
             step="0.01"
             [class.invalid]="form.controls.budget.invalid && form.controls.budget.touched"
           />
-          @if (form.controls.budget.invalid && form.controls.budget.touched) {
-            <div class="validation-error">
-              @if (form.controls.budget.hasError('min')) {
-                Budget must be a positive number
-              }
-            </div>
-          }
+          <app-validation-error
+            [control]="form.controls.budget"
+            minMessage="Budget must be a positive number" />
         </div>
 
         <div class="form-group">
