@@ -35,10 +35,11 @@ export interface Contact {
 }
 
 /**
- * Contact with additional timestamp metadata.
+ * Contact with additional timestamp metadata and client name.
  * Used in detail views where audit information is displayed.
  */
 export interface ContactDetail extends Contact {
+  clientName: string;
   createdAt: string;
   updatedAt: string;
 }

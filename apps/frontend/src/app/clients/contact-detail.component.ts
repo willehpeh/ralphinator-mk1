@@ -520,6 +520,9 @@ import { AsyncStateManager } from '../shared/async-state-manager';
               <h4>Associated Client</h4>
               <div class="client-link-section">
                 <div class="client-link-label">Client Company</div>
+                <div class="detail-value" style="margin-bottom: 0.5rem; font-weight: 500;">
+                  {{ contactData.clientName }}
+                </div>
                 <a [routerLink]="['/clients', contactData.clientId]" class="client-link">
                   View Client Details →
                 </a>
