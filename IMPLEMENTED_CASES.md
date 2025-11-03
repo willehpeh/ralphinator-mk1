@@ -403,6 +403,43 @@
 - Documentation: update-contact-information-tasks.md
 - **Note**: NGRX integration and unit tests pending for future enhancement
 
+## UC-PROJECT-001-01: Add a New Project to a Client (2025-11-03)
+- Complete CQRS + Event Sourcing implementation for project management
+- Domain: ProjectAggregate, ProjectCreatedDomainEvent, ProjectStatus enum, ProjectData value object
+- Domain: Project business logic with event sourcing pattern
+- Application: CreateProjectCommand and CreateProjectCommandHandler
+- Application: ProjectReadModel DTO for query responses
+- Application: GetProjectsByClientIdQuery and GetProjectsByClientIdQueryHandler
+- Application: IProjectReadRepository port interface for read model access
+- Infrastructure: InMemoryProjectReadRepository implementation with Map-based storage
+- Infrastructure: ProjectProjection handles ProjectCreatedDomainEvent and builds read models
+- Backend: ProjectsModule with CQRS handlers and infrastructure providers
+- Backend: ProjectsController with POST /api/clients/:id/projects endpoint
+- Backend: GET /api/clients/:id/projects endpoint to retrieve all projects for a client
+- Backend: Project DTOs (CreateProjectDto, ProjectDto) with validation decorators
+- Backend: Validation for required fields (name, status), budget positivity, date ranges
+- Backend: Status enum validation (Planning, Active, On Hold, Completed, Cancelled)
+- Frontend: ProjectFormComponent with reactive forms and comprehensive validation
+- Frontend: Form fields for name, status, description, dates, budget, technical notes
+- Frontend: Conditional actual end date field (only for Completed/Cancelled status)
+- Frontend: Custom date range validators (start <= expected, expected <= actual)
+- Frontend: Budget validation (positive numbers only)
+- Frontend: ProjectsService for API communication (createProject, getProjectsByClientId)
+- Frontend: Projects section integrated into ClientDetailComponent
+- Frontend: "Add Project" button with form toggle functionality
+- Frontend: Project list display with status badges, description, and metadata
+- Frontend: Color-coded status badges (blue=Planning, green=Active, orange=On Hold, purple=Completed, red=Cancelled)
+- Frontend: Professional card layout with hover effects for projects
+- Frontend: Empty state message for clients with no projects
+- Frontend: Automatic project list reload after successful creation
+- Event sourcing: All project creations captured as immutable events in event store
+- Projections: Project read models built from ProjectCreatedDomainEvent
+- All main success scenario steps implemented and verified
+- All extensions implemented (required field validation, business rule validation, cancel functionality)
+- Success guarantee met: Projects persisted, associated with client, and displayed in list
+- Documentation: UC-PROJECT-001-01-tasks.md
+- **Note**: Complete end-to-end implementation with full CQRS + Event Sourcing pattern
+
 ## Use Case 6: Remove a Contact from the System (2025-11-03)
 - Complete CQRS + Event Sourcing implementation for contact deletion
 - Domain: ContactDeletedDomainEvent captures contact deletion with contactId and timestamp
