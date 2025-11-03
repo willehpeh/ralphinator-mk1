@@ -83,7 +83,12 @@
 - None
 
 ## Remaining Tasks (Planned)
-- None - Implementation complete!
+- Add name/search filter input field to UI
+- Add signal for search term state
+- Update computed filtering logic to include name search (case-insensitive)
+- Ensure search filter works with status and client filters (AND logic)
+- Update Clear Filters button to clear search term as well
+- Test all three filters working together
 
 ## Manual Testing Instructions
 To verify the filtering functionality works correctly:
