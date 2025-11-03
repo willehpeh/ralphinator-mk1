@@ -76,7 +76,7 @@
 - Dialog displays: "Are you sure you want to delete this project? The project will be archived and removed from active views, but the complete history will be preserved."
 - Confirm button text: "Delete", Cancel button text: "Cancel"
 - Located in `apps/frontend/src/app/projects/project-detail.component.ts:10,14,160,243-255,149-158`
-- Commit: `TBD`
+- Commit: `03517ac feat: Add confirmation dialog for project deletion`
 
 ## Tasks Remaining
 
