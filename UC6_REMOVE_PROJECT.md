@@ -48,11 +48,15 @@
 - Endpoint URL: `DELETE /api/clients/:clientId/projects/:projectId`
 - Commit: `ec4fe3e feat: Add DELETE endpoint for project deletion`
 
-## Tasks Remaining
+### Task 6: Add deleteProject method to ProjectsService (Frontend) ✅
+- Added `deleteProject(clientId: string, projectId: string)` method to `ProjectsService`
+- Method calls HTTP DELETE to `/api/clients/${clientId}/projects/${projectId}`
+- Returns `Observable<{ id: string }>`
+- Added JSDoc comment documenting soft delete behavior
+- Located in `apps/frontend/src/app/projects/projects.service.ts:62-64`
+- Commit: [pending]
 
-### Task 6: Add deleteProject method to ProjectsService (Frontend)
-- Add `deleteProject(id: string)` method to `ProjectsService`
-- Return `Observable<{ id: string }>`
+## Tasks Remaining
 
 ### Task 7: Add Delete button to ProjectDetailComponent
 - Add "Delete Project" button to project detail view

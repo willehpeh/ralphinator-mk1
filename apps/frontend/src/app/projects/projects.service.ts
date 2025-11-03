@@ -55,4 +55,11 @@ export class ProjectsService {
   changeProjectStatus(clientId: string, projectId: string, dto: ChangeProjectStatusDto): Observable<ProjectDto> {
     return this.http.patch<ProjectDto>(`${this.apiUrl}/${clientId}/projects/${projectId}/status`, dto);
   }
+
+  /**
+   * Delete a project (soft delete)
+   */
+  deleteProject(clientId: string, projectId: string): Observable<{ id: string }> {
+    return this.http.delete<{ id: string }>(`${this.apiUrl}/${clientId}/projects/${projectId}`);
+  }
 }
