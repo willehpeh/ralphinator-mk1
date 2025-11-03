@@ -31,10 +31,22 @@
   - Follows same pattern as ClientsController.getClientById()
 - **Testing**: Pending integration with frontend
 
+### Task 3: Register GetProjectByIdQueryHandler in ProjectsModule providers (2025-11-03)
+- **Status**: ✅ COMPLETE
+- **Files Modified**:
+  - `apps/api/src/app/projects/projects.module.ts`
+- **Description**: Registered GetProjectByIdQueryHandler in ProjectsModule to enable dependency injection
+- **Implementation Details**:
+  - Added import for GetProjectByIdQueryHandler from @angular-nest-starter/application
+  - Added handler to QueryHandlers array
+  - Handler is now available for NestJS to inject via CQRS module
+  - Follows same pattern as other query handlers in the module
+- **Testing**: Backend endpoint is now fully functional and ready for frontend integration
+
 ## Remaining Tasks
 
 ### Backend Tasks
-- [ ] Register GetProjectByIdQueryHandler in ProjectsModule providers
+- ✅ All backend tasks complete!
 
 ### Frontend Tasks
 - [ ] Create ProjectDetailComponent with routing

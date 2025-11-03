@@ -4,6 +4,7 @@ import {
   CreateProjectHandler,
   GetProjectsByClientIdQueryHandler,
   GetAllProjectsQueryHandler,
+  GetProjectByIdQueryHandler,
   INJECTION_TOKENS,
 } from '@angular-nest-starter/application';
 import {
@@ -16,7 +17,11 @@ import { ProjectsController } from './projects.controller';
 import { AllProjectsController } from './all-projects.controller';
 
 const CommandHandlers = [CreateProjectHandler];
-const QueryHandlers = [GetProjectsByClientIdQueryHandler, GetAllProjectsQueryHandler];
+const QueryHandlers = [
+  GetProjectsByClientIdQueryHandler,
+  GetAllProjectsQueryHandler,
+  GetProjectByIdQueryHandler,
+];
 const EventHandlers = [ProjectProjection];
 
 @Module({
