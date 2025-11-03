@@ -95,13 +95,21 @@
     - Added placeholder color styling (#999)
     - Build verified successfully
 
+11. ✅ Update computed filtering logic to include name search (case-insensitive)
+    - Added search variable to capture searchTerm() signal in projects-list.component.ts:161
+    - Added name search filter logic after status and client filters in projects-list.component.ts:176-182
+    - Implemented case-insensitive search using toLowerCase() on both search term and project name
+    - Filter uses includes() method to match partial project names
+    - Search filter only applies when searchTerm is not empty
+    - All three filters (status, client, search) now work together using AND logic
+    - Build verified successfully
+
 ## Current Task
 - None
 
 ## Remaining Tasks (Planned)
-- Update computed filtering logic to include name search (case-insensitive)
-- Ensure search filter works with status and client filters (AND logic)
 - Test all three filters working together
+- Verify use case acceptance criteria are met
 
 ## Manual Testing Instructions
 To verify the filtering functionality works correctly:

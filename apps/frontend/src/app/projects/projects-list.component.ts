@@ -158,6 +158,7 @@ export class ProjectsListComponent implements OnInit {
     const allProjectsList = this.allProjects();
     const statusFilter = this.selectedStatusFilter();
     const clientFilter = this.selectedClientFilter();
+    const search = this.searchTerm();
 
     // Start with all projects
     let filteredProjects = allProjectsList;
@@ -170,6 +171,14 @@ export class ProjectsListComponent implements OnInit {
     // Apply client filter if selected
     if (clientFilter) {
       filteredProjects = filteredProjects.filter(project => project.clientId === clientFilter);
+    }
+
+    // Apply name search filter if entered (case-insensitive)
+    if (search) {
+      const searchLower = search.toLowerCase();
+      filteredProjects = filteredProjects.filter(project =>
+        project.name.toLowerCase().includes(searchLower)
+      );
     }
 
     return filteredProjects;
