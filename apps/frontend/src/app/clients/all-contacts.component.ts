@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ClientsService } from './clients.service';
 import { ContactWithClient } from './client.types';
 
 @Component({
@@ -463,8 +463,7 @@ import { ContactWithClient } from './client.types';
   `
 })
 export class AllContactsComponent implements OnInit {
-  private http = inject(HttpClient);
-  private readonly apiUrl = '/api/contacts';
+  private clientsService = inject(ClientsService);
 
   // Component state using signals
   contacts = signal<ContactWithClient[]>([]);
@@ -518,7 +517,7 @@ export class AllContactsComponent implements OnInit {
     this.loading.set(true);
     this.error.set(null);
 
-    this.http.get<ContactWithClient[]>(this.apiUrl).subscribe({
+    this.clientsService.getAllContacts().subscribe({
       next: (contacts) => {
         this.contacts.set(contacts);
         this.loading.set(false);

@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientNavigationService } from './client-navigation.service';
+import { ClientsService } from './clients.service';
 import { STANDARD_DATE_FORMAT } from './client-display.constants';
 import { ContactDetail } from './client.types';
 
@@ -554,7 +554,7 @@ interface ContactEditForm {
 })
 export class ContactDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private http = inject(HttpClient);
+  private clientsService = inject(ClientsService);
   private navigation = inject(ClientNavigationService);
 
   // Get contact ID from route params
@@ -603,7 +603,7 @@ export class ContactDetailComponent implements OnInit {
       this.loading.set(true);
       this.error.set(null);
 
-      this.http.get<ContactDetail>(`/api/contacts/${id}`).subscribe({
+      this.clientsService.getContactById(id).subscribe({
         next: (contact) => {
           this.contact.set(contact);
           this.loading.set(false);
@@ -675,7 +675,7 @@ export class ContactDetailComponent implements OnInit {
     this.saveError.set(null);
     this.saving.set(true);
 
-    this.http.put<ContactDetail>(`/api/contacts/${contactId}`, updateData).subscribe({
+    this.clientsService.updateContact(contactId, updateData).subscribe({
       next: (updatedContact) => {
         this.contact.set(updatedContact);
         this.isEditMode.set(false);
@@ -719,7 +719,7 @@ export class ContactDetailComponent implements OnInit {
     this.loading.set(true);
     this.error.set(null);
 
-    this.http.delete(`/api/contacts/${contactId}`).subscribe({
+    this.clientsService.deleteContact(contactId).subscribe({
       next: () => {
         // Navigate back to the client detail page after successful deletion
         this.navigation.toClientDetail(contact.clientId);

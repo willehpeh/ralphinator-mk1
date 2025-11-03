@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { ClientsService } from './clients.service';
 
 interface ContactForm {
   name: FormControl<string>;
@@ -15,11 +15,6 @@ interface AddContactDto {
   role?: string;
   email?: string;
   phone?: string;
-}
-
-interface AddContactResponse {
-  contactId: string;
-  clientId: string;
 }
 
 @Component({
@@ -120,7 +115,7 @@ interface AddContactResponse {
   `
 })
 export class ContactFormComponent {
-  private http = inject(HttpClient);
+  private clientsService = inject(ClientsService);
 
   // Input: clientId is required to associate the contact with a client
   clientId = input.required<string>();
@@ -168,10 +163,7 @@ export class ContactFormComponent {
       ...(formValue.phone && { phone: formValue.phone })
     };
 
-    this.http.post<AddContactResponse>(
-      `/api/clients/${this.clientId()}/contacts`,
-      payload
-    ).subscribe({
+    this.clientsService.addContactToClient(this.clientId(), payload).subscribe({
       next: () => {
         this.isSubmitting.set(false);
         this.form.reset();

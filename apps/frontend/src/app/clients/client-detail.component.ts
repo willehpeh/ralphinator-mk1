@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { HttpClient } from '@angular/common/http';
 import { loadClients, deleteClient } from './store/clients.actions';
 import { selectClientById, selectClientsLoading, selectClientsError } from './store/clients.selectors';
 import { ClientFormComponent } from './client-form.component';
@@ -14,6 +13,7 @@ import { StatusBadgeComponent } from './status-badge.component';
 import { ContactFormComponent } from './contact-form.component';
 import { ContactListComponent } from './contact-list.component';
 import { ClientNavigationService } from './client-navigation.service';
+import { ClientsService } from './clients.service';
 import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
 import { Contact } from './client.types';
 
@@ -169,7 +169,7 @@ export class ClientDetailComponent implements OnInit {
   private store = inject(Store);
   private route = inject(ActivatedRoute);
   private navigation = inject(ClientNavigationService);
-  private http = inject(HttpClient);
+  private clientsService = inject(ClientsService);
 
   // Get client ID from route params using toSignal to avoid manual subscription cleanup
   private clientId = toSignal(
@@ -252,7 +252,7 @@ export class ClientDetailComponent implements OnInit {
   private loadContacts(): void {
     const id = this.clientId();
     if (id) {
-      this.http.get<Contact[]>(`/api/clients/${id}/contacts`).subscribe({
+      this.clientsService.getContactsByClient(id).subscribe({
         next: (contacts) => {
           this.contacts.set(contacts);
         },
