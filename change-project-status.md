@@ -77,9 +77,41 @@ Commands in CQRS represent the intent to perform an action. The `ChangeProjectSt
 
 ---
 
+### Task 4: Create ChangeProjectStatusCommandHandler
+**Date**: 2025-11-03
+
+**What was implemented**:
+- Created `ChangeProjectStatusCommandHandler` at `packages/application/src/lib/commands/handlers/change-project-status.handler.ts`
+- Extends `BaseCommandHandler<ChangeProjectStatusCommand, ProjectAggregate>` for consistent aggregate handling
+- Implements `ICommandHandler<ChangeProjectStatusCommand>` from `@nestjs/cqrs`
+- Uses `executeOnAggregate()` helper method to:
+  - Load the ProjectAggregate from event store by ID
+  - Execute the `changeStatus()` domain logic on the aggregate
+  - Persist the resulting `ProjectStatusChangedDomainEvent` to event store
+  - Publish the event to event bus for projections
+- Returns the project ID on successful execution
+- Registered handler in `ProjectsModule` providers array
+- Added export to `packages/application/src/lib/application.ts`
+
+**Files created**:
+- `packages/application/src/lib/commands/handlers/change-project-status.handler.ts`
+
+**Files modified**:
+- `packages/application/src/lib/application.ts` (added export)
+- `apps/api/src/app/projects/projects.module.ts` (imported and registered handler)
+
+**Rationale**:
+The `ChangeProjectStatusCommandHandler` follows the CQRS pattern and event sourcing principles:
+1. **Separation of concerns**: Handler orchestrates the flow, aggregate contains business logic
+2. **Event sourcing**: All state changes persist as events via the event store
+3. **Consistency**: Uses the same `BaseCommandHandler` pattern as other command handlers
+4. **Type safety**: TypeScript ensures compile-time validation of command and aggregate types
+5. **Testability**: Handler can be unit tested by mocking the event store and aggregate repository
+
+---
+
 ## Next Tasks
 
-- Create ChangeProjectStatusCommandHandler
-- Update ProjectProjection to handle status changed event
+- Update ProjectProjection to handle ProjectStatusChangedDomainEvent
 - Add PATCH /api/projects/:id/status endpoint
 - Add frontend change status functionality
