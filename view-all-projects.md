@@ -30,8 +30,18 @@
 
 ---
 
+### Task 3: Register GetAllProjectsQueryHandler in ProjectsModule
+**Status**: ✅ Completed
+**Files Modified**:
+- `apps/api/src/app/projects/projects.module.ts` - Added GetAllProjectsQueryHandler import and registered in QueryHandlers array
+
+**Description**: Registered the GetAllProjectsQueryHandler in the ProjectsModule so it can be invoked by the QueryBus. This enables the CQRS infrastructure to route GetAllProjectsQuery to its handler.
+
+**Pattern**: Followed existing module registration pattern for query handlers.
+
+---
+
 ## Next Tasks
-- Add GET /api/projects endpoint
-- Register handler in ProjectsModule
+- Add GET /api/projects endpoint (create new all-projects.controller.ts)
 - Add getAllProjects() to ProjectService
 - Create ProjectsListComponent

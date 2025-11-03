@@ -3,6 +3,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import {
   CreateProjectHandler,
   GetProjectsByClientIdQueryHandler,
+  GetAllProjectsQueryHandler,
   INJECTION_TOKENS,
 } from '@angular-nest-starter/application';
 import {
@@ -14,7 +15,7 @@ import {
 import { ProjectsController } from './projects.controller';
 
 const CommandHandlers = [CreateProjectHandler];
-const QueryHandlers = [GetProjectsByClientIdQueryHandler];
+const QueryHandlers = [GetProjectsByClientIdQueryHandler, GetAllProjectsQueryHandler];
 const EventHandlers = [ProjectProjection];
 
 @Module({
