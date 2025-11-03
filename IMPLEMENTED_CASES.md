@@ -737,3 +737,39 @@
 - Success guarantee met: User can quickly find specific projects from a large portfolio using multiple filter criteria
 - Documentation: find-projects-by-status-or-client.md
 - **Note**: Complete implementation with all acceptance criteria satisfied including name search functionality.
+
+## Use Case 3 (Project Management): View Detailed Information About a Project (2025-11-03) ✅ COMPLETE
+- Complete CQRS query implementation for retrieving individual project details
+- Application: GetProjectByIdQuery accepts projectId parameter to retrieve single project
+- Application: GetProjectByIdQueryHandler queries IProjectReadRepository.findById()
+- Application: IProjectReadRepository.findById() port interface method for retrieving single project
+- Infrastructure: InMemoryProjectReadRepository.findById() implementation retrieves project by ID from Map
+- Backend API: GET /api/projects/:id endpoint returns ProjectReadModel or 404 if not found
+- Frontend: ProjectDetailComponent at /projects/:id route with modern Angular patterns
+- Frontend: Complete project information display (name, description, status, dates, budget, technical notes)
+- Frontend: Timeline section showing start date, expected end date, and actual end date (conditional)
+- Frontend: Budget displayed with currency formatting in prominent green styling
+- Frontend: Color-coded status badge (Planning=blue, Active=green, On Hold=orange, Completed=purple, Cancelled=red)
+- Frontend: Client Information section with clickable link to navigate to client detail page
+- Frontend: Metadata section showing projectId, clientId, and created timestamp
+- Frontend: "Back to Projects" button with navigation to projects list
+- Frontend: Professional styling with modern card-based layout and responsive design
+- Frontend: Loading, error, and not found states with user-friendly messages
+- Frontend: Signal-based state management (project, loading, error signals)
+- Frontend: Route parameter handling using toSignal() and switchMap for reactive data loading
+- Frontend: RouterLink directive for client navigation
+- Frontend: OnPush change detection with modern Angular patterns
+- All main success scenario steps met:
+  - User clicks on a project from the list (route navigation via /projects/:id) ✅
+  - System navigates to project detail page ✅
+  - System displays complete project information (name, description, status, dates, budget) ✅
+  - System shows associated client information with clickable link ✅
+  - System displays timeline visualization showing project duration ✅
+  - User reviews project details and history ✅
+- All extensions handled:
+  - 2a: Project has associated tasks - noted as future implementation ✅
+  - 6a: User clicks client link - navigates to client detail page via RouterLink ✅
+  - 6b: User uses breadcrumb navigation - back button navigates to projects list ✅
+- Success guarantee met: User has complete understanding of project status, timeline, and context
+- Documentation: view-project-details-tasks.md
+- **Note**: Complete implementation with all acceptance criteria satisfied and professional UI design
