@@ -15,6 +15,7 @@ export * from './repositories/aggregate.repository';
 export * from './projections/client.projection';
 export * from './projections/contact.projection';
 export * from './projections/project.projection';
+export * from './projections/task.projection';
 
 // Read Model Repositories
 export * from './read-models/base-in-memory-read-repository';
