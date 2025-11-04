@@ -818,6 +818,46 @@
 - Documentation: TASK_UC4_UPDATE_PROJECT.md
 - **Note**: Complete end-to-end implementation with full CQRS + Event Sourcing pattern and professional UI
 
+## Use Case 6 (Project Management): Remove Project from Active Portfolio (2025-11-03) ✅ COMPLETE
+- Complete CQRS + Event Sourcing implementation for project deletion (soft delete)
+- Domain: ProjectDeletedDomainEvent captures project deletion with aggregateId and eventVersion
+- Domain: ProjectAggregate.delete() method marks project as deleted
+- Domain: ProjectAggregate.isDeleted() getter for accessing deletion state
+- Domain: PROJECT_EVENT_TYPES.DELETED constant for event type identification
+- Application: DeleteProjectCommand with id field
+- Application: DeleteProjectCommandHandler loads aggregate, calls delete(), persists events
+- Application: IProjectReadRepository.delete() port interface method for removing from read model
+- Infrastructure: InMemoryProjectReadRepository.delete() implementation removes project from Map
+- Infrastructure: ProjectProjection handles ProjectDeletedDomainEvent and removes from read model
+- Backend API: DELETE /api/clients/:clientId/projects/:projectId endpoint removes project
+- Frontend: ProjectsService.deleteProject() method for API communication
+- Frontend: "Delete Project" button in ProjectDetailComponent header with danger styling (red)
+- Frontend: ConfirmationDialogComponent reused for delete confirmation
+- Frontend: Confirmation message explains project will be archived with history preserved
+- Frontend: Signal-based dialog state management with showDeleteDialog signal
+- Frontend: Automatic navigation to projects list after successful deletion
+- Frontend: Loading state during deletion operation
+- Frontend: Error handling with user-friendly error messages
+- Frontend: Professional button styling with red background and hover effects
+- Frontend: Modern Angular patterns (standalone, signals, OnPush change detection)
+- Event sourcing: All project deletions captured as immutable events in event store
+- Soft delete pattern: Project removed from read model but complete history preserved in event store
+- All main success scenario steps met:
+  - User clicks "Delete Project" button on project detail page ✅
+  - System displays confirmation dialog explaining the project will be archived ✅
+  - User confirms deletion (or cancels to return to detail page) ✅
+  - System marks project as deleted (soft delete) ✅
+  - System preserves complete project history via event sourcing ✅
+  - System displays confirmation and redirects to projects list ✅
+  - System excludes deleted project from standard project views ✅
+- All extensions handled:
+  - 3a: User cancels deletion - returns to project detail page with no changes ✅
+  - 4a: Project has associated tasks - noted as future constraint (not yet enforced)
+  - 5a: User needs to restore project - noted as future feature (self-service restore)
+- Success guarantee met: Project is removed from active views but complete audit trail is preserved in event store
+- Documentation: UC6_REMOVE_PROJECT.md, CURRENT_USE_CASE.md (archived)
+- **Note**: Complete implementation with full soft delete pattern and event sourcing preservation
+
 ## Use Case 5 (Project Management): Change Project Status Through Lifecycle (2025-11-03) ✅ COMPLETE
 - Complete CQRS + Event Sourcing implementation for project status changes
 - Domain: ProjectStatusChangedDomainEvent captures status changes with audit trail (previous and new status)

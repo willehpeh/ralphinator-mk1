@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, output, input, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, output, input, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProjectStatus, PROJECT_STATUS_VALUES } from '@angular-nest-starter/shared-types';
@@ -66,7 +66,7 @@ import { ProjectStatus, PROJECT_STATUS_VALUES } from '@angular-nest-starter/shar
     </div>
   `
 })
-export class StatusChangeDialogComponent {
+export class StatusChangeDialogComponent implements OnInit {
   // Inputs
   currentStatus = input.required<ProjectStatus>();
 
