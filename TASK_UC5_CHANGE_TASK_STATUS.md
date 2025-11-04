@@ -151,11 +151,27 @@ From CURRENT_USE_CASE.md:
 
 ---
 
-## Next Tasks (Remaining)
+### ✅ Task 8: Create status change UI component
+**Completed**: 2025-11-04
+**Commit**: [pending]
+**File**: `apps/frontend/src/app/tasks/components/task-status-change.component.ts`
+**Description**:
+- Created TaskStatusChangeComponent with modern Angular patterns (standalone, signals, OnPush)
+- Status dropdown populated from TASK_STATUSES constant (Todo, InProgress, Completed, Cancelled)
+- Two-way binding using FormsModule and [(ngModel)]
+- Warning message displays when selected status equals current status
+- Submit button disabled when selected status equals current status
+- Output events: statusChanged emits TaskStatus, cancelled emits void
+- Input: currentStatus as required signal
+- Effect used to initialize selectedStatus from currentStatus signal
+- Professional styling with form controls, buttons, and warning message
+- Button group with Cancel (gray) and Change Status (blue) buttons
+- Follows design system from existing components (colors, spacing, transitions)
+- Build verified successfully
 
-### Task 8: Create status change UI component
-**Status**: Pending
-**Description**: Create component with status dropdown (To Do, In Progress, Completed, Cancelled) and submit/cancel buttons.
+---
+
+## Next Tasks (Remaining)
 
 ### Task 9: Integrate status change UI into task detail view
 **Status**: Pending
