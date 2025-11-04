@@ -1,13 +1,15 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { ProjectsService } from './projects.service';
 import { ProjectDto, ProjectStatus } from '@angular-nest-starter/shared-types';
 import { StatusChangeDialogComponent } from '../shared/status-change-dialog.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
+import { loadProjectTasks } from '../tasks/store/tasks.actions';
 
 @Component({
   selector: 'app-project-detail',
@@ -163,6 +165,7 @@ export class ProjectDetailComponent {
   private projectsService = inject(ProjectsService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private store = inject(Store);
 
   // Loading and error states
   loading = signal(false);
@@ -206,6 +209,16 @@ export class ProjectDetailComponent {
     ),
     { initialValue: null }
   );
+
+  // Load project tasks whenever projectId changes
+  constructor() {
+    effect(() => {
+      const id = this.projectId();
+      if (id) {
+        this.store.dispatch(loadProjectTasks({ projectId: id }));
+      }
+    });
+  }
 
   navigateBack(): void {
     this.router.navigate(['/projects']);
