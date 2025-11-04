@@ -91,4 +91,51 @@
 **Files modified**:
 - `packages/application/src/lib/application.ts` - Added exports for new task command, payload, and handler
 
-**Next Task**: Create TaskProjection to handle TaskCreatedDomainEvent in infrastructure layer
+### Task 5: Create GetTaskByIdQuery and GetTaskByIdHandler in application layer
+**Status**: ✅ Completed
+**Date**: 2025-11-04
+**Commit**: Next
+
+**What was done**:
+- Created `TaskQueryHandler` base class extending `BaseQueryHandler` with task-specific repository injection
+- Created `GetTaskByIdQuery` class implementing IQuery with task ID parameter
+- Created `GetTaskByIdQueryHandler` extending TaskQueryHandler
+- Implemented execute() method that:
+  - Queries the task read repository by ID
+  - Returns TaskReadModel or null if not found
+  - Handles errors with descriptive messages
+- Exported ITaskReadRepository from ports package
+- Exported TaskQueryHandler from query base handlers
+- Exported query and handler from application package index
+- Successfully linted and verified compilation
+
+**Files created**:
+- `packages/application/src/lib/queries/base/task-query.handler.ts`
+- `packages/application/src/lib/queries/get-task-by-id.query.ts`
+- `packages/application/src/lib/queries/handlers/get-task-by-id.handler.ts`
+
+**Files modified**:
+- `packages/application/src/lib/ports/index.ts` - Added export for ITaskReadRepository
+- `packages/application/src/lib/queries/base/index.ts` - Added export for TaskQueryHandler
+- `packages/application/src/lib/application.ts` - Added exports for query and handler
+
+### Task 6: Add GET /api/tasks/:id endpoint to TasksController
+**Status**: ✅ Completed
+**Date**: 2025-11-04
+**Commit**: Next
+
+**What was done**:
+- Added QueryBus injection to TasksController constructor
+- Imported GetTaskByIdQuery and TaskReadModel from application package
+- Created GET endpoint at `/api/tasks/:id` path
+- Implemented getTaskById() method that:
+  - Creates GetTaskByIdQuery with the task ID parameter
+  - Executes query via QueryBus
+  - Returns 404 NotFoundException if task not found
+  - Returns TaskReadModel if found
+- Successfully built and verified compilation
+
+**Files modified**:
+- `apps/api/src/app/tasks/tasks.controller.ts` - Added GET endpoint
+
+**Next Task**: Create TaskProjection to handle TaskCreatedDomainEvent

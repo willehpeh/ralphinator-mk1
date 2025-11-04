@@ -1,13 +1,14 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { CreateTaskCommand, TaskDataPayload } from '@angular-nest-starter/application';
+import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { CreateTaskCommand, GetTaskByIdQuery, TaskDataPayload, TaskReadModel } from '@angular-nest-starter/application';
 import { CreateTaskDto, CreateTaskResponse } from '@angular-nest-starter/shared-types';
 import { randomUUID } from 'crypto';
 
 @Controller('tasks')
 export class TasksController {
   constructor(
-    private readonly commandBus: CommandBus
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus
   ) {}
 
   /**
@@ -42,5 +43,22 @@ export class TasksController {
     );
 
     return { id: taskId };
+  }
+
+  @Get(':id')
+  async getTaskById(
+    @Param('id') id: string
+  ): Promise<TaskReadModel> {
+    const query = new GetTaskByIdQuery(id);
+
+    const task = await this.queryBus.execute<GetTaskByIdQuery, TaskReadModel | null>(
+      query
+    );
+
+    if (!task) {
+      throw new NotFoundException(`Task with ID ${id} not found`);
+    }
+
+    return task;
   }
 }
