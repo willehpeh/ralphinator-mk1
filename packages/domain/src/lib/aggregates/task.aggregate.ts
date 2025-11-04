@@ -6,6 +6,7 @@ import { DOMAIN_ERRORS } from '../constants/domain-errors';
 import { TaskCreatedDomainEvent } from '../events/task-created.domain-event';
 import { TaskDetailsUpdatedDomainEvent } from '../events/task-details-updated.domain-event';
 import { TaskStatusChangedDomainEvent } from '../events/task-status-changed.domain-event';
+import { TaskDeletedDomainEvent } from '../events/task-deleted.domain-event';
 import { TaskData } from '../value-objects/task-data.value-object';
 
 export class TaskAggregate extends EventSourcedAggregate {
@@ -18,6 +19,7 @@ export class TaskAggregate extends EventSourcedAggregate {
   private clientId: string | null = null;
   private projectId: string | null = null;
   private completedAt: Date | null = null;
+  private _isDeleted = false;
 
   constructor() {
     super();
@@ -27,6 +29,7 @@ export class TaskAggregate extends EventSourcedAggregate {
       [TASK_EVENT_TYPES.CREATED]: this.onTaskCreated.bind(this),
       [TASK_EVENT_TYPES.DETAILS_UPDATED]: this.onTaskDetailsUpdated.bind(this),
       [TASK_EVENT_TYPES.STATUS_CHANGED]: this.onTaskStatusChanged.bind(this),
+      [TASK_EVENT_TYPES.DELETED]: this.onTaskDeleted.bind(this),
     } as unknown as Record<string, (event: DomainEvent) => void>);
   }
 
@@ -101,6 +104,14 @@ export class TaskAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Event handler for TaskDeletedDomainEvent
+   * Sets the isDeleted flag to true, marking the task as deleted
+   */
+  private onTaskDeleted(event: TaskDeletedDomainEvent): void {
+    this._isDeleted = true;
+  }
+
+  /**
    * Command method to update task details
    * Applies a TaskDetailsUpdatedDomainEvent to modify the task information
    *
@@ -128,6 +139,19 @@ export class TaskAggregate extends EventSourcedAggregate {
 
     this.applyEvent(
       new TaskStatusChangedDomainEvent(this.id!, newStatus, completedAt)
+    );
+  }
+
+  /**
+   * Command method to delete the task
+   * Applies a TaskDeletedDomainEvent to soft-delete the task.
+   * The task will be marked as deleted and removed from active tracking,
+   * but the complete event history is preserved in the event store for audit purposes.
+   */
+  delete(): void {
+    this.ensureInitialized();
+    this.applyEvent(
+      new TaskDeletedDomainEvent(this.id!)
     );
   }
 
@@ -167,5 +191,9 @@ export class TaskAggregate extends EventSourcedAggregate {
 
   getCompletedAt(): Date | null {
     return this.getInitializedField(this.completedAt);
+  }
+
+  isDeleted(): boolean {
+    return this.getInitializedField(this._isDeleted);
   }
 }

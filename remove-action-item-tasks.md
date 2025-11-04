@@ -9,9 +9,9 @@ Implement the ability to delete action items from the system using CQRS + Event 
 
 ### Domain Layer
 - [x] Create TaskDeletedDomainEvent domain event (Commit: 521a186)
-- [ ] Add delete() method to TaskAggregate
-- [ ] Add isDeleted getter to TaskAggregate
-- [ ] Add TASK_EVENT_TYPES.DELETED constant
+- [x] Add delete() method to TaskAggregate (Commit: pending)
+- [x] Add isDeleted getter to TaskAggregate (Commit: pending)
+- [x] Add TASK_EVENT_TYPES.DELETED constant (Commit: pending)
 - [ ] Write tests for TaskAggregate.delete()
 
 ### Application Layer
