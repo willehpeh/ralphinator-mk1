@@ -153,7 +153,7 @@ From CURRENT_USE_CASE.md:
 
 ### ✅ Task 8: Create status change UI component
 **Completed**: 2025-11-04
-**Commit**: [pending]
+**Commit**: 156196e
 **File**: `apps/frontend/src/app/tasks/components/task-status-change.component.ts`
 **Description**:
 - Created TaskStatusChangeComponent with modern Angular patterns (standalone, signals, OnPush)
