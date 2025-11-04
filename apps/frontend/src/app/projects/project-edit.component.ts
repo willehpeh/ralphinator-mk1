@@ -9,6 +9,7 @@ import { UpdateProjectDto, ProjectStatus, PROJECT_STATUS_VALUES, ProjectDto } fr
 import { ProjectsService } from './projects.service';
 import { FormState } from '../shared/form-state';
 import { ValidationErrorComponent } from '../shared/validation-error.component';
+import { SUCCESS_MESSAGE_DISMISS_DURATION_MS } from '../shared/ui.constants';
 
 interface ProjectEditFormFields {
   clientId: FormControl<string>;
@@ -357,12 +358,12 @@ export class ProjectEditComponent {
 
       this.projectsService.updateProject(currentProjectId, dto).subscribe({
         next: () => {
-          this.formState.setSuccess('Success', 2000);
+          this.formState.setSuccess('Success', SUCCESS_MESSAGE_DISMISS_DURATION_MS);
           this.formState.setSubmitting(false);
           // Navigate back to project detail page after successful update
           setTimeout(() => {
             this.router.navigate(['/projects', currentProjectId]);
-          }, 2000);
+          }, SUCCESS_MESSAGE_DISMISS_DURATION_MS);
         },
         error: (error) => {
           this.formState.setError(error.message || 'Failed to update project');

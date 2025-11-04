@@ -5,6 +5,7 @@ import { CreateProjectDto, ProjectStatus, PROJECT_STATUS_VALUES } from '@angular
 import { ProjectsService } from './projects.service';
 import { FormState } from '../shared/form-state';
 import { ValidationErrorComponent } from '../shared/validation-error.component';
+import { SUCCESS_MESSAGE_DISMISS_DURATION_MS } from '../shared/ui.constants';
 
 interface ProjectFormFields {
   name: FormControl<string>;
@@ -258,12 +259,12 @@ export class ProjectFormComponent {
 
       this.projectsService.createProject(dto).subscribe({
         next: () => {
-          this.formState.setSuccess('Success', 2000);
+          this.formState.setSuccess('Success', SUCCESS_MESSAGE_DISMISS_DURATION_MS);
           this.formState.setSubmitting(false);
           this.form.reset({ status: 'Planning' });
           setTimeout(() => {
             this.formSucceeded.emit();
-          }, 2000);
+          }, SUCCESS_MESSAGE_DISMISS_DURATION_MS);
         },
         error: (error) => {
           this.formState.setError(error.message || 'Failed to create project');
