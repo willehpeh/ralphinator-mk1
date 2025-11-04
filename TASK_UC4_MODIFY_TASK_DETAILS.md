@@ -60,7 +60,7 @@ Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 **Description**: Added three NGRX actions for task update flow: updateTask (triggers update with id and UpdateTaskInput), updateTaskSuccess (handles successful update with updated Task), and updateTaskFailure (handles errors with error message). Updated imports to include UpdateTaskInput type. Follows the established pattern from createTask actions.
 
 ### Task 8: Add updateTask method to TasksService
-**Commit**: [PENDING]
+**Commit**: 009f218 - feat(frontend): Add updateTask method to TasksService
 **Files**:
 - apps/frontend/src/app/tasks/tasks.service.ts
 **Description**: Added updateTask() method to TasksService that accepts task id and UpdateTaskInput, makes a PATCH request to /api/tasks/:id endpoint, and returns Observable<Task>. Updated imports to include UpdateTaskInput type. Follows the established pattern from createTask method.
