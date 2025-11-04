@@ -4,6 +4,7 @@ import { TaskStatus, TaskPriority } from '@angular-nest-starter/shared-types';
 import { TASK_EVENT_TYPES } from '../constants/task-event-types';
 import { DOMAIN_ERRORS } from '../constants/domain-errors';
 import { TaskCreatedDomainEvent } from '../events/task-created.domain-event';
+import { TaskDetailsUpdatedDomainEvent } from '../events/task-details-updated.domain-event';
 import { TaskData } from '../value-objects/task-data.value-object';
 
 export class TaskAggregate extends EventSourcedAggregate {
@@ -22,6 +23,7 @@ export class TaskAggregate extends EventSourcedAggregate {
     // Type assertion needed because handlers have heterogeneous event types
     this.registerEventHandlers({
       [TASK_EVENT_TYPES.CREATED]: this.onTaskCreated.bind(this),
+      [TASK_EVENT_TYPES.DETAILS_UPDATED]: this.onTaskDetailsUpdated.bind(this),
     } as unknown as Record<string, (event: DomainEvent) => void>);
   }
 
@@ -76,6 +78,27 @@ export class TaskAggregate extends EventSourcedAggregate {
   private onTaskCreated(event: TaskCreatedDomainEvent): void {
     this.id = event.aggregateId;
     this.updateTaskFields(event.taskData);
+  }
+
+  /**
+   * Event handler for TaskDetailsUpdatedDomainEvent
+   * Updates the aggregate state when task details are modified
+   */
+  private onTaskDetailsUpdated(event: TaskDetailsUpdatedDomainEvent): void {
+    this.updateTaskFields(event.taskData);
+  }
+
+  /**
+   * Command method to update task details
+   * Applies a TaskDetailsUpdatedDomainEvent to modify the task information
+   *
+   * @param taskData - Value object containing updated task information
+   */
+  updateDetails(taskData: TaskData): void {
+    this.ensureInitialized();
+    this.applyEvent(
+      new TaskDetailsUpdatedDomainEvent(this.id!, taskData)
+    );
   }
 
   // Getters for accessing aggregate state

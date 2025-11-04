@@ -20,12 +20,29 @@
 
 **Location:** packages/domain/src/lib/events/task-details-updated.domain-event.ts:1
 
+### Task 2: Add updateDetails method to TaskAggregate
+**Date:** 2025-11-04
+**Description:** Added the updateDetails command method and event handler to TaskAggregate.
+
+**Files Changed:**
+- Modified: `packages/domain/src/lib/aggregates/task.aggregate.ts`
+
+**Details:**
+- Imported `TaskDetailsUpdatedDomainEvent`
+- Registered `onTaskDetailsUpdated` event handler in constructor
+- Added `onTaskDetailsUpdated()` private event handler method that calls `updateTaskFields()`
+- Added public `updateDetails(taskData: TaskData)` command method that:
+  - Ensures aggregate is initialized
+  - Applies `TaskDetailsUpdatedDomainEvent` with the new task data
+- Reuses existing `updateTaskFields()` helper method for consistent state updates
+- Follows same pattern as `create()` method
+
+**Location:** packages/domain/src/lib/aggregates/task.aggregate.ts:97
+
 ## Pending Tasks
 
-- Add updateDetails method to TaskAggregate
 - Create UpdateTaskDetailsCommand
 - Create UpdateTaskDetailsHandler
-- Add event handler for TaskDetailsUpdatedDomainEvent in TaskAggregate
 - Update TaskProjection to handle TaskDetailsUpdatedDomainEvent
 - Create API endpoint for updating task details
 - Create frontend form for editing task details
