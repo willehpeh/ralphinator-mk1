@@ -150,8 +150,14 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 - apps/frontend/src/app/tasks/task-display.constants.ts
 **Description**: Created task-display.constants.ts following the established pattern from client-display.constants.ts. Includes TASK_UI_TEXT (UI text labels for buttons, page titles, messages, loading states, search/filter, count display, and detail labels), TASK_FORM_LABELS (form field labels, placeholders, validation messages, and submit button labels), and TASK_ERROR_MESSAGES (error messages for task-related API operations). This file serves as the single source of truth for UI text in the tasks feature.
 
+### Task 21: TaskFormComponent
+**Commit**: (pending) - feat(frontend): Add TaskFormComponent for task creation
+**Files**:
+- apps/frontend/src/app/tasks/task-form.component.ts
+**Description**: Created TaskFormComponent as a presentational component for task creation. Implemented reactive form with validation for title (required), status (required), priority (required), notes (optional), dueDate (optional), clientId (optional), and projectId (optional). Component follows the established pattern from ProjectFormComponent with modern Angular patterns (standalone, signals, OnPush change detection), FormState for state management, and ValidationErrorComponent for validation errors. Uses TASK_FORM_LABELS and TASK_UI_TEXT constants for UI text. Emits taskSubmitted output event with CreateTaskInput data structure and formCancelled output event. Includes helper methods (resetForm, showSuccess, showError, setSubmitting) for parent component integration. Professional styling with responsive design and form validation indicators.
+
 ## Next Task
-Frontend: Create TaskFormComponent (presentational component for task creation/editing)
+Frontend: Create AddTaskPageComponent (container component that integrates TaskFormComponent with NGRX)
 
 ## Use Case Status
-❌ Not Complete - Still need frontend implementation
+❌ Not Complete - Still need AddTaskPageComponent and routing configuration
