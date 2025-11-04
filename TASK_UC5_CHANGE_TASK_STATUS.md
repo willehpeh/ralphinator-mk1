@@ -171,11 +171,32 @@ From CURRENT_USE_CASE.md:
 
 ---
 
-## Next Tasks (Remaining)
+### ✅ Task 9: Integrate status change UI into task detail view
+**Completed**: 2025-11-04
+**Commit**: [To be added]
+**File**: `apps/frontend/src/app/tasks/task-detail.component.ts`
+**Description**:
+- Imported TaskStatusChangeComponent and TaskStatus type
+- Added TaskStatusChangeComponent to component imports array
+- Added showStatusChange signal to control modal visibility
+- Implemented onComplete() method to dispatch changeTaskStatus action with 'Completed' status
+- Implemented onChangeStatus() method to show the status change modal
+- Implemented onStatusChanged() method to dispatch changeTaskStatus action with selected status
+- Implemented onStatusChangeCancelled() method to hide the status change modal
+- Added status change modal overlay with professional styling
+- Modal rendered conditionally using @if(showStatusChange())
+- Modal positioned as fixed overlay with semi-transparent backdrop
+- Modal contains TaskStatusChangeComponent with proper event handlers
+- Responsive design: modal adapts to mobile screens (95% width)
+- Status change component receives currentStatus as input
+- Status change component emits statusChanged and cancelled events
+- "Mark Complete" button provides quick completion (one-click to Completed)
+- "Change Status" button opens modal for full status selection
+- Build verified successfully
 
-### Task 9: Integrate status change UI into task detail view
-**Status**: Pending
-**Description**: Add "Change Status" button and wire up the status change component.
+---
+
+## Next Tasks (Remaining)
 
 ### Task 10: (Optional) Add success notification
 **Status**: Optional

@@ -4,10 +4,12 @@ import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectTaskById, selectTasksLoading, selectTasksError } from './store/tasks.selectors';
 import * as TasksActions from './store/tasks.actions';
+import { TaskStatusChangeComponent } from './components/task-status-change.component';
+import { TaskStatus } from '@angular-nest-starter/shared-types';
 
 @Component({
   selector: 'app-task-detail',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TaskStatusChangeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="task-detail-container">
@@ -121,6 +123,19 @@ import * as TasksActions from './store/tasks.actions';
               </button>
             </div>
           </div>
+
+          <!-- Status Change Component -->
+          @if (showStatusChange()) {
+            <div class="status-change-overlay">
+              <div class="status-change-modal">
+                <app-task-status-change
+                  [currentStatus]="taskData.status"
+                  (statusChanged)="onStatusChanged($event)"
+                  (cancelled)="onStatusChangeCancelled()"
+                />
+              </div>
+            </div>
+          }
         } @else {
           <div class="error-state">
             <p>Task not found</p>
@@ -395,6 +410,27 @@ import * as TasksActions from './store/tasks.actions';
       background-color: #c0392b;
     }
 
+    .status-change-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .status-change-modal {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      max-width: 500px;
+      width: 90%;
+    }
+
     @media (max-width: 768px) {
       .task-detail-container {
         padding: 1rem;
@@ -420,6 +456,11 @@ import * as TasksActions from './store/tasks.actions';
       .action-button {
         width: 100%;
       }
+
+      .status-change-modal {
+        width: 95%;
+        max-width: none;
+      }
     }
   `]
 })
@@ -435,6 +476,9 @@ export class TaskDetailComponent implements OnInit {
   task = this.store.selectSignal(selectTaskById(this.taskId()));
   loading = this.store.selectSignal(selectTasksLoading);
   error = this.store.selectSignal(selectTasksError);
+
+  // Status change UI visibility
+  showStatusChange = signal(false);
 
   // Computed values for deadline and overdue status
   isOverdue = computed(() => {
@@ -508,13 +552,30 @@ export class TaskDetailComponent implements OnInit {
   }
 
   onComplete(): void {
-    // TODO: Implement mark as complete (Use Case 5)
-    console.log('Complete task:', this.taskId());
+    const id = this.taskId();
+    if (id) {
+      this.store.dispatch(
+        TasksActions.changeTaskStatus({ id, status: 'Completed' })
+      );
+    }
   }
 
   onChangeStatus(): void {
-    // TODO: Implement change status (Use Case 5)
-    console.log('Change status:', this.taskId());
+    this.showStatusChange.set(true);
+  }
+
+  onStatusChanged(newStatus: TaskStatus): void {
+    const id = this.taskId();
+    if (id) {
+      this.store.dispatch(
+        TasksActions.changeTaskStatus({ id, status: newStatus })
+      );
+      this.showStatusChange.set(false);
+    }
+  }
+
+  onStatusChangeCancelled(): void {
+    this.showStatusChange.set(false);
   }
 
   onDelete(): void {
