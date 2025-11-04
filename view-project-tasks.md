@@ -38,7 +38,7 @@ Implement the ability to view all tasks associated with a specific project withi
 - [x] Task 23: Add error state handling with user-friendly error messages (commit: 8a988ff)
 
 ### Testing & Verification
-- [x] Task 24: Verify backend query returns only tasks for specified projectId (commit: PENDING)
+- [x] Task 24: Verify backend query returns only tasks for specified projectId (commit: 9338d3a)
 - [ ] Task 25: Verify task list displays correctly in ProjectDetailComponent
 - [ ] Task 26: Test navigation from task card to task detail page
 - [ ] Task 27: Test "Add Task" button pre-populates project field
