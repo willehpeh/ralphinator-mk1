@@ -19,7 +19,7 @@ Implement the ability to view all tasks associated with a specific project withi
 - [x] Task 6: Test backend endpoint with curl to verify data retrieval (commit: 45992b7)
 
 ### Frontend Implementation
-- [x] Task 7: Add getTasksByProjectId(projectId: string) method to TasksService (commit: PENDING)
+- [x] Task 7: Add getTasksByProjectId(projectId: string) method to TasksService (commit: bff8173)
 - [ ] Task 8: Create NGRX actions (loadProjectTasks, loadProjectTasksSuccess, loadProjectTasksFailure)
 - [ ] Task 9: Create NGRX effect to handle loadProjectTasks action with API call
 - [ ] Task 10: Update tasksReducer to handle project tasks loading state
