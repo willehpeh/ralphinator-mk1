@@ -45,6 +45,15 @@ export class CreateTaskDto extends TaskDataDto {}
 export class UpdateTaskDto extends TaskDataDto {}
 
 /**
+ * DTO for changing a task's status.
+ */
+export class ChangeTaskStatusDto {
+  @IsIn(TASK_STATUS_VALUES)
+  @IsNotEmpty()
+  status!: TaskStatus;
+}
+
+/**
  * Response DTO for task creation.
  */
 export interface CreateTaskResponse {

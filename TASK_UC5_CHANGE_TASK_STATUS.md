@@ -74,11 +74,27 @@ From CURRENT_USE_CASE.md:
 
 ---
 
-## Next Tasks (Remaining)
+### ✅ Task 3: Add PATCH /api/tasks/:id/status endpoint
+**Completed**: 2025-11-04
+**Commit**: [pending]
+**Files**:
+- `packages/shared-types/src/lib/dtos/task.dtos.ts` - Created ChangeTaskStatusDto
+- `apps/api/src/app/tasks/tasks.controller.ts` - Added PATCH endpoint
 
-### Task 3: Add PATCH /api/tasks/:id/status endpoint
-**Status**: Pending
-**Description**: Create API endpoint in TasksController to accept status change requests.
+**Description**:
+- Created `ChangeTaskStatusDto` with single status field
+- Imported ChangeTaskStatusCommand from application package
+- Added `@Patch(':id/status')` endpoint in TasksController
+- Endpoint accepts task ID and ChangeTaskStatusDto
+- Executes ChangeTaskStatusCommand via command bus
+- Returns updated TaskReadModel using fetchEntityAfterMutation helper
+- Follows REST conventions: PATCH for partial updates
+- Follows same pattern as ClientsController status change endpoint
+- Build verified successfully
+
+---
+
+## Next Tasks (Remaining)
 
 ### Task 4: Add changeTaskStatus actions to NGRX store
 **Status**: Pending
