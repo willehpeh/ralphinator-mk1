@@ -57,7 +57,7 @@
     transition: border-color 0.2s ease;
 
     &:hover {
-      border-color: $color-border-dark;
+      border-color: $color-text-tertiary;
     }
 
     &:focus {
@@ -108,7 +108,7 @@
 }
 
 // Responsive design for mobile
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: 768px) {
   .dialog-container {
     min-width: auto;
     width: 90%;

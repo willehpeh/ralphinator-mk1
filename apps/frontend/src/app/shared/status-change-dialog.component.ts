@@ -75,7 +75,7 @@ export class StatusChangeDialogComponent implements OnInit {
   cancelled = output<void>();
 
   // Local state
-  selectedStatus = signal<ProjectStatus>(this.currentStatus());
+  selectedStatus = signal<ProjectStatus>('Planning');
   readonly availableStatuses = PROJECT_STATUS_VALUES;
 
   ngOnInit(): void {
