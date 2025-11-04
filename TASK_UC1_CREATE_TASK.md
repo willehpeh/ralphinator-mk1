@@ -50,8 +50,15 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 - packages/application/src/lib/application.ts (exports)
 **Description**: Implemented command handler to execute task creation following CQRS pattern with TDD
 
+### Task 6: TaskReadModel
+**Commit**: [pending]
+**Files**:
+- packages/application/src/lib/read-models/task.read-model.ts
+- packages/application/src/lib/application.ts (exports)
+**Description**: Created read model DTO for task queries with all task fields
+
 ## Next Task
-TaskProjection - Infrastructure handler to build read models from TaskCreatedDomainEvent
+ITaskReadRepository interface - Port for task read model repository
 
 ## Use Case Status
 ❌ Not Complete - Still need projection, API endpoint, and frontend
