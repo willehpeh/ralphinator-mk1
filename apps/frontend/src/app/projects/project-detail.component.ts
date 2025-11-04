@@ -148,7 +148,7 @@ import { selectTasksByProjectId } from '../tasks/store/tasks.selectors';
             </div>
             <div class="tasks-content">
               @for (task of projectTasks(); track task.id) {
-                <div class="task-card">
+                <div class="task-card" (click)="navigateToTask(task.id)">
                   <div class="task-card-header">
                     <h5 class="task-title">{{ task.title }}</h5>
                     <div class="task-badges">
@@ -287,6 +287,10 @@ export class ProjectDetailComponent {
         clientId: currentProject.clientId
       }
     });
+  }
+
+  navigateToTask(taskId: string): void {
+    this.router.navigate(['/tasks', taskId]);
   }
 
   openStatusChangeDialog(): void {
