@@ -1267,3 +1267,37 @@
   - Overdue tasks sorted by urgency (most overdue first) ✅
 - Documentation: identify-overdue-action-items.md
 - **Note**: Complete implementation using existing task list infrastructure with filtering, sorting, and context-aware empty states.
+
+## Use Case 10: Search for Action Items by Description (UC-TASK-001-10) (2025-11-04) ✅ COMPLETE
+- Frontend: Search input field in TaskListComponent with placeholder "Search by title or notes..."
+- Frontend: searchQuery signal tracks current search term (line 610)
+- Frontend: onSearchChange() method updates searchQuery on input events (lines 708-711)
+- Frontend: Real-time filtering in filteredTasks computed signal (lines 657-662)
+- Frontend: Case-insensitive search using .toLowerCase() for both title and notes
+- Frontend: Search query trimmed to remove leading/trailing whitespace
+- Frontend: Search works in combination with all other filters (priority, status, client, project, overdue)
+- Frontend: Empty state message when no tasks match search criteria
+- Frontend: Modern Angular patterns (signals, computed properties, OnPush change detection)
+- All main success scenario steps met:
+  - User is viewing action items (Use Case 2) ✅
+  - User enters keywords from action item's title (search input field) ✅
+  - System filters display to show only matching action items (real-time filtering) ✅
+  - User sees matching action items (filtered results displayed) ✅
+  - User can navigate to any action item for full details (View Details button) ✅
+- All extensions handled:
+  - 3a: No action items match keywords - empty state with "No tasks found" message ✅
+  - 3a1: System displays message indicating no matches found ✅
+  - 3a2: User can modify search keywords and try again (reactive search input) ✅
+  - 4a: User clears search - deleting text restores full list ✅
+  - 4a1: System returns to showing all action items ✅
+- Success guarantee met: User can locate specific action items based on remembered keywords
+- All acceptance criteria met:
+  - User can search by title keywords ✅
+  - User can search by notes keywords ✅
+  - Search is case-insensitive ✅
+  - Search updates in real-time as user types ✅
+  - Search combines with other active filters ✅
+  - Empty state shown when no matches ✅
+  - Clearing search restores full list ✅
+- Documentation: search-tasks-by-description.md
+- **Note**: Feature was already implemented as part of Use Case 2 (View All Tracked Action Items). Verified and documented as complete.
