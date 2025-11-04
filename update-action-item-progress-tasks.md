@@ -23,7 +23,7 @@
 
 ###  Task 2: Add changeStatus() method to TaskAggregate
 **Status**: Completed
-**Commit**: (pending)
+**Commit**: c65a4b6
 **Files Modified**:
 - `packages/domain/src/lib/aggregates/task.aggregate.ts`
 
