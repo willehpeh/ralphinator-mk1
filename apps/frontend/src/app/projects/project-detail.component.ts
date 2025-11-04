@@ -156,7 +156,10 @@ import { selectTasksByProjectId } from '../tasks/store/tasks.selectors';
                     </div>
                   </div>
                   @if (task.dueDate) {
-                    <div class="task-due-date">
+                    <div class="task-due-date" [class.overdue]="isTaskOverdue(task)">
+                      @if (isTaskOverdue(task)) {
+                        <span class="overdue-badge">OVERDUE</span>
+                      }
                       Due: {{ task.dueDate | date:'mediumDate' }}
                     </div>
                   }
@@ -328,5 +331,17 @@ export class ProjectDetailComponent {
 
   onDeleteCancelled(): void {
     this.showDeleteDialog.set(false);
+  }
+
+  isTaskOverdue(task: any): boolean {
+    if (!task.dueDate) return false;
+    if (task.status === 'Completed' || task.status === 'Cancelled') return false;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const dueDate = new Date(task.dueDate);
+    dueDate.setHours(0, 0, 0, 0);
+
+    return dueDate < today;
   }
 }

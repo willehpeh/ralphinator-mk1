@@ -29,7 +29,7 @@ Implement the ability to view all tasks associated with a specific project withi
 - [x] Task 14: Display task list with cards showing title, status badge, priority badge, due date (commit: 54f1828)
 - [x] Task 15: Add color-coded status badges (Todo=blue, InProgress=yellow, Completed=green, Cancelled=gray) (commit: 9658e4b)
 - [x] Task 16: Add color-coded priority badges (Low=gray, Medium=blue, High=orange, Urgent=red) (commit: 9658e4b)
-- [ ] Task 17: Add overdue indicator (red "OVERDUE" label) for tasks past due date
+- [x] Task 17: Add overdue indicator (red "OVERDUE" label) for tasks past due date (commit: [pending])
 - [ ] Task 18: Implement empty state message "No tasks yet. Add a task to get started."
 - [ ] Task 19: Add "Add Task" button that navigates to /tasks/add with projectId pre-populated
 - [ ] Task 20: Make task cards clickable to navigate to task detail page (/tasks/:id)
