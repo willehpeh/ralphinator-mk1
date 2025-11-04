@@ -107,7 +107,7 @@ From CURRENT_USE_CASE.md:
 
 ### ✅ Task 5: Add changeTaskStatus method to TasksService
 **Completed**: 2025-11-04
-**Commit**: (pending)
+**Commit**: d510345
 **File**: `apps/frontend/src/app/tasks/tasks.service.ts`
 **Description**:
 - Imported ChangeTaskStatusDto from @angular-nest-starter/shared-types
