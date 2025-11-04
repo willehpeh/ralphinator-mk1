@@ -661,6 +661,15 @@ export class TaskListComponent implements OnInit {
       );
     }
 
+    // Sort overdue tasks by days overdue (most urgent first)
+    if (overdueOnly) {
+      filtered = filtered.sort((a, b) => {
+        const daysOverdueA = this.daysOverdue(a.dueDate);
+        const daysOverdueB = this.daysOverdue(b.dueDate);
+        return daysOverdueB - daysOverdueA; // Descending order (most overdue first)
+      });
+    }
+
     return filtered;
   });
 

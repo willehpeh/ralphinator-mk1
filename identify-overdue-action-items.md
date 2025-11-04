@@ -1,8 +1,9 @@
 # Task Documentation: Identify Overdue Action Items
 
 **Use Case**: UC-TASK-001-09 - Identify Overdue Action Items
-**Status**: In Progress
+**Status**: Complete
 **Created**: 2025-11-04
+**Completed**: 2025-11-04
 
 ## Overview
 
@@ -30,6 +31,12 @@ Implement functionality to quickly identify and highlight action items that have
    - Generic empty state with "Add Task" button still shown when no overdue filter is active
    - Files: `apps/frontend/src/app/tasks/task-display.constants.ts`, `apps/frontend/src/app/tasks/task-list.component.ts` (lines 188-201)
 
+4. **Sort overdue tasks by urgency (days overdue)** (2025-11-04)
+   - Added sorting logic to filteredTasks computed property
+   - When overdue filter is active, tasks are sorted by daysOverdue() in descending order
+   - Most urgent (most overdue) tasks appear first in the list
+   - File: `apps/frontend/src/app/tasks/task-list.component.ts` (lines 664-671)
+
 ## Implementation Notes
 
 - Check existing overdue filter in TaskListComponent (Use Case 2)
@@ -46,7 +53,7 @@ Implement functionality to quickly identify and highlight action items that have
 - [x] Completed and cancelled tasks are excluded from overdue list
 - [x] User can navigate from overdue task to full task detail (existing "View Details" button)
 - [x] Empty state message when no tasks are overdue (positive confirmation message)
-- [ ] Overdue tasks sorted by urgency (most overdue first)
+- [x] Overdue tasks sorted by urgency (most overdue first)
 
 ## Related Files
 
