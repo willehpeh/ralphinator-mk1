@@ -74,7 +74,7 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 **Description**: Created projection event handler to build task read models from TaskCreatedDomainEvent, enabling CQRS separation between write (event store) and read (read model) data stores
 
 ### Task 9: InMemoryTaskReadRepository
-**Commit**: (pending)
+**Commit**: 02fcec7 - feat(infrastructure): Add InMemoryTaskReadRepository implementation
 **Files**:
 - packages/infrastructure/src/lib/read-models/in-memory-task-read-repository.ts
 - packages/infrastructure/src/lib/infrastructure.ts (exports)
