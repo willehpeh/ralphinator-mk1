@@ -113,8 +113,14 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 - apps/frontend/src/app/tasks/tasks.service.ts
 **Description**: Created TasksService to handle HTTP API calls for task operations. Implemented createTask(), getAllTasks(), and getTaskById() methods following the established pattern from ClientsService. Uses inject() for dependency injection and returns typed Observables.
 
+### Task 15: TasksEffects with createTask$ effect
+**Commit**: (pending)
+**Files**:
+- apps/frontend/src/app/tasks/store/tasks.effects.ts
+**Description**: Created TasksEffects with createTask$ effect to handle API calls for task creation. Follows the established pattern from ClientsEffects with reusable error handler. Uses inject() for dependency injection and handles success/failure actions.
+
 ## Next Task
-Frontend NGRX: Create tasks.effects.ts with createTask$ effect to handle API calls
+Frontend NGRX: Create tasks.reducer.ts to manage task state
 
 ## Use Case Status
 ❌ Not Complete - Still need frontend implementation
