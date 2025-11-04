@@ -27,6 +27,10 @@ export class TasksService {
     return this.http.get<Task>(`${this.apiUrl}/${id}`);
   }
 
+  getTasksByProjectId(projectId: string): Observable<Task[]> {
+    return this.http.get<Task[]>(`/api/projects/${projectId}/tasks`);
+  }
+
   updateTask(id: string, input: UpdateTaskInput): Observable<Task> {
     return this.http.patch<Task>(`${this.apiUrl}/${id}`, input);
   }
