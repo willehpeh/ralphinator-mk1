@@ -165,3 +165,53 @@
 - Soft delete pattern ensures no data loss and allows future restore functionality
 
 **Documentation**: view-all-projects.md, find-projects-by-status-or-client.md, view-project-details-tasks.md, TASK_UC4_UPDATE_PROJECT.md, change-project-status.md, UC6_REMOVE_PROJECT.md, NEXT_USE_CASES.md, IMPLEMENTED_CASES.md (Use Cases 1-6)
+
+---
+
+## US-TASK-001: Complete Task Management CRUD Operations (2025-11-04)
+
+**Story**: As a software developer or agency owner, I want to create, update, view, and manage task records associated with projects and/or clients so that I can track action items, prioritize work, set due dates, and monitor completion status across my entire portfolio.
+
+**Completed Use Cases**:
+1. ✅ UC-TASK-001-01: Create a New Task
+2. ✅ UC-TASK-001-02: View All Tasks with Filtering
+3. ✅ UC-TASK-001-03: View Task Detail
+4. ✅ UC-TASK-001-04: Update Task Details
+5. ✅ UC-TASK-001-05: Change Task Status
+6. ✅ UC-TASK-001-06: Delete a Task
+7. ✅ UC-TASK-001-07: View Project Tasks
+8. ✅ UC-TASK-001-08: View Client Tasks
+
+**Implementation Summary**:
+- Complete CQRS + Event Sourcing architecture for tasks domain
+- Backend: TaskAggregate with event sourcing, all domain events (Created, DetailsUpdated, StatusChanged, Deleted)
+- Backend: Full command handlers (CreateTask, UpdateTaskDetails, ChangeTaskStatus, DeleteTask)
+- Backend: Full query handlers (GetAll, GetById, GetByProjectId, GetByClientId, GetByStatus, GetByPriority, GetOverdue)
+- Backend: InMemoryTaskReadRepository and TaskProjection
+- Backend: Complete REST API (POST, GET, PUT, PATCH, DELETE /api/tasks, /api/projects/:id/tasks, /api/clients/:id/tasks)
+- Frontend: TaskFormComponent (shared create/edit with reactive forms validation)
+- Frontend: TasksListComponent with advanced filtering (status, priority, project, client, overdue, search)
+- Frontend: TaskDetailComponent with complete task information and action buttons
+- Frontend: Tasks section in ProjectDetailComponent and ClientDetailComponent
+- Frontend: NGRX state management (actions, effects, reducers, selectors)
+- Frontend: Status/priority badges, overdue highlighting, due date formatting
+- Business rules: Required fields, status/priority enums, project/client validation, due date handling
+- Event sourcing pattern: Complete audit trail of all task changes
+- Read model projections: Optimized query access via TaskReadModel with denormalized data
+- Soft delete pattern: Deleted tasks removed from read model but history preserved
+
+**Business Value Delivered**:
+- Users can create and track tasks across all projects and clients
+- Users can prioritize work by setting task priority (Low, Medium, High, Urgent)
+- Users can manage task lifecycle with status tracking (Todo, In Progress, Completed, Cancelled)
+- Users can set and track due dates with overdue task identification
+- Users can filter tasks by multiple criteria (status, priority, project, client, overdue status)
+- Users can search tasks by title for quick access
+- Users can view all tasks for a specific project or client
+- Users can update task details as work progresses
+- Users can mark tasks as complete or cancel them when no longer needed
+- Users can delete tasks with complete history preservation
+- Professional UI with color-coded badges, overdue warnings, and responsive design
+- Complete audit trail via event sourcing for compliance and history
+
+**Documentation**: create-new-task.md, view-all-tasks-with-filtering.md, view-task-detail.md, update-task-details.md, change-task-status.md, delete-task.md, view-project-tasks.md, view-client-tasks.md, find-tasks-by-priority.md, search-for-action-items.md, IMPLEMENTED_CASES.md (Use Cases 1-10)

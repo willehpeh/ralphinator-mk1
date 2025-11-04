@@ -7,6 +7,7 @@ import * as TasksActions from './store/tasks.actions';
 import { TaskStatusChangeComponent } from './components/task-status-change.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { TaskStatus } from '@angular-nest-starter/shared-types';
+import { formatOverdueText, formatDeadlineText, isOverdue as isTaskOverdue } from './utils/date-utils';
 
 @Component({
   selector: 'app-task-detail',
@@ -500,44 +501,19 @@ export class TaskDetailComponent implements OnInit {
   isOverdue = computed(() => {
     const taskData = this.task();
     if (!taskData || !taskData.dueDate) return false;
-    const now = new Date();
-    const deadline = new Date(taskData.dueDate);
-    return deadline < now && taskData.status !== 'Completed';
+    const isCompleted = taskData.status === 'Completed';
+    return isTaskOverdue(taskData.dueDate, isCompleted);
   });
 
   overdueByText = computed(() => {
     const taskData = this.task();
     if (!taskData || !taskData.dueDate) return '';
-    const now = new Date();
-    const deadline = new Date(taskData.dueDate);
-    const diffMs = now.getTime() - deadline.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-    if (diffDays === 0) return 'less than a day';
-    if (diffDays === 1) return '1 day';
-    return `${diffDays} days`;
+    return formatOverdueText(taskData.dueDate);
   });
 
   deadlineText = computed(() => {
     const taskData = this.task();
-    if (!taskData || !taskData.dueDate) return 'No deadline set';
-
-    const now = new Date();
-    const deadline = new Date(taskData.dueDate);
-    const diffMs = deadline.getTime() - now.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-    if (diffDays < 0) {
-      return `Overdue by ${Math.abs(diffDays)} day${Math.abs(diffDays) !== 1 ? 's' : ''}`;
-    } else if (diffDays === 0) {
-      return 'Due today';
-    } else if (diffDays === 1) {
-      return 'Due tomorrow';
-    } else if (diffDays <= 7) {
-      return `Due in ${diffDays} days`;
-    } else {
-      return deadline.toLocaleDateString();
-    }
+    return formatDeadlineText(taskData?.dueDate ?? null);
   });
 
   ngOnInit(): void {

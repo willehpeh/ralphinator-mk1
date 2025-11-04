@@ -8,6 +8,7 @@ import { selectAllClients } from '../clients/store/clients.selectors';
 import * as ClientsActions from '../clients/store/clients.actions';
 import { TASK_UI_TEXT } from './task-display.constants';
 import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
+import { formatDate, isOverdue, daysOverdue } from './utils/date-utils';
 
 @Component({
   selector: 'app-task-list',
@@ -728,28 +729,14 @@ export class TaskListComponent implements OnInit {
   }
 
   formatDate(date: Date | null): string {
-    if (!date) return '';
-    const d = new Date(date);
-    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    return formatDate(date);
   }
 
   isOverdue(dueDate: Date | null): boolean {
-    if (!dueDate) return false;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const due = new Date(dueDate);
-    due.setHours(0, 0, 0, 0);
-    return due < today;
+    return isOverdue(dueDate);
   }
 
   daysOverdue(dueDate: Date | null): number {
-    if (!dueDate) return 0;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const due = new Date(dueDate);
-    due.setHours(0, 0, 0, 0);
-    const diffTime = today.getTime() - due.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays > 0 ? diffDays : 0;
+    return daysOverdue(dueDate);
   }
 }
