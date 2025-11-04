@@ -101,8 +101,14 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 - apps/frontend/src/app/tasks/task.types.ts
 **Description**: Created frontend Task, CreateTaskInput, and UpdateTaskInput interfaces that match the backend DTOs. These types provide type safety for the frontend NGRX state, actions, and components.
 
+### Task 13: Tasks NGRX actions
+**Commit**: (pending)
+**Files**:
+- apps/frontend/src/app/tasks/store/tasks.actions.ts
+**Description**: Created NGRX actions for task creation including createTask (to initiate task creation), createTaskSuccess (on successful creation), and createTaskFailure (on error). These actions follow the established pattern from clients.actions.ts and provide type-safe action creators for the tasks feature.
+
 ## Next Task
-Frontend NGRX: Create tasks.actions.ts with createTask, createTaskSuccess, and createTaskFailure actions
+Frontend NGRX: Create tasks.effects.ts with createTask$ effect to handle API calls
 
 ## Use Case Status
 ❌ Not Complete - Still need frontend implementation
