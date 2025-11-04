@@ -36,7 +36,19 @@ export class TasksEffects {
       ofType(createTask),
       switchMap((action) =>
         this.tasksService.createTask(action.task).pipe(
-          map((response) => createTaskSuccess({ task: { id: response.id, ...action.task } })),
+          map((response) => createTaskSuccess({
+            task: {
+              id: response.id,
+              title: action.task.title,
+              notes: action.task.notes ?? null,
+              priority: action.task.priority,
+              status: action.task.status,
+              dueDate: action.task.dueDate ? new Date(action.task.dueDate) : null,
+              clientId: action.task.clientId ?? null,
+              projectId: action.task.projectId ?? null,
+              createdAt: new Date()
+            }
+          })),
           catchError(this.handleError(createTaskFailure, 'Failed to create task'))
         )
       )
