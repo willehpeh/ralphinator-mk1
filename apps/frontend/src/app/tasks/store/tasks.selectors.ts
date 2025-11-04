@@ -45,3 +45,11 @@ export const selectTaskById = (id: string) => createSelector(
   selectAllTasks,
   (tasks) => tasks.find(task => task.id === id) ?? null
 );
+
+/**
+ * Select all tasks for a specific project
+ */
+export const selectTasksByProjectId = (projectId: string) => createSelector(
+  selectAllTasks,
+  (tasks) => tasks.filter(task => task.projectId === projectId)
+);
