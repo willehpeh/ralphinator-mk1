@@ -1076,3 +1076,45 @@
 - Success guarantee met: Action item reflects the updated information
 - Documentation: TASK_UC4_MODIFY_TASK_DETAILS.md
 - **Note**: Complete end-to-end implementation with 11 tasks completed. Full CQRS + Event Sourcing pattern with professional UI.
+
+## Use Case 5: Update Action Item Progress / Change Task Status (2025-11-04) ✅ COMPLETE
+- Complete CQRS + Event Sourcing implementation for task status changes
+- Domain: TaskAggregate.changeStatus() method handles status transitions (pre-existing)
+- Domain: TaskStatusChangedDomainEvent captures status changes with audit trail (pre-existing)
+- Domain: Completion date automatically recorded when status becomes 'Completed' (pre-existing)
+- Application: ChangeTaskStatusCommand and ChangeTaskStatusHandler for command processing (pre-existing)
+- Infrastructure: TaskProjection handles TaskStatusChangedDomainEvent and updates read model
+- Backend API: PATCH /api/tasks/:id/status endpoint accepts ChangeTaskStatusDto
+- Backend API: ChangeTaskStatusDto validates status field with class-validator decorators
+- Frontend: Task NGRX actions (changeTaskStatus, changeTaskStatusSuccess, changeTaskStatusFailure)
+- Frontend: TasksService.changeTaskStatus() method for API communication
+- Frontend: TasksEffects with changeTaskStatus$ effect for handling async API calls
+- Frontend: tasksReducer handles changeTaskStatus actions with array map to update task
+- Frontend: TaskStatusChangeComponent with dropdown selector and validation
+- Frontend: Status dropdown populated from TASK_STATUSES constant (Todo, InProgress, Completed, Cancelled)
+- Frontend: Warning message displays when selected status equals current status
+- Frontend: Submit button disabled when selected status equals current status
+- Frontend: TaskDetailComponent enhanced with status change modal overlay
+- Frontend: Modal rendered conditionally using showStatusChange signal
+- Frontend: Modal positioned as fixed overlay with semi-transparent backdrop
+- Frontend: "Mark Complete" button provides one-click completion (quick complete action)
+- Frontend: "Change Status" button opens modal for full status selection
+- Frontend: Professional styling with responsive design and modern Angular patterns
+- Event sourcing: All status changes captured as immutable events in event store
+- Projections: Task read model updated efficiently (only status field updated)
+- All main success scenario steps met:
+  - User is reviewing an action item (Use Case 3) ✅
+  - User indicates the current progress state has changed ✅
+  - User selects new state (To Do, In Progress, Completed, or Cancelled) ✅
+  - System records the state change ✅
+  - If state changed to Completed, system records when completion occurred ✅
+  - System confirms the state has been updated ✅
+  - User sees the updated state ✅
+- All extensions handled:
+  - 2a: Quick mark action as complete - "Mark Complete" button implemented ✅
+  - 2a1: User directly marks action as complete - dispatches changeTaskStatus with 'Completed' ✅
+  - 2a2: System changes state to Completed - handled by backend ✅
+  - 2a3: Continue at step 5 - completion date recorded automatically ✅
+- Success guarantee met: Action item reflects current progress state
+- Documentation: TASK_UC5_CHANGE_TASK_STATUS.md
+- **Note**: Complete end-to-end implementation with 9 tasks completed. Full CQRS + Event Sourcing pattern with professional modal UI.

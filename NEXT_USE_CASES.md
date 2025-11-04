@@ -1,34 +1,5 @@
 # Use Cases: Task Management (Alistair Cockburn Style)
 
-## Use Case 5: Update Action Item Progress
-
-**Primary Actor**: Developer or Agency Owner
-
-**Goal**: Track progress on an action item as work proceeds
-
-**Preconditions**:
-- User has access to the task management system
-- The action item exists in the system
-
-**Main Success Scenario**:
-1. User is reviewing an action item (Use Case 3)
-2. User indicates the current progress state has changed
-3. User selects new state (To Do, In Progress, Completed, or Cancelled)
-4. System records the state change
-5. If state changed to Completed, system records when completion occurred
-6. System confirms the state has been updated
-7. User sees the updated state
-
-**Extensions**:
-- 2a. If user wants to quickly mark action as complete without choosing from states:
-  - 2a1. User directly marks action as complete
-  - 2a2. System changes state to Completed
-  - 2a3. Continue at step 5
-
-**Success Guarantee**: Action item reflects current progress state
-
----
-
 ## Use Case 6: Remove Action Item from Tracking
 
 **Primary Actor**: Developer or Agency Owner
