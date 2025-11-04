@@ -71,8 +71,14 @@ Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 - apps/frontend/src/app/tasks/store/tasks.effects.ts
 **Description**: Added updateTask$ effect to TasksEffects that listens for updateTask action, calls tasksService.updateTask(), and dispatches updateTaskSuccess or updateTaskFailure. Updated imports to include updateTask, updateTaskSuccess, and updateTaskFailure actions. Follows the established pattern from createTask effect.
 
+### Task 10: Add reducer cases for updateTask actions
+**Commit**: [To be added]
+**Files**:
+- apps/frontend/src/app/tasks/store/tasks.reducer.ts
+**Description**: Added three reducer cases for task update flow: updateTask (sets loading state), updateTaskSuccess (updates task in array by id using map), and updateTaskFailure (sets error state). Updated imports to include updateTask, updateTaskSuccess, and updateTaskFailure actions. The updateTaskSuccess case uses Array.map() to replace the updated task while preserving all other tasks unchanged. Follows the established pattern from createTask reducers.
+
 ## Next Task
-Add updateTaskSuccess reducer case to tasks.reducer.ts
+Create EditTaskPageComponent for editing task details
 
 ## Use Case Status
-🔄 In Progress - Backend complete; Frontend NGRX effects added
+🔄 In Progress - Backend complete; Frontend NGRX reducer added

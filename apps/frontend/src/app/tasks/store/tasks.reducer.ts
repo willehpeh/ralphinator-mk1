@@ -5,7 +5,10 @@ import {
   createTaskFailure,
   loadTasks,
   loadTasksSuccess,
-  loadTasksFailure
+  loadTasksFailure,
+  updateTask,
+  updateTaskSuccess,
+  updateTaskFailure
 } from './tasks.actions';
 import { Task } from '../task.types';
 
@@ -86,5 +89,17 @@ export const tasksReducer = createReducer(
   })),
 
   // When loading tasks fails
-  on(loadTasksFailure, (state, { error }) => setError(state, error))
+  on(loadTasksFailure, (state, { error }) => setError(state, error)),
+
+  // When updating a task is triggered
+  on(updateTask, setLoading),
+
+  // When task is successfully updated
+  on(updateTaskSuccess, (state, { task }) => ({
+    ...clearLoadingAndError(state),
+    tasks: state.tasks.map(t => t.id === task.id ? task : t),
+  })),
+
+  // When updating task fails
+  on(updateTaskFailure, (state, { error }) => setError(state, error))
 );
