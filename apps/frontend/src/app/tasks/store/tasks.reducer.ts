@@ -11,7 +11,10 @@ import {
   updateTaskFailure,
   changeTaskStatus,
   changeTaskStatusSuccess,
-  changeTaskStatusFailure
+  changeTaskStatusFailure,
+  deleteTask,
+  deleteTaskSuccess,
+  deleteTaskFailure
 } from './tasks.actions';
 import { Task } from '../task.types';
 
@@ -116,5 +119,17 @@ export const tasksReducer = createReducer(
   })),
 
   // When changing task status fails
-  on(changeTaskStatusFailure, (state, { error }) => setError(state, error))
+  on(changeTaskStatusFailure, (state, { error }) => setError(state, error)),
+
+  // When deleting a task is triggered
+  on(deleteTask, setLoading),
+
+  // When task is successfully deleted
+  on(deleteTaskSuccess, (state, { id }) => ({
+    ...clearLoadingAndError(state),
+    tasks: state.tasks.filter(t => t.id !== id),
+  })),
+
+  // When deleting task fails
+  on(deleteTaskFailure, (state, { error }) => setError(state, error))
 );
