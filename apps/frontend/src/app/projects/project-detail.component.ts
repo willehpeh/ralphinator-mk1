@@ -140,7 +140,12 @@ import { selectTasksByProjectId } from '../tasks/store/tasks.selectors';
           </div>
 
           <div class="detail-section">
-            <h4>Tasks</h4>
+            <div class="section-header-with-action">
+              <h4>Tasks</h4>
+              <button class="secondary-button" (click)="navigateToAddTask()">
+                + Add Task
+              </button>
+            </div>
             <div class="tasks-content">
               @for (task of projectTasks(); track task.id) {
                 <div class="task-card">
@@ -270,6 +275,18 @@ export class ProjectDetailComponent {
     if (id) {
       this.router.navigate(['/projects', id, 'edit']);
     }
+  }
+
+  navigateToAddTask(): void {
+    const currentProject = this.project();
+    if (!currentProject) return;
+
+    this.router.navigate(['/tasks/add'], {
+      queryParams: {
+        projectId: currentProject.id,
+        clientId: currentProject.clientId
+      }
+    });
   }
 
   openStatusChangeDialog(): void {

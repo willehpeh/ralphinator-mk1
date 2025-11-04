@@ -188,6 +188,17 @@
   }
 }
 
+.section-header-with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  h4 {
+    margin: 0;
+  }
+}
+
 .description-content,
 .technical-notes-content {
   margin: 0;
@@ -425,5 +436,15 @@
 
   .task-badges {
     flex-wrap: wrap;
+  }
+
+  .section-header-with-action {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+
+    .secondary-button {
+      width: 100%;
+    }
   }
 }

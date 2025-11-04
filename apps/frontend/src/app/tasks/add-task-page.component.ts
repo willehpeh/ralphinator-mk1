@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject, viewChild, effect } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TaskFormComponent } from './task-form.component';
 import { CreateTaskInput } from './task.types';
@@ -65,6 +65,7 @@ import { SUCCESS_MESSAGE_DISMISS_DURATION_MS } from '../shared/ui.constants';
 export class AddTaskPageComponent {
   private store = inject(Store);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   // Get reference to TaskFormComponent to call its methods
   private taskForm = viewChild(TaskFormComponent);
@@ -74,6 +75,21 @@ export class AddTaskPageComponent {
   private error = this.store.selectSignal(selectTasksError);
 
   constructor() {
+    // Pre-populate form with query params
+    effect(() => {
+      const form = this.taskForm();
+      if (form) {
+        // Read query params and pre-populate form
+        const queryParams = this.route.snapshot.queryParams;
+        if (queryParams['projectId']) {
+          form.form.patchValue({ projectId: queryParams['projectId'] });
+        }
+        if (queryParams['clientId']) {
+          form.form.patchValue({ clientId: queryParams['clientId'] });
+        }
+      }
+    });
+
     // React to loading state changes
     effect(() => {
       const form = this.taskForm();
