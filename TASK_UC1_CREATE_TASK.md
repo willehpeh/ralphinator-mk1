@@ -9,8 +9,8 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
    - ✅ CreateTaskCommand + TaskDataPayload (Completed)
    - ✅ CreateTaskHandler (Completed)
 3. ✅ Infrastructure: TaskProjection for TaskCreatedDomainEvent (Done)
-4. ⏳ Backend: InMemoryTaskReadRepository implementation (Next)
-5. ⬜ Backend: POST /api/tasks endpoint
+4. ✅ Backend: InMemoryTaskReadRepository implementation (Done)
+5. ⏳ Backend: POST /api/tasks endpoint (Next)
 6. ⬜ Frontend: TaskFormComponent + AddTaskPageComponent + NGRX state
 
 ## Completed Tasks
@@ -73,8 +73,15 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 - packages/infrastructure/src/lib/infrastructure.ts (exports)
 **Description**: Created projection event handler to build task read models from TaskCreatedDomainEvent, enabling CQRS separation between write (event store) and read (read model) data stores
 
+### Task 9: InMemoryTaskReadRepository
+**Commit**: (pending)
+**Files**:
+- packages/infrastructure/src/lib/read-models/in-memory-task-read-repository.ts
+- packages/infrastructure/src/lib/infrastructure.ts (exports)
+**Description**: Implemented in-memory repository for task read models, extending BaseInMemoryReadRepository and implementing ITaskReadRepository interface for CRUD operations on task queries
+
 ## Next Task
-InMemoryTaskReadRepository - Implement ITaskReadRepository for in-memory storage
+POST /api/tasks endpoint - Create REST API endpoint in TasksController to handle task creation
 
 ## Use Case Status
-❌ Not Complete - Still need read repository implementation, API endpoint, and frontend
+❌ Not Complete - Still need API endpoint and frontend

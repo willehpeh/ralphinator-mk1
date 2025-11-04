@@ -22,3 +22,4 @@ export * from './read-models/base-in-memory-read-repository';
 export * from './read-models/in-memory-client-read-repository';
 export * from './read-models/in-memory-contact-read-repository';
 export * from './read-models/in-memory-project-read-repository';
+export * from './read-models/in-memory-task-read-repository';
