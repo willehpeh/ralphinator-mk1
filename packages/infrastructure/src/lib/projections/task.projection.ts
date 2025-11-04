@@ -4,6 +4,7 @@ import {
   TaskCreatedDomainEvent,
   TaskDetailsUpdatedDomainEvent,
   TaskStatusChangedDomainEvent,
+  TaskDeletedDomainEvent,
   TASK_EVENT_TYPES
 } from '@angular-nest-starter/domain';
 import {
@@ -27,7 +28,7 @@ import { BaseProjectionHandler } from '../base/base-projection.handler';
  * - Uses the event handler registry pattern for extensible event handling
  */
 @Injectable()
-@EventsHandler(TaskCreatedDomainEvent, TaskDetailsUpdatedDomainEvent, TaskStatusChangedDomainEvent)
+@EventsHandler(TaskCreatedDomainEvent, TaskDetailsUpdatedDomainEvent, TaskStatusChangedDomainEvent, TaskDeletedDomainEvent)
 export class TaskProjection extends BaseProjectionHandler {
   constructor(
     @Inject(INJECTION_TOKENS.TASK_READ_REPOSITORY)
@@ -39,6 +40,7 @@ export class TaskProjection extends BaseProjectionHandler {
       [TASK_EVENT_TYPES.CREATED]: this.onTaskCreated.bind(this),
       [TASK_EVENT_TYPES.DETAILS_UPDATED]: this.onTaskDetailsUpdated.bind(this),
       [TASK_EVENT_TYPES.STATUS_CHANGED]: this.onTaskStatusChanged.bind(this),
+      [TASK_EVENT_TYPES.DELETED]: this.onTaskDeleted.bind(this),
     });
   }
 
@@ -130,5 +132,13 @@ export class TaskProjection extends BaseProjectionHandler {
         );
       }
     );
+  }
+
+  /**
+   * Event handler for TaskDeletedDomainEvent
+   * Removes the task from the read model when deleted (soft delete)
+   */
+  private async onTaskDeleted(event: TaskDeletedDomainEvent): Promise<void> {
+    await this.taskReadRepository.delete(event.aggregateId);
   }
 }

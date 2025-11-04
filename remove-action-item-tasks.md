@@ -22,7 +22,7 @@ Implement the ability to delete action items from the system using CQRS + Event 
 
 ### Infrastructure Layer
 - [x] Add delete() method to InMemoryTaskReadRepository (Already exists via BaseInMemoryReadRepository)
-- [ ] Update TaskProjection to handle TaskDeletedDomainEvent
+- [x] Update TaskProjection to handle TaskDeletedDomainEvent (Commit: TBD)
 - [ ] Write tests for TaskProjection.onTaskDeleted()
 
 ### Backend API
