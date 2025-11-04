@@ -42,13 +42,19 @@ Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 **Description**: Created UpdateTaskDetailsHandler that extends BaseCommandHandler to load TaskAggregate, execute updateDetails() domain method, and persist events to event store. Follows the established pattern from UpdateProjectDetailsHandler. Handler uses TaskData.fromPayload() to convert command payload to value object.
 
 ### Task 5: TaskProjection handler for TaskDetailsUpdatedDomainEvent
-**Commit**: (current - to be committed)
+**Commit**: d54641b - feat(infrastructure): Add TaskDetailsUpdatedDomainEvent handler to TaskProjection
 **Files**:
 - packages/infrastructure/src/lib/projections/task.projection.ts
 **Description**: Updated TaskProjection to handle TaskDetailsUpdatedDomainEvent. Added event handler registration for TASK_EVENT_TYPES.DETAILS_UPDATED, created transformTaskDataToReadModel() helper method to eliminate duplication between create and update handlers, and implemented onTaskDetailsUpdated() method that uses updateReadModel() to update the read model while preserving the original createdAt timestamp. Follows the established pattern from ProjectProjection.
 
+### Task 6: PATCH /api/tasks/:id endpoint
+**Commit**: (current - to be committed)
+**Files**:
+- apps/api/src/app/tasks/tasks.controller.ts
+**Description**: Added PATCH /api/tasks/:id endpoint to TasksController that accepts UpdateTaskDto, creates UpdateTaskDetailsCommand, executes it via CommandBus, and returns the updated TaskReadModel using fetchEntityAfterMutation utility. Updated imports to include Patch decorator, UpdateTaskDetailsCommand, and UpdateTaskDto. Updated createTaskDataPayload() helper method to accept both CreateTaskDto and UpdateTaskDto. Follows the established pattern from ProjectsController.
+
 ## Next Task
-Create PATCH /api/tasks/:id endpoint in TasksController
+Create frontend EditTaskPageComponent with NGRX state management
 
 ## Use Case Status
-🔄 In Progress - Domain, application, and projection layers complete; need API endpoint and frontend
+🔄 In Progress - Backend complete (domain, application, projection, API); need frontend

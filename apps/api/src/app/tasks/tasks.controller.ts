@@ -1,8 +1,9 @@
-import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Patch, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateTaskCommand, GetTaskByIdQuery, TaskDataPayload, TaskReadModel } from '@angular-nest-starter/application';
-import { CreateTaskDto, CreateTaskResponse } from '@angular-nest-starter/shared-types';
+import { CreateTaskCommand, UpdateTaskDetailsCommand, GetTaskByIdQuery, TaskDataPayload, TaskReadModel } from '@angular-nest-starter/application';
+import { CreateTaskDto, UpdateTaskDto, CreateTaskResponse } from '@angular-nest-starter/shared-types';
 import { randomUUID } from 'crypto';
+import { fetchEntityAfterMutation } from '../shared/controller-utilities';
 
 @Controller('tasks')
 export class TasksController {
@@ -18,7 +19,7 @@ export class TasksController {
    * @param dto - The task data DTO
    * @returns A new TaskDataPayload instance
    */
-  private createTaskDataPayload(dto: CreateTaskDto): TaskDataPayload {
+  private createTaskDataPayload(dto: CreateTaskDto | UpdateTaskDto): TaskDataPayload {
     return new TaskDataPayload(
       dto.title,
       dto.status,
@@ -60,5 +61,28 @@ export class TasksController {
     }
 
     return task;
+  }
+
+  @Patch(':id')
+  async updateTask(
+    @Param('id') id: string,
+    @Body() dto: UpdateTaskDto
+  ): Promise<TaskReadModel> {
+    const data = this.createTaskDataPayload(dto);
+    const command = new UpdateTaskDetailsCommand(id, data);
+
+    const updatedTaskId = await this.commandBus.execute<UpdateTaskDetailsCommand, string>(
+      command
+    );
+
+    // Return the updated task to avoid unnecessary refetch
+    return fetchEntityAfterMutation(
+      this.queryBus,
+      GetTaskByIdQuery,
+      [updatedTaskId],
+      'Task',
+      updatedTaskId,
+      'update'
+    );
   }
 }
