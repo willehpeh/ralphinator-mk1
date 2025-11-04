@@ -96,7 +96,7 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 **Description**: Created TasksController with POST /api/tasks endpoint that uses CommandBus to execute CreateTaskCommand. Set up TasksModule with CQRS handlers, event handlers, and infrastructure providers. Registered TasksModule in AppModule.
 
 ### Task 12: Task frontend types
-**Commit**: TBD
+**Commit**: 19121e0 - feat(frontend): Add Task type interfaces for frontend
 **Files**:
 - apps/frontend/src/app/tasks/task.types.ts
 **Description**: Created frontend Task, CreateTaskInput, and UpdateTaskInput interfaces that match the backend DTOs. These types provide type safety for the frontend NGRX state, actions, and components.
