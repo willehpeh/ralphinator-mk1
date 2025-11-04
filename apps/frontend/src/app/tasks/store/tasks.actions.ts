@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Task, CreateTaskInput } from '../task.types';
+import { Task, CreateTaskInput, UpdateTaskInput } from '../task.types';
 
 /**
  * Create a new task
@@ -22,6 +22,30 @@ export const createTaskSuccess = createAction(
  */
 export const createTaskFailure = createAction(
   '[Tasks] Create Task Failure',
+  props<{ error: string }>()
+);
+
+/**
+ * Update an existing task
+ */
+export const updateTask = createAction(
+  '[Tasks] Update Task',
+  props<{ id: string; task: UpdateTaskInput }>()
+);
+
+/**
+ * Successfully updated task
+ */
+export const updateTaskSuccess = createAction(
+  '[Tasks] Update Task Success',
+  props<{ task: Task }>()
+);
+
+/**
+ * Failed to update task
+ */
+export const updateTaskFailure = createAction(
+  '[Tasks] Update Task Failure',
   props<{ error: string }>()
 );
 
