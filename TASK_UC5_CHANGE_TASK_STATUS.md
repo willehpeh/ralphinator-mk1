@@ -138,7 +138,7 @@ From CURRENT_USE_CASE.md:
 
 ### ✅ Task 7: Add changeTaskStatus reducer handlers
 **Completed**: 2025-11-04
-**Commit**: (pending)
+**Commit**: 21bc3ec
 **File**: `apps/frontend/src/app/tasks/store/tasks.reducer.ts`
 **Description**:
 - Imported changeTaskStatus, changeTaskStatusSuccess, changeTaskStatusFailure actions
