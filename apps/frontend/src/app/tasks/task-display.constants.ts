@@ -12,7 +12,10 @@ export const TASK_UI_TEXT = {
   EDIT_TASK: 'Edit Task',
   DELETE_TASK: 'Delete Task',
   CHANGE_STATUS: 'Change Status',
+  MARK_COMPLETE: 'Mark Complete',
   BACK_TO_LIST: '← Back to List',
+  BACK_TO_TASKS: '← Back to Tasks',
+  RETRY: 'Retry',
 
   // Page titles
   TASK_LIST: 'Task List',
@@ -60,12 +63,18 @@ export const TASK_UI_TEXT = {
   // Detail labels (used in task list and detail views)
   LABEL_TITLE: 'Title:',
   LABEL_NOTES: 'Notes:',
+  LABEL_DESCRIPTION: 'Description',
   LABEL_STATUS: 'Status:',
   LABEL_PRIORITY: 'Priority:',
   LABEL_DUE_DATE: 'Due Date:',
+  LABEL_DEADLINE: 'Deadline',
   LABEL_CLIENT: 'Client:',
   LABEL_PROJECT: 'Project:',
   LABEL_CREATED: 'Created:',
+  VIEW_CLIENT: 'View Client →',
+  VIEW_PROJECT: 'View Project →',
+  NO_CLIENT_ASSIGNED: 'No client assigned',
+  NO_PROJECT_ASSIGNED: 'No project assigned',
 
   // Change Status Form
   CHANGE_STATUS_TITLE: 'Change Task Status',

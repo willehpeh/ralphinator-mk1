@@ -8,6 +8,7 @@ import { TaskStatusChangeComponent } from './components/task-status-change.compo
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { TaskStatus } from '@angular-nest-starter/shared-types';
 import { formatOverdueText, formatDeadlineText, isOverdue as isTaskOverdue } from '../shared/date-utils';
+import { TASK_UI_TEXT } from './task-display.constants';
 
 @Component({
   selector: 'app-task-detail',
@@ -18,20 +19,20 @@ import { formatOverdueText, formatDeadlineText, isOverdue as isTaskOverdue } fro
     <div class="task-detail-container">
       <div class="task-detail-header">
         <button type="button" class="back-button" (click)="onBack()">
-          ← Back to Tasks
+          {{ UI_TEXT.BACK_TO_TASKS }}
         </button>
       </div>
 
       @if (loading()) {
         <div class="loading-state">
-          <p>Loading task details...</p>
+          <p>{{ UI_TEXT.LOADING_TASK_DETAILS }}</p>
         </div>
       }
 
       @if (error(); as errorMessage) {
         <div class="error-state">
           <p>{{ errorMessage }}</p>
-          <button type="button" (click)="onRetry()">Retry</button>
+          <button type="button" (click)="onRetry()">{{ UI_TEXT.RETRY }}</button>
         </div>
       }
 
@@ -62,7 +63,7 @@ import { formatOverdueText, formatDeadlineText, isOverdue as isTaskOverdue } fro
             <!-- Notes Section -->
             @if (taskData.notes) {
               <div class="detail-section">
-                <h3 class="section-title">Description</h3>
+                <h3 class="section-title">{{ UI_TEXT.LABEL_DESCRIPTION }}</h3>
                 <p class="notes">{{ taskData.notes }}</p>
               </div>
             }
@@ -71,7 +72,7 @@ import { formatOverdueText, formatDeadlineText, isOverdue as isTaskOverdue } fro
             <div class="metadata-grid">
               <!-- Deadline -->
               <div class="metadata-item">
-                <span class="metadata-label">Deadline</span>
+                <span class="metadata-label">{{ UI_TEXT.LABEL_DEADLINE }}</span>
                 <span class="metadata-value" [class.overdue-text]="isOverdue()">
                   {{ deadlineText() }}
                 </span>
@@ -79,31 +80,31 @@ import { formatOverdueText, formatDeadlineText, isOverdue as isTaskOverdue } fro
 
               <!-- Client -->
               <div class="metadata-item">
-                <span class="metadata-label">Client</span>
+                <span class="metadata-label">{{ UI_TEXT.LABEL_CLIENT }}</span>
                 @if (taskData.clientId) {
                   <a [routerLink]="['/clients', taskData.clientId]" class="metadata-link">
-                    View Client →
+                    {{ UI_TEXT.VIEW_CLIENT }}
                   </a>
                 } @else {
-                  <span class="metadata-value no-value">No client assigned</span>
+                  <span class="metadata-value no-value">{{ UI_TEXT.NO_CLIENT_ASSIGNED }}</span>
                 }
               </div>
 
               <!-- Project -->
               <div class="metadata-item">
-                <span class="metadata-label">Project</span>
+                <span class="metadata-label">{{ UI_TEXT.LABEL_PROJECT }}</span>
                 @if (taskData.projectId) {
                   <a [routerLink]="['/projects', taskData.projectId]" class="metadata-link">
-                    View Project →
+                    {{ UI_TEXT.VIEW_PROJECT }}
                   </a>
                 } @else {
-                  <span class="metadata-value no-value">No project assigned</span>
+                  <span class="metadata-value no-value">{{ UI_TEXT.NO_PROJECT_ASSIGNED }}</span>
                 }
               </div>
 
               <!-- Created At -->
               <div class="metadata-item">
-                <span class="metadata-label">Created</span>
+                <span class="metadata-label">{{ UI_TEXT.LABEL_CREATED }}</span>
                 <span class="metadata-value">
                   {{ taskData.createdAt | date:'medium' }}
                 </span>
@@ -113,16 +114,16 @@ import { formatOverdueText, formatDeadlineText, isOverdue as isTaskOverdue } fro
             <!-- Action Buttons -->
             <div class="actions-section">
               <button type="button" class="action-button primary" (click)="onEdit()">
-                Edit Task
+                {{ UI_TEXT.EDIT_TASK }}
               </button>
               <button type="button" class="action-button success" (click)="onComplete()">
-                Mark Complete
+                {{ UI_TEXT.MARK_COMPLETE }}
               </button>
               <button type="button" class="action-button secondary" (click)="onChangeStatus()">
-                Change Status
+                {{ UI_TEXT.CHANGE_STATUS }}
               </button>
               <button type="button" class="action-button danger" (click)="onDelete()">
-                Delete Task
+                {{ UI_TEXT.DELETE_TASK }}
               </button>
             </div>
           </div>
@@ -143,18 +144,18 @@ import { formatOverdueText, formatDeadlineText, isOverdue as isTaskOverdue } fro
           <!-- Delete Confirmation Dialog -->
           @if (showDeleteConfirmation()) {
             <app-confirmation-dialog
-              [title]="'Delete Task'"
-              [message]="'Are you sure you want to delete this task? This action cannot be undone.'"
-              [confirmText]="'Delete'"
-              [cancelText]="'Cancel'"
+              [title]="UI_TEXT.DELETE_CONFIRMATION_TITLE"
+              [message]="UI_TEXT.DELETE_CONFIRMATION_MESSAGE"
+              [confirmText]="UI_TEXT.DELETE_CONFIRM_BUTTON"
+              [cancelText]="UI_TEXT.DELETE_CANCEL_BUTTON"
               (confirmed)="onDeleteConfirmed()"
               (cancelled)="onDeleteCancelled()"
             />
           }
         } @else {
           <div class="error-state">
-            <p>Task not found</p>
-            <button type="button" (click)="onBack()">Back to Tasks</button>
+            <p>{{ UI_TEXT.TASK_NOT_FOUND }}</p>
+            <button type="button" (click)="onBack()">{{ UI_TEXT.BACK_TO_TASKS }}</button>
           </div>
         }
       }
@@ -165,6 +166,9 @@ export class TaskDetailComponent implements OnInit {
   private store = inject(Store);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+
+  // Constants for UI text
+  protected readonly UI_TEXT = TASK_UI_TEXT;
 
   // Task ID from route parameter
   taskId = signal<string>('');
