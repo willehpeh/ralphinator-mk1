@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { TasksService } from '../tasks.service';
-import { createTask, createTaskSuccess, createTaskFailure, updateTask, updateTaskSuccess, updateTaskFailure, changeTaskStatus, changeTaskStatusSuccess, changeTaskStatusFailure, loadTasks, loadTasksSuccess, loadTasksFailure, deleteTask, deleteTaskSuccess, deleteTaskFailure } from './tasks.actions';
+import { createTask, createTaskSuccess, createTaskFailure, updateTask, updateTaskSuccess, updateTaskFailure, changeTaskStatus, changeTaskStatusSuccess, changeTaskStatusFailure, loadTasks, loadTasksSuccess, loadTasksFailure, deleteTask, deleteTaskSuccess, deleteTaskFailure, loadProjectTasks, loadProjectTasksSuccess, loadProjectTasksFailure } from './tasks.actions';
 
 /**
  * NGRX Effects for task-related side effects
@@ -114,6 +114,22 @@ export class TasksEffects {
         this.tasksService.deleteTask(action.id).pipe(
           map(() => deleteTaskSuccess({ id: action.id })),
           catchError(this.handleError(deleteTaskFailure, 'Failed to delete task'))
+        )
+      )
+    )
+  );
+
+  /**
+   * Effect to load tasks for a specific project from the backend
+   * Listens for loadProjectTasks action, calls the service, and dispatches success/failure
+   */
+  loadProjectTasks$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadProjectTasks),
+      switchMap((action) =>
+        this.tasksService.getTasksByProjectId(action.projectId).pipe(
+          map((tasks) => loadProjectTasksSuccess({ tasks })),
+          catchError(this.handleError(loadProjectTasksFailure, 'Failed to load project tasks'))
         )
       )
     )
