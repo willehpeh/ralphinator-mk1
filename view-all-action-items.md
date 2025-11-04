@@ -23,9 +23,15 @@ Allow users to see all action items with their priority, status, deadline, and c
    - Added reducer handler for `loadTasksFailure` action (stores error message)
    - Location: `apps/frontend/src/app/tasks/store/tasks.reducer.ts:79-89`
 
-### Pending Tasks
+#### NGRX Store Effects
+3. ✅ Add effects for loading tasks from API
+   - Added `loadTasks$` effect to fetch all tasks from the backend
+   - Effect listens for `loadTasks` action and calls `TasksService.getAllTasks()`
+   - On success, dispatches `loadTasksSuccess` with tasks array
+   - On failure, dispatches `loadTasksFailure` with error message
+   - Location: `apps/frontend/src/app/tasks/store/tasks.effects.ts:62-72`
 
-3. ⏳ Add effects for loading tasks from API
+### Pending Tasks
 4. ⏳ Create TaskListComponent for displaying all tasks
 5. ⏳ Add route for tasks list view
 6. ⏳ Add filtering capabilities (priority, status, client, project, overdue)
@@ -36,4 +42,4 @@ Allow users to see all action items with their priority, status, deadline, and c
 ---
 
 **Last Updated:** 2025-11-04
-**Status:** In Progress - NGRX reducer updated to handle load actions
+**Status:** In Progress - NGRX effects added for loading tasks from API

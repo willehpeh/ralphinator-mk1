@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { TasksService } from '../tasks.service';
-import { createTask, createTaskSuccess, createTaskFailure } from './tasks.actions';
+import { createTask, createTaskSuccess, createTaskFailure, loadTasks, loadTasksSuccess, loadTasksFailure } from './tasks.actions';
 
 /**
  * NGRX Effects for task-related side effects
@@ -50,6 +50,22 @@ export class TasksEffects {
             }
           })),
           catchError(this.handleError(createTaskFailure, 'Failed to create task'))
+        )
+      )
+    )
+  );
+
+  /**
+   * Effect to load all tasks from the backend
+   * Listens for loadTasks action, calls the service, and dispatches success/failure
+   */
+  loadTasks$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadTasks),
+      switchMap(() =>
+        this.tasksService.getAllTasks().pipe(
+          map((tasks) => loadTasksSuccess({ tasks })),
+          catchError(this.handleError(loadTasksFailure, 'Failed to load tasks'))
         )
       )
     )
