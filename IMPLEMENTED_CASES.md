@@ -1199,3 +1199,37 @@
 - Success guarantee met: User sees all action items specific to the project
 - Documentation: view-project-tasks.md, CURRENT_USE_CASE.md (archived)
 - **Note**: Complete implementation with 25 tasks (1-24 implementation, 25 verification). Tasks 26-30 are manual UI tests pending backend bug fix.
+
+## Use Case 8: View Action Items for a Specific Client (UC-TASK-001-08) (2025-11-04) ✅ COMPLETE
+- Complete CQRS query implementation for retrieving tasks by client ID
+- Application: GetTasksByClientIdQuery accepts clientId parameter to retrieve all tasks for a client
+- Application: GetTasksByClientIdQueryHandler queries ITaskReadRepository.findByClientId()
+- Application: ITaskReadRepository.findByClientId() port interface method for filtering tasks by clientId
+- Infrastructure: InMemoryTaskReadRepository.findByClientId() implementation filters tasks from Map by clientId
+- Backend API: GET /api/clients/:id/tasks endpoint returns TaskReadModel[] array
+- Backend: ClientsController.getClientTasks() method handles route and dispatches query
+- Frontend: TasksService.getTasksByClientId() method for API communication
+- Frontend: ClientDetailComponent enhanced with Action Items section displaying tasks
+- Frontend: Component loads tasks using toSignal with combineLatest pattern for reactive updates
+- Frontend: tasksReloadTrigger signal enables manual reload capability
+- Frontend: Task cards display title, status badge, priority badge, due date with overdue indicator, and project association
+- Frontend: Color-coded status badges (Todo=gray, InProgress=blue, Completed=green, Cancelled=dark gray)
+- Frontend: Color-coded priority badges (Urgent=red, High=orange, Medium=yellow, Low=gray)
+- Frontend: Overdue indicator with "OVERDUE" badge (red) for past-due tasks
+- Frontend: Task cards clickable with "View Details" button navigating to task detail page (/tasks/:id)
+- Frontend: Empty state message: "No action items for this client. Tasks will appear here as they are created."
+- Frontend: Professional styling with hover effects, shadows, and responsive design matching projects section
+- Frontend: Modern Angular patterns (standalone, signals, toSignal, OnPush, modern control flow @if/@for)
+- Frontend: Helper methods (formatTaskStatus, isTaskOverdue, formatTaskDate, viewTaskDetails)
+- All main success scenario steps met:
+  - User is reviewing client information (client detail page) ✅
+  - System displays section showing action items for this client ✅
+  - System lists all action items with title, priority, status, deadline, project relation ✅
+  - User reviews client-specific action items across all projects ✅
+  - User can navigate to any action item for full details ✅
+- Extensions handled:
+  - 2a: No action items for client - empty state message displayed ✅
+  - 2a2: Option to add new action item - noted as optional enhancement (not implemented) ⚠️
+- Success guarantee met: User sees all action items across all work for the client
+- Documentation: view-client-tasks.md
+- **Note**: Core functionality complete. Optional "Add Task" button could be added as future enhancement similar to Add Contact/Project buttons.
