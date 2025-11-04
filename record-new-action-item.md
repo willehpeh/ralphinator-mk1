@@ -66,4 +66,29 @@
 - `packages/domain/src/lib/constants/domain-errors.ts` - Added TASK_NOT_INITIALIZED error
 - `packages/domain/src/index.ts` - Added export for TaskAggregate
 
-**Next Task**: Create CreateTaskCommand and CreateTaskHandler in application layer (TDD)
+### Task 4: Create CreateTaskCommand and CreateTaskHandler in application layer
+**Status**: ✅ Completed
+**Date**: 2025-11-04
+**Commit**: Next
+
+**What was done**:
+- Created `TaskDataPayload` class to encapsulate task data for commands
+- Created `CreateTaskCommand` class following CQRS command pattern
+- Created `CreateTaskHandler` extending BaseCommandHandler
+- Implemented execute() method that:
+  - Creates TaskData value object from payload
+  - Creates TaskAggregate using domain logic
+  - Persists aggregate (saves events and publishes to event bus)
+  - Returns the task ID
+- Exported command, payload, and handler from application package index
+- Successfully linted and verified compilation
+
+**Files created**:
+- `packages/application/src/lib/commands/task-data.payload.ts`
+- `packages/application/src/lib/commands/create-task.command.ts`
+- `packages/application/src/lib/commands/handlers/create-task.handler.ts`
+
+**Files modified**:
+- `packages/application/src/lib/application.ts` - Added exports for new task command, payload, and handler
+
+**Next Task**: Create TaskProjection to handle TaskCreatedDomainEvent in infrastructure layer
