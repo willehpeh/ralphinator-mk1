@@ -1118,3 +1118,44 @@
 - Success guarantee met: Action item reflects current progress state
 - Documentation: TASK_UC5_CHANGE_TASK_STATUS.md
 - **Note**: Complete end-to-end implementation with 9 tasks completed. Full CQRS + Event Sourcing pattern with professional modal UI.
+
+## Use Case 6: Remove Action Item from Tracking (2025-11-04) ✅ COMPLETE
+- Complete CQRS + Event Sourcing implementation for task deletion (soft delete)
+- Domain: TaskDeletedDomainEvent captures task deletion with aggregateId (pre-existing)
+- Domain: TaskAggregate.delete() method marks task as deleted (pre-existing)
+- Domain: TaskAggregate.isDeleted() getter for accessing deletion state (pre-existing)
+- Domain: TASK_EVENT_TYPES.DELETED constant for event type identification (pre-existing)
+- Application: DeleteTaskCommand with id field (pre-existing)
+- Application: DeleteTaskCommandHandler loads aggregate, calls delete(), persists events (pre-existing)
+- Infrastructure: TaskProjection handles TaskDeletedDomainEvent and removes from read model (pre-existing)
+- Backend API: DELETE /api/tasks/:id endpoint removes task (pre-existing)
+- Frontend: Task NGRX actions (deleteTask, deleteTaskSuccess, deleteTaskFailure) (pre-existing)
+- Frontend: TasksService.deleteTask() method for API communication (pre-existing)
+- Frontend: TasksEffects with deleteTask$ effect for handling async API calls (pre-existing)
+- Frontend: tasksReducer handles deleteTask actions with array filter to remove task (pre-existing)
+- Frontend: ConfirmationDialogComponent reused for delete confirmation
+- Frontend: TaskDetailComponent enhanced with delete functionality using showDeleteConfirmation signal
+- Frontend: "Delete Task" button in action section with danger styling (red background)
+- Frontend: Confirmation dialog with custom message explaining action cannot be undone
+- Frontend: onDelete() method shows confirmation dialog
+- Frontend: onDeleteConfirmed() dispatches deleteTask action and navigates to task list
+- Frontend: onDeleteCancelled() closes dialog without deleting
+- Frontend: Automatic navigation to /tasks after successful deletion
+- Frontend: Modern Angular patterns (standalone, signals, OnPush change detection)
+- Event sourcing: All task deletions captured as immutable events in event store
+- Soft delete pattern: Task removed from read model but complete history preserved in event store
+- All main success scenario steps met:
+  - User is reviewing an action item (Use Case 3) ✅
+  - User requests to remove the action item from tracking (Delete Task button) ✅
+  - System asks user to confirm the removal (confirmation dialog) ✅
+  - User confirms the removal (onDeleteConfirmed) ✅
+  - System removes the action item from active tracking (NGRX + backend) ✅
+  - System confirms the action item has been removed (implicit via navigation) ✅
+  - User is returned to the list of action items (without the removed item) ✅
+- All extensions handled:
+  - 4a: User decides not to remove - Cancel button closes dialog without action ✅
+  - 4a1: System cancels the removal - no API call made ✅
+  - 4a2: Return to Use Case 3 - dialog closes, remains on detail page ✅
+- Success guarantee met: Action item is no longer visible in active tracking (historical record preserved in event store)
+- Documentation: TASK_UC6_DELETE_TASK.md
+- **Note**: Complete implementation. Backend was pre-existing; frontend delete confirmation dialog implemented.
