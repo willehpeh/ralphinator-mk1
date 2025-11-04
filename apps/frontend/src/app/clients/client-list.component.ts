@@ -11,7 +11,8 @@ import {
 import { ClientStatus } from './client.types';
 import { CLIENT_STATUSES, FILTER_ALL_CLIENTS } from './client.constants';
 import { ClientNavigationService } from './client-navigation.service';
-import { STANDARD_DATE_FORMAT, CLIENT_UI_TEXT } from './client-display.constants';
+import { STANDARD_DATE_FORMAT } from '../shared/ui.constants';
+import { CLIENT_UI_TEXT } from './client-display.constants';
 import { StatusBadgeComponent } from './status-badge.component';
 
 @Component({

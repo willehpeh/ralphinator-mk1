@@ -3,18 +3,6 @@
  */
 
 /**
- * Standard date format for displaying client dates (createdAt, etc.)
- * Uses Angular DatePipe format string
- * 'medium' format example: "Jun 15, 2023, 9:03:01 AM"
- */
-export const STANDARD_DATE_FORMAT = 'medium';
-
-/**
- * Duration in milliseconds to display success messages before auto-dismissing
- */
-export const SUCCESS_MESSAGE_DISMISS_DURATION_MS = 3000;
-
-/**
  * UI text labels for client-related components.
  * This is the single source of truth for UI text in the clients feature.
  */

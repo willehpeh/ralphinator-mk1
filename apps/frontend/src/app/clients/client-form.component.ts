@@ -10,7 +10,8 @@ import { updateClient, updateClientSuccess, updateClientFailure } from './store/
 import { selectClientsError } from './store/clients.selectors';
 import { ClientStatus, Client } from './client.types';
 import { CLIENT_STATUSES, DEFAULT_CLIENT_STATUS } from './client.constants';
-import { CLIENT_UI_TEXT, CLIENT_FORM_LABELS, SUCCESS_MESSAGE_DISMISS_DURATION_MS } from './client-display.constants';
+import { SUCCESS_MESSAGE_DISMISS_DURATION_MS } from '../shared/ui.constants';
+import { CLIENT_UI_TEXT, CLIENT_FORM_LABELS } from './client-display.constants';
 import { FormState } from '../shared/form-state';
 import { ValidationErrorComponent } from '../shared/validation-error.component';
 
