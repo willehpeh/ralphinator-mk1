@@ -61,13 +61,20 @@ From CURRENT_USE_CASE.md:
 - Handler preserves all other fields (title, priority, notes, deadline, clientId, projectId, createdAt)
 - Follows same pattern as ClientProjection status change handler
 
+### ✅ Task 2: Register ChangeTaskStatusHandler in TasksModule
+**Completed**: 2025-11-04
+**Commit**: [pending]
+**File**: `apps/api/src/app/tasks/tasks.module.ts`
+**Description**:
+- Imported ChangeTaskStatusHandler from @angular-nest-starter/application
+- Added handler to CommandHandlers array
+- Handler is now registered as a provider via spread operator
+- Follows same pattern as CreateTaskHandler in the module
+- Build verified successfully
+
 ---
 
 ## Next Tasks (Remaining)
-
-### Task 2: Register ChangeTaskStatusHandler in TasksModule
-**Status**: Pending
-**Description**: Add ChangeTaskStatusHandler to the CommandHandlers array in tasks.module.ts.
 
 ### Task 3: Add PATCH /api/tasks/:id/status endpoint
 **Status**: Pending
