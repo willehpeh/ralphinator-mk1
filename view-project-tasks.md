@@ -32,8 +32,8 @@ Implement the ability to view all tasks associated with a specific project withi
 - [x] Task 17: Add overdue indicator (red "OVERDUE" label) for tasks past due date (commit: a4db5ca)
 - [x] Task 18: Implement empty state message "No tasks yet. Add a task to get started." (commit: 06da30a)
 - [x] Task 19: Add "Add Task" button that navigates to /tasks/add with projectId pre-populated (commit: fe433a8)
-- [x] Task 20: Make task cards clickable to navigate to task detail page (/tasks/:id) (commit: PENDING)
-- [ ] Task 21: Add professional styling with hover effects for task cards
+- [x] Task 20: Make task cards clickable to navigate to task detail page (/tasks/:id) (commit: f1f137c)
+- [x] Task 21: Add professional styling with hover effects for task cards (commit: pending)
 - [ ] Task 22: Add loading state spinner while fetching tasks
 - [ ] Task 23: Add error state handling with user-friendly error messages
 
