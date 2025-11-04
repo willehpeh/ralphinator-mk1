@@ -14,6 +14,7 @@ import { ClientNavigationService } from './client-navigation.service';
 import { STANDARD_DATE_FORMAT } from '../shared/ui.constants';
 import { CLIENT_UI_TEXT } from './client-display.constants';
 import { StatusBadgeComponent } from './status-badge.component';
+import { extractSelectValue, extractInputValue } from '../shared/form-event-utils';
 
 @Component({
   selector: 'app-client-list',
@@ -180,8 +181,7 @@ export class ClientListComponent implements OnInit {
   }
 
   onFilterChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    const value = selectElement.value as typeof FILTER_ALL_CLIENTS | ClientStatus;
+    const value = extractSelectValue(event) as typeof FILTER_ALL_CLIENTS | ClientStatus;
 
     this.selectedFilter.set(value);
 
@@ -195,8 +195,7 @@ export class ClientListComponent implements OnInit {
   }
 
   onSearchChange(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    const searchTerm = inputElement.value;
+    const searchTerm = extractInputValue(event);
     this.searchTerm.set(searchTerm);
     this.store.dispatch(filterClientsByName({ searchTerm }));
   }

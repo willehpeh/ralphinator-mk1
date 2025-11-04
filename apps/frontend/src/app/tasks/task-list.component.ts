@@ -10,6 +10,7 @@ import { TASK_UI_TEXT } from './task-display.constants';
 import { TaskStatus } from '@angular-nest-starter/shared-types';
 import { formatDate, isOverdue, daysOverdue } from './utils/date-utils';
 import { formatTaskStatus } from './utils/task-display-utils';
+import { extractSelectValue, extractInputValue, extractCheckboxValue } from '../shared/form-event-utils';
 
 @Component({
   selector: 'app-task-list',
@@ -301,33 +302,27 @@ export class TaskListComponent implements OnInit {
   }
 
   onPriorityFilterChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    this.selectedPriority.set(selectElement.value);
+    this.selectedPriority.set(extractSelectValue(event));
   }
 
   onStatusFilterChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    this.selectedStatus.set(selectElement.value);
+    this.selectedStatus.set(extractSelectValue(event));
   }
 
   onClientFilterChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    this.selectedClientId.set(selectElement.value);
+    this.selectedClientId.set(extractSelectValue(event));
   }
 
   onProjectFilterChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    this.selectedProjectId.set(selectElement.value);
+    this.selectedProjectId.set(extractSelectValue(event));
   }
 
   onOverdueFilterChange(event: Event): void {
-    const checkboxElement = event.target as HTMLInputElement;
-    this.showOverdueOnly.set(checkboxElement.checked);
+    this.showOverdueOnly.set(extractCheckboxValue(event));
   }
 
   onSearchChange(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    this.searchQuery.set(inputElement.value);
+    this.searchQuery.set(extractInputValue(event));
   }
 
   onAddTask(): void {

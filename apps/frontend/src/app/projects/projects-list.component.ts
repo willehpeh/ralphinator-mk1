@@ -4,6 +4,7 @@ import { ProjectsService } from './projects.service';
 import { ProjectDto, PROJECT_STATUS_VALUES, ProjectStatus } from '@angular-nest-starter/shared-types';
 import { ClientsService } from '../clients/clients.service';
 import { Client } from '../clients/client.types';
+import { extractSelectValue, extractInputValue } from '../shared/form-event-utils';
 
 @Component({
   selector: 'app-projects-list',
@@ -190,18 +191,15 @@ export class ProjectsListComponent implements OnInit {
   }
 
   onStatusFilterChange(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.selectedStatusFilter.set(target.value);
+    this.selectedStatusFilter.set(extractSelectValue(event));
   }
 
   onClientFilterChange(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.selectedClientFilter.set(target.value);
+    this.selectedClientFilter.set(extractSelectValue(event));
   }
 
   onSearchTermChange(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    this.searchTerm.set(target.value);
+    this.searchTerm.set(extractInputValue(event));
   }
 
   clearFilters(): void {
