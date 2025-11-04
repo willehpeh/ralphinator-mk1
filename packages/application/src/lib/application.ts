@@ -16,6 +16,7 @@ export * from './commands/task-data.payload';
 export * from './commands/create-task.command';
 export * from './commands/update-task-details.command';
 export * from './commands/change-task-status.command';
+export * from './commands/delete-task.command';
 
 // Command Handlers
 export * from './commands/handlers/create-client.handler';
@@ -32,6 +33,7 @@ export * from './commands/handlers/delete-project.handler';
 export * from './commands/handlers/create-task.handler';
 export * from './commands/handlers/update-task-details.handler';
 export * from './commands/handlers/change-task-status.handler';
+export * from './commands/handlers/delete-task.handler';
 
 // Queries
 export * from './queries/get-client-by-id.query';

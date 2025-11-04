@@ -16,7 +16,7 @@ Implement the ability to delete action items from the system using CQRS + Event 
 
 ### Application Layer
 - [x] Create DeleteTaskCommand (Commit: c66eece)
-- [ ] Create DeleteTaskCommandHandler
+- [x] Create DeleteTaskCommandHandler (Commit: TBD)
 - [ ] Add delete() method to ITaskReadRepository port
 - [ ] Write tests for DeleteTaskCommandHandler
 

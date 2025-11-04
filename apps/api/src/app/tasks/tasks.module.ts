@@ -3,6 +3,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import {
   CreateTaskHandler,
   ChangeTaskStatusHandler,
+  DeleteTaskHandler,
   INJECTION_TOKENS,
 } from '@angular-nest-starter/application';
 import {
@@ -16,6 +17,7 @@ import { TasksController } from './tasks.controller';
 const CommandHandlers = [
   CreateTaskHandler,
   ChangeTaskStatusHandler,
+  DeleteTaskHandler,
 ];
 const QueryHandlers: never[] = [];
 const EventHandlers = [TaskProjection];
