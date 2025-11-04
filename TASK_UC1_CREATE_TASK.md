@@ -88,7 +88,7 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 **Description**: Created DTOs for task API operations including CreateTaskDto, UpdateTaskDto, CreateTaskResponse, and TaskDto following the established pattern from project DTOs with class-validator decorators
 
 ### Task 11: TasksController and TasksModule
-**Commit**: [pending]
+**Commit**: 8519a24 - feat(api): Add TasksController and TasksModule with POST /api/tasks endpoint
 **Files**:
 - apps/api/src/app/tasks/tasks.controller.ts
 - apps/api/src/app/tasks/tasks.module.ts
