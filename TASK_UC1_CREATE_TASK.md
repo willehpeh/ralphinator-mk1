@@ -51,7 +51,7 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 **Description**: Implemented command handler to execute task creation following CQRS pattern with TDD
 
 ### Task 6: TaskReadModel
-**Commit**: [pending]
+**Commit**: 6382ee5 - feat(application): Add TaskReadModel for task queries
 **Files**:
 - packages/application/src/lib/read-models/task.read-model.ts
 - packages/application/src/lib/application.ts (exports)
