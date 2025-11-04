@@ -45,13 +45,20 @@ Allow users to see all action items with their priority, status, deadline, and c
    - Professional styling with responsive design
    - Location: `apps/frontend/src/app/tasks/task-list.component.ts`
 
+#### Routing
+5. ✅ Add route for tasks list view
+   - Added import for `TaskListComponent` to `app.routes.ts`
+   - Added `/tasks` route pointing to `TaskListComponent`
+   - Route placed before `/tasks/add` to ensure proper matching
+   - Location: `apps/frontend/src/app/app.routes.ts:11,47-49`
+
 ### Pending Tasks
-5. ⏳ Add route for tasks list view
-6. ⏳ Add filtering capabilities (priority, status, client, project, overdue)
-7. ⏳ Add search functionality
-8. ⏳ Test the complete flow
+6. ⏳ Fix TypeScript compilation errors in TaskListComponent
+7. ⏳ Add filtering capabilities (priority, status, client, project, overdue)
+8. ⏳ Add search functionality
+9. ⏳ Test the complete flow
 
 ---
 
 **Last Updated:** 2025-11-04
-**Status:** In Progress - TaskListComponent created with full task display functionality
+**Status:** In Progress - Route added for tasks list view, compilation errors need fixing

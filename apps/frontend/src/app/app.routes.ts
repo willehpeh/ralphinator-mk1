@@ -8,6 +8,7 @@ import { ProjectsListComponent } from './projects/projects-list.component';
 import { ProjectDetailComponent } from './projects/project-detail.component';
 import { ProjectEditComponent } from './projects/project-edit.component';
 import { AddTaskPageComponent } from './tasks/add-task-page.component';
+import { TaskListComponent } from './tasks/task-list.component';
 
 export const appRoutes: Route[] = [
   {
@@ -41,6 +42,10 @@ export const appRoutes: Route[] = [
   {
     path: 'clients/:id',
     component: ClientDetailComponent,
+  },
+  {
+    path: 'tasks',
+    component: TaskListComponent,
   },
   {
     path: 'tasks/add',
