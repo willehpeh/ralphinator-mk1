@@ -48,6 +48,17 @@ $color-action-secondary-hover: #545b62;
 $color-action-danger: #dc3545;
 $color-action-danger-hover: #c82333;
 
+/* Task-specific Colors */
+$color-task-primary: #3498db;
+$color-task-primary-hover: #2980b9;
+$color-task-text-dark: #2c3e50;
+$color-task-text-medium: #7f8c8d;
+$color-task-text-light: #95a5a6;
+$color-task-border: #d5dbdb;
+$color-task-bg-light: #ecf0f1;
+$color-task-error: #e74c3c;
+$color-task-error-hover: #c0392b;
+
 /* Shadow */
 $color-backdrop: rgba(0, 0, 0, 0.5);
 $color-shadow: rgba(0, 0, 0, 0.1);
@@ -64,10 +75,15 @@ $spacing-md: 0.75rem;
 $spacing-lg: 1rem;
 $spacing-xl: 1.5rem;
 $spacing-2xl: 2rem;
+$spacing-3xl: 3rem;
+$spacing-4xl: 4rem;
 
 /* Shadows */
 $shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.15);
 $shadow-focus: 0 0 0 2px $color-primary-focus-shadow;
+$shadow-focus-task: 0 0 0 3px rgba(52, 152, 219, 0.1);
 
 /* Transitions */
 $transition-fast: 0.2s;
@@ -75,12 +91,29 @@ $transition-fast: 0.2s;
 /* Typography */
 $font-size-xs: 0.625rem;
 $font-size-sm: 0.75rem;
+$font-size-md: 0.9rem;
+$font-size-almost-base: 0.95rem;
 $font-size-base: 1rem;
 $font-size-lg: 1.1rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 2rem;
 
 $font-weight-medium: 500;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
+$line-height-base: 1.5;
+
 /* Opacity */
 $opacity-disabled: 0.5;
+
+/* Layout */
+$container-max-width: 1200px;
+$min-width-sm: 250px;
+$min-width-md: 300px;
+$min-width-select: 180px;
+
+/* Other Sizes */
+$checkbox-size: 18px;
+$letter-spacing-caps: 0.5px;
