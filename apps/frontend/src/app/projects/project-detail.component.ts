@@ -10,7 +10,7 @@ import { ProjectDto, ProjectStatus } from '@angular-nest-starter/shared-types';
 import { StatusChangeDialogComponent } from '../shared/status-change-dialog.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { loadProjectTasks } from '../tasks/store/tasks.actions';
-import { selectTasksByProjectId, selectTasksLoading } from '../tasks/store/tasks.selectors';
+import { selectTasksByProjectId, selectTasksLoading, selectTasksError } from '../tasks/store/tasks.selectors';
 
 @Component({
   selector: 'app-project-detail',
@@ -152,6 +152,13 @@ import { selectTasksByProjectId, selectTasksLoading } from '../tasks/store/tasks
                   <div class="spinner"></div>
                   <p class="loading-text">Loading tasks...</p>
                 </div>
+              } @else if (tasksError(); as errorMessage) {
+                <div class="error-message">
+                  <p>{{ errorMessage }}</p>
+                  <button class="secondary-button" (click)="retryLoadTasks()">
+                    Retry
+                  </button>
+                </div>
               } @else {
                 @for (task of projectTasks(); track task.id) {
                   <div class="task-card" (click)="navigateToTask(task.id)">
@@ -266,6 +273,9 @@ export class ProjectDetailComponent {
   // Select tasks loading state
   tasksLoading = this.store.selectSignal(selectTasksLoading);
 
+  // Select tasks error state
+  tasksError = this.store.selectSignal(selectTasksError);
+
   // Load project tasks whenever projectId changes
   constructor() {
     effect(() => {
@@ -301,6 +311,13 @@ export class ProjectDetailComponent {
 
   navigateToTask(taskId: string): void {
     this.router.navigate(['/tasks', taskId]);
+  }
+
+  retryLoadTasks(): void {
+    const id = this.projectId();
+    if (id) {
+      this.store.dispatch(loadProjectTasks({ projectId: id }));
+    }
   }
 
   openStatusChangeDialog(): void {
