@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { TasksService } from '../tasks.service';
-import { createTask, createTaskSuccess, createTaskFailure, updateTask, updateTaskSuccess, updateTaskFailure, loadTasks, loadTasksSuccess, loadTasksFailure } from './tasks.actions';
+import { createTask, createTaskSuccess, createTaskFailure, updateTask, updateTaskSuccess, updateTaskFailure, changeTaskStatus, changeTaskStatusSuccess, changeTaskStatusFailure, loadTasks, loadTasksSuccess, loadTasksFailure } from './tasks.actions';
 
 /**
  * NGRX Effects for task-related side effects
@@ -66,6 +66,22 @@ export class TasksEffects {
         this.tasksService.updateTask(action.id, action.task).pipe(
           map((task) => updateTaskSuccess({ task })),
           catchError(this.handleError(updateTaskFailure, 'Failed to update task'))
+        )
+      )
+    )
+  );
+
+  /**
+   * Effect to change task status in the backend
+   * Listens for changeTaskStatus action, calls the service, and dispatches success/failure
+   */
+  changeTaskStatus$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(changeTaskStatus),
+      switchMap((action) =>
+        this.tasksService.changeTaskStatus(action.id, { status: action.status }).pipe(
+          map((task) => changeTaskStatusSuccess({ task })),
+          catchError(this.handleError(changeTaskStatusFailure, 'Failed to change task status'))
         )
       )
     )

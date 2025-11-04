@@ -119,11 +119,24 @@ From CURRENT_USE_CASE.md:
 
 ---
 
-## Next Tasks (Remaining)
+### ✅ Task 6: Add changeTaskStatus effect to TasksEffects
+**Completed**: 2025-11-04
+**Commit**: (pending)
+**File**: `apps/frontend/src/app/tasks/store/tasks.effects.ts`
+**Description**:
+- Imported changeTaskStatus, changeTaskStatusSuccess, changeTaskStatusFailure actions
+- Created changeTaskStatus$ effect
+- Listens for changeTaskStatus action
+- Calls TasksService.changeTaskStatus() method with id and status
+- Maps successful response to changeTaskStatusSuccess action
+- Catches errors and dispatches changeTaskStatusFailure action
+- Follows NGRX effects pattern with switchMap operator
+- Uses handleError helper for consistent error handling
+- Build verified successfully
 
-### Task 6: Add changeTaskStatus effect to TasksEffects
-**Status**: Pending
-**Description**: Create effect to handle status change side effects.
+---
+
+## Next Tasks (Remaining)
 
 ### Task 7: Add changeTaskStatus reducer handlers
 **Status**: Pending
