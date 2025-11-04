@@ -23,6 +23,13 @@ Implement functionality to quickly identify and highlight action items that have
    - Ensures only actionable tasks (Todo, InProgress) appear when "Show Overdue Only" is checked
    - File: `apps/frontend/src/app/tasks/task-list.component.ts` (lines 644-650)
 
+3. **Add context-aware empty state message for overdue filter** (2025-11-04)
+   - Added NO_OVERDUE_TASKS and NO_OVERDUE_TASKS_DESCRIPTION constants to TASK_UI_TEXT
+   - Updated empty state template to show positive message when overdue filter is active but no tasks match
+   - Shows "All tasks are on track!" and "There are no overdue action items. Keep up the great work!" when no overdue tasks
+   - Generic empty state with "Add Task" button still shown when no overdue filter is active
+   - Files: `apps/frontend/src/app/tasks/task-display.constants.ts`, `apps/frontend/src/app/tasks/task-list.component.ts` (lines 188-201)
+
 ## Implementation Notes
 
 - Check existing overdue filter in TaskListComponent (Use Case 2)
@@ -38,7 +45,7 @@ Implement functionality to quickly identify and highlight action items that have
 - [x] "Days overdue" is calculated and displayed accurately
 - [x] Completed and cancelled tasks are excluded from overdue list
 - [x] User can navigate from overdue task to full task detail (existing "View Details" button)
-- [ ] Empty state message when no tasks are overdue
+- [x] Empty state message when no tasks are overdue (positive confirmation message)
 - [ ] Overdue tasks sorted by urgency (most overdue first)
 
 ## Related Files

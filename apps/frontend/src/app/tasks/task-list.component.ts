@@ -187,11 +187,16 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
           </div>
         } @else {
           <div class="empty-state">
-            <h3>{{ TASK_UI_TEXT.NO_TASKS_FOUND }}</h3>
-            <p>{{ TASK_UI_TEXT.ADD_FIRST_TASK }}</p>
-            <button type="button" class="add-first-task-button" (click)="onAddTask()">
-              {{ TASK_UI_TEXT.ADD_NEW_TASK }}
-            </button>
+            @if (showOverdueOnly()) {
+              <h3>{{ TASK_UI_TEXT.NO_OVERDUE_TASKS }}</h3>
+              <p>{{ TASK_UI_TEXT.NO_OVERDUE_TASKS_DESCRIPTION }}</p>
+            } @else {
+              <h3>{{ TASK_UI_TEXT.NO_TASKS_FOUND }}</h3>
+              <p>{{ TASK_UI_TEXT.ADD_FIRST_TASK }}</p>
+              <button type="button" class="add-first-task-button" (click)="onAddTask()">
+                {{ TASK_UI_TEXT.ADD_NEW_TASK }}
+              </button>
+            }
           </div>
         }
       }

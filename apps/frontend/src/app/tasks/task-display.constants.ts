@@ -37,6 +37,8 @@ export const TASK_UI_TEXT = {
   ADD_FIRST_TASK: 'Add your first task to get started',
   NO_SEARCH_RESULTS: 'Try a different search term.',
   NO_FILTER_RESULTS: 'Try a different filter.',
+  NO_OVERDUE_TASKS: 'All tasks are on track!',
+  NO_OVERDUE_TASKS_DESCRIPTION: 'There are no overdue action items. Keep up the great work!',
 
   // Search and filter
   SEARCH_PLACEHOLDER: 'Search by task title...',
