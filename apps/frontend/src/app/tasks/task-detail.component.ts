@@ -5,11 +5,12 @@ import { Store } from '@ngrx/store';
 import { selectTaskById, selectTasksLoading, selectTasksError } from './store/tasks.selectors';
 import * as TasksActions from './store/tasks.actions';
 import { TaskStatusChangeComponent } from './components/task-status-change.component';
+import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { TaskStatus } from '@angular-nest-starter/shared-types';
 
 @Component({
   selector: 'app-task-detail',
-  imports: [CommonModule, RouterModule, TaskStatusChangeComponent],
+  imports: [CommonModule, RouterModule, TaskStatusChangeComponent, ConfirmationDialogComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="task-detail-container">
@@ -135,6 +136,18 @@ import { TaskStatus } from '@angular-nest-starter/shared-types';
                 />
               </div>
             </div>
+          }
+
+          <!-- Delete Confirmation Dialog -->
+          @if (showDeleteConfirmation()) {
+            <app-confirmation-dialog
+              [title]="'Delete Task'"
+              [message]="'Are you sure you want to delete this task? This action cannot be undone.'"
+              [confirmText]="'Delete'"
+              [cancelText]="'Cancel'"
+              (confirmed)="onDeleteConfirmed()"
+              (cancelled)="onDeleteCancelled()"
+            />
           }
         } @else {
           <div class="error-state">
@@ -480,6 +493,9 @@ export class TaskDetailComponent implements OnInit {
   // Status change UI visibility
   showStatusChange = signal(false);
 
+  // Delete confirmation UI visibility
+  showDeleteConfirmation = signal(false);
+
   // Computed values for deadline and overdue status
   isOverdue = computed(() => {
     const taskData = this.task();
@@ -579,7 +595,20 @@ export class TaskDetailComponent implements OnInit {
   }
 
   onDelete(): void {
-    // TODO: Implement delete (Use Case 6)
-    console.log('Delete task:', this.taskId());
+    this.showDeleteConfirmation.set(true);
+  }
+
+  onDeleteConfirmed(): void {
+    const id = this.taskId();
+    if (id) {
+      this.store.dispatch(TasksActions.deleteTask({ id }));
+      this.showDeleteConfirmation.set(false);
+      // Navigate back to the task list after deletion
+      this.router.navigate(['/tasks']);
+    }
+  }
+
+  onDeleteCancelled(): void {
+    this.showDeleteConfirmation.set(false);
   }
 }
