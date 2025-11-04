@@ -94,7 +94,7 @@ From CURRENT_USE_CASE.md:
 
 ### ✅ Task 4: Add changeTaskStatus actions to NGRX store
 **Completed**: 2025-11-04
-**Commit**: [pending]
+**Commit**: 58e0fc9
 **File**: `apps/frontend/src/app/tasks/store/tasks.actions.ts`
 **Description**:
 - Imported TaskStatus type from @angular-nest-starter/shared-types
