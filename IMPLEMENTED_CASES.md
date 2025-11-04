@@ -1233,3 +1233,37 @@
 - Success guarantee met: User sees all action items across all work for the client
 - Documentation: view-client-tasks.md
 - **Note**: Core functionality complete. Optional "Add Task" button could be added as future enhancement similar to Add Contact/Project buttons.
+
+## Use Case 9: Identify Overdue Action Items (UC-TASK-001-09) (2025-11-04) ✅ COMPLETE
+- Frontend: "Show Overdue Only" checkbox filter in TaskListComponent (Use Case 2)
+- Frontend: isOverdue() method compares due date with today (time-normalized to midnight)
+- Frontend: daysOverdue() method calculates number of days past due date
+- Frontend: Overdue filter excludes tasks with status 'Completed' or 'Cancelled'
+- Frontend: Only actionable tasks (Todo, InProgress) appear when overdue filter is active
+- Frontend: Overdue tasks display "overdue by X day(s)" text with proper singular/plural grammar
+- Frontend: Red text styling for overdue indicators makes them visually prominent
+- Frontend: Context-aware empty state when no overdue tasks exist ("All tasks are on track!")
+- Frontend: Positive confirmation message encourages user when nothing is overdue
+- Frontend: Overdue tasks sorted by days overdue in descending order (most urgent first)
+- Frontend: Sorting applied automatically when overdue filter is active via filteredTasks computed signal
+- All main success scenario steps met:
+  - User requests to see overdue action items (checkbox filter) ✅
+  - System identifies overdue action items where deadline has passed and status is Todo/InProgress ✅
+  - System displays overdue action items with title, priority, status, days overdue, client/project info ✅
+  - User reviews overdue items to prioritize immediate work ✅
+  - User can navigate to any action item for full details (View Details button) ✅
+- All extensions handled:
+  - 2a: No overdue action items - positive confirmation message displayed ✅
+  - 3a1: Visually highlight overdue items in list - red "overdue by X days" text ✅
+  - 3a2: Display overdue alert with each item - days calculation shown ✅
+- Success guarantee met: User can identify and prioritize overdue work requiring immediate attention
+- All acceptance criteria met:
+  - User can view all overdue action items via filter ✅
+  - Overdue status is visually prominent with red text ✅
+  - Days overdue calculated and displayed accurately ✅
+  - Completed and cancelled tasks excluded from overdue list ✅
+  - User can navigate from overdue task to full detail ✅
+  - Empty state message when no tasks overdue ✅
+  - Overdue tasks sorted by urgency (most overdue first) ✅
+- Documentation: identify-overdue-action-items.md
+- **Note**: Complete implementation using existing task list infrastructure with filtering, sorting, and context-aware empty states.
