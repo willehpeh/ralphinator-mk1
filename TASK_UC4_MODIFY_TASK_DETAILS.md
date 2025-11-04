@@ -51,4 +51,4 @@ Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 Create PATCH /api/tasks/:id endpoint in TasksController
 
 ## Use Case Status
-🔄 In Progress - Domain, command, and handler layers complete; need projection, API endpoint, and frontend
+🔄 In Progress - Domain, application, and projection layers complete; need API endpoint and frontend
