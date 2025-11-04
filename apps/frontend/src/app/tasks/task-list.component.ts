@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import * as TasksActions from './store/tasks.actions';
 import { selectAllTasks, selectTasksLoading, selectTasksError, selectHasTasks } from './store/tasks.selectors';
+import { selectAllClients } from '../clients/store/clients.selectors';
+import * as ClientsActions from '../clients/store/clients.actions';
 import { TASK_UI_TEXT } from './task-display.constants';
 import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
 
@@ -48,6 +50,20 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
             <option value="InProgress">In Progress</option>
             <option value="Completed">Completed</option>
             <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="client-filter" class="filter-label">Filter by Client:</label>
+          <select
+            id="client-filter"
+            class="filter-select"
+            [value]="selectedClientId()"
+            (change)="onClientFilterChange($event)">
+            <option value="">All Clients</option>
+            @for (client of clients(); track client.id) {
+              <option [value]="client.id">{{ client.companyName }}</option>
+            }
           </select>
         </div>
       </div>
@@ -480,16 +496,19 @@ export class TaskListComponent implements OnInit {
   loading = this.store.selectSignal(selectTasksLoading);
   error = this.store.selectSignal(selectTasksError);
   hasTasks = this.store.selectSignal(selectHasTasks);
+  clients = this.store.selectSignal(selectAllClients);
 
   // Filter state using signals
   selectedPriority = signal<string>('');
   selectedStatus = signal<string>('');
+  selectedClientId = signal<string>('');
 
   // Computed filtered tasks
   filteredTasks = computed(() => {
     const allTasks = this.tasks();
     const priority = this.selectedPriority();
     const status = this.selectedStatus();
+    const clientId = this.selectedClientId();
 
     let filtered = allTasks;
 
@@ -501,12 +520,18 @@ export class TaskListComponent implements OnInit {
       filtered = filtered.filter(task => task.status === status);
     }
 
+    if (clientId) {
+      filtered = filtered.filter(task => task.clientId === clientId);
+    }
+
     return filtered;
   });
 
   ngOnInit(): void {
     // Dispatch action to load all tasks when component initializes
     this.store.dispatch(TasksActions.loadTasks());
+    // Dispatch action to load all clients for the filter dropdown
+    this.store.dispatch(ClientsActions.loadClients());
   }
 
   onPriorityFilterChange(event: Event): void {
@@ -517,6 +542,11 @@ export class TaskListComponent implements OnInit {
   onStatusFilterChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedStatus.set(selectElement.value);
+  }
+
+  onClientFilterChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedClientId.set(selectElement.value);
   }
 
   onAddTask(): void {

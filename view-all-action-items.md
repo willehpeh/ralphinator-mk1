@@ -81,8 +81,20 @@ Allow users to see all action items with their priority, status, deadline, and c
    - Both filters work together to narrow down task list
    - Location: `apps/frontend/src/app/tasks/task-list.component.ts:39-52,181-189,485-505,517-520`
 
+9. ✅ Add client filter dropdown to TaskListComponent
+   - Imported `selectAllClients` selector and `ClientsActions` from clients store
+   - Added `clients` selector using `selectSignal(selectAllClients)` to get all clients from store
+   - Added `selectedClientId` signal for client filter state management
+   - Added client filter dropdown after status filter in filter controls section
+   - Dropdown uses `@for` to dynamically render all clients with `client.companyName` as display text
+   - Dropdown includes "All Clients" option to reset filter
+   - Updated `filteredTasks` computed to filter by priority, status, AND clientId
+   - Added `onClientFilterChange()` method to handle client selection changes
+   - Added `loadClients()` dispatch in `ngOnInit()` to ensure clients are available for dropdown
+   - All three filters (priority, status, client) work together to narrow down task list
+   - Location: `apps/frontend/src/app/tasks/task-list.component.ts:6-7,56-68,499,504,523-525,530-534,547-550`
+
 ### Pending Tasks
-9. ⏳ Add client filter dropdown
 10. ⏳ Add project filter dropdown
 11. ⏳ Add overdue filter checkbox
 12. ⏳ Add search functionality
@@ -91,4 +103,4 @@ Allow users to see all action items with their priority, status, deadline, and c
 ---
 
 **Last Updated:** 2025-11-04
-**Status:** In Progress - Priority and status filters completed, client/project filters and search pending
+**Status:** In Progress - Priority, status, and client filters completed; project filter, overdue filter, and search pending
