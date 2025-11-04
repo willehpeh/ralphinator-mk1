@@ -33,7 +33,7 @@
 - Executes `GetTasksByClientIdQuery` via QueryBus
 - Returns array of `TaskReadModel` objects
 
-### Frontend Implementation (In Progress) 🔨
+### Frontend Implementation ✅
 
 #### Task 5: Add getTasksByClientId() Method to TasksService
 **Commit:** 91ef80b
@@ -41,24 +41,21 @@
 - HTTP GET to `/api/clients/${clientId}/tasks`
 - Returns Observable<Task[]>
 
----
-
-## Next Tasks
-
-### Task 6: Display Client Tasks in ClientDetailComponent
-Add a new section to the ClientDetailComponent template to display action items for the client:
-- Use similar pattern to contacts/projects sections
-- Load tasks using toSignal with combineLatest pattern
+#### Task 6: Display Client Tasks in ClientDetailComponent
+**Commit:** [pending]
+- Added TasksService and Router injections to component
+- Created tasksReloadTrigger signal for reactive updates
+- Implemented tasks signal using toSignal with combineLatest pattern
+- Added "Action Items" section in template after Projects section
 - Display task cards with title, priority, status, and due date
-- Show visual indicators for priority and overdue status
-- Allow navigation to task details
-
-**Implementation Notes:**
-- Follow existing pattern from contacts and projects sections
-- Use reload trigger signal for refreshing task list
-- Reuse task card styling from TaskListComponent
-- Include empty state message if no tasks exist
-- Add link to create new task for this client
+- Added visual indicators for priority (color-coded badges)
+- Added status badges with appropriate styling
+- Highlighted overdue tasks with red text and OVERDUE badge
+- Included navigation to task details via "View Details" button
+- Added empty state message when no tasks exist
+- Implemented helper methods: formatTaskStatus(), isTaskOverdue(), formatTaskDate(), viewTaskDetails()
+- Added comprehensive SCSS styling matching project cards pattern
+- Tasks section follows same visual design as contacts and projects sections
 
 ---
 
@@ -68,12 +65,12 @@ Add a new section to the ClientDetailComponent template to display action items 
 - [x] Backend repository method implemented
 - [x] Backend API endpoint created
 - [x] Frontend service method created
-- [ ] Frontend UI displays client tasks
-- [ ] Tasks show priority indicators
-- [ ] Tasks show status badges
-- [ ] Overdue tasks visually highlighted
-- [ ] Navigation to task details works
-- [ ] Empty state handled gracefully
+- [x] Frontend UI displays client tasks
+- [x] Tasks show priority indicators
+- [x] Tasks show status badges
+- [x] Overdue tasks visually highlighted
+- [x] Navigation to task details works
+- [x] Empty state handled gracefully
 - [ ] Manual testing completed
 
 ---

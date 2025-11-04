@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit, computed, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { of, combineLatest } from 'rxjs';
@@ -21,6 +21,8 @@ import { Contact } from './client.types';
 import { ProjectFormComponent } from '../projects/project-form.component';
 import { ProjectsService } from '../projects/projects.service';
 import { ProjectDto } from '@angular-nest-starter/shared-types';
+import { TasksService } from '../tasks/tasks.service';
+import { Task } from '../tasks/task.types';
 
 @Component({
   selector: 'app-client-detail',
@@ -191,6 +193,69 @@ import { ProjectDto } from '@angular-nest-starter/shared-types';
             </div>
 
             <div class="detail-section">
+              <div class="section-header">
+                <h4>Action Items</h4>
+              </div>
+
+              @if (tasks().length > 0) {
+                <div class="tasks-list">
+                  @for (task of tasks(); track task.id) {
+                    <div class="task-card">
+                      <div class="task-header">
+                        <h5 class="task-title">{{ task.title }}</h5>
+                        <div class="task-badges">
+                          <span
+                            class="priority-badge"
+                            [class.priority-urgent]="task.priority === 'Urgent'"
+                            [class.priority-high]="task.priority === 'High'"
+                            [class.priority-medium]="task.priority === 'Medium'"
+                            [class.priority-low]="task.priority === 'Low'">
+                            {{ task.priority }}
+                          </span>
+                          <span
+                            class="status-badge"
+                            [class.status-todo]="task.status === 'Todo'"
+                            [class.status-in-progress]="task.status === 'InProgress'"
+                            [class.status-completed]="task.status === 'Completed'"
+                            [class.status-cancelled]="task.status === 'Cancelled'">
+                            {{ formatTaskStatus(task.status) }}
+                          </span>
+                        </div>
+                      </div>
+                      @if (task.notes) {
+                        <p class="task-notes">{{ task.notes }}</p>
+                      }
+                      <div class="task-metadata">
+                        @if (task.dueDate) {
+                          <div class="task-meta-item" [class.overdue]="isTaskOverdue(task.dueDate)">
+                            <span class="meta-label">Due Date:</span>
+                            <span class="meta-value">{{ formatTaskDate(task.dueDate) }}</span>
+                            @if (isTaskOverdue(task.dueDate)) {
+                              <span class="overdue-badge">OVERDUE</span>
+                            }
+                          </div>
+                        }
+                        @if (task.projectId) {
+                          <div class="task-meta-item">
+                            <span class="meta-label">Project:</span>
+                            <span class="meta-value">{{ task.projectId }}</span>
+                          </div>
+                        }
+                      </div>
+                      <div class="task-actions">
+                        <button class="view-task-button" (click)="viewTaskDetails(task.id)">
+                          View Details
+                        </button>
+                      </div>
+                    </div>
+                  }
+                </div>
+              } @else {
+                <p class="empty-state">No action items for this client. Tasks will appear here as they are created.</p>
+              }
+            </div>
+
+            <div class="detail-section">
               <h4>Metadata</h4>
               <div class="detail-grid">
                 <div class="detail-item">
@@ -223,9 +288,11 @@ import { ProjectDto } from '@angular-nest-starter/shared-types';
 export class ClientDetailComponent {
   private store = inject(Store);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private navigation = inject(ClientNavigationService);
   private clientsService = inject(ClientsService);
   private projectsService = inject(ProjectsService);
+  private tasksService = inject(TasksService);
 
   constructor() {
     // Load clients on component initialization
@@ -260,6 +327,9 @@ export class ClientDetailComponent {
 
   // Signal to trigger reloading of projects
   private projectsReloadTrigger = signal(0);
+
+  // Signal to trigger reloading of tasks
+  private tasksReloadTrigger = signal(0);
 
   // Contacts loaded from service using toSignal
   // Combines clientId and reload trigger to reactively fetch contacts
@@ -297,6 +367,28 @@ export class ClientDetailComponent {
         return this.projectsService.getProjectsByClientId(id).pipe(
           catchError(error => {
             console.error('Failed to load projects:', error);
+            return of([]);
+          })
+        );
+      })
+    ),
+    { initialValue: [] }
+  );
+
+  // Tasks loaded from service using toSignal
+  // Combines clientId and reload trigger to reactively fetch tasks
+  tasks = toSignal(
+    combineLatest([
+      toObservable(this.clientId),
+      toObservable(this.tasksReloadTrigger)
+    ]).pipe(
+      switchMap(([id]) => {
+        if (!id) {
+          return of([]);
+        }
+        return this.tasksService.getTasksByClientId(id).pipe(
+          catchError(error => {
+            console.error('Failed to load tasks:', error);
             return of([]);
           })
         );
@@ -391,5 +483,30 @@ export class ClientDetailComponent {
   cancelDelete(): void {
     // Hide confirmation dialog
     this.showDeleteConfirmation.set(false);
+  }
+
+  // Task helper methods
+  formatTaskStatus(status: string): string {
+    // Convert 'InProgress' to 'In Progress', etc.
+    return status.replace(/([A-Z])/g, ' $1').trim();
+  }
+
+  isTaskOverdue(dueDate: Date | null): boolean {
+    if (!dueDate) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const due = new Date(dueDate);
+    due.setHours(0, 0, 0, 0);
+    return due < today;
+  }
+
+  formatTaskDate(date: Date | null): string {
+    if (!date) return '';
+    const d = new Date(date);
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  viewTaskDetails(taskId: string): void {
+    this.router.navigate(['/tasks', taskId]);
   }
 }

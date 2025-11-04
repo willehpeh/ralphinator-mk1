@@ -231,3 +231,158 @@ h4 {
   margin: 0;
   padding: $spacing-lg 0;
 }
+
+// Tasks section styles
+.tasks-list {
+  display: grid;
+  gap: $spacing-lg;
+}
+
+.task-card {
+  border: 1px solid $color-border;
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  background-color: $color-white;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-md;
+  gap: $spacing-md;
+}
+
+.task-title {
+  margin: 0;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  flex: 1;
+}
+
+.task-badges {
+  display: flex;
+  gap: $spacing-xs;
+  flex-shrink: 0;
+}
+
+.priority-badge,
+.status-badge {
+  padding: $spacing-xs $spacing-md;
+  border-radius: 12px;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.priority-badge {
+  color: $color-white;
+}
+
+.priority-urgent {
+  background-color: #e74c3c;
+}
+
+.priority-high {
+  background-color: #e67e22;
+}
+
+.priority-medium {
+  background-color: #f39c12;
+}
+
+.priority-low {
+  background-color: #95a5a6;
+}
+
+.status-badge {
+  color: $color-white;
+}
+
+.status-todo {
+  background-color: #95a5a6;
+}
+
+.status-in-progress {
+  background-color: #3498db;
+}
+
+.status-completed {
+  background-color: #27ae60;
+}
+
+.status-cancelled {
+  background-color: #7f8c8d;
+}
+
+.task-notes {
+  color: $color-text-secondary;
+  margin: 0 0 $spacing-md 0;
+  line-height: 1.5;
+  font-size: $font-size-sm;
+}
+
+.task-metadata {
+  display: flex;
+  gap: $spacing-lg;
+  flex-wrap: wrap;
+  padding-top: $spacing-md;
+  border-top: 1px solid $color-border-light;
+  margin-bottom: $spacing-md;
+}
+
+.task-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  &.overdue {
+    .meta-label,
+    .meta-value {
+      color: #e74c3c;
+    }
+  }
+}
+
+.meta-label {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  color: $color-text-tertiary;
+  letter-spacing: 0.5px;
+}
+
+.meta-value {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+}
+
+.overdue-badge {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: #e74c3c;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: $spacing-xs;
+}
+
+.task-actions {
+  display: flex;
+  gap: $spacing-sm;
+  padding-top: $spacing-md;
+  border-top: 1px solid $color-border-light;
+}
+
+.view-task-button {
+  @include btn-secondary;
+  @include btn-small;
+}
