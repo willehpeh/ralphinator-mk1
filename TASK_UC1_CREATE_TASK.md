@@ -163,7 +163,7 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 **Description**: Created AddTaskPageComponent following the established pattern from AddClientPageComponent. This container component connects TaskFormComponent to NGRX store, dispatches createTask action on form submission, handles loading/error/success states using signals, uses viewChild() to access TaskFormComponent methods (setSubmitting, showError, showSuccess, resetForm), and navigates to /tasks on success or cancel. Uses modern Angular patterns (standalone, signals, OnPush change detection, inject(), effect()) with responsive design and professional styling. Implements effects to react to loading state changes, error state changes, and success state (not loading, no error, form not pristine).
 
 ### Task 23: Register AddTaskPageComponent route in app.routes.ts
-**Commit**: [To be filled after commit]
+**Commit**: 21fc0c4 - feat(frontend): Register /tasks/add route in app.routes.ts
 **Files**:
 - apps/frontend/src/app/app.routes.ts
 **Description**: Registered the `/tasks/add` route in app.routes.ts to make the AddTaskPageComponent accessible. Imported AddTaskPageComponent and added route configuration following the established pattern from client routes. The route allows users to navigate to the task creation page at `/tasks/add`.
