@@ -35,6 +35,21 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
             <option value="Low">Low</option>
           </select>
         </div>
+
+        <div class="filter-group">
+          <label for="status-filter" class="filter-label">Filter by Status:</label>
+          <select
+            id="status-filter"
+            class="filter-select"
+            [value]="selectedStatus()"
+            (change)="onStatusFilterChange($event)">
+            <option value="">All Statuses</option>
+            <option value="Todo">To Do</option>
+            <option value="InProgress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
       </div>
 
       @if (loading()) {
@@ -169,6 +184,9 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
     }
 
     .filter-group {
@@ -465,17 +483,25 @@ export class TaskListComponent implements OnInit {
 
   // Filter state using signals
   selectedPriority = signal<string>('');
+  selectedStatus = signal<string>('');
 
   // Computed filtered tasks
   filteredTasks = computed(() => {
     const allTasks = this.tasks();
     const priority = this.selectedPriority();
+    const status = this.selectedStatus();
 
-    if (!priority) {
-      return allTasks;
+    let filtered = allTasks;
+
+    if (priority) {
+      filtered = filtered.filter(task => task.priority === priority);
     }
 
-    return allTasks.filter(task => task.priority === priority);
+    if (status) {
+      filtered = filtered.filter(task => task.status === status);
+    }
+
+    return filtered;
   });
 
   ngOnInit(): void {
@@ -486,6 +512,11 @@ export class TaskListComponent implements OnInit {
   onPriorityFilterChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedPriority.set(selectElement.value);
+  }
+
+  onStatusFilterChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedStatus.set(selectElement.value);
   }
 
   onAddTask(): void {

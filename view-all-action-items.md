@@ -70,8 +70,18 @@ Allow users to see all action items with their priority, status, deadline, and c
    - Automatically updates filtered view when selection changes
    - Location: `apps/frontend/src/app/tasks/task-list.component.ts:24-39,167-208,467-490`
 
+8. ✅ Add status filter dropdown to TaskListComponent
+   - Added status filter dropdown next to priority filter in filter controls section
+   - Added `selectedStatus` signal for status filter state management
+   - Updated `filteredTasks` computed to filter by both priority and status
+   - Filters are combined using sequential filtering logic
+   - Added `onStatusFilterChange()` method to handle status selection changes
+   - Dropdown includes "All Statuses" option plus all TaskStatus enum values (Todo, InProgress, Completed, Cancelled)
+   - Updated filter controls styling to use flexbox layout with flex-wrap for responsive design
+   - Both filters work together to narrow down task list
+   - Location: `apps/frontend/src/app/tasks/task-list.component.ts:39-52,181-189,485-505,517-520`
+
 ### Pending Tasks
-8. ⏳ Add status filter dropdown
 9. ⏳ Add client filter dropdown
 10. ⏳ Add project filter dropdown
 11. ⏳ Add overdue filter checkbox
@@ -81,4 +91,4 @@ Allow users to see all action items with their priority, status, deadline, and c
 ---
 
 **Last Updated:** 2025-11-04
-**Status:** In Progress - Priority filter completed, additional filters and search pending
+**Status:** In Progress - Priority and status filters completed, client/project filters and search pending
