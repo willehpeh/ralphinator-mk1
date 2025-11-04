@@ -1,0 +1,131 @@
+# Task Tracking: UC5 - Update Action Item Progress (Change Task Status)
+
+**Status**: In Progress
+**Started**: 2025-11-04
+
+---
+
+## Overview
+
+Implementation tracking for Use Case 5: Update Action Item Progress
+This use case allows users to change the status of a task (To Do, In Progress, Completed, or Cancelled).
+
+---
+
+## Use Case Mapping
+
+From CURRENT_USE_CASE.md:
+- **Domain Layer**: `TaskAggregate.changeStatus()` method ✅ (Already exists)
+- **Domain Layer**: `TaskStatusChangedDomainEvent` ✅ (Already exists)
+- **Application Layer**: `ChangeTaskStatusCommand` ✅ (Already exists)
+- **Application Layer**: `ChangeTaskStatusHandler` ✅ (Already exists)
+- **API Endpoint**: `PATCH /api/tasks/:id/status` ❌ (Not yet created)
+- **Frontend**: Status change UI component ❌ (Not yet created)
+- **Frontend**: NGRX actions/effects/reducer ❌ (Not yet created)
+
+---
+
+## Completed Tasks
+
+### ✅ Pre-existing: TaskAggregate.changeStatus() method
+**File**: `packages/domain/src/lib/aggregates/task.aggregate.ts`
+**Description**: Domain logic for changing task status. Automatically records completedAt timestamp when status becomes 'Completed'.
+
+### ✅ Pre-existing: TaskStatusChangedDomainEvent
+**File**: `packages/domain/src/lib/events/task-status-changed.domain-event.ts`
+**Description**: Domain event representing a task status change with newStatus and completedAt fields.
+
+### ✅ Pre-existing: ChangeTaskStatusCommand
+**File**: `packages/application/src/lib/commands/change-task-status.command.ts`
+**Description**: CQRS command with taskId and newStatus parameters.
+
+### ✅ Pre-existing: ChangeTaskStatusHandler
+**File**: `packages/application/src/lib/commands/handlers/change-task-status.handler.ts`
+**Description**: Command handler that loads aggregate, changes status, and persists events.
+
+---
+
+---
+
+## Completed Tasks
+
+### ✅ Task 1: Add TaskStatusChangedDomainEvent handler to TaskProjection
+**Completed**: 2025-11-04
+**Commit**: (pending)
+**File**: `packages/infrastructure/src/lib/projections/task.projection.ts`
+**Description**:
+- Added TaskStatusChangedDomainEvent to imports
+- Registered event in @EventsHandler decorator
+- Added TASK_EVENT_TYPES.STATUS_CHANGED to event handler registry
+- Implemented onTaskStatusChanged() handler that updates only the status field in the read model
+- Handler preserves all other fields (title, priority, notes, deadline, clientId, projectId, createdAt)
+- Follows same pattern as ClientProjection status change handler
+
+---
+
+## Next Tasks (Remaining)
+
+### Task 2: Register ChangeTaskStatusHandler in TasksModule
+**Status**: Pending
+**Description**: Add ChangeTaskStatusHandler to the CommandHandlers array in tasks.module.ts.
+
+### Task 3: Add PATCH /api/tasks/:id/status endpoint
+**Status**: Pending
+**Description**: Create API endpoint in TasksController to accept status change requests.
+
+### Task 4: Add changeTaskStatus actions to NGRX store
+**Status**: Pending
+**Description**: Create changeTaskStatus, changeTaskStatusSuccess, and changeTaskStatusFailure actions.
+
+### Task 5: Add changeTaskStatus method to TasksService
+**Status**: Pending
+**Description**: Add HTTP method to call the PATCH /tasks/:id/status endpoint.
+
+### Task 6: Add changeTaskStatus effect to TasksEffects
+**Status**: Pending
+**Description**: Create effect to handle status change side effects.
+
+### Task 7: Add changeTaskStatus reducer handlers
+**Status**: Pending
+**Description**: Add reducer logic to handle status change actions.
+
+### Task 8: Create status change UI component
+**Status**: Pending
+**Description**: Create component with status dropdown (To Do, In Progress, Completed, Cancelled) and submit/cancel buttons.
+
+### Task 9: Integrate status change UI into task detail view
+**Status**: Pending
+**Description**: Add "Change Status" button and wire up the status change component.
+
+### Task 10: (Optional) Add success notification
+**Status**: Optional
+**Description**: Display toast/snackbar notification on successful status change.
+
+---
+
+## Implementation Notes
+
+### Business Rules
+- Status transitions should be logical (Todo → In Progress → Completed)
+- When status changes to Completed, system automatically records completion date
+- Cancelled tasks retain their due date but are no longer considered for overdue checks
+- Quick complete action immediately sets status to Completed without showing status dialog
+
+### Frontend Requirements
+- Status badge with color coding (matching existing design system)
+- Quick complete button for one-click Todo/InProgress → Completed transition
+- Status change dialog for full status selection
+- Professional, modern UI consistent with existing components
+
+---
+
+## Use Case Status
+
+**Status**: In Progress
+
+Core backend functionality exists:
+- ✅ Domain layer complete
+- ✅ Application layer complete
+- ⏳ Infrastructure layer: Projection needs update
+- ❌ API layer: Endpoint not created
+- ❌ Frontend: Not started

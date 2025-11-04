@@ -3,6 +3,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import {
   TaskCreatedDomainEvent,
   TaskDetailsUpdatedDomainEvent,
+  TaskStatusChangedDomainEvent,
   TASK_EVENT_TYPES
 } from '@angular-nest-starter/domain';
 import {
@@ -19,14 +20,14 @@ import { BaseProjectionHandler } from '../base/base-projection.handler';
  * and builds optimized read models for the CQRS query side.
  *
  * This projection:
- * - Subscribes to TaskCreatedDomainEvent and TaskDetailsUpdatedDomainEvent from the event store
+ * - Subscribes to TaskCreatedDomainEvent, TaskDetailsUpdatedDomainEvent, and TaskStatusChangedDomainEvent from the event store
  * - Transforms domain events into TaskReadModel DTOs
  * - Persists read models to the read repository (optimized for queries)
  * - Enables separation of write (event store) and read (read model) data stores
  * - Uses the event handler registry pattern for extensible event handling
  */
 @Injectable()
-@EventsHandler(TaskCreatedDomainEvent, TaskDetailsUpdatedDomainEvent)
+@EventsHandler(TaskCreatedDomainEvent, TaskDetailsUpdatedDomainEvent, TaskStatusChangedDomainEvent)
 export class TaskProjection extends BaseProjectionHandler {
   constructor(
     @Inject(INJECTION_TOKENS.TASK_READ_REPOSITORY)
@@ -37,6 +38,7 @@ export class TaskProjection extends BaseProjectionHandler {
     this.registerEventHandlers({
       [TASK_EVENT_TYPES.CREATED]: this.onTaskCreated.bind(this),
       [TASK_EVENT_TYPES.DETAILS_UPDATED]: this.onTaskDetailsUpdated.bind(this),
+      [TASK_EVENT_TYPES.STATUS_CHANGED]: this.onTaskStatusChanged.bind(this),
     });
   }
 
@@ -97,6 +99,36 @@ export class TaskProjection extends BaseProjectionHandler {
           event.taskData,
           existing?.createdAt ?? event.occurredOn // Preserve original createdAt
         )
+    );
+  }
+
+  /**
+   * Event handler for TaskStatusChangedDomainEvent
+   * Updates only the status field in the read model when task status changes
+   */
+  private async onTaskStatusChanged(event: TaskStatusChangedDomainEvent): Promise<void> {
+    return this.updateReadModel(
+      event.aggregateId,
+      this.taskReadRepository,
+      (existing) => {
+        if (!existing) {
+          throw new Error(
+            `Cannot update status: Task with ID ${event.aggregateId} not found in read model`
+          );
+        }
+        // Create new read model with updated status, preserving all other fields
+        return new TaskReadModel(
+          existing.id,
+          existing.title,
+          event.newStatus, // Update status
+          existing.priority,
+          existing.notes,
+          existing.deadline,
+          existing.clientId,
+          existing.projectId,
+          existing.createdAt
+        );
+      }
     );
   }
 }
