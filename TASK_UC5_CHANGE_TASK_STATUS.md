@@ -51,7 +51,7 @@ From CURRENT_USE_CASE.md:
 
 ### ✅ Task 1: Add TaskStatusChangedDomainEvent handler to TaskProjection
 **Completed**: 2025-11-04
-**Commit**: (pending)
+**Commit**: 7565ef1
 **File**: `packages/infrastructure/src/lib/projections/task.projection.ts`
 **Description**:
 - Added TaskStatusChangedDomainEvent to imports
