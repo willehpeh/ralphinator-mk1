@@ -1,3 +1,5 @@
+@use '../shared/badge-styles.scss';
+
 .task-detail-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -97,48 +99,6 @@
   font-size: 0.875rem;
   font-weight: 600;
   text-transform: capitalize;
-}
-
-/* Status Badge Colors */
-.status-badge.status-todo {
-  background-color: #3498db;
-  color: white;
-}
-
-.status-badge.status-inprogress {
-  background-color: #f39c12;
-  color: white;
-}
-
-.status-badge.status-completed {
-  background-color: #27ae60;
-  color: white;
-}
-
-.status-badge.status-cancelled {
-  background-color: #95a5a6;
-  color: white;
-}
-
-/* Priority Badge Colors */
-.priority-badge.priority-low {
-  background-color: #95a5a6;
-  color: white;
-}
-
-.priority-badge.priority-medium {
-  background-color: #3498db;
-  color: white;
-}
-
-.priority-badge.priority-high {
-  background-color: #e67e22;
-  color: white;
-}
-
-.priority-badge.priority-urgent {
-  background-color: #e74c3c;
-  color: white;
 }
 
 .detail-section {

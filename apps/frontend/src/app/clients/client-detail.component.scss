@@ -1,5 +1,6 @@
 @use './clients-variables.scss' as *;
 @use './clients-mixins.scss' as *;
+@use '../shared/badge-styles.scss';
 
 .client-detail {
   @include page-container;
@@ -270,57 +271,6 @@ h4 {
   display: flex;
   gap: $spacing-xs;
   flex-shrink: 0;
-}
-
-.priority-badge,
-.status-badge {
-  padding: $spacing-xs $spacing-md;
-  border-radius: 12px;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-}
-
-.priority-badge {
-  color: $color-white;
-}
-
-.priority-urgent {
-  background-color: #e74c3c;
-}
-
-.priority-high {
-  background-color: #e67e22;
-}
-
-.priority-medium {
-  background-color: #f39c12;
-}
-
-.priority-low {
-  background-color: #95a5a6;
-}
-
-.status-badge {
-  color: $color-white;
-}
-
-.status-todo {
-  background-color: #95a5a6;
-}
-
-.status-in-progress {
-  background-color: #3498db;
-}
-
-.status-completed {
-  background-color: #27ae60;
-}
-
-.status-cancelled {
-  background-color: #7f8c8d;
 }
 
 .task-notes {

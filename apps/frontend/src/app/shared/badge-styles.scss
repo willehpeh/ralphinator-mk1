@@ -1,0 +1,59 @@
+/* Shared Badge Styles
+ * Extracted from duplicated styles across multiple components
+ * to maintain consistency and follow DRY principles
+ */
+
+/* Base Badge Styles */
+.priority-badge,
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.priority-badge {
+  color: white;
+}
+
+.status-badge {
+  color: white;
+}
+
+/* Priority Badge Colors */
+.priority-urgent {
+  background-color: #e74c3c;
+}
+
+.priority-high {
+  background-color: #e67e22;
+}
+
+.priority-medium {
+  background-color: #f39c12;
+}
+
+.priority-low {
+  background-color: #95a5a6;
+}
+
+/* Task Status Badge Colors */
+.status-todo {
+  background-color: #95a5a6;
+}
+
+.status-in-progress,
+.status-inprogress {
+  background-color: #3498db;
+}
+
+.status-completed {
+  background-color: #27ae60;
+}
+
+.status-cancelled {
+  background-color: #7f8c8d;
+}
