@@ -34,8 +34,15 @@ Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 - packages/application/src/lib/application.ts (exports)
 **Description**: Created UpdateTaskDetailsCommand following the established pattern from UpdateProjectDetailsCommand. This command accepts a task ID and TaskDataPayload to enable updating task details via CQRS.
 
+### Task 4: UpdateTaskDetailsHandler
+**Commit**: (current - to be committed)
+**Files**:
+- packages/application/src/lib/commands/handlers/update-task-details.handler.ts
+- packages/application/src/lib/application.ts (exports)
+**Description**: Created UpdateTaskDetailsHandler that extends BaseCommandHandler to load TaskAggregate, execute updateDetails() domain method, and persist events to event store. Follows the established pattern from UpdateProjectDetailsHandler. Handler uses TaskData.fromPayload() to convert command payload to value object.
+
 ## Next Task
-Create UpdateTaskDetailsHandler to load aggregate, execute updateDetails(), and persist events
+Create TaskProjection handler for TaskDetailsUpdatedDomainEvent to update read model
 
 ## Use Case Status
-🔄 In Progress - Domain and command layers complete; need handler, projection, API endpoint, and frontend
+🔄 In Progress - Domain, command, and handler layers complete; need projection, API endpoint, and frontend

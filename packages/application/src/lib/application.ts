@@ -29,6 +29,7 @@ export * from './commands/handlers/update-project-details.handler';
 export * from './commands/handlers/change-project-status.handler';
 export * from './commands/handlers/delete-project.handler';
 export * from './commands/handlers/create-task.handler';
+export * from './commands/handlers/update-task-details.handler';
 
 // Queries
 export * from './queries/get-client-by-id.query';
