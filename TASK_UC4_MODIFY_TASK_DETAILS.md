@@ -54,13 +54,19 @@ Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 **Description**: Added PATCH /api/tasks/:id endpoint to TasksController that accepts UpdateTaskDto, creates UpdateTaskDetailsCommand, executes it via CommandBus, and returns the updated TaskReadModel using fetchEntityAfterMutation utility. Updated imports to include Patch decorator, UpdateTaskDetailsCommand, and UpdateTaskDto. Updated createTaskDataPayload() helper method to accept both CreateTaskDto and UpdateTaskDto. Follows the established pattern from ProjectsController.
 
 ### Task 7: Add NGRX actions for updating task
-**Commit**: [pending] - feat(frontend): Add NGRX actions for updating task details
+**Commit**: fb611d5 - feat(frontend): Add NGRX actions for updating task details
 **Files**:
 - apps/frontend/src/app/tasks/store/tasks.actions.ts
 **Description**: Added three NGRX actions for task update flow: updateTask (triggers update with id and UpdateTaskInput), updateTaskSuccess (handles successful update with updated Task), and updateTaskFailure (handles errors with error message). Updated imports to include UpdateTaskInput type. Follows the established pattern from createTask actions.
 
+### Task 8: Add updateTask method to TasksService
+**Commit**: [PENDING]
+**Files**:
+- apps/frontend/src/app/tasks/tasks.service.ts
+**Description**: Added updateTask() method to TasksService that accepts task id and UpdateTaskInput, makes a PATCH request to /api/tasks/:id endpoint, and returns Observable<Task>. Updated imports to include UpdateTaskInput type. Follows the established pattern from createTask method.
+
 ## Next Task
-Add updateTask method to TasksService
+Add updateTask effect to TasksEffects
 
 ## Use Case Status
 🔄 In Progress - Backend complete; Frontend started (NGRX actions added)
