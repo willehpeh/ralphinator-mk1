@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { GetAllProjectsQuery, GetProjectByIdQuery, ProjectReadModel } from '@angular-nest-starter/application';
+import { GetAllProjectsQuery, GetProjectByIdQuery, GetTasksByProjectIdQuery, ProjectReadModel, TaskReadModel } from '@angular-nest-starter/application';
 
 @Controller('projects')
 export class AllProjectsController {
@@ -18,5 +18,12 @@ export class AllProjectsController {
     const query = new GetProjectByIdQuery(id);
     const project = await this.queryBus.execute<GetProjectByIdQuery, ProjectReadModel | null>(query);
     return project;
+  }
+
+  @Get(':id/tasks')
+  async getTasksByProjectId(@Param('id') id: string): Promise<TaskReadModel[]> {
+    const query = new GetTasksByProjectIdQuery(id);
+    const tasks = await this.queryBus.execute<GetTasksByProjectIdQuery, TaskReadModel[]>(query);
+    return tasks;
   }
 }

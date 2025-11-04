@@ -7,12 +7,14 @@ import {
   GetProjectsByClientIdQueryHandler,
   GetAllProjectsQueryHandler,
   GetProjectByIdQueryHandler,
+  GetTasksByProjectIdQueryHandler,
   INJECTION_TOKENS,
 } from '@angular-nest-starter/application';
 import {
   ProjectProjection,
   InMemoryEventStore,
   InMemoryProjectReadRepository,
+  InMemoryTaskReadRepository,
   AggregateRepository,
 } from '@angular-nest-starter/infrastructure';
 import { ProjectsController } from './projects.controller';
@@ -27,6 +29,7 @@ const QueryHandlers = [
   GetProjectsByClientIdQueryHandler,
   GetAllProjectsQueryHandler,
   GetProjectByIdQueryHandler,
+  GetTasksByProjectIdQueryHandler,
 ];
 const EventHandlers = [ProjectProjection];
 
@@ -45,6 +48,10 @@ const EventHandlers = [ProjectProjection];
     {
       provide: INJECTION_TOKENS.PROJECT_READ_REPOSITORY,
       useClass: InMemoryProjectReadRepository,
+    },
+    {
+      provide: INJECTION_TOKENS.TASK_READ_REPOSITORY,
+      useClass: InMemoryTaskReadRepository,
     },
     {
       provide: INJECTION_TOKENS.AGGREGATE_REPOSITORY,

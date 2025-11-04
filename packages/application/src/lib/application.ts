@@ -59,6 +59,7 @@ export * from './queries/handlers/get-projects-by-client-id.handler';
 export * from './queries/handlers/get-all-projects.handler';
 export * from './queries/handlers/get-project-by-id.handler';
 export * from './queries/handlers/get-task-by-id.handler';
+export * from './queries/handlers/get-tasks-by-project-id.handler';
 
 // Integration Events
 export * from './events/client-created.event';
