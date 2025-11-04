@@ -6,10 +6,10 @@ Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 ## Implementation Order
 1. ✅ Domain: TaskDetailsUpdatedDomainEvent (Done - prior commit)
 2. ✅ Domain: TaskAggregate.updateDetails() method (Done - prior commit)
-3. ✅ Application: UpdateTaskDetailsCommand (Done - this iteration)
-4. ⏳ Application: UpdateTaskDetailsHandler (Next)
-5. ⏳ Infrastructure: TaskProjection handler for TaskDetailsUpdatedDomainEvent
-6. ⏳ Backend: PATCH /api/tasks/:id endpoint
+3. ✅ Application: UpdateTaskDetailsCommand (Done - prior commit)
+4. ✅ Application: UpdateTaskDetailsHandler (Done - prior commit)
+5. ✅ Infrastructure: TaskProjection handler for TaskDetailsUpdatedDomainEvent (Done - this iteration)
+6. ⏳ Backend: PATCH /api/tasks/:id endpoint (Next)
 7. ⏳ Frontend: EditTaskPageComponent + NGRX state
 
 ## Completed Tasks
@@ -35,14 +35,20 @@ Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 **Description**: Created UpdateTaskDetailsCommand following the established pattern from UpdateProjectDetailsCommand. This command accepts a task ID and TaskDataPayload to enable updating task details via CQRS.
 
 ### Task 4: UpdateTaskDetailsHandler
-**Commit**: (current - to be committed)
+**Commit**: 0a7502d - feat(application): Add UpdateTaskDetailsHandler for task updates
 **Files**:
 - packages/application/src/lib/commands/handlers/update-task-details.handler.ts
 - packages/application/src/lib/application.ts (exports)
 **Description**: Created UpdateTaskDetailsHandler that extends BaseCommandHandler to load TaskAggregate, execute updateDetails() domain method, and persist events to event store. Follows the established pattern from UpdateProjectDetailsHandler. Handler uses TaskData.fromPayload() to convert command payload to value object.
 
+### Task 5: TaskProjection handler for TaskDetailsUpdatedDomainEvent
+**Commit**: (current - to be committed)
+**Files**:
+- packages/infrastructure/src/lib/projections/task.projection.ts
+**Description**: Updated TaskProjection to handle TaskDetailsUpdatedDomainEvent. Added event handler registration for TASK_EVENT_TYPES.DETAILS_UPDATED, created transformTaskDataToReadModel() helper method to eliminate duplication between create and update handlers, and implemented onTaskDetailsUpdated() method that uses updateReadModel() to update the read model while preserving the original createdAt timestamp. Follows the established pattern from ProjectProjection.
+
 ## Next Task
-Create TaskProjection handler for TaskDetailsUpdatedDomainEvent to update read model
+Create PATCH /api/tasks/:id endpoint in TasksController
 
 ## Use Case Status
 🔄 In Progress - Domain, command, and handler layers complete; need projection, API endpoint, and frontend

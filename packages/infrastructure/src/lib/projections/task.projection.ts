@@ -2,6 +2,7 @@ import { EventsHandler } from '@nestjs/cqrs';
 import { Injectable, Inject } from '@nestjs/common';
 import {
   TaskCreatedDomainEvent,
+  TaskDetailsUpdatedDomainEvent,
   TASK_EVENT_TYPES
 } from '@angular-nest-starter/domain';
 import {
@@ -18,23 +19,24 @@ import { BaseProjectionHandler } from '../base/base-projection.handler';
  * and builds optimized read models for the CQRS query side.
  *
  * This projection:
- * - Subscribes to TaskCreatedDomainEvent from the event store
+ * - Subscribes to TaskCreatedDomainEvent and TaskDetailsUpdatedDomainEvent from the event store
  * - Transforms domain events into TaskReadModel DTOs
  * - Persists read models to the read repository (optimized for queries)
  * - Enables separation of write (event store) and read (read model) data stores
  * - Uses the event handler registry pattern for extensible event handling
  */
 @Injectable()
-@EventsHandler(TaskCreatedDomainEvent)
+@EventsHandler(TaskCreatedDomainEvent, TaskDetailsUpdatedDomainEvent)
 export class TaskProjection extends BaseProjectionHandler {
   constructor(
     @Inject(INJECTION_TOKENS.TASK_READ_REPOSITORY)
     private readonly taskReadRepository: ITaskReadRepository
   ) {
     super();
-    // Register event handler for task created event using helper method
+    // Register event handlers for task events using helper method
     this.registerEventHandlers({
       [TASK_EVENT_TYPES.CREATED]: this.onTaskCreated.bind(this),
+      [TASK_EVENT_TYPES.DETAILS_UPDATED]: this.onTaskDetailsUpdated.bind(this),
     });
   }
 
@@ -43,20 +45,58 @@ export class TaskProjection extends BaseProjectionHandler {
    * Creates a new task read model when a task is created
    */
   private async onTaskCreated(event: TaskCreatedDomainEvent): Promise<void> {
-    // Transform TaskCreatedDomainEvent into task read model
-    const readModel = new TaskReadModel(
-      event.aggregateId, // taskId
-      event.taskData.title,
-      event.taskData.status,
-      event.taskData.priority,
-      event.taskData.notes,
-      event.taskData.deadline,
-      event.taskData.clientId,
-      event.taskData.projectId,
-      event.occurredOn // createdAt timestamp from event
+    // Transform TaskCreatedDomainEvent into task read model using helper
+    const readModel = this.transformTaskDataToReadModel(
+      event.aggregateId,
+      event.taskData,
+      event.occurredOn
     );
 
     // Persist to read repository
     await this.taskReadRepository.save(readModel);
+  }
+
+  /**
+   * Helper method to transform TaskData and metadata into a TaskReadModel.
+   * Eliminates duplication between create and update event handlers.
+   *
+   * @param aggregateId - The task aggregate ID
+   * @param taskData - The task data from the domain event
+   * @param createdAt - The timestamp when the task was created
+   * @returns TaskReadModel for persistence
+   */
+  private transformTaskDataToReadModel(
+    aggregateId: string,
+    taskData: TaskCreatedDomainEvent['taskData'] | TaskDetailsUpdatedDomainEvent['taskData'],
+    createdAt: Date
+  ): TaskReadModel {
+    return new TaskReadModel(
+      aggregateId,
+      taskData.title,
+      taskData.status,
+      taskData.priority,
+      taskData.notes,
+      taskData.deadline,
+      taskData.clientId,
+      taskData.projectId,
+      createdAt
+    );
+  }
+
+  /**
+   * Event handler for TaskDetailsUpdatedDomainEvent
+   * Updates the read model when task details change
+   */
+  private async onTaskDetailsUpdated(event: TaskDetailsUpdatedDomainEvent): Promise<void> {
+    return this.updateReadModel(
+      event.aggregateId,
+      this.taskReadRepository,
+      (existing) =>
+        this.transformTaskDataToReadModel(
+          event.aggregateId,
+          event.taskData,
+          existing?.createdAt ?? event.occurredOn // Preserve original createdAt
+        )
+    );
   }
 }
