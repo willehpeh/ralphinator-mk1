@@ -35,7 +35,7 @@ Implement the ability to delete action items from the system using CQRS + Event 
 - [x] Add deleteTaskFailure action to tasks.actions.ts (Commit: 4dee1d2)
 - [ ] Add deleteTask$ effect to tasks.effects.ts
 - [ ] Update tasksReducer to handle deleteTask actions
-- [ ] Add deleteTask() method to TasksService
+- [x] Add deleteTask() method to TasksService (Commit: TBD)
 
 ### Frontend - UI Components
 - [ ] Add "Delete Task" button to TaskDetailComponent

@@ -34,4 +34,8 @@ export class TasksService {
   changeTaskStatus(id: string, dto: ChangeTaskStatusDto): Observable<Task> {
     return this.http.patch<Task>(`${this.apiUrl}/${id}/status`, dto);
   }
+
+  deleteTask(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
