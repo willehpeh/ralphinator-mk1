@@ -9,6 +9,7 @@ import { ProjectDetailComponent } from './projects/project-detail.component';
 import { ProjectEditComponent } from './projects/project-edit.component';
 import { AddTaskPageComponent } from './tasks/add-task-page.component';
 import { TaskListComponent } from './tasks/task-list.component';
+import { TaskDetailComponent } from './tasks/task-detail.component';
 
 export const appRoutes: Route[] = [
   {
@@ -50,6 +51,10 @@ export const appRoutes: Route[] = [
   {
     path: 'tasks/add',
     component: AddTaskPageComponent,
+  },
+  {
+    path: 'tasks/:id',
+    component: TaskDetailComponent,
   },
   {
     path: '',
