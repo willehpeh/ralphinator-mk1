@@ -956,3 +956,46 @@
 - Success guarantee met: Action item is recorded in the system and available for tracking
 - Documentation: TASK_UC1_CREATE_TASK.md
 - **Note**: Complete end-to-end implementation with 23 tasks completed. Full CQRS + Event Sourcing pattern with professional UI.
+
+## Use Case 2: View All Tracked Action Items (2025-11-04) ✅ COMPLETE
+- Complete CQRS query implementation for viewing all tasks with comprehensive filtering
+- Backend: GetAllTasksQuery and GetAllTasksQueryHandler query ITaskReadRepository.findAll()
+- Backend API: GET /api/tasks endpoint returns TaskReadModel[] array
+- Frontend: TaskListComponent at /tasks route with professional responsive card layout
+- Frontend: NGRX state management (loadTasks, loadTasksSuccess, loadTasksFailure actions)
+- Frontend: TasksEffects with loadTasks$ effect for async API calls
+- Frontend: Signal-based local state for filter management (priority, status, client, project, overdue, search)
+- Frontend: filteredTasks computed signal applies all filters sequentially with AND logic
+- Frontend: Priority filter dropdown (All Priorities, Urgent, High, Medium, Low)
+- Frontend: Status filter dropdown (All Statuses, Todo, InProgress, Completed, Cancelled)
+- Frontend: Client filter dropdown populated from ClientsStore with dynamic client list
+- Frontend: Project filter dropdown with unique project IDs extracted from tasks
+- Frontend: Overdue checkbox filter using isOverdue() date comparison method
+- Frontend: Search input field filters by title and notes (case-insensitive)
+- Frontend: Professional filter UI with white card, flexbox layout, responsive design
+- Frontend: Task cards display title, priority badge, status badge, notes, metadata
+- Frontend: Color-coded priority badges (Urgent=red, High=orange, Medium=yellow, Low=gray)
+- Frontend: Color-coded status badges (Todo=gray, InProgress=blue, Completed=green, Cancelled=dark gray)
+- Frontend: Overdue indicator with OVERDUE label in red for past-due tasks
+- Frontend: Loading state with spinner message during data fetch
+- Frontend: Error state with retry button for failed API calls
+- Frontend: Empty state with "Add First Task" CTA button
+- Frontend: Modern Angular patterns (standalone, signals, OnPush, modern control flow @if/@for)
+- Frontend: Route /tasks configured for task list view
+- All main success scenario steps met:
+  - User requests to see all action items (navigate to /tasks) ✅
+  - System displays all recorded action items with title, priority, status, deadline, client/project info ✅
+  - User reviews the list of action items ✅
+- All extensions handled:
+  - 3a1: Filter by urgency level (priority dropdown) ✅
+  - 3a2: Filter by current state (status dropdown) ✅
+  - 3a3: Filter by client (client dropdown with dynamic list) ✅
+  - 3a4: Filter by project (project dropdown with unique IDs) ✅
+  - 3a5: Filter to show only overdue items (overdue checkbox) ✅
+  - 3a6: Search by keywords in title (search input, also searches notes) ✅
+  - 3a7: System updates display to show matching items (computed signal reactive filtering) ✅
+  - 3b1: No action items - empty state message displayed ✅
+  - 3b2: Option to record new action item (Add First Task button) ✅
+- Success guarantee met: User sees current status of all relevant action items with powerful filtering capabilities
+- Documentation: view-all-action-items.md
+- **Note**: Complete implementation with all filtering extensions (priority, status, client, project, overdue, search) working in combination.
