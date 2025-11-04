@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { TasksService } from '../tasks.service';
-import { createTask, createTaskSuccess, createTaskFailure, loadTasks, loadTasksSuccess, loadTasksFailure } from './tasks.actions';
+import { createTask, createTaskSuccess, createTaskFailure, updateTask, updateTaskSuccess, updateTaskFailure, loadTasks, loadTasksSuccess, loadTasksFailure } from './tasks.actions';
 
 /**
  * NGRX Effects for task-related side effects
@@ -50,6 +50,22 @@ export class TasksEffects {
             }
           })),
           catchError(this.handleError(createTaskFailure, 'Failed to create task'))
+        )
+      )
+    )
+  );
+
+  /**
+   * Effect to update a task in the backend
+   * Listens for updateTask action, calls the service, and dispatches success/failure
+   */
+  updateTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateTask),
+      switchMap((action) =>
+        this.tasksService.updateTask(action.id, action.task).pipe(
+          map((task) => updateTaskSuccess({ task })),
+          catchError(this.handleError(updateTaskFailure, 'Failed to update task'))
         )
       )
     )
