@@ -20,7 +20,7 @@ Implement the ability to view all tasks associated with a specific project withi
 
 ### Frontend Implementation
 - [x] Task 7: Add getTasksByProjectId(projectId: string) method to TasksService (commit: bff8173)
-- [ ] Task 8: Create NGRX actions (loadProjectTasks, loadProjectTasksSuccess, loadProjectTasksFailure)
+- [x] Task 8: Create NGRX actions (loadProjectTasks, loadProjectTasksSuccess, loadProjectTasksFailure) (commit: PENDING)
 - [ ] Task 9: Create NGRX effect to handle loadProjectTasks action with API call
 - [ ] Task 10: Update tasksReducer to handle project tasks loading state
 - [ ] Task 11: Create NGRX selector selectTasksByProjectId(projectId) for querying tasks by project

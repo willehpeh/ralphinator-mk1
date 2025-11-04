@@ -120,3 +120,27 @@ export const deleteTaskFailure = createAction(
   '[Tasks] Delete Task Failure',
   props<{ error: string }>()
 );
+
+/**
+ * Load tasks for a specific project
+ */
+export const loadProjectTasks = createAction(
+  '[Tasks] Load Project Tasks',
+  props<{ projectId: string }>()
+);
+
+/**
+ * Successfully loaded project tasks
+ */
+export const loadProjectTasksSuccess = createAction(
+  '[Tasks] Load Project Tasks Success',
+  props<{ tasks: Task[] }>()
+);
+
+/**
+ * Failed to load project tasks
+ */
+export const loadProjectTasksFailure = createAction(
+  '[Tasks] Load Project Tasks Failure',
+  props<{ error: string }>()
+);
