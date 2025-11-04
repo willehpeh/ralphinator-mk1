@@ -80,6 +80,17 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
             }
           </select>
         </div>
+
+        <div class="filter-group filter-checkbox-group">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              class="filter-checkbox"
+              [checked]="showOverdueOnly()"
+              (change)="onOverdueFilterChange($event)">
+            <span class="checkbox-text">Show Overdue Only</span>
+          </label>
+        </div>
       </div>
 
       @if (loading()) {
@@ -252,6 +263,33 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
       outline: none;
       border-color: #3498db;
       box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+
+    .filter-checkbox-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .filter-checkbox {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #3498db;
+    }
+
+    .checkbox-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #2c3e50;
+      white-space: nowrap;
     }
 
     .loading-state,
@@ -517,6 +555,7 @@ export class TaskListComponent implements OnInit {
   selectedStatus = signal<string>('');
   selectedClientId = signal<string>('');
   selectedProjectId = signal<string>('');
+  showOverdueOnly = signal<boolean>(false);
 
   // Computed unique project IDs from all tasks
   uniqueProjectIds = computed(() => {
@@ -534,6 +573,7 @@ export class TaskListComponent implements OnInit {
     const status = this.selectedStatus();
     const clientId = this.selectedClientId();
     const projectId = this.selectedProjectId();
+    const overdueOnly = this.showOverdueOnly();
 
     let filtered = allTasks;
 
@@ -551,6 +591,10 @@ export class TaskListComponent implements OnInit {
 
     if (projectId) {
       filtered = filtered.filter(task => task.projectId === projectId);
+    }
+
+    if (overdueOnly) {
+      filtered = filtered.filter(task => this.isOverdue(task.dueDate));
     }
 
     return filtered;
@@ -581,6 +625,11 @@ export class TaskListComponent implements OnInit {
   onProjectFilterChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedProjectId.set(selectElement.value);
+  }
+
+  onOverdueFilterChange(event: Event): void {
+    const checkboxElement = event.target as HTMLInputElement;
+    this.showOverdueOnly.set(checkboxElement.checked);
   }
 
   onAddTask(): void {

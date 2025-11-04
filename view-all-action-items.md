@@ -107,12 +107,22 @@ Allow users to see all action items with their priority, status, deadline, and c
    - Note: Filter shows project IDs (not names) since projects store doesn't exist yet
    - Location: `apps/frontend/src/app/tasks/task-list.component.ts:70-82,519,521-528,536,552-554,581-584`
 
+11. ✅ Add overdue filter checkbox to TaskListComponent
+   - Added `showOverdueOnly` signal for checkbox state management (boolean)
+   - Added checkbox UI in filter controls section with professional styling
+   - Checkbox uses modern Angular binding (`[checked]` and `(change)`)
+   - Updated `filteredTasks` computed to filter by overdue status when checkbox is checked
+   - Added `onOverdueFilterChange()` method to handle checkbox state changes
+   - Added CSS styling for checkbox with proper sizing and accent color
+   - Overdue filter works in combination with all other filters (priority, status, client, project)
+   - Uses existing `isOverdue()` method for date comparison logic
+   - Location: `apps/frontend/src/app/tasks/task-list.component.ts:84-93,268-293,558,576,596-598,630-633`
+
 ### Pending Tasks
-11. ⏳ Add overdue filter checkbox
 12. ⏳ Add search functionality
 13. ⏳ Test the complete flow
 
 ---
 
 **Last Updated:** 2025-11-04
-**Status:** In Progress - Priority, status, client, and project filters completed; overdue filter and search pending
+**Status:** In Progress - All filters completed (priority, status, client, project, overdue); search functionality pending
