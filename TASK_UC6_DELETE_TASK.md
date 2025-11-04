@@ -64,7 +64,7 @@ This use case implements the DELETE operation for task management, completing th
   - onDeleteCancelled() closes dialog
   - Navigation to task list after deletion
 
-**Commit Hash**: TBD (current implementation)
+**Commit Hash**: d23b5d1
 
 ---
 
