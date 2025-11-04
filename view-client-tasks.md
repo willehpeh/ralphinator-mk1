@@ -1,8 +1,8 @@
 # Use Case 8: View Action Items for a Specific Client (UC-TASK-001-08)
 
-**Status:** In Progress
+**Status:** Complete (pending manual testing)
 
-**Current Phase:** Frontend Integration
+**Current Phase:** Implementation Complete
 
 ---
 
@@ -56,6 +56,15 @@
 - Implemented helper methods: formatTaskStatus(), isTaskOverdue(), formatTaskDate(), viewTaskDetails()
 - Added comprehensive SCSS styling matching project cards pattern
 - Tasks section follows same visual design as contacts and projects sections
+
+---
+
+## Optional Enhancement (Not Implemented)
+
+The use case extension 2a2 suggests offering an option to add a new task for the client when no tasks exist. This could be implemented as a future enhancement by:
+- Adding an "Add Task" button in the Action Items section header (similar to Add Contact/Add Project)
+- Navigating to the task creation form with clientId pre-selected
+- This is a nice-to-have feature but not required for the core use case
 
 ---
 
