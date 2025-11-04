@@ -164,6 +164,10 @@ import { selectTasksByProjectId } from '../tasks/store/tasks.selectors';
                     </div>
                   }
                 </div>
+              } @empty {
+                <div class="empty-state">
+                  <p class="empty-state-message">No tasks yet. Add a task to get started.</p>
+                </div>
               }
             </div>
           </div>

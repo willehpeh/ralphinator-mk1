@@ -256,6 +256,21 @@
   gap: 1rem;
 }
 
+.empty-state {
+  padding: 2rem;
+  background-color: #f7fafc;
+  border: 2px dashed #cbd5e0;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.empty-state-message {
+  margin: 0;
+  font-size: 1rem;
+  color: #718096;
+  font-style: italic;
+}
+
 .task-card {
   padding: 1rem;
   background-color: #f7fafc;
