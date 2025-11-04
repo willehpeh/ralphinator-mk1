@@ -1,33 +1,5 @@
 # Use Cases: Task Management (Alistair Cockburn Style)
 
-## Use Case 6: Remove Action Item from Tracking
-
-**Primary Actor**: Developer or Agency Owner
-
-**Goal**: Stop tracking an action item that is no longer relevant
-
-**Preconditions**:
-- User has access to the task management system
-- The action item exists in the system
-
-**Main Success Scenario**:
-1. User is reviewing an action item (Use Case 3)
-2. User requests to remove the action item from tracking
-3. System asks user to confirm the removal
-4. User confirms the removal
-5. System removes the action item from active tracking
-6. System confirms the action item has been removed
-7. User is returned to the list of action items (without the removed item)
-
-**Extensions**:
-- 4a. If user decides not to remove the action item:
-  - 4a1. System cancels the removal
-  - 4a2. Return to Use Case 3
-
-**Success Guarantee**: Action item is no longer visible in active tracking (though historical record may be preserved for audit purposes)
-
----
-
 ## Use Case 7: View Action Items for a Specific Project
 
 **Primary Actor**: Developer or Agency Owner
