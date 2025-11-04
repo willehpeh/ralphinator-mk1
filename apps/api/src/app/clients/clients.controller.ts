@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel, ClientDataPayload, AddContactToClientCommand, GetClientContactsQuery, ContactReadModel } from '@angular-nest-starter/application';
+import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel, ClientDataPayload, AddContactToClientCommand, GetClientContactsQuery, ContactReadModel, GetTasksByClientIdQuery, TaskReadModel } from '@angular-nest-starter/application';
 import { ClientDataDto, CreateClientDto, UpdateClientDto, ChangeClientStatusDto, ClientStatus, AddContactDto, AddContactResponse } from '@angular-nest-starter/shared-types';
 import { ContactData } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
@@ -141,5 +141,12 @@ export class ClientsController {
     const query = new GetClientContactsQuery(clientId);
     const contacts = await this.queryBus.execute<GetClientContactsQuery, ContactReadModel[]>(query);
     return contacts;
+  }
+
+  @Get(':id/tasks')
+  async getClientTasks(@Param('id') clientId: string): Promise<TaskReadModel[]> {
+    const query = new GetTasksByClientIdQuery(clientId);
+    const tasks = await this.queryBus.execute<GetTasksByClientIdQuery, TaskReadModel[]>(query);
+    return tasks;
   }
 }
