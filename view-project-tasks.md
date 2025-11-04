@@ -24,7 +24,7 @@ Implement the ability to view all tasks associated with a specific project withi
 - [x] Task 9: Create NGRX effect to handle loadProjectTasks action with API call (commit: 51372f2)
 - [x] Task 10: Update tasksReducer to handle project tasks loading state (commit: 5b485ef)
 - [x] Task 11: Create NGRX selector selectTasksByProjectId(projectId) for querying tasks by project (commit: 012bcfa)
-- [x] Task 12: Update ProjectDetailComponent to dispatch loadProjectTasks action on init (commit: TBD)
+- [x] Task 12: Update ProjectDetailComponent to dispatch loadProjectTasks action on init (commit: c59a90b)
 - [ ] Task 13: Add Tasks section to ProjectDetailComponent template
 - [ ] Task 14: Display task list with cards showing title, status badge, priority badge, due date
 - [ ] Task 15: Add color-coded status badges (Todo=blue, InProgress=yellow, Completed=green, Cancelled=gray)
