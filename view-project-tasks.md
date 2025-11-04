@@ -16,7 +16,7 @@ Implement the ability to view all tasks associated with a specific project withi
 - [x] Task 3: Add findByProjectId(projectId: string) method to ITaskReadRepository interface (commit: e3a9569)
 - [x] Task 4: Implement findByProjectId() in InMemoryTaskReadRepository (packages/infrastructure/) (commit: ec45ece)
 - [x] Task 5: Add GET /api/projects/:id/tasks endpoint to AllProjectsController (commit: a29732d)
-- [x] Task 6: Test backend endpoint with curl to verify data retrieval (commit: PENDING)
+- [x] Task 6: Test backend endpoint with curl to verify data retrieval (commit: 45992b7)
 
 ### Frontend Implementation
 - [ ] Task 7: Add getTasksByProjectId(projectId: string) method to TasksService
