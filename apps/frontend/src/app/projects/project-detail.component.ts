@@ -10,7 +10,7 @@ import { ProjectDto, ProjectStatus } from '@angular-nest-starter/shared-types';
 import { StatusChangeDialogComponent } from '../shared/status-change-dialog.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { loadProjectTasks } from '../tasks/store/tasks.actions';
-import { selectTasksByProjectId } from '../tasks/store/tasks.selectors';
+import { selectTasksByProjectId, selectTasksLoading } from '../tasks/store/tasks.selectors';
 
 @Component({
   selector: 'app-project-detail',
@@ -147,32 +147,39 @@ import { selectTasksByProjectId } from '../tasks/store/tasks.selectors';
               </button>
             </div>
             <div class="tasks-content">
-              @for (task of projectTasks(); track task.id) {
-                <div class="task-card" (click)="navigateToTask(task.id)">
-                  <div class="task-card-header">
-                    <h5 class="task-title">{{ task.title }}</h5>
-                    <div class="task-badges">
-                      <span class="status-badge status-{{ task.status.toLowerCase() }}">
-                        {{ task.status }}
-                      </span>
-                      <span class="priority-badge priority-{{ task.priority.toLowerCase() }}">
-                        {{ task.priority }}
-                      </span>
+              @if (tasksLoading()) {
+                <div class="loading-spinner-container">
+                  <div class="spinner"></div>
+                  <p class="loading-text">Loading tasks...</p>
+                </div>
+              } @else {
+                @for (task of projectTasks(); track task.id) {
+                  <div class="task-card" (click)="navigateToTask(task.id)">
+                    <div class="task-card-header">
+                      <h5 class="task-title">{{ task.title }}</h5>
+                      <div class="task-badges">
+                        <span class="status-badge status-{{ task.status.toLowerCase() }}">
+                          {{ task.status }}
+                        </span>
+                        <span class="priority-badge priority-{{ task.priority.toLowerCase() }}">
+                          {{ task.priority }}
+                        </span>
+                      </div>
                     </div>
+                    @if (task.dueDate) {
+                      <div class="task-due-date" [class.overdue]="isTaskOverdue(task)">
+                        @if (isTaskOverdue(task)) {
+                          <span class="overdue-badge">OVERDUE</span>
+                        }
+                        Due: {{ task.dueDate | date:'mediumDate' }}
+                      </div>
+                    }
                   </div>
-                  @if (task.dueDate) {
-                    <div class="task-due-date" [class.overdue]="isTaskOverdue(task)">
-                      @if (isTaskOverdue(task)) {
-                        <span class="overdue-badge">OVERDUE</span>
-                      }
-                      Due: {{ task.dueDate | date:'mediumDate' }}
-                    </div>
-                  }
-                </div>
-              } @empty {
-                <div class="empty-state">
-                  <p class="empty-state-message">No tasks yet. Add a task to get started.</p>
-                </div>
+                } @empty {
+                  <div class="empty-state">
+                    <p class="empty-state-message">No tasks yet. Add a task to get started.</p>
+                  </div>
+                }
               }
             </div>
           </div>
@@ -255,6 +262,9 @@ export class ProjectDetailComponent {
     if (!id) return [];
     return this.store.selectSignal(selectTasksByProjectId(id))();
   });
+
+  // Select tasks loading state
+  tasksLoading = this.store.selectSignal(selectTasksLoading);
 
   // Load project tasks whenever projectId changes
   constructor() {
