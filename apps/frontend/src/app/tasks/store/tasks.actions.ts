@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Task, CreateTaskInput, UpdateTaskInput } from '../task.types';
+import { TaskStatus } from '@angular-nest-starter/shared-types';
 
 /**
  * Create a new task
@@ -46,6 +47,30 @@ export const updateTaskSuccess = createAction(
  */
 export const updateTaskFailure = createAction(
   '[Tasks] Update Task Failure',
+  props<{ error: string }>()
+);
+
+/**
+ * Change task status
+ */
+export const changeTaskStatus = createAction(
+  '[Tasks] Change Task Status',
+  props<{ id: string; status: TaskStatus }>()
+);
+
+/**
+ * Successfully changed task status
+ */
+export const changeTaskStatusSuccess = createAction(
+  '[Tasks] Change Task Status Success',
+  props<{ task: Task }>()
+);
+
+/**
+ * Failed to change task status
+ */
+export const changeTaskStatusFailure = createAction(
+  '[Tasks] Change Task Status Failure',
   props<{ error: string }>()
 );
 

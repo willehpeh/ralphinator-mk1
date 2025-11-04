@@ -47,7 +47,7 @@ From CURRENT_USE_CASE.md:
 
 ---
 
-## Completed Tasks
+## Implementation Progress
 
 ### ✅ Task 1: Add TaskStatusChangedDomainEvent handler to TaskProjection
 **Completed**: 2025-11-04
@@ -92,16 +92,25 @@ From CURRENT_USE_CASE.md:
 - Follows same pattern as ClientsController status change endpoint
 - Build verified successfully
 
+### ✅ Task 4: Add changeTaskStatus actions to NGRX store
+**Completed**: 2025-11-04
+**Commit**: [pending]
+**File**: `apps/frontend/src/app/tasks/store/tasks.actions.ts`
+**Description**:
+- Imported TaskStatus type from @angular-nest-starter/shared-types
+- Created `changeTaskStatus` action with id and status parameters
+- Created `changeTaskStatusSuccess` action with task parameter
+- Created `changeTaskStatusFailure` action with error parameter
+- Actions follow NGRX naming convention: `[Tasks] {Action Name}`
+- Follows same pattern as updateTask actions
+- Build verified successfully
+
 ---
 
 ## Next Tasks (Remaining)
 
-### Task 4: Add changeTaskStatus actions to NGRX store
-**Status**: Pending
-**Description**: Create changeTaskStatus, changeTaskStatusSuccess, and changeTaskStatusFailure actions.
-
 ### Task 5: Add changeTaskStatus method to TasksService
-**Status**: Pending
+**Status**: Next
 **Description**: Add HTTP method to call the PATCH /tasks/:id/status endpoint.
 
 ### Task 6: Add changeTaskStatus effect to TasksEffects
