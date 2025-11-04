@@ -121,7 +121,7 @@ From CURRENT_USE_CASE.md:
 
 ### ✅ Task 6: Add changeTaskStatus effect to TasksEffects
 **Completed**: 2025-11-04
-**Commit**: (pending)
+**Commit**: 4e68615
 **File**: `apps/frontend/src/app/tasks/store/tasks.effects.ts`
 **Description**:
 - Imported changeTaskStatus, changeTaskStatusSuccess, changeTaskStatusFailure actions
