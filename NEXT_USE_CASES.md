@@ -1,46 +1,5 @@
 # Use Cases: Task Management (Alistair Cockburn Style)
 
-## Use Case 3: Review Details of a Specific Action Item
-
-**Primary Actor**: Developer or Agency Owner
-
-**Goal**: Understand everything about a specific action item to decide what to do next
-
-**Preconditions**:
-- User has access to the task management system
-- The action item exists in the system
-
-**Main Success Scenario**:
-1. User selects an action item from the list
-2. System displays complete information:
-   - What needs to be done (title)
-   - Detailed notes about the work
-   - How urgent it is (priority with visual indicator)
-   - Current state (status with visual indicator)
-   - Deadline (with alert if overdue)
-   - Related client (with ability to navigate to client information)
-   - Related project (with ability to navigate to project information)
-   - When the action item was created
-   - When it was last modified
-3. User reviews the complete information
-4. System offers available actions:
-   - Modify the action item details
-   - Mark the action as complete
-   - Change the current state
-   - Remove the action item from tracking
-
-**Extensions**:
-- 2a. If the deadline has passed and work is not complete:
-  - 2a1. System prominently displays overdue warning
-- 4a. If user decides to take an action:
-  - 4a1. See Use Case 4 (Modify Action Item)
-  - 4a2. See Use Case 5 (Update Action Item Progress)
-  - 4a3. See Use Case 6 (Remove Action Item from Tracking)
-
-**Success Guarantee**: User has complete context about the action item to make informed decisions
-
----
-
 ## Use Case 4: Modify Action Item Details
 
 **Primary Actor**: Developer or Agency Owner

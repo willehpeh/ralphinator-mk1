@@ -999,3 +999,39 @@
 - Success guarantee met: User sees current status of all relevant action items with powerful filtering capabilities
 - Documentation: view-all-action-items.md
 - **Note**: Complete implementation with all filtering extensions (priority, status, client, project, overdue, search) working in combination.
+
+## Use Case 3: Review Details of a Specific Action Item (2025-11-04) ✅ COMPLETE
+- Complete task detail view implementation with comprehensive information display
+- Backend: GetTaskByIdQuery and handler already implemented (from Use Case 1)
+- Backend API: GET /api/tasks/:id endpoint returns TaskReadModel or null
+- Frontend: TaskDetailComponent at /tasks/:id route with professional responsive layout
+- Frontend: Route configuration for /tasks/:id properly positioned after /tasks/add
+- Frontend: Navigation from TaskListComponent "View Details" button to detail page using router.navigate()
+- Frontend: Title section with large heading and badge display
+- Frontend: Color-coded status badges (Todo=blue, InProgress=yellow, Completed=green, Cancelled=gray)
+- Frontend: Color-coded priority badges (Low=gray, Medium=blue, High=orange, Urgent=red)
+- Frontend: Overdue warning banner (yellow background, warning icon) when task is past due and not completed
+- Frontend: Relative deadline formatting (due today, due in X days, overdue by X days, or formatted date)
+- Frontend: Description/notes section with proper whitespace handling (pre-wrap)
+- Frontend: Metadata grid displaying deadline, client link, project link, and created date
+- Frontend: Clickable navigation links to /clients/:id and /projects/:id pages
+- Frontend: "No client assigned" / "No project assigned" placeholders when not set
+- Frontend: Action buttons section with Edit, Mark Complete, Change Status, Delete buttons
+- Frontend: Loading state with spinner during data fetch
+- Frontend: Error state with retry button for failed API calls
+- Frontend: Not found state when task doesn't exist
+- Frontend: Back to Tasks button for navigation to task list
+- Frontend: Responsive design with mobile and desktop layouts (CSS Grid, Flexbox)
+- Frontend: Modern Angular patterns (standalone, signals, computed, OnPush, inject())
+- Frontend: Computed signals for isOverdue(), overdueByText(), and deadlineText()
+- All main success scenario steps met:
+  - User selects action item from list (View Details button with navigation) ✅
+  - System displays complete information (title, notes, priority, status, deadline, client, project, createdAt) ✅
+  - User reviews complete information (all fields visible and properly formatted) ✅
+  - System offers available actions (Edit, Mark Complete, Change Status, Delete buttons present) ✅
+- All extensions handled:
+  - 2a1: Overdue warning prominently displayed (banner with icon and days calculation) ✅
+  - 4a1-4a3: Action buttons present (future use cases will implement functionality) ✅
+- Success guarantee met: User has complete context about the action item to make informed decisions
+- Documentation: CURRENT_USE_CASE.md (will be archived)
+- **Note**: Complete visual implementation. Action button functionality (Edit, Complete, Change Status, Delete) will be implemented in future use cases.
