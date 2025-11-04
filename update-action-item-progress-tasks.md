@@ -21,15 +21,30 @@
 - `newStatus`: The updated task status (Todo, InProgress, Completed, or Cancelled)
 - `completedAt`: Timestamp when task was completed (null for non-completed statuses)
 
+###  Task 2: Add changeStatus() method to TaskAggregate
+**Status**: Completed
+**Commit**: (pending)
+**Files Modified**:
+- `packages/domain/src/lib/aggregates/task.aggregate.ts`
+
+**Description**: Implemented status change business logic in the aggregate:
+- Added `completedAt: Date | null` field to aggregate state
+- Added `changeStatus(newStatus: TaskStatus)` command method
+- Automatically sets `completedAt` timestamp when status becomes 'Completed'
+- Registered `onTaskStatusChanged()` event handler in constructor
+- Implemented `onTaskStatusChanged()` to apply status and completedAt changes
+- Added `getCompletedAt()` getter method
+- Follows event sourcing pattern with event application
+
 ---
 
 ## Tasks Remaining
 
 ### Domain Layer
-- [ ] Add `changeStatus()` method to TaskAggregate
-- [ ] Register TaskStatusChangedDomainEvent handler in TaskAggregate
-- [ ] Add `completedAt` field to TaskAggregate state
-- [ ] Add `getCompletedAt()` getter to TaskAggregate
+- [x] Add `changeStatus()` method to TaskAggregate
+- [x] Register TaskStatusChangedDomainEvent handler in TaskAggregate
+- [x] Add `completedAt` field to TaskAggregate state
+- [x] Add `getCompletedAt()` getter to TaskAggregate
 
 ### Application Layer
 - [ ] Create ChangeTaskStatusCommand

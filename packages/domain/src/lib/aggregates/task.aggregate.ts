@@ -5,6 +5,7 @@ import { TASK_EVENT_TYPES } from '../constants/task-event-types';
 import { DOMAIN_ERRORS } from '../constants/domain-errors';
 import { TaskCreatedDomainEvent } from '../events/task-created.domain-event';
 import { TaskDetailsUpdatedDomainEvent } from '../events/task-details-updated.domain-event';
+import { TaskStatusChangedDomainEvent } from '../events/task-status-changed.domain-event';
 import { TaskData } from '../value-objects/task-data.value-object';
 
 export class TaskAggregate extends EventSourcedAggregate {
@@ -16,6 +17,7 @@ export class TaskAggregate extends EventSourcedAggregate {
   private deadline: Date | null = null;
   private clientId: string | null = null;
   private projectId: string | null = null;
+  private completedAt: Date | null = null;
 
   constructor() {
     super();
@@ -24,6 +26,7 @@ export class TaskAggregate extends EventSourcedAggregate {
     this.registerEventHandlers({
       [TASK_EVENT_TYPES.CREATED]: this.onTaskCreated.bind(this),
       [TASK_EVENT_TYPES.DETAILS_UPDATED]: this.onTaskDetailsUpdated.bind(this),
+      [TASK_EVENT_TYPES.STATUS_CHANGED]: this.onTaskStatusChanged.bind(this),
     } as unknown as Record<string, (event: DomainEvent) => void>);
   }
 
@@ -89,6 +92,15 @@ export class TaskAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Event handler for TaskStatusChangedDomainEvent
+   * Updates the task status and completedAt timestamp
+   */
+  private onTaskStatusChanged(event: TaskStatusChangedDomainEvent): void {
+    this.status = event.newStatus;
+    this.completedAt = event.completedAt;
+  }
+
+  /**
    * Command method to update task details
    * Applies a TaskDetailsUpdatedDomainEvent to modify the task information
    *
@@ -98,6 +110,24 @@ export class TaskAggregate extends EventSourcedAggregate {
     this.ensureInitialized();
     this.applyEvent(
       new TaskDetailsUpdatedDomainEvent(this.id!, taskData)
+    );
+  }
+
+  /**
+   * Command method to change task status
+   * Applies a TaskStatusChangedDomainEvent to modify the task status.
+   * When status changes to 'Completed', automatically records the completion timestamp.
+   *
+   * @param newStatus - The new status for the task
+   */
+  changeStatus(newStatus: TaskStatus): void {
+    this.ensureInitialized();
+
+    // Automatically set completedAt when status becomes 'Completed'
+    const completedAt = newStatus === 'Completed' ? new Date() : null;
+
+    this.applyEvent(
+      new TaskStatusChangedDomainEvent(this.id!, newStatus, completedAt)
     );
   }
 
@@ -133,5 +163,9 @@ export class TaskAggregate extends EventSourcedAggregate {
 
   getProjectId(): string | null {
     return this.getInitializedField(this.projectId);
+  }
+
+  getCompletedAt(): Date | null {
+    return this.getInitializedField(this.completedAt);
   }
 }
