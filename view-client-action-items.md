@@ -10,7 +10,7 @@ Implement functionality to display all action items (tasks) associated with a sp
 
 ### Backend Implementation
 - [x] Task 1: Create GetTasksByClientIdQuery and handler (COMPLETED - query and handler created following CQRS pattern, exports added to application.ts)
-- [ ] Task 2: Verify ITaskReadRepository.findByClientId() port interface method exists
+- [x] Task 2: Add ITaskReadRepository.findByClientId() port interface method (COMPLETED - method added to interface at packages/application/src/lib/ports/task-read-repository.interface.ts:7)
 - [ ] Task 3: Verify InMemoryTaskReadRepository.findByClientId() implementation exists
 - [ ] Task 4: Verify GET /api/clients/:id/tasks endpoint exists (may need to add to TasksController or ClientsController)
 
