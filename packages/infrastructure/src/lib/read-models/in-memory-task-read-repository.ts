@@ -33,4 +33,16 @@ export class InMemoryTaskReadRepository
       (task) => task.projectId === projectId
     );
   }
+
+  /**
+   * Find all tasks associated with a specific client
+   *
+   * @param clientId - The unique identifier of the client
+   * @returns Promise resolving to array of tasks for the client
+   */
+  async findByClientId(clientId: string): Promise<TaskReadModel[]> {
+    return Array.from(this.items.values()).filter(
+      (task) => task.clientId === clientId
+    );
+  }
 }
