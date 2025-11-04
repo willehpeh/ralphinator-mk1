@@ -51,6 +51,24 @@
 - Imported TaskStatus type from shared-types package
 - Follows naming convention: `{Verb}{Noun}Command`
 
+###  Task 4: Create ChangeTaskStatusHandler
+**Status**: Completed
+**Commit**: [pending]
+**Files Created**:
+- `packages/application/src/lib/commands/handlers/change-task-status.handler.ts`
+
+**Files Modified**:
+- `packages/application/src/lib/application.ts` - Exported new handler
+
+**Description**: Implemented command handler for changing task status:
+- Loads task aggregate from event store using `executeOnAggregate` helper
+- Executes `changeStatus()` domain logic on aggregate
+- Persists events with optimistic concurrency control
+- Publishes domain events to event bus for projections
+- Follows CQRS + Event Sourcing pattern
+- Returns task ID on successful status change
+- Uses BaseCommandHandler for common load-execute-save pattern
+
 ---
 
 ## Tasks Remaining
@@ -63,7 +81,7 @@
 
 ### Application Layer
 - [x] Create ChangeTaskStatusCommand
-- [ ] Create ChangeTaskStatusHandler
+- [x] Create ChangeTaskStatusHandler
 - [ ] Add tests for ChangeTaskStatusHandler
 
 ### Infrastructure Layer
