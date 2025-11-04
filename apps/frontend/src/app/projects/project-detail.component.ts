@@ -161,7 +161,11 @@ import { selectTasksByProjectId, selectTasksLoading, selectTasksError } from '..
                 </div>
               } @else {
                 @for (task of projectTasks(); track task.id) {
-                  <div class="task-card" (click)="navigateToTask(task.id)">
+                  <div class="task-card"
+                       tabindex="0"
+                       role="button"
+                       (click)="navigateToTask(task.id)"
+                       (keydown)="handleTaskCardKeydown($event, task.id)">
                     <div class="task-card-header">
                       <h5 class="task-title">{{ task.title }}</h5>
                       <div class="task-badges">
@@ -311,6 +315,13 @@ export class ProjectDetailComponent {
 
   navigateToTask(taskId: string): void {
     this.router.navigate(['/tasks', taskId]);
+  }
+
+  handleTaskCardKeydown(event: KeyboardEvent, taskId: string): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.navigateToTask(taskId);
+    }
   }
 
   retryLoadTasks(): void {
