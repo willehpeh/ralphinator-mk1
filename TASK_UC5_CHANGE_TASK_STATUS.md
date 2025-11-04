@@ -63,7 +63,7 @@ From CURRENT_USE_CASE.md:
 
 ### ✅ Task 2: Register ChangeTaskStatusHandler in TasksModule
 **Completed**: 2025-11-04
-**Commit**: [pending]
+**Commit**: 90fffe2
 **File**: `apps/api/src/app/tasks/tasks.module.ts`
 **Description**:
 - Imported ChangeTaskStatusHandler from @angular-nest-starter/application
