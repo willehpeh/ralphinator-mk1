@@ -14,7 +14,10 @@ import {
   changeTaskStatusFailure,
   deleteTask,
   deleteTaskSuccess,
-  deleteTaskFailure
+  deleteTaskFailure,
+  loadProjectTasks,
+  loadProjectTasksSuccess,
+  loadProjectTasksFailure
 } from './tasks.actions';
 import { Task } from '../task.types';
 
@@ -131,5 +134,17 @@ export const tasksReducer = createReducer(
   })),
 
   // When deleting task fails
-  on(deleteTaskFailure, (state, { error }) => setError(state, error))
+  on(deleteTaskFailure, (state, { error }) => setError(state, error)),
+
+  // When loading project tasks is triggered
+  on(loadProjectTasks, setLoading),
+
+  // When project tasks are successfully loaded
+  on(loadProjectTasksSuccess, (state, { tasks }) => ({
+    ...clearLoadingAndError(state),
+    tasks,
+  })),
+
+  // When loading project tasks fails
+  on(loadProjectTasksFailure, (state, { error }) => setError(state, error))
 );
