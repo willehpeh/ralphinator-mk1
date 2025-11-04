@@ -3,9 +3,10 @@ import { HealthController } from './health.controller';
 import { ClientsModule } from './clients/clients.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { ProjectsModule } from './projects/projects.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
-  imports: [ClientsModule, ContactsModule, ProjectsModule],
+  imports: [ClientsModule, ContactsModule, ProjectsModule, TasksModule],
   controllers: [HealthController],
   providers: [],
 })

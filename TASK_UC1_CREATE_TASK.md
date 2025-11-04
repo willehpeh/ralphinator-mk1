@@ -10,8 +10,8 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
    - ✅ CreateTaskHandler (Completed)
 3. ✅ Infrastructure: TaskProjection for TaskCreatedDomainEvent (Done)
 4. ✅ Backend: InMemoryTaskReadRepository implementation (Done)
-5. ⏳ Backend: POST /api/tasks endpoint (Next)
-6. ⬜ Frontend: TaskFormComponent + AddTaskPageComponent + NGRX state
+5. ✅ Backend: POST /api/tasks endpoint (Done)
+6. ⏳ Frontend: TaskFormComponent + AddTaskPageComponent + NGRX state (Next)
 
 ## Completed Tasks
 
@@ -87,8 +87,16 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 - packages/shared-types/src/index.ts (exports)
 **Description**: Created DTOs for task API operations including CreateTaskDto, UpdateTaskDto, CreateTaskResponse, and TaskDto following the established pattern from project DTOs with class-validator decorators
 
+### Task 11: TasksController and TasksModule
+**Commit**: [pending]
+**Files**:
+- apps/api/src/app/tasks/tasks.controller.ts
+- apps/api/src/app/tasks/tasks.module.ts
+- apps/api/src/app/app.module.ts (import TasksModule)
+**Description**: Created TasksController with POST /api/tasks endpoint that uses CommandBus to execute CreateTaskCommand. Set up TasksModule with CQRS handlers, event handlers, and infrastructure providers. Registered TasksModule in AppModule.
+
 ## Next Task
-Create TasksController and TasksModule - Set up NestJS module with POST /api/tasks endpoint
+Frontend: TaskFormComponent + AddTaskPageComponent + NGRX state for task creation
 
 ## Use Case Status
-❌ Not Complete - Still need API endpoint and frontend
+❌ Not Complete - Still need frontend implementation
