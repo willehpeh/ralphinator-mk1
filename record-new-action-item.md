@@ -21,4 +21,25 @@
 **Files modified**:
 - `packages/shared-types/src/index.ts` - Added exports for new types
 
-**Next Task**: Create TaskCreatedDomainEvent in domain layer
+### Task 2: Create TaskCreatedDomainEvent in domain layer
+**Status**: ✅ Completed
+**Date**: 2025-11-04
+**Commit**: Next
+
+**What was done**:
+- Created `TaskData` value object to encapsulate task information (title, status, priority, notes, deadline, clientId, projectId)
+- Added `fromPayload()` factory method to TaskData for easy construction from payload objects
+- Created `TASK_EVENT_TYPES` constants file with CREATED event type
+- Created `TaskCreatedDomainEvent` extending DomainEvent base class
+- Exported all new types from domain package index
+- Successfully built and verified compilation
+
+**Files created**:
+- `packages/domain/src/lib/value-objects/task-data.value-object.ts`
+- `packages/domain/src/lib/constants/task-event-types.ts`
+- `packages/domain/src/lib/events/task-created.domain-event.ts`
+
+**Files modified**:
+- `packages/domain/src/index.ts` - Added exports for new task-related types
+
+**Next Task**: Create TaskAggregate.create() method in domain layer
