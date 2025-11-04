@@ -80,8 +80,15 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 - packages/infrastructure/src/lib/infrastructure.ts (exports)
 **Description**: Implemented in-memory repository for task read models, extending BaseInMemoryReadRepository and implementing ITaskReadRepository interface for CRUD operations on task queries
 
+### Task 10: Task DTOs
+**Commit**: b8814da - feat(shared-types): Add task DTOs for API validation
+**Files**:
+- packages/shared-types/src/lib/dtos/task.dtos.ts
+- packages/shared-types/src/index.ts (exports)
+**Description**: Created DTOs for task API operations including CreateTaskDto, UpdateTaskDto, CreateTaskResponse, and TaskDto following the established pattern from project DTOs with class-validator decorators
+
 ## Next Task
-POST /api/tasks endpoint - Create REST API endpoint in TasksController to handle task creation
+Create TasksController and TasksModule - Set up NestJS module with POST /api/tasks endpoint
 
 ## Use Case Status
 ❌ Not Complete - Still need API endpoint and frontend
