@@ -26,7 +26,7 @@ Implement the ability to delete action items from the system using CQRS + Event 
 - [ ] Write tests for TaskProjection.onTaskDeleted()
 
 ### Backend API
-- [ ] Add DELETE /api/tasks/:id endpoint to TasksController
+- [x] Add DELETE /api/tasks/:id endpoint to TasksController
 - [ ] Test endpoint with HTTP client (curl/Postman)
 
 ### Frontend - NGRX State Management

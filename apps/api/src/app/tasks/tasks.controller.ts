@@ -1,6 +1,6 @@
-import { Body, Controller, Get, NotFoundException, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateTaskCommand, UpdateTaskDetailsCommand, ChangeTaskStatusCommand, GetTaskByIdQuery, TaskDataPayload, TaskReadModel } from '@angular-nest-starter/application';
+import { CreateTaskCommand, UpdateTaskDetailsCommand, ChangeTaskStatusCommand, DeleteTaskCommand, GetTaskByIdQuery, TaskDataPayload, TaskReadModel } from '@angular-nest-starter/application';
 import { CreateTaskDto, UpdateTaskDto, ChangeTaskStatusDto, CreateTaskResponse } from '@angular-nest-starter/shared-types';
 import { randomUUID } from 'crypto';
 import { fetchEntityAfterMutation } from '../shared/controller-utilities';
@@ -105,6 +105,17 @@ export class TasksController {
       'Task',
       taskId,
       'status change'
+    );
+  }
+
+  @Delete(':id')
+  async deleteTask(
+    @Param('id') id: string
+  ): Promise<void> {
+    const command = new DeleteTaskCommand(id);
+
+    await this.commandBus.execute<DeleteTaskCommand, void>(
+      command
     );
   }
 }
