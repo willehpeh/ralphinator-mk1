@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import * as TasksActions from './store/tasks.actions';
@@ -19,6 +19,24 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
         </button>
       </div>
 
+      <!-- Filter Controls -->
+      <div class="filter-controls">
+        <div class="filter-group">
+          <label for="priority-filter" class="filter-label">Filter by Priority:</label>
+          <select
+            id="priority-filter"
+            class="filter-select"
+            [value]="selectedPriority()"
+            (change)="onPriorityFilterChange($event)">
+            <option value="">All Priorities</option>
+            <option value="Urgent">Urgent</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+      </div>
+
       @if (loading()) {
         <div class="loading-state">
           <p>{{ TASK_UI_TEXT.LOADING_TASKS }}</p>
@@ -33,9 +51,9 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
       }
 
       @if (!loading() && !error()) {
-        @if (hasTasks()) {
+        @if (filteredTasks().length > 0) {
           <div class="task-list">
-            @for (task of tasks(); track task.id) {
+            @for (task of filteredTasks(); track task.id) {
               <div class="task-card">
                 <div class="task-header">
                   <h3 class="task-title">{{ task.title }}</h3>
@@ -143,6 +161,49 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
 
     .add-task-button:hover {
       background-color: #2980b9;
+    }
+
+    .filter-controls {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .filter-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #2c3e50;
+      white-space: nowrap;
+    }
+
+    .filter-select {
+      padding: 0.5rem 1rem;
+      border: 1px solid #d5dbdb;
+      border-radius: 4px;
+      background-color: white;
+      color: #2c3e50;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      min-width: 180px;
+    }
+
+    .filter-select:hover {
+      border-color: #3498db;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
     }
 
     .loading-state,
@@ -402,9 +463,29 @@ export class TaskListComponent implements OnInit {
   error = this.store.selectSignal(selectTasksError);
   hasTasks = this.store.selectSignal(selectHasTasks);
 
+  // Filter state using signals
+  selectedPriority = signal<string>('');
+
+  // Computed filtered tasks
+  filteredTasks = computed(() => {
+    const allTasks = this.tasks();
+    const priority = this.selectedPriority();
+
+    if (!priority) {
+      return allTasks;
+    }
+
+    return allTasks.filter(task => task.priority === priority);
+  });
+
   ngOnInit(): void {
     // Dispatch action to load all tasks when component initializes
     this.store.dispatch(TasksActions.loadTasks());
+  }
+
+  onPriorityFilterChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedPriority.set(selectElement.value);
   }
 
   onAddTask(): void {

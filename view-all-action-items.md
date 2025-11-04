@@ -60,12 +60,25 @@ Allow users to see all action items with their priority, status, deadline, and c
    - Build now succeeds without TypeScript errors
    - Location: `apps/frontend/src/app/tasks/task-list.component.ts`
 
+7. ✅ Add priority filter dropdown UI to TaskListComponent
+   - Added filter controls section with priority dropdown
+   - Used signals for filter state management (`selectedPriority` signal)
+   - Implemented computed signal `filteredTasks` that filters tasks by selected priority
+   - Added professional styling for filter controls (white card with shadow)
+   - Filter dropdown uses modern Angular binding (`[value]` and `(change)`)
+   - Dropdown includes "All Priorities" option plus all TaskPriority enum values
+   - Automatically updates filtered view when selection changes
+   - Location: `apps/frontend/src/app/tasks/task-list.component.ts:24-39,167-208,467-490`
+
 ### Pending Tasks
-7. ⏳ Add filtering capabilities (priority, status, client, project, overdue)
-8. ⏳ Add search functionality
-9. ⏳ Test the complete flow
+8. ⏳ Add status filter dropdown
+9. ⏳ Add client filter dropdown
+10. ⏳ Add project filter dropdown
+11. ⏳ Add overdue filter checkbox
+12. ⏳ Add search functionality
+13. ⏳ Test the complete flow
 
 ---
 
 **Last Updated:** 2025-11-04
-**Status:** In Progress - Compilation errors fixed, filtering and search functionality pending
+**Status:** In Progress - Priority filter completed, additional filters and search pending
