@@ -57,8 +57,16 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 - packages/application/src/lib/application.ts (exports)
 **Description**: Created read model DTO for task queries with all task fields
 
+### Task 7: ITaskReadRepository interface
+**Commit**: 87e0271 - feat(application): Add ITaskReadRepository port interface
+**Files**:
+- packages/application/src/lib/ports/task-read-repository.interface.ts
+- packages/application/src/lib/ports/injection-tokens.ts
+- packages/application/src/lib/application.ts (exports)
+**Description**: Created repository port interface for task read model operations with CRUD methods and injection token
+
 ## Next Task
-ITaskReadRepository interface - Port for task read model repository
+TaskProjection event handler - Handle TaskCreatedDomainEvent to build read model
 
 ## Use Case Status
 ❌ Not Complete - Still need projection, API endpoint, and frontend
