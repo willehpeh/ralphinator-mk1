@@ -144,8 +144,14 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 - apps/frontend/src/app/tasks/task.constants.ts
 **Description**: Created task.constants.ts with TASK_STATUSES and TASK_PRIORITIES arrays, DEFAULT_TASK_STATUS (Todo), DEFAULT_TASK_PRIORITY (Medium), and FILTER_ALL_TASKS constant following the established pattern from client.constants.ts.
 
+### Task 20: Task display constants for frontend
+**Commit**: fb46949 - feat(frontend): Add task-display.constants.ts with UI text labels
+**Files**:
+- apps/frontend/src/app/tasks/task-display.constants.ts
+**Description**: Created task-display.constants.ts following the established pattern from client-display.constants.ts. Includes TASK_UI_TEXT (UI text labels for buttons, page titles, messages, loading states, search/filter, count display, and detail labels), TASK_FORM_LABELS (form field labels, placeholders, validation messages, and submit button labels), and TASK_ERROR_MESSAGES (error messages for task-related API operations). This file serves as the single source of truth for UI text in the tasks feature.
+
 ## Next Task
-Frontend: Create task-display.constants.ts with UI text labels
+Frontend: Create TaskFormComponent (presentational component for task creation/editing)
 
 ## Use Case Status
 ❌ Not Complete - Still need frontend implementation
