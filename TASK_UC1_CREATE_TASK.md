@@ -43,7 +43,7 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 **Description**: Created command and payload DTOs following DRY principle
 
 ### Task 5: CreateTaskHandler
-**Commit**: (pending) - feat(application): Add CreateTaskHandler with tests
+**Commit**: 7af5d57 - feat(application): Add CreateTaskHandler with tests
 **Files**:
 - packages/application/src/lib/commands/handlers/create-task.handler.ts
 - packages/testing/src/tests/create-task.handler.spec.ts
