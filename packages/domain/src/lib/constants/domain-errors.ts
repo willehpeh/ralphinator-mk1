@@ -41,4 +41,10 @@ export const DOMAIN_ERRORS = {
    * Error message when attempting to change project status to the same value
    */
   PROJECT_STATUS_UNCHANGED: 'New status must be different from current status',
+
+  /**
+   * Error message when attempting to perform an operation on an aggregate
+   * that has not been initialized (created) yet
+   */
+  TASK_NOT_INITIALIZED: 'Cannot perform operation on a task that has not been created',
 } as const;

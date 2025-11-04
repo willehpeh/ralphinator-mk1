@@ -1,0 +1,114 @@
+import { EventSourcedAggregate } from '../base/event-sourced-aggregate';
+import { DomainEvent } from '../base/domain-event';
+import { TaskStatus, TaskPriority } from '@angular-nest-starter/shared-types';
+import { TASK_EVENT_TYPES } from '../constants/task-event-types';
+import { DOMAIN_ERRORS } from '../constants/domain-errors';
+import { TaskCreatedDomainEvent } from '../events/task-created.domain-event';
+import { TaskData } from '../value-objects/task-data.value-object';
+
+export class TaskAggregate extends EventSourcedAggregate {
+  private id?: string;
+  private title?: string;
+  private status?: TaskStatus;
+  private priority?: TaskPriority;
+  private notes: string | null = null;
+  private deadline: Date | null = null;
+  private clientId: string | null = null;
+  private projectId: string | null = null;
+
+  constructor() {
+    super();
+    // Register event handlers for all task events
+    // Type assertion needed because handlers have heterogeneous event types
+    this.registerEventHandlers({
+      [TASK_EVENT_TYPES.CREATED]: this.onTaskCreated.bind(this),
+    } as unknown as Record<string, (event: DomainEvent) => void>);
+  }
+
+  /**
+   * Factory method to create a new Task aggregate
+   *
+   * @param id - Unique identifier for the task
+   * @param taskData - Value object containing all task information
+   * @returns A new TaskAggregate instance with TaskCreatedDomainEvent applied
+   */
+  static create(
+    id: string,
+    taskData: TaskData
+  ): TaskAggregate {
+    const task = new TaskAggregate();
+    task.applyEvent(
+      new TaskCreatedDomainEvent(id, taskData)
+    );
+    return task;
+  }
+
+  /**
+   * Override base ensureInitialized to provide task-specific error message
+   */
+  protected override ensureInitialized(): string {
+    if (!this.id) {
+      throw new Error(DOMAIN_ERRORS.TASK_NOT_INITIALIZED);
+    }
+    return this.id;
+  }
+
+  /**
+   * Helper method to update task fields from TaskData value object
+   * Used by event handlers to apply state changes consistently
+   *
+   * @param taskData - Value object containing task information
+   */
+  private updateTaskFields(taskData: TaskData): void {
+    this.title = taskData.title;
+    this.status = taskData.status;
+    this.priority = taskData.priority;
+    this.notes = taskData.notes;
+    this.deadline = taskData.deadline;
+    this.clientId = taskData.clientId;
+    this.projectId = taskData.projectId;
+  }
+
+  /**
+   * Event handler for TaskCreatedDomainEvent
+   * Initializes the aggregate state when a new task is created
+   */
+  private onTaskCreated(event: TaskCreatedDomainEvent): void {
+    this.id = event.aggregateId;
+    this.updateTaskFields(event.taskData);
+  }
+
+  // Getters for accessing aggregate state
+  // All getters ensure the aggregate is initialized before returning values
+  getId(): string {
+    return this.ensureInitialized();
+  }
+
+  getTitle(): string {
+    return this.getInitializedField(this.title);
+  }
+
+  getStatus(): TaskStatus {
+    return this.getInitializedField(this.status);
+  }
+
+  getPriority(): TaskPriority {
+    return this.getInitializedField(this.priority);
+  }
+
+  getNotes(): string | null {
+    return this.getInitializedField(this.notes);
+  }
+
+  getDeadline(): Date | null {
+    return this.getInitializedField(this.deadline);
+  }
+
+  getClientId(): string | null {
+    return this.getInitializedField(this.clientId);
+  }
+
+  getProjectId(): string | null {
+    return this.getInitializedField(this.projectId);
+  }
+}
