@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, signal, effect } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
@@ -10,6 +10,7 @@ import { ProjectDto, ProjectStatus } from '@angular-nest-starter/shared-types';
 import { StatusChangeDialogComponent } from '../shared/status-change-dialog.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { loadProjectTasks } from '../tasks/store/tasks.actions';
+import { selectTasksByProjectId } from '../tasks/store/tasks.selectors';
 
 @Component({
   selector: 'app-project-detail',
@@ -141,7 +142,26 @@ import { loadProjectTasks } from '../tasks/store/tasks.actions';
           <div class="detail-section">
             <h4>Tasks</h4>
             <div class="tasks-content">
-              <!-- Tasks will be displayed here -->
+              @for (task of projectTasks(); track task.id) {
+                <div class="task-card">
+                  <div class="task-card-header">
+                    <h5 class="task-title">{{ task.title }}</h5>
+                    <div class="task-badges">
+                      <span class="status-badge status-{{ task.status.toLowerCase() }}">
+                        {{ task.status }}
+                      </span>
+                      <span class="priority-badge priority-{{ task.priority.toLowerCase() }}">
+                        {{ task.priority }}
+                      </span>
+                    </div>
+                  </div>
+                  @if (task.dueDate) {
+                    <div class="task-due-date">
+                      Due: {{ task.dueDate | date:'mediumDate' }}
+                    </div>
+                  }
+                </div>
+              }
             </div>
           </div>
         </div>
@@ -216,6 +236,13 @@ export class ProjectDetailComponent {
     ),
     { initialValue: null }
   );
+
+  // Select tasks for this project
+  projectTasks = computed(() => {
+    const id = this.projectId();
+    if (!id) return [];
+    return this.store.selectSignal(selectTasksByProjectId(id))();
+  });
 
   // Load project tasks whenever projectId changes
   constructor() {

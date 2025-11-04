@@ -249,6 +249,111 @@
   }
 }
 
+// Task cards styling
+.tasks-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.task-card {
+  padding: 1rem;
+  background-color: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #edf2f7;
+    border-color: #cbd5e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.task-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.task-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a202c;
+  flex: 1;
+}
+
+.task-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.priority-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+
+  &.priority-low {
+    background-color: #e2e8f0;
+    color: #4a5568;
+  }
+
+  &.priority-medium {
+    background-color: #bee3f8;
+    color: #2c5282;
+  }
+
+  &.priority-high {
+    background-color: #fbd38d;
+    color: #7c2d12;
+  }
+
+  &.priority-urgent {
+    background-color: #feb2b2;
+    color: #991b1b;
+  }
+}
+
+// Task status badges (different from project status badges)
+.task-card {
+  .status-badge {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+
+    &.status-todo {
+      background-color: #bee3f8;
+      color: #2c5282;
+    }
+
+    &.status-inprogress {
+      background-color: #fef3c7;
+      color: #92400e;
+    }
+
+    &.status-completed {
+      background-color: #c6f6d5;
+      color: #22543d;
+    }
+
+    &.status-cancelled {
+      background-color: #e2e8f0;
+      color: #4a5568;
+    }
+  }
+}
+
+.task-due-date {
+  font-size: 0.875rem;
+  color: #718096;
+}
+
 @media (max-width: 768px) {
   .project-detail {
     padding: 1rem;
@@ -278,5 +383,14 @@
 
   .detail-grid {
     grid-template-columns: 1fr;
+  }
+
+  .task-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .task-badges {
+    flex-wrap: wrap;
   }
 }
