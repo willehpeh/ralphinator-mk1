@@ -18,6 +18,11 @@ Implement functionality to quickly identify and highlight action items that have
    - Properly handles singular vs plural ("1 day" vs "X days")
    - File: `apps/frontend/src/app/tasks/task-list.component.ts`
 
+2. **Exclude completed and cancelled tasks from overdue filter** (2025-11-04)
+   - Updated overdueOnly filter logic to exclude tasks with status 'Completed' or 'Cancelled'
+   - Ensures only actionable tasks (Todo, InProgress) appear when "Show Overdue Only" is checked
+   - File: `apps/frontend/src/app/tasks/task-list.component.ts` (lines 644-650)
+
 ## Implementation Notes
 
 - Check existing overdue filter in TaskListComponent (Use Case 2)
@@ -31,7 +36,7 @@ Implement functionality to quickly identify and highlight action items that have
 - [x] User can view all overdue action items (via existing "Show Overdue Only" filter)
 - [x] Overdue status is visually prominent (red badges, icons) (existing red text styling)
 - [x] "Days overdue" is calculated and displayed accurately
-- [ ] Completed and cancelled tasks are excluded from overdue list
+- [x] Completed and cancelled tasks are excluded from overdue list
 - [x] User can navigate from overdue task to full task detail (existing "View Details" button)
 - [ ] Empty state message when no tasks are overdue
 - [ ] Overdue tasks sorted by urgency (most overdue first)

@@ -642,7 +642,11 @@ export class TaskListComponent implements OnInit {
     }
 
     if (overdueOnly) {
-      filtered = filtered.filter(task => this.isOverdue(task.dueDate));
+      filtered = filtered.filter(task =>
+        this.isOverdue(task.dueDate) &&
+        task.status !== 'Completed' &&
+        task.status !== 'Cancelled'
+      );
     }
 
     if (search) {
