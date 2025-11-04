@@ -501,8 +501,10 @@ export class TaskDetailComponent implements OnInit {
   }
 
   onEdit(): void {
-    // TODO: Navigate to edit page (Use Case 4)
-    console.log('Edit task:', this.taskId());
+    const id = this.taskId();
+    if (id) {
+      this.router.navigate(['/tasks', id, 'edit']);
+    }
   }
 
   onComplete(): void {

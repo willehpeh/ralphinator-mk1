@@ -77,8 +77,16 @@ Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 - apps/frontend/src/app/tasks/store/tasks.reducer.ts
 **Description**: Added three reducer cases for task update flow: updateTask (sets loading state), updateTaskSuccess (updates task in array by id using map), and updateTaskFailure (sets error state). Updated imports to include updateTask, updateTaskSuccess, and updateTaskFailure actions. The updateTaskSuccess case uses Array.map() to replace the updated task while preserving all other tasks unchanged. Follows the established pattern from createTask reducers.
 
+### Task 11: Create EditTaskPageComponent for editing task details
+**Commit**: [Pending]
+**Files**:
+- apps/frontend/src/app/tasks/edit-task-page.component.ts
+- apps/frontend/src/app/app.routes.ts (route added for /tasks/:id/edit)
+- apps/frontend/src/app/tasks/task-detail.component.ts (updated onEdit to navigate to edit page)
+**Description**: Created EditTaskPageComponent that loads a task by ID from the route, pre-populates a form with the task's current data, and dispatches updateTask action on submission. The component uses NGRX store to select task data using selectTaskById selector, manages form state with FormState helper, and navigates back to task detail after successful update. The form includes all task fields (title, notes, status, priority, dueDate, clientId, projectId) with proper validation. Added route for /tasks/:id/edit and updated TaskDetailComponent's onEdit method to navigate to the edit page. Follows the established pattern from AddTaskPageComponent with reactive signals and effects.
+
 ## Next Task
-Create EditTaskPageComponent for editing task details
+None - Use Case Complete
 
 ## Use Case Status
-🔄 In Progress - Backend complete; Frontend NGRX reducer added
+✅ Complete - Full CRUD implementation for task details modification
