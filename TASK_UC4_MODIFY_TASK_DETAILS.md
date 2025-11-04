@@ -78,7 +78,7 @@ Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 **Description**: Added three reducer cases for task update flow: updateTask (sets loading state), updateTaskSuccess (updates task in array by id using map), and updateTaskFailure (sets error state). Updated imports to include updateTask, updateTaskSuccess, and updateTaskFailure actions. The updateTaskSuccess case uses Array.map() to replace the updated task while preserving all other tasks unchanged. Follows the established pattern from createTask reducers.
 
 ### Task 11: Create EditTaskPageComponent for editing task details
-**Commit**: [Pending]
+**Commit**: c7e23c7 - feat(frontend): Add EditTaskPageComponent for UC4 task details modification
 **Files**:
 - apps/frontend/src/app/tasks/edit-task-page.component.ts
 - apps/frontend/src/app/app.routes.ts (route added for /tasks/:id/edit)
