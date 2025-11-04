@@ -1,6 +1,10 @@
-import { Inject } from '@nestjs/common';
-import { BaseQueryHandler } from './base-query.handler';
 import { IContactReadRepository, INJECTION_TOKENS } from '../../ports';
+import { createTypedQueryHandler } from './create-typed-query-handler';
+
+// Create the base class with injected repository
+const ContactQueryHandlerBase = createTypedQueryHandler<IContactReadRepository>(
+  INJECTION_TOKENS.CONTACT_READ_REPOSITORY
+);
 
 /**
  * Base class for query handlers that work with contact read models.
@@ -9,12 +13,7 @@ import { IContactReadRepository, INJECTION_TOKENS } from '../../ports';
  * @template TQuery - The query type this handler processes
  * @template TResult - The return type of the query execution
  */
-export abstract class ContactQueryHandler<TQuery, TResult>
-  extends BaseQueryHandler<TQuery, TResult, IContactReadRepository> {
-  constructor(
-    @Inject(INJECTION_TOKENS.CONTACT_READ_REPOSITORY)
-    readRepository: IContactReadRepository
-  ) {
-    super(readRepository);
-  }
-}
+export abstract class ContactQueryHandler<
+  TQuery,
+  TResult
+> extends ContactQueryHandlerBase<TQuery, TResult> {}
