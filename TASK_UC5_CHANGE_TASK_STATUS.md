@@ -136,11 +136,22 @@ From CURRENT_USE_CASE.md:
 
 ---
 
-## Next Tasks (Remaining)
+### ✅ Task 7: Add changeTaskStatus reducer handlers
+**Completed**: 2025-11-04
+**Commit**: (pending)
+**File**: `apps/frontend/src/app/tasks/store/tasks.reducer.ts`
+**Description**:
+- Imported changeTaskStatus, changeTaskStatusSuccess, changeTaskStatusFailure actions
+- Added handler for changeTaskStatus action (sets loading state)
+- Added handler for changeTaskStatusSuccess action (updates task in array)
+- Added handler for changeTaskStatusFailure action (sets error state)
+- Follows same pattern as updateTask reducer handlers
+- Uses helper functions: setLoading, clearLoadingAndError, setError
+- Build verified successfully
 
-### Task 7: Add changeTaskStatus reducer handlers
-**Status**: Pending
-**Description**: Add reducer logic to handle status change actions.
+---
+
+## Next Tasks (Remaining)
 
 ### Task 8: Create status change UI component
 **Status**: Pending
