@@ -118,11 +118,23 @@ Allow users to see all action items with their priority, status, deadline, and c
    - Uses existing `isOverdue()` method for date comparison logic
    - Location: `apps/frontend/src/app/tasks/task-list.component.ts:84-93,268-293,558,576,596-598,630-633`
 
+12. ✅ Add search functionality to TaskListComponent
+   - Added `searchQuery` signal for search input state management
+   - Added search input field at the beginning of filter controls section
+   - Input field uses modern Angular binding (`[value]` and `(input)`)
+   - Search input includes professional styling with placeholder text
+   - Search input has flex layout to take available space responsively
+   - Updated `filteredTasks` computed to filter tasks by search query
+   - Search filters by title and notes (case-insensitive)
+   - Added `onSearchChange()` method to handle search input changes
+   - Added CSS styling for search input with hover and focus states
+   - Search works in combination with all other filters (priority, status, client, project, overdue)
+   - Location: `apps/frontend/src/app/tasks/task-list.component.ts:26-35,250-286,559,578,602-607,644-647`
+
 ### Pending Tasks
-12. ⏳ Add search functionality
 13. ⏳ Test the complete flow
 
 ---
 
 **Last Updated:** 2025-11-04
-**Status:** In Progress - All filters completed (priority, status, client, project, overdue); search functionality pending
+**Status:** In Progress - All filters and search completed; testing pending

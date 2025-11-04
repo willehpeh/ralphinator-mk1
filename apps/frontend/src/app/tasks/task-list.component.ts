@@ -23,6 +23,17 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
 
       <!-- Filter Controls -->
       <div class="filter-controls">
+        <div class="filter-group search-group">
+          <label for="task-search" class="filter-label">Search:</label>
+          <input
+            id="task-search"
+            type="text"
+            class="search-input"
+            placeholder="Search by title or notes..."
+            [value]="searchQuery()"
+            (input)="onSearchChange($event)">
+        </div>
+
         <div class="filter-group">
           <label for="priority-filter" class="filter-label">Filter by Priority:</label>
           <select
@@ -236,11 +247,42 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
       gap: 1rem;
     }
 
+    .search-group {
+      flex: 1 1 300px;
+      min-width: 250px;
+    }
+
     .filter-label {
       font-size: 0.95rem;
       font-weight: 600;
       color: #2c3e50;
       white-space: nowrap;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 0.5rem 1rem;
+      border: 1px solid #d5dbdb;
+      border-radius: 4px;
+      background-color: white;
+      color: #2c3e50;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+    }
+
+    .search-input::placeholder {
+      color: #95a5a6;
+      font-style: italic;
+    }
+
+    .search-input:hover {
+      border-color: #3498db;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
     }
 
     .filter-select {
@@ -556,6 +598,7 @@ export class TaskListComponent implements OnInit {
   selectedClientId = signal<string>('');
   selectedProjectId = signal<string>('');
   showOverdueOnly = signal<boolean>(false);
+  searchQuery = signal<string>('');
 
   // Computed unique project IDs from all tasks
   uniqueProjectIds = computed(() => {
@@ -574,6 +617,7 @@ export class TaskListComponent implements OnInit {
     const clientId = this.selectedClientId();
     const projectId = this.selectedProjectId();
     const overdueOnly = this.showOverdueOnly();
+    const search = this.searchQuery().toLowerCase().trim();
 
     let filtered = allTasks;
 
@@ -595,6 +639,13 @@ export class TaskListComponent implements OnInit {
 
     if (overdueOnly) {
       filtered = filtered.filter(task => this.isOverdue(task.dueDate));
+    }
+
+    if (search) {
+      filtered = filtered.filter(task =>
+        task.title.toLowerCase().includes(search) ||
+        (task.notes && task.notes.toLowerCase().includes(search))
+      );
     }
 
     return filtered;
@@ -630,6 +681,11 @@ export class TaskListComponent implements OnInit {
   onOverdueFilterChange(event: Event): void {
     const checkboxElement = event.target as HTMLInputElement;
     this.showOverdueOnly.set(checkboxElement.checked);
+  }
+
+  onSearchChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    this.searchQuery.set(inputElement.value);
   }
 
   onAddTask(): void {
