@@ -105,13 +105,21 @@ From CURRENT_USE_CASE.md:
 - Follows same pattern as updateTask actions
 - Build verified successfully
 
+### ✅ Task 5: Add changeTaskStatus method to TasksService
+**Completed**: 2025-11-04
+**Commit**: (pending)
+**File**: `apps/frontend/src/app/tasks/tasks.service.ts`
+**Description**:
+- Imported ChangeTaskStatusDto from @angular-nest-starter/shared-types
+- Added changeTaskStatus method that accepts id and dto parameters
+- Method uses HTTP PATCH to `/api/tasks/:id/status` endpoint
+- Returns Observable<Task> with updated task data
+- Follows same pattern as updateTask method
+- Build verified successfully
+
 ---
 
 ## Next Tasks (Remaining)
-
-### Task 5: Add changeTaskStatus method to TasksService
-**Status**: Next
-**Description**: Add HTTP method to call the PATCH /tasks/:id/status endpoint.
 
 ### Task 6: Add changeTaskStatus effect to TasksEffects
 **Status**: Pending
