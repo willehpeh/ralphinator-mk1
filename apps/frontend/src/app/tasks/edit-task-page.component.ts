@@ -14,7 +14,7 @@ import { FormState } from '../shared/form-state';
 import { ValidationErrorComponent } from '../shared/validation-error.component';
 import { TaskStatus, TaskPriority } from '@angular-nest-starter/shared-types';
 import { SUCCESS_MESSAGE_DISMISS_DURATION_MS } from '../shared/ui.constants';
-import { formatDateForInput } from '../shared/date-format-utils';
+import { formatDateForInput } from '../shared/date-utils';
 
 interface TaskEditFormFields {
   title: FormControl<string>;

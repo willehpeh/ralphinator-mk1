@@ -1,7 +1,27 @@
 /**
- * Shared date utility functions for task date formatting and calculations.
- * Centralized to ensure consistency across components.
+ * Unified date utility functions
+ * Provides consistent date formatting and calculations across the application
  */
+
+/**
+ * Format Date object or ISO string to YYYY-MM-DD string for input[type="date"]
+ *
+ * @param date - Date object or ISO date string
+ * @returns Formatted date string in YYYY-MM-DD format
+ *
+ * @example
+ * ```typescript
+ * formatDateForInput(new Date('2024-03-15')); // '2024-03-15'
+ * formatDateForInput('2024-03-15T10:30:00Z'); // '2024-03-15'
+ * ```
+ */
+export function formatDateForInput(date: Date | string): string {
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 
 /**
  * Formats a date in a human-readable format.
@@ -17,7 +37,7 @@ export function formatDate(date: Date | null): string {
 /**
  * Checks if a given due date is overdue (past today).
  * @param dueDate The due date to check
- * @param includeCompleted If false, completed tasks are never considered overdue
+ * @param isCompleted If true, completed tasks are never considered overdue
  * @returns True if the date is in the past
  */
 export function isOverdue(dueDate: Date | null, isCompleted = false): boolean {

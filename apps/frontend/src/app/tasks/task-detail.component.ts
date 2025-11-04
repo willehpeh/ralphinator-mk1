@@ -7,7 +7,7 @@ import * as TasksActions from './store/tasks.actions';
 import { TaskStatusChangeComponent } from './components/task-status-change.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { TaskStatus } from '@angular-nest-starter/shared-types';
-import { formatOverdueText, formatDeadlineText, isOverdue as isTaskOverdue } from './utils/date-utils';
+import { formatOverdueText, formatDeadlineText, isOverdue as isTaskOverdue } from '../shared/date-utils';
 
 @Component({
   selector: 'app-task-detail',

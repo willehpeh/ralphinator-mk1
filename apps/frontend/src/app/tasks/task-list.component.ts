@@ -8,7 +8,7 @@ import { selectAllClients } from '../clients/store/clients.selectors';
 import * as ClientsActions from '../clients/store/clients.actions';
 import { TASK_UI_TEXT } from './task-display.constants';
 import { TaskStatus } from '@angular-nest-starter/shared-types';
-import { formatDate, isOverdue, daysOverdue } from './utils/date-utils';
+import { formatDate, isOverdue, daysOverdue } from '../shared/date-utils';
 import { formatTaskStatus } from './utils/task-display-utils';
 import { extractSelectValue, extractInputValue, extractCheckboxValue } from '../shared/form-event-utils';
 

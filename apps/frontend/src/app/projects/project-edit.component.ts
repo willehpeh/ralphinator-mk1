@@ -10,7 +10,7 @@ import { ProjectsService } from './projects.service';
 import { FormState } from '../shared/form-state';
 import { ValidationErrorComponent } from '../shared/validation-error.component';
 import { SUCCESS_MESSAGE_DISMISS_DURATION_MS } from '../shared/ui.constants';
-import { formatDateForInput } from '../shared/date-format-utils';
+import { formatDateForInput } from '../shared/date-utils';
 
 interface ProjectEditFormFields {
   clientId: FormControl<string>;

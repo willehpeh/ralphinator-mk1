@@ -24,7 +24,7 @@ import { ProjectDto } from '@angular-nest-starter/shared-types';
 import { TasksService } from '../tasks/tasks.service';
 import { Task } from '../tasks/task.types';
 import { formatTaskStatus, isTaskOverdue } from '../tasks/utils/task-display-utils';
-import { formatDate } from '../tasks/utils/date-utils';
+import { formatDate } from '../shared/date-utils';
 
 @Component({
   selector: 'app-client-detail',
