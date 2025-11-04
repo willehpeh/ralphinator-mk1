@@ -34,7 +34,7 @@ Implement the ability to view all tasks associated with a specific project withi
 - [x] Task 19: Add "Add Task" button that navigates to /tasks/add with projectId pre-populated (commit: fe433a8)
 - [x] Task 20: Make task cards clickable to navigate to task detail page (/tasks/:id) (commit: f1f137c)
 - [x] Task 21: Add professional styling with hover effects for task cards (commit: c3037c7)
-- [x] Task 22: Add loading state spinner while fetching tasks (commit: pending)
+- [x] Task 22: Add loading state spinner while fetching tasks (commit: d638cf2)
 - [ ] Task 23: Add error state handling with user-friendly error messages
 
 ### Testing & Verification
