@@ -23,6 +23,8 @@ import { ProjectsService } from '../projects/projects.service';
 import { ProjectDto } from '@angular-nest-starter/shared-types';
 import { TasksService } from '../tasks/tasks.service';
 import { Task } from '../tasks/task.types';
+import { formatTaskStatus, isTaskOverdue } from '../tasks/utils/task-display-utils';
+import { formatDate } from '../tasks/utils/date-utils';
 
 @Component({
   selector: 'app-client-detail',
@@ -487,23 +489,15 @@ export class ClientDetailComponent {
 
   // Task helper methods
   formatTaskStatus(status: string): string {
-    // Convert 'InProgress' to 'In Progress', etc.
-    return status.replace(/([A-Z])/g, ' $1').trim();
+    return formatTaskStatus(status);
   }
 
   isTaskOverdue(dueDate: Date | null): boolean {
-    if (!dueDate) return false;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const due = new Date(dueDate);
-    due.setHours(0, 0, 0, 0);
-    return due < today;
+    return isTaskOverdue(dueDate);
   }
 
   formatTaskDate(date: Date | null): string {
-    if (!date) return '';
-    const d = new Date(date);
-    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    return formatDate(date);
   }
 
   viewTaskDetails(taskId: string): void {

@@ -9,6 +9,7 @@ import * as ClientsActions from '../clients/store/clients.actions';
 import { TASK_UI_TEXT } from './task-display.constants';
 import { TaskStatus } from '@angular-nest-starter/shared-types';
 import { formatDate, isOverdue, daysOverdue } from './utils/date-utils';
+import { formatTaskStatus } from './utils/task-display-utils';
 
 @Component({
   selector: 'app-task-list',
@@ -343,7 +344,7 @@ export class TaskListComponent implements OnInit {
   }
 
   formatStatus(status: TaskStatus): string {
-    return status.replace(/_/g, ' ');
+    return formatTaskStatus(status);
   }
 
   formatDate(date: Date | null): string {

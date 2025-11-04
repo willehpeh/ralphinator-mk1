@@ -11,6 +11,7 @@ import { StatusChangeDialogComponent } from '../shared/status-change-dialog.comp
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 import { loadProjectTasks } from '../tasks/store/tasks.actions';
 import { selectTasksByProjectId, selectTasksLoading, selectTasksError } from '../tasks/store/tasks.selectors';
+import { isTaskOverdue } from '../tasks/utils/task-display-utils';
 
 @Component({
   selector: 'app-project-detail',
@@ -397,14 +398,6 @@ export class ProjectDetailComponent {
   }
 
   isTaskOverdue(task: any): boolean {
-    if (!task.dueDate) return false;
-    if (task.status === 'Completed' || task.status === 'Cancelled') return false;
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const dueDate = new Date(task.dueDate);
-    dueDate.setHours(0, 0, 0, 0);
-
-    return dueDate < today;
+    return isTaskOverdue(task.dueDate, task.status);
   }
 }
