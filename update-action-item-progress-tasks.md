@@ -36,6 +36,21 @@
 - Added `getCompletedAt()` getter method
 - Follows event sourcing pattern with event application
 
+###  Task 3: Create ChangeTaskStatusCommand
+**Status**: Completed
+**Commit**: (pending)
+**Files Created**:
+- `packages/application/src/lib/commands/change-task-status.command.ts`
+
+**Files Modified**:
+- `packages/application/src/lib/application.ts` - Exported new command
+
+**Description**: Created CQRS command to represent task status change requests:
+- Accepts `taskId` (string) and `newStatus` (TaskStatus)
+- Follows CQRS pattern as immutable data structure
+- Imported TaskStatus type from shared-types package
+- Follows naming convention: `{Verb}{Noun}Command`
+
 ---
 
 ## Tasks Remaining
@@ -47,7 +62,7 @@
 - [x] Add `getCompletedAt()` getter to TaskAggregate
 
 ### Application Layer
-- [ ] Create ChangeTaskStatusCommand
+- [x] Create ChangeTaskStatusCommand
 - [ ] Create ChangeTaskStatusHandler
 - [ ] Add tests for ChangeTaskStatusHandler
 

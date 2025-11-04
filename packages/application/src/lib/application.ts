@@ -15,6 +15,7 @@ export * from './commands/delete-project.command';
 export * from './commands/task-data.payload';
 export * from './commands/create-task.command';
 export * from './commands/update-task-details.command';
+export * from './commands/change-task-status.command';
 
 // Command Handlers
 export * from './commands/handlers/create-client.handler';
