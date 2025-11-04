@@ -137,6 +137,13 @@ import { loadProjectTasks } from '../tasks/store/tasks.actions';
               </div>
             </div>
           </div>
+
+          <div class="detail-section">
+            <h4>Tasks</h4>
+            <div class="tasks-content">
+              <!-- Tasks will be displayed here -->
+            </div>
+          </div>
         </div>
       }
 
