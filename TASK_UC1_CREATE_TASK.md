@@ -120,7 +120,7 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 **Description**: Created TasksEffects with createTask$ effect to handle API calls for task creation. Follows the established pattern from ClientsEffects with reusable error handler. Uses inject() for dependency injection and handles success/failure actions.
 
 ### Task 16: TasksReducer to manage task state
-**Commit**: (next) - feat(frontend): Add tasks.reducer.ts to manage task state
+**Commit**: 874cc3d - feat(frontend): Add tasks.reducer.ts to manage task state
 **Files**:
 - apps/frontend/src/app/tasks/store/tasks.reducer.ts
 **Description**: Created tasksReducer with TasksState interface following the established pattern from clients.reducer.ts. Implements state management for task creation actions (createTask, createTaskSuccess, createTaskFailure) with helper functions for common state transitions.
