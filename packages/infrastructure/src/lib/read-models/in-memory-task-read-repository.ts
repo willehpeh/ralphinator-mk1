@@ -21,5 +21,16 @@ export class InMemoryTaskReadRepository
   implements ITaskReadRepository
 {
   // All CRUD methods (findById, findAll, save, delete) are inherited from BaseInMemoryReadRepository
-  // Additional task-specific query methods can be added here in future iterations as needed
+
+  /**
+   * Find all tasks associated with a specific project
+   *
+   * @param projectId - The unique identifier of the project
+   * @returns Promise resolving to array of tasks for the project
+   */
+  async findByProjectId(projectId: string): Promise<TaskReadModel[]> {
+    return Array.from(this.items.values()).filter(
+      (task) => task.projectId === projectId
+    );
+  }
 }
