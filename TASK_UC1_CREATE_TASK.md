@@ -126,13 +126,20 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 **Description**: Created tasksReducer with TasksState interface following the established pattern from clients.reducer.ts. Implements state management for task creation actions (createTask, createTaskSuccess, createTaskFailure) with helper functions for common state transitions.
 
 ### Task 17: Tasks NGRX selectors
-**Commit**: (pending)
+**Commit**: 5991261 - feat(frontend): Add NGRX selectors for tasks state
 **Files**:
 - apps/frontend/src/app/tasks/store/tasks.selectors.ts
 **Description**: Created NGRX selectors for tasks state including selectTasksState (feature selector), selectAllTasks, selectTasksLoading, selectTasksError, selectHasTasks, and selectTaskById. These selectors provide type-safe access to task state slices following the established pattern from clients.selectors.ts.
 
+### Task 18: Register tasks feature in app.config.ts
+**Commit**: c14b947 - feat(frontend): Register tasks feature in app.config.ts
+**Files**:
+- apps/frontend/src/app/app.config.ts
+- apps/frontend/src/app/tasks/store/tasks.effects.ts (fix for type conversion)
+**Description**: Registered the tasks NGRX state and effects in app.config.ts using provideState and provideEffects. Fixed TasksEffects to properly convert CreateTaskInput to Task type by handling optional fields (converting undefined to null) and adding createdAt timestamp when dispatching createTaskSuccess action.
+
 ## Next Task
-Frontend: Register tasks feature in app.config.ts with provideState
+Frontend: Create TaskFormComponent for add/edit task form
 
 ## Use Case Status
 ❌ Not Complete - Still need frontend implementation
