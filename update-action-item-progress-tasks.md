@@ -53,7 +53,7 @@
 
 ###  Task 4: Create ChangeTaskStatusHandler
 **Status**: Completed
-**Commit**: [pending]
+**Commit**: 23cb5b2
 **Files Created**:
 - `packages/application/src/lib/commands/handlers/change-task-status.handler.ts`
 
