@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { TasksService } from '../tasks.service';
-import { createTask, createTaskSuccess, createTaskFailure, updateTask, updateTaskSuccess, updateTaskFailure, changeTaskStatus, changeTaskStatusSuccess, changeTaskStatusFailure, loadTasks, loadTasksSuccess, loadTasksFailure } from './tasks.actions';
+import { createTask, createTaskSuccess, createTaskFailure, updateTask, updateTaskSuccess, updateTaskFailure, changeTaskStatus, changeTaskStatusSuccess, changeTaskStatusFailure, loadTasks, loadTasksSuccess, loadTasksFailure, deleteTask, deleteTaskSuccess, deleteTaskFailure } from './tasks.actions';
 
 /**
  * NGRX Effects for task-related side effects
@@ -98,6 +98,22 @@ export class TasksEffects {
         this.tasksService.getAllTasks().pipe(
           map((tasks) => loadTasksSuccess({ tasks })),
           catchError(this.handleError(loadTasksFailure, 'Failed to load tasks'))
+        )
+      )
+    )
+  );
+
+  /**
+   * Effect to delete a task from the backend
+   * Listens for deleteTask action, calls the service, and dispatches success/failure
+   */
+  deleteTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteTask),
+      switchMap((action) =>
+        this.tasksService.deleteTask(action.id).pipe(
+          map(() => deleteTaskSuccess({ id: action.id })),
+          catchError(this.handleError(deleteTaskFailure, 'Failed to delete task'))
         )
       )
     )
