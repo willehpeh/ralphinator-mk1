@@ -76,7 +76,7 @@ From CURRENT_USE_CASE.md:
 
 ### ✅ Task 3: Add PATCH /api/tasks/:id/status endpoint
 **Completed**: 2025-11-04
-**Commit**: [pending]
+**Commit**: 0e7ff3e
 **Files**:
 - `packages/shared-types/src/lib/dtos/task.dtos.ts` - Created ChangeTaskStatusDto
 - `apps/api/src/app/tasks/tasks.controller.ts` - Added PATCH endpoint
