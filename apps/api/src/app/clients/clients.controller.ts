@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, NotFoundException } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateClientCommand, UpdateClientCommand, ChangeClientStatusCommand, DeleteClientCommand, GetClientByIdQuery, GetAllClientsQuery, GetClientsByStatusQuery, ClientReadModel, ClientDataPayload, AddContactToClientCommand, GetClientContactsQuery, ContactReadModel } from '@angular-nest-starter/application';
 import { ClientDataDto, CreateClientDto, UpdateClientDto, ChangeClientStatusDto, ClientStatus, AddContactDto, AddContactResponse } from '@angular-nest-starter/shared-types';
 import { ContactData } from '@angular-nest-starter/domain';
 import { randomUUID } from 'crypto';
-import { CLIENT_CONTROLLER_ERROR_MESSAGES } from './clients-controller.constants';
+import { fetchEntityAfterMutation } from '../shared/controller-utilities';
 
 @Controller('clients')
 export class ClientsController {
@@ -12,31 +12,6 @@ export class ClientsController {
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus
   ) {}
-
-  /**
-   * Helper method to fetch a client by ID after a mutation command.
-   * Throws a NotFoundException if the client is not found.
-   *
-   * @param clientId - The ID of the client to fetch
-   * @param operation - Description of the operation for error message (e.g., 'update', 'status change')
-   * @returns The client read model
-   * @throws NotFoundException if the client is not found after the mutation
-   */
-  private async fetchClientAfterMutation(
-    clientId: string,
-    operation: string
-  ): Promise<ClientReadModel> {
-    const query = new GetClientByIdQuery(clientId);
-    const client = await this.queryBus.execute<GetClientByIdQuery, ClientReadModel | null>(query);
-
-    if (!client) {
-      throw new NotFoundException(
-        CLIENT_CONTROLLER_ERROR_MESSAGES.CLIENT_NOT_FOUND_AFTER_MUTATION(clientId, operation)
-      );
-    }
-
-    return client;
-  }
 
   /**
    * Helper method to create ClientDataPayload from DTO.
@@ -103,7 +78,14 @@ export class ClientsController {
     );
 
     // Return the updated client to avoid unnecessary refetch
-    return this.fetchClientAfterMutation(clientId, 'update');
+    return fetchEntityAfterMutation(
+      this.queryBus,
+      GetClientByIdQuery,
+      [clientId],
+      'Client',
+      clientId,
+      'update'
+    );
   }
 
   @Patch(':id/status')
@@ -118,7 +100,14 @@ export class ClientsController {
     );
 
     // Return the updated client to avoid unnecessary refetch
-    return this.fetchClientAfterMutation(clientId, 'status change');
+    return fetchEntityAfterMutation(
+      this.queryBus,
+      GetClientByIdQuery,
+      [clientId],
+      'Client',
+      clientId,
+      'status change'
+    );
   }
 
   @Delete(':id')

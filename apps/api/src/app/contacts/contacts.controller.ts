@@ -1,9 +1,9 @@
-import { Controller, Get, Param, Put, Body, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Param, Put, Body, Delete } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { GetContactByIdQuery, GetAllContactsQuery, ContactReadModel, UpdateContactCommand, RemoveContactCommand } from '@angular-nest-starter/application';
 import { UpdateContactDto } from '@angular-nest-starter/shared-types';
 import { ContactData } from '@angular-nest-starter/domain';
-import { CONTACT_CONTROLLER_ERROR_MESSAGES } from './contacts-controller.constants';
+import { fetchAndValidateEntity } from '../shared/controller-utilities';
 
 @Controller('contacts')
 export class ContactsController {
@@ -26,28 +26,14 @@ export class ContactsController {
     return contact;
   }
 
-  /**
-   * Helper method to fetch and validate a contact exists before mutation operations.
-   * Retrieves the contact and throws NotFoundException if not found.
-   *
-   * @param id - The contact ID to fetch and validate
-   * @returns The contact read model including clientId needed for commands
-   * @throws NotFoundException if the contact is not found
-   */
-  private async fetchAndValidateContact(id: string): Promise<ContactReadModel> {
-    const query = new GetContactByIdQuery(id);
-    const contact = await this.queryBus.execute<GetContactByIdQuery, ContactReadModel | null>(query);
-
-    if (!contact) {
-      throw new NotFoundException(CONTACT_CONTROLLER_ERROR_MESSAGES.CONTACT_NOT_FOUND);
-    }
-
-    return contact;
-  }
-
   @Put(':id')
   async updateContact(@Param('id') id: string, @Body() dto: UpdateContactDto): Promise<void> {
-    const contact = await this.fetchAndValidateContact(id);
+    const contact = await fetchAndValidateEntity<GetContactByIdQuery, ContactReadModel>(
+      this.queryBus,
+      GetContactByIdQuery,
+      [id],
+      'Contact'
+    );
 
     const contactData = ContactData.fromDto(id, dto);
 
@@ -57,7 +43,12 @@ export class ContactsController {
 
   @Delete(':id')
   async deleteContact(@Param('id') id: string): Promise<void> {
-    const contact = await this.fetchAndValidateContact(id);
+    const contact = await fetchAndValidateEntity<GetContactByIdQuery, ContactReadModel>(
+      this.queryBus,
+      GetContactByIdQuery,
+      [id],
+      'Contact'
+    );
 
     const command = new RemoveContactCommand(contact.clientId, id);
     await this.commandBus.execute(command);

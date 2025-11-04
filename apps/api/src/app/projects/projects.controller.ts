@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, NotFoundException } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateProjectCommand, UpdateProjectDetailsCommand, ChangeProjectStatusCommand, DeleteProjectCommand, GetProjectsByClientIdQuery, GetProjectByIdQuery, ProjectReadModel, ProjectDataPayload } from '@angular-nest-starter/application';
 import { CreateProjectDto, UpdateProjectDto, ChangeProjectStatusDto, CreateProjectResponse } from '@angular-nest-starter/shared-types';
 import { randomUUID } from 'crypto';
+import { fetchEntityAfterMutation } from '../shared/controller-utilities';
 
 @Controller('clients/:clientId/projects')
 export class ProjectsController {
@@ -10,31 +11,6 @@ export class ProjectsController {
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus
   ) {}
-
-  /**
-   * Helper method to fetch a project by ID after a mutation command.
-   * Throws a NotFoundException if the project is not found.
-   *
-   * @param projectId - The ID of the project to fetch
-   * @param operation - Description of the operation for error message (e.g., 'update')
-   * @returns The project read model
-   * @throws NotFoundException if the project is not found after the mutation
-   */
-  private async fetchProjectAfterMutation(
-    projectId: string,
-    operation: string
-  ): Promise<ProjectReadModel> {
-    const query = new GetProjectByIdQuery(projectId);
-    const project = await this.queryBus.execute<GetProjectByIdQuery, ProjectReadModel | null>(query);
-
-    if (!project) {
-      throw new NotFoundException(
-        `Project with ID ${projectId} not found after ${operation}`
-      );
-    }
-
-    return project;
-  }
 
   /**
    * Helper method to create ProjectDataPayload from DTO.
@@ -95,7 +71,14 @@ export class ProjectsController {
     );
 
     // Return the updated project to avoid unnecessary refetch
-    return this.fetchProjectAfterMutation(updatedProjectId, 'update');
+    return fetchEntityAfterMutation(
+      this.queryBus,
+      GetProjectByIdQuery,
+      [updatedProjectId],
+      'Project',
+      updatedProjectId,
+      'update'
+    );
   }
 
   @Patch(':projectId/status')
@@ -110,7 +93,14 @@ export class ProjectsController {
     );
 
     // Return the updated project to avoid unnecessary refetch
-    return this.fetchProjectAfterMutation(updatedProjectId, 'status change');
+    return fetchEntityAfterMutation(
+      this.queryBus,
+      GetProjectByIdQuery,
+      [updatedProjectId],
+      'Project',
+      updatedProjectId,
+      'status change'
+    );
   }
 
   @Delete(':projectId')
