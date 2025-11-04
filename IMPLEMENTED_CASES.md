@@ -901,3 +901,58 @@
 - Success guarantee met: Project status accurately reflects current state and status change is recorded in history
 - Documentation: change-project-status.md
 - **Note**: Core functionality complete and working end-to-end. Optional extensions (end date prompts, success toast) can be added in future iterations.
+
+## Use Case 1: Record a New Action Item (2025-11-04) ✅ COMPLETE
+- Complete CQRS + Event Sourcing implementation for task management
+- Domain: TaskAggregate with event-sourced create() factory method
+- Domain: TaskCreatedDomainEvent captures task creation with all fields
+- Domain: TaskData value object encapsulates task information
+- Domain: TaskStatus enum (Todo, InProgress, Completed, Cancelled) defined in shared-types
+- Domain: TaskPriority enum (Low, Medium, High, Urgent) defined in shared-types
+- Application: CreateTaskCommand and TaskDataPayload for command processing
+- Application: CreateTaskCommandHandler loads aggregate, creates task, persists events
+- Application: TaskReadModel DTO for query responses
+- Application: ITaskReadRepository port interface with CRUD operations and injection token
+- Infrastructure: InMemoryTaskReadRepository implementation with Map-based storage
+- Infrastructure: TaskProjection handles TaskCreatedDomainEvent and builds read models
+- Backend: TasksModule with CQRS handlers, event handlers, and infrastructure providers
+- Backend: TasksController with POST /api/tasks endpoint
+- Backend: Task DTOs (CreateTaskDto, UpdateTaskDto, CreateTaskResponse, TaskDto) with validation decorators
+- Backend: Validation for required fields (title, status, priority), optional fields (notes, dueDate, clientId, projectId)
+- Frontend: Task type interfaces (Task, CreateTaskInput, UpdateTaskInput) for type safety
+- Frontend: NGRX actions for task creation (createTask, createTaskSuccess, createTaskFailure)
+- Frontend: TasksService for API communication (createTask, getAllTasks, getTaskById methods)
+- Frontend: TasksEffects with createTask$ effect for handling async API calls
+- Frontend: tasksReducer with TasksState interface for state management
+- Frontend: NGRX selectors (selectTasksState, selectAllTasks, selectTasksLoading, selectTasksError, selectHasTasks, selectTaskById)
+- Frontend: Tasks feature registered in app.config.ts with provideState and provideEffects
+- Frontend: task.constants.ts with TASK_STATUSES, TASK_PRIORITIES, default values
+- Frontend: task-display.constants.ts with TASK_UI_TEXT, TASK_FORM_LABELS, TASK_ERROR_MESSAGES
+- Frontend: TaskFormComponent with reactive forms and comprehensive validation
+- Frontend: Form fields for title (required), status (required), priority (required), notes, dueDate, clientId, projectId
+- Frontend: TaskFormComponent emits taskSubmitted and formCancelled output events
+- Frontend: AddTaskPageComponent container component connects TaskFormComponent to NGRX store
+- Frontend: AddTaskPageComponent dispatches createTask action, handles loading/error/success states
+- Frontend: Route /tasks/add configured in app.routes.ts for task creation page
+- Frontend: Professional styling with modern Angular patterns (standalone, signals, OnPush)
+- Event sourcing: All task creations captured as immutable events in event store
+- Projections: Task read models built from TaskCreatedDomainEvent
+- All main success scenario steps met:
+  - User decides to record a new action item ✅
+  - User provides title describing the action ✅
+  - User optionally adds detailed notes ✅
+  - User indicates priority (Low, Medium, High, Urgent) ✅
+  - User indicates current state (To Do, In Progress, Completed, Cancelled) ✅
+  - User optionally sets deadline (dueDate field) ✅
+  - User optionally associates with client or project ✅
+  - System validates information is complete and consistent ✅
+  - System records the action item ✅
+  - System confirms action item has been recorded ✅
+  - User sees newly recorded action item (via navigation) ✅
+- Extensions handled:
+  - 8a: Missing required information - form validation highlights missing fields ✅
+  - 8b: Invalid deadline - date input validation enforces valid dates ✅
+  - 7a1: Client/project consistency - future enhancement (not enforced yet)
+- Success guarantee met: Action item is recorded in the system and available for tracking
+- Documentation: TASK_UC1_CREATE_TASK.md
+- **Note**: Complete end-to-end implementation with 23 tasks completed. Full CQRS + Event Sourcing pattern with professional UI.
