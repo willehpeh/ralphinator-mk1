@@ -17,6 +17,7 @@ export * from './lib/events/project-details-updated.domain-event';
 export * from './lib/events/project-status-changed.domain-event';
 export * from './lib/events/project-deleted.domain-event';
 export * from './lib/events/task-created.domain-event';
+export * from './lib/events/task-details-updated.domain-event';
 export * from './lib/aggregates/client.aggregate';
 export * from './lib/aggregates/project.aggregate';
 export * from './lib/aggregates/task.aggregate';

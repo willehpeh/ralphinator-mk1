@@ -5,4 +5,5 @@
  */
 export const TASK_EVENT_TYPES = {
   CREATED: 'TaskCreatedDomainEvent',
+  DETAILS_UPDATED: 'TaskDetailsUpdatedDomainEvent',
 } as const;
