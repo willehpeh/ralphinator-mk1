@@ -99,26 +99,36 @@ export class ProjectAggregate extends EventSourcedAggregate {
   }
 
   /**
+   * Helper method to update project fields from ProjectData
+   * Used by event handlers to apply state changes consistently
+   *
+   * @param projectData - Value object containing project information
+   */
+  private updateProjectFields(projectData: ProjectData): void {
+    this.clientId = projectData.clientId;
+    this.name = projectData.name;
+    this.status = projectData.status;
+    this.description = projectData.description;
+    this.startDate = projectData.startDate
+      ? projectData.startDate.toISOString()
+      : null;
+    this.expectedEndDate = projectData.expectedEndDate
+      ? projectData.expectedEndDate.toISOString()
+      : null;
+    this.actualEndDate = projectData.actualEndDate
+      ? projectData.actualEndDate.toISOString()
+      : null;
+    this.budget = projectData.budget;
+    this.technicalNotes = projectData.technicalNotes;
+  }
+
+  /**
    * Event handler for ProjectCreatedDomainEvent
    * Initializes the aggregate state when a new project is created
    */
   private onProjectCreated(event: ProjectCreatedDomainEvent): void {
     this.id = event.aggregateId;
-    this.clientId = event.projectData.clientId;
-    this.name = event.projectData.name;
-    this.status = event.projectData.status;
-    this.description = event.projectData.description;
-    this.startDate = event.projectData.startDate
-      ? event.projectData.startDate.toISOString()
-      : null;
-    this.expectedEndDate = event.projectData.expectedEndDate
-      ? event.projectData.expectedEndDate.toISOString()
-      : null;
-    this.actualEndDate = event.projectData.actualEndDate
-      ? event.projectData.actualEndDate.toISOString()
-      : null;
-    this.budget = event.projectData.budget;
-    this.technicalNotes = event.projectData.technicalNotes;
+    this.updateProjectFields(event.projectData);
   }
 
   /**
@@ -126,21 +136,7 @@ export class ProjectAggregate extends EventSourcedAggregate {
    * Updates the aggregate state when project details are modified
    */
   private onProjectDetailsUpdated(event: ProjectDetailsUpdatedDomainEvent): void {
-    this.clientId = event.projectData.clientId;
-    this.name = event.projectData.name;
-    this.status = event.projectData.status;
-    this.description = event.projectData.description;
-    this.startDate = event.projectData.startDate
-      ? event.projectData.startDate.toISOString()
-      : null;
-    this.expectedEndDate = event.projectData.expectedEndDate
-      ? event.projectData.expectedEndDate.toISOString()
-      : null;
-    this.actualEndDate = event.projectData.actualEndDate
-      ? event.projectData.actualEndDate.toISOString()
-      : null;
-    this.budget = event.projectData.budget;
-    this.technicalNotes = event.projectData.technicalNotes;
+    this.updateProjectFields(event.projectData);
   }
 
   /**
