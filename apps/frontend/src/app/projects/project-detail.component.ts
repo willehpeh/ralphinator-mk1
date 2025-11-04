@@ -1,9 +1,8 @@
 import { Component, ChangeDetectionStrategy, inject, signal, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { toSignal, toObservable } from '@angular/core/rxjs-interop';
-import { map, switchMap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { ProjectsService } from './projects.service';
 import { ProjectDto, ProjectStatus } from '@angular-nest-starter/shared-types';
@@ -239,34 +238,8 @@ export class ProjectDetailComponent {
     { initialValue: null }
   );
 
-  // Load project data reactively when projectId changes
-  project = toSignal(
-    toObservable(this.projectId).pipe(
-      switchMap(id => {
-        if (!id) {
-          this.error.set('No project ID provided');
-          return of(null);
-        }
-
-        this.loading.set(true);
-        this.error.set(null);
-
-        return this.projectsService.getProjectById(id).pipe(
-          map(project => {
-            this.loading.set(false);
-            return project;
-          }),
-          catchError(err => {
-            console.error('Error loading project:', err);
-            this.error.set('Failed to load project details. Please try again later.');
-            this.loading.set(false);
-            return of(null);
-          })
-        );
-      })
-    ),
-    { initialValue: null }
-  );
+  // Use a writable signal for project data to allow updates
+  project = signal<ProjectDto | null>(null);
 
   // Select tasks for this project
   projectTasks = computed(() => {
@@ -281,8 +254,33 @@ export class ProjectDetailComponent {
   // Select tasks error state
   tasksError = this.store.selectSignal(selectTasksError);
 
-  // Load project tasks whenever projectId changes
+  // Load project and tasks whenever projectId changes
   constructor() {
+    // Load project data
+    effect(() => {
+      const id = this.projectId();
+      if (!id) {
+        this.error.set('No project ID provided');
+        return;
+      }
+
+      this.loading.set(true);
+      this.error.set(null);
+
+      this.projectsService.getProjectById(id).subscribe({
+        next: (project) => {
+          this.project.set(project);
+          this.loading.set(false);
+        },
+        error: (err) => {
+          console.error('Error loading project:', err);
+          this.error.set('Failed to load project details. Please try again later.');
+          this.loading.set(false);
+        }
+      });
+    });
+
+    // Load project tasks
     effect(() => {
       const id = this.projectId();
       if (id) {
@@ -349,9 +347,8 @@ export class ProjectDetailComponent {
       { status: newStatus }
     ).subscribe({
       next: (updatedProject) => {
+        this.project.set(updatedProject);
         this.loading.set(false);
-        // Reload the project to get the latest data
-        window.location.reload();
       },
       error: (err) => {
         console.error('Error changing project status:', err);
