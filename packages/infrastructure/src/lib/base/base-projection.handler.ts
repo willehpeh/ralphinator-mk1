@@ -7,6 +7,15 @@ import { DomainEvent } from '@angular-nest-starter/domain';
 type ProjectionEventHandler<TEvent extends DomainEvent> = (event: TEvent) => Promise<void>;
 
 /**
+ * Generic repository interface for read model operations.
+ * Used by the updateReadModel helper method to support any read repository implementation.
+ */
+interface IReadRepository<TReadModel> {
+  findById(id: string): Promise<TReadModel | null>;
+  save(model: TReadModel): Promise<void>;
+}
+
+/**
  * Base class for projections that build read models from domain events.
  * Uses a Map-based event handler registry pattern for O(1) event dispatching,
  * eliminating the need for instanceof chains and improving extensibility.
@@ -15,6 +24,7 @@ type ProjectionEventHandler<TEvent extends DomainEvent> = (event: TEvent) => Pro
  * 1. Call super() in constructor
  * 2. Register event handlers using registerEventHandler()
  * 3. Implement handler methods that update read models
+ * 4. Use updateReadModel() helper for the common "fetch-update-save" pattern
  */
 export abstract class BaseProjectionHandler implements IEventHandler<DomainEvent> {
   private eventHandlers = new Map<string, ProjectionEventHandler<DomainEvent>>();
@@ -45,6 +55,48 @@ export abstract class BaseProjectionHandler implements IEventHandler<DomainEvent
     Object.entries(handlers).forEach(([eventType, handler]) => {
       this.registerEventHandler(eventType, handler);
     });
+  }
+
+  /**
+   * Helper method to update an existing read model using the common "fetch-update-save" pattern.
+   * Fetches the existing read model, applies the update function, and saves the result.
+   *
+   * This consolidates duplication across projection event handlers and provides:
+   * - Consistent null handling (updater can return null to skip save)
+   * - Type-safe repository operations
+   * - Single point for future enhancements (e.g., logging, error handling)
+   *
+   * @param aggregateId - The aggregate ID to fetch and update
+   * @param repository - The read repository with findById and save operations
+   * @param updater - Function that transforms the existing read model (or null) into the updated version
+   *
+   * @example
+   * // Update only the status field
+   * await this.updateReadModel(
+   *   event.aggregateId,
+   *   this.clientReadRepository,
+   *   (existing) => existing ? { ...existing, status: event.newStatus } : null
+   * );
+   *
+   * @example
+   * // Replace entire read model
+   * await this.updateReadModel(
+   *   event.aggregateId,
+   *   this.projectReadRepository,
+   *   (existing) => this.transformToReadModel(event.aggregateId, event.data, existing?.createdAt ?? event.occurredOn)
+   * );
+   */
+  protected async updateReadModel<TReadModel>(
+    aggregateId: string,
+    repository: IReadRepository<TReadModel>,
+    updater: (existing: TReadModel | null) => TReadModel | null
+  ): Promise<void> {
+    const existing = await repository.findById(aggregateId);
+    const updated = updater(existing);
+
+    if (updated) {
+      await repository.save(updated);
+    }
   }
 
   /**

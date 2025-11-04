@@ -45,26 +45,6 @@ export class ClientProjection extends BaseProjectionHandler {
   }
 
   /**
-   * Helper method to update an existing read model.
-   * Fetches the existing read model, applies the update function, and saves it.
-   * Consolidates the common "fetch-update-save" pattern across event handlers.
-   *
-   * @param aggregateId - The client aggregate ID
-   * @param updater - Function that transforms the existing read model into the updated version
-   */
-  private async updateReadModel(
-    aggregateId: string,
-    updater: (existing: ClientReadModel | null) => ClientReadModel | null
-  ): Promise<void> {
-    const existing = await this.clientReadRepository.findById(aggregateId);
-    const updated = updater(existing);
-
-    if (updated) {
-      await this.clientReadRepository.save(updated);
-    }
-  }
-
-  /**
    * Helper method to transform ClientData and metadata into a ClientReadModel.
    * Eliminates duplication between create and update event handlers.
    *
@@ -111,12 +91,15 @@ export class ClientProjection extends BaseProjectionHandler {
    * Updates the read model when client information changes
    */
   private async onClientInformationUpdated(event: ClientInformationUpdatedDomainEvent): Promise<void> {
-    return this.updateReadModel(event.aggregateId, (existing) =>
-      this.transformToReadModel(
-        event.aggregateId,
-        event.clientData,
-        existing?.createdAt ?? event.occurredOn // Preserve original createdAt
-      )
+    return this.updateReadModel(
+      event.aggregateId,
+      this.clientReadRepository,
+      (existing) =>
+        this.transformToReadModel(
+          event.aggregateId,
+          event.clientData,
+          existing?.createdAt ?? event.occurredOn // Preserve original createdAt
+        )
     );
   }
 
@@ -125,8 +108,10 @@ export class ClientProjection extends BaseProjectionHandler {
    * Updates only the status field in the read model
    */
   private async onClientStatusChanged(event: ClientStatusChangedDomainEvent): Promise<void> {
-    return this.updateReadModel(event.aggregateId, (existing) =>
-      existing ? { ...existing, status: event.newStatus } : null
+    return this.updateReadModel(
+      event.aggregateId,
+      this.clientReadRepository,
+      (existing) => (existing ? { ...existing, status: event.newStatus } : null)
     );
   }
 

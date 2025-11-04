@@ -61,26 +61,6 @@ export class ProjectProjection extends BaseProjectionHandler {
   }
 
   /**
-   * Helper method to update an existing read model.
-   * Fetches the existing read model, applies the update function, and saves it.
-   * Consolidates the common "fetch-update-save" pattern across event handlers.
-   *
-   * @param aggregateId - The project aggregate ID
-   * @param updater - Function that transforms the existing read model into the updated version
-   */
-  private async updateReadModel(
-    aggregateId: string,
-    updater: (existing: ProjectReadModel | null) => ProjectReadModel | null
-  ): Promise<void> {
-    const existing = await this.projectReadRepository.findById(aggregateId);
-    const updated = updater(existing);
-
-    if (updated) {
-      await this.projectReadRepository.save(updated);
-    }
-  }
-
-  /**
    * Helper method to transform ProjectData and metadata into a ProjectReadModel.
    * Eliminates duplication between create and update event handlers.
    *
@@ -114,12 +94,15 @@ export class ProjectProjection extends BaseProjectionHandler {
    * Updates the read model when project details change
    */
   private async onProjectDetailsUpdated(event: ProjectDetailsUpdatedDomainEvent): Promise<void> {
-    return this.updateReadModel(event.aggregateId, (existing) =>
-      this.transformProjectDataToReadModel(
-        event.aggregateId,
-        event.projectData,
-        existing?.createdAt ?? event.occurredOn // Preserve original createdAt
-      )
+    return this.updateReadModel(
+      event.aggregateId,
+      this.projectReadRepository,
+      (existing) =>
+        this.transformProjectDataToReadModel(
+          event.aggregateId,
+          event.projectData,
+          existing?.createdAt ?? event.occurredOn // Preserve original createdAt
+        )
     );
   }
 
@@ -129,7 +112,7 @@ export class ProjectProjection extends BaseProjectionHandler {
    * This is more efficient than updating all fields since only status has changed.
    */
   private async onProjectStatusChanged(event: ProjectStatusChangedDomainEvent): Promise<void> {
-    return this.updateReadModel(event.aggregateId, (existing) => {
+    return this.updateReadModel(event.aggregateId, this.projectReadRepository, (existing) => {
       if (!existing) {
         return null; // Cannot update status if project doesn't exist
       }
