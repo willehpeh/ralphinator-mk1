@@ -15,7 +15,7 @@ Implement the ability to delete action items from the system using CQRS + Event 
 - [ ] Write tests for TaskAggregate.delete()
 
 ### Application Layer
-- [ ] Create DeleteTaskCommand
+- [x] Create DeleteTaskCommand (Commit: [pending])
 - [ ] Create DeleteTaskCommandHandler
 - [ ] Add delete() method to ITaskReadRepository port
 - [ ] Write tests for DeleteTaskCommandHandler
