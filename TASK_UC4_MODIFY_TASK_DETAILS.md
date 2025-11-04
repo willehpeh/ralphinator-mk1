@@ -66,7 +66,7 @@ Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 **Description**: Added updateTask() method to TasksService that accepts task id and UpdateTaskInput, makes a PATCH request to /api/tasks/:id endpoint, and returns Observable<Task>. Updated imports to include UpdateTaskInput type. Follows the established pattern from createTask method.
 
 ### Task 9: Add updateTask effect to TasksEffects
-**Commit**: TBD
+**Commit**: 3dec419 - feat(frontend): Add updateTask effect to TasksEffects
 **Files**:
 - apps/frontend/src/app/tasks/store/tasks.effects.ts
 **Description**: Added updateTask$ effect to TasksEffects that listens for updateTask action, calls tasksService.updateTask(), and dispatches updateTaskSuccess or updateTaskFailure. Updated imports to include updateTask, updateTaskSuccess, and updateTaskFailure actions. Follows the established pattern from createTask effect.
