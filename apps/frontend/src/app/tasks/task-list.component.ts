@@ -155,7 +155,9 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
                       <span class="metadata-label">{{ TASK_UI_TEXT.LABEL_DUE_DATE }}</span>
                       <span class="metadata-value">{{ formatDate(task.dueDate) }}</span>
                       @if (isOverdue(task.dueDate)) {
-                        <span class="overdue-indicator">OVERDUE</span>
+                        <span class="overdue-indicator">
+                          {{ daysOverdue(task.dueDate) === 1 ? 'overdue by 1 day' : 'overdue by ' + daysOverdue(task.dueDate) + ' days' }}
+                        </span>
                       }
                     </div>
                   }
@@ -720,5 +722,16 @@ export class TaskListComponent implements OnInit {
     const due = new Date(dueDate);
     due.setHours(0, 0, 0, 0);
     return due < today;
+  }
+
+  daysOverdue(dueDate: Date | null): number {
+    if (!dueDate) return 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const due = new Date(dueDate);
+    due.setHours(0, 0, 0, 0);
+    const diffTime = today.getTime() - due.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays > 0 ? diffDays : 0;
   }
 }
