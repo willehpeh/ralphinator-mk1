@@ -4,13 +4,13 @@
 Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 
 ## Implementation Order
-1. ✅ Domain: TaskDetailsUpdatedDomainEvent (Done - prior commit)
-2. ✅ Domain: TaskAggregate.updateDetails() method (Done - prior commit)
-3. ✅ Application: UpdateTaskDetailsCommand (Done - prior commit)
-4. ✅ Application: UpdateTaskDetailsHandler (Done - prior commit)
-5. ✅ Infrastructure: TaskProjection handler for TaskDetailsUpdatedDomainEvent (Done - this iteration)
-6. ⏳ Backend: PATCH /api/tasks/:id endpoint (Next)
-7. ⏳ Frontend: EditTaskPageComponent + NGRX state
+1. ✅ Domain: TaskDetailsUpdatedDomainEvent (Done - commit 5518b40)
+2. ✅ Domain: TaskAggregate.updateDetails() method (Done - commit 3fe0557)
+3. ✅ Application: UpdateTaskDetailsCommand (Done - commit 7575abc)
+4. ✅ Application: UpdateTaskDetailsHandler (Done - commit 0a7502d)
+5. ✅ Infrastructure: TaskProjection handler for TaskDetailsUpdatedDomainEvent (Done - commit d54641b)
+6. ✅ Backend: PATCH /api/tasks/:id endpoint (Done - commit 798201e)
+7. ⏳ Frontend: EditTaskPageComponent + NGRX state (Next)
 
 ## Completed Tasks
 
