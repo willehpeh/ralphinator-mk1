@@ -173,7 +173,7 @@ From CURRENT_USE_CASE.md:
 
 ### ✅ Task 9: Integrate status change UI into task detail view
 **Completed**: 2025-11-04
-**Commit**: [To be added]
+**Commit**: ec42a63
 **File**: `apps/frontend/src/app/tasks/task-detail.component.ts`
 **Description**:
 - Imported TaskStatusChangeComponent and TaskStatus type
@@ -222,11 +222,37 @@ From CURRENT_USE_CASE.md:
 
 ## Use Case Status
 
-**Status**: In Progress
+**Status**: ✅ COMPLETE
 
-Core backend functionality exists:
-- ✅ Domain layer complete
-- ✅ Application layer complete
-- ⏳ Infrastructure layer: Projection needs update
-- ❌ API layer: Endpoint not created
-- ❌ Frontend: Not started
+All required functionality implemented:
+- ✅ Domain layer complete (pre-existing)
+- ✅ Application layer complete (pre-existing)
+- ✅ Infrastructure layer complete (Task 1)
+- ✅ API layer complete (Task 3)
+- ✅ Frontend complete (Tasks 4-9)
+
+## Summary
+
+Use Case 5 (Update Action Item Progress / Change Task Status) is fully implemented and functional:
+
+**Backend**:
+- TaskAggregate.changeStatus() handles status transitions
+- TaskStatusChangedDomainEvent records status changes
+- ChangeTaskStatusCommand and handler orchestrate the operation
+- TaskProjection updates read model when status changes
+- PATCH /api/tasks/:id/status endpoint exposes functionality
+
+**Frontend**:
+- TasksService.changeTaskStatus() calls API endpoint
+- NGRX actions, effects, and reducers manage state
+- TaskStatusChangeComponent provides status selection UI
+- Task detail view integrates status change functionality
+- "Mark Complete" button provides quick one-click completion
+- "Change Status" button opens modal for full status selection
+- Professional, responsive design with modal overlay
+
+**Business Rules Implemented**:
+- Status transitions validated at domain level
+- Completion date automatically recorded when status becomes 'Completed'
+- Status changes reflected immediately in UI
+- Quick complete action for streamlined workflow
