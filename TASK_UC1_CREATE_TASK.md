@@ -108,7 +108,7 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 **Description**: Created NGRX actions for task creation including createTask (to initiate task creation), createTaskSuccess (on successful creation), and createTaskFailure (on error). These actions follow the established pattern from clients.actions.ts and provide type-safe action creators for the tasks feature.
 
 ### Task 14: TasksService for API calls
-**Commit**: (pending)
+**Commit**: dae6253 - feat(frontend): Add TasksService for task API calls
 **Files**:
 - apps/frontend/src/app/tasks/tasks.service.ts
 **Description**: Created TasksService to handle HTTP API calls for task operations. Implemented createTask(), getAllTasks(), and getTaskById() methods following the established pattern from ClientsService. Uses inject() for dependency injection and returns typed Observables.
