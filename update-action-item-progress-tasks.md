@@ -9,7 +9,7 @@
 
 ###  Task 1: Create TaskStatusChangedDomainEvent
 **Status**: Completed
-**Commit**: [Next commit]
+**Commit**: 811527c
 **Files Created**:
 - `packages/domain/src/lib/events/task-status-changed.domain-event.ts`
 
@@ -56,6 +56,6 @@
 
 ## Notes
 - Following TDD approach: Will write tests before implementing handlers
-- Status transitions: Any status ’ Any other status (no restrictions at domain level)
+- Status transitions: Any status ï¿½ Any other status (no restrictions at domain level)
 - Business rule: completedAt is set automatically when status becomes 'Completed'
 - Quick complete feature: One-click transition to Completed status
