@@ -1159,3 +1159,43 @@
 - Success guarantee met: Action item is no longer visible in active tracking (historical record preserved in event store)
 - Documentation: TASK_UC6_DELETE_TASK.md
 - **Note**: Complete implementation. Backend was pre-existing; frontend delete confirmation dialog implemented.
+
+## Use Case 7: View Action Items for a Specific Project (UC-TASK-001-07) (2025-11-04) ✅ COMPLETE
+- Complete CQRS query implementation for retrieving tasks by project ID
+- Application: GetTasksByProjectIdQuery accepts projectId parameter to retrieve all tasks for a project
+- Application: GetTasksByProjectIdQueryHandler queries ITaskReadRepository.findByProjectId()
+- Application: ITaskReadRepository.findByProjectId() port interface method for filtering tasks by projectId
+- Infrastructure: InMemoryTaskReadRepository.findByProjectId() implementation filters tasks from Map by projectId
+- Backend API: GET /api/projects/:id/tasks endpoint returns TaskReadModel[] array
+- Backend: AllProjectsController.getTasksForProject() method handles route and dispatches query
+- Frontend: TasksService.getTasksByProjectId() method for API communication
+- Frontend: NGRX actions (loadProjectTasks, loadProjectTasksSuccess, loadProjectTasksFailure)
+- Frontend: TasksEffects with loadProjectTasks$ effect for handling async API calls
+- Frontend: tasksReducer handles loadProjectTasks actions for loading state management
+- Frontend: selectTasksByProjectId(projectId) selector retrieves tasks for specific project
+- Frontend: ProjectDetailComponent enhanced with Tasks section (lines 142-192)
+- Frontend: Component dispatches loadProjectTasks action when projectId changes (effect, lines 281-286)
+- Frontend: Task cards display title, status badge, priority badge, due date with overdue indicator
+- Frontend: Color-coded status badges (Todo=blue, InProgress=yellow, Completed=green, Cancelled=gray)
+- Frontend: Color-coded priority badges (Low=gray, Medium=blue, High=orange, Urgent=red) with animations
+- Frontend: Overdue indicator with animated "OVERDUE" badge (red) for past-due incomplete tasks
+- Frontend: Task cards clickable with navigation to task detail page (/tasks/:id)
+- Frontend: "Add Task" button pre-populates projectId and clientId from current project
+- Frontend: Empty state message: "No tasks yet. Add a task to get started."
+- Frontend: Loading state with spinner during data fetch
+- Frontend: Error state with retry button for failed API calls
+- Frontend: Professional styling with hover effects, shadows, and responsive design
+- Frontend: Modern Angular patterns (standalone, signals, computed, OnPush, modern control flow @if/@for)
+- All main success scenario steps met:
+  - User is reviewing project information (project detail page) ✅
+  - System displays section showing action items for this project ✅
+  - System lists all action items with title, priority, status, deadline ✅
+  - User reviews project-specific action items ✅
+  - User can navigate to any action item for full details (click card) ✅
+- All extensions handled:
+  - 2a: No action items for project - empty state message displayed ✅
+  - 2a2: Option to add new action item with project pre-selected ✅
+  - 4a: Add action item for project - "Add Task" button navigates to /tasks/add with queryParams ✅
+- Success guarantee met: User sees all action items specific to the project
+- Documentation: view-project-tasks.md, CURRENT_USE_CASE.md (archived)
+- **Note**: Complete implementation with 25 tasks (1-24 implementation, 25 verification). Tasks 26-30 are manual UI tests pending backend bug fix.

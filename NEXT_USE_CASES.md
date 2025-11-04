@@ -1,38 +1,5 @@
 # Use Cases: Task Management (Alistair Cockburn Style)
 
-## Use Case 7: View Action Items for a Specific Project
-
-**Primary Actor**: Developer or Agency Owner
-
-**Goal**: See all action items related to a specific project to understand what needs to be done for that project
-
-**Preconditions**:
-- User has access to the task management system
-- The project exists in the system
-
-**Main Success Scenario**:
-1. User is reviewing project information (from project management features)
-2. System displays section showing action items for this project
-3. System lists all action items associated with the project with:
-   - What needs to be done (title)
-   - How urgent it is (priority with visual indicator)
-   - Current state (status with visual indicator)
-   - When it's due (deadline with alert if overdue)
-4. User reviews project-specific action items
-5. User can navigate to any action item for full details (Use Case 3)
-
-**Extensions**:
-- 2a. If no action items exist for this project:
-  - 2a1. System displays message indicating no action items for this project
-  - 2a2. System offers option to record a new action item for this project
-- 4a. If user wants to add action item for this project:
-  - 4a1. User requests to add new action item
-  - 4a2. System starts Use Case 1 with project pre-selected
-
-**Success Guarantee**: User sees all action items specific to the project
-
----
-
 ## Use Case 8: View Action Items for a Specific Client
 
 **Primary Actor**: Developer or Agency Owner
