@@ -38,7 +38,7 @@
 
 ###  Task 3: Create ChangeTaskStatusCommand
 **Status**: Completed
-**Commit**: (pending)
+**Commit**: 5d11cb5
 **Files Created**:
 - `packages/application/src/lib/commands/change-task-status.command.ts`
 
