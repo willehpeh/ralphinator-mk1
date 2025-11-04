@@ -138,8 +138,14 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 - apps/frontend/src/app/tasks/store/tasks.effects.ts (fix for type conversion)
 **Description**: Registered the tasks NGRX state and effects in app.config.ts using provideState and provideEffects. Fixed TasksEffects to properly convert CreateTaskInput to Task type by handling optional fields (converting undefined to null) and adding createdAt timestamp when dispatching createTaskSuccess action.
 
+### Task 19: Task constants for frontend
+**Commit**: f41cdc5 - feat(frontend): Add task constants for statuses, priorities, and defaults
+**Files**:
+- apps/frontend/src/app/tasks/task.constants.ts
+**Description**: Created task.constants.ts with TASK_STATUSES and TASK_PRIORITIES arrays, DEFAULT_TASK_STATUS (Todo), DEFAULT_TASK_PRIORITY (Medium), and FILTER_ALL_TASKS constant following the established pattern from client.constants.ts.
+
 ## Next Task
-Frontend: Create TaskFormComponent for add/edit task form
+Frontend: Create task-display.constants.ts with UI text labels
 
 ## Use Case Status
 ❌ Not Complete - Still need frontend implementation
