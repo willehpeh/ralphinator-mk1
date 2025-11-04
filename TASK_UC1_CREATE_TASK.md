@@ -151,13 +151,19 @@ Use Case 1: Record a New Action Item (from CURRENT_USE_CASE.md)
 **Description**: Created task-display.constants.ts following the established pattern from client-display.constants.ts. Includes TASK_UI_TEXT (UI text labels for buttons, page titles, messages, loading states, search/filter, count display, and detail labels), TASK_FORM_LABELS (form field labels, placeholders, validation messages, and submit button labels), and TASK_ERROR_MESSAGES (error messages for task-related API operations). This file serves as the single source of truth for UI text in the tasks feature.
 
 ### Task 21: TaskFormComponent
-**Commit**: (pending) - feat(frontend): Add TaskFormComponent for task creation
+**Commit**: abd986a - feat(frontend): Add TaskFormComponent for task creation
 **Files**:
 - apps/frontend/src/app/tasks/task-form.component.ts
 **Description**: Created TaskFormComponent as a presentational component for task creation. Implemented reactive form with validation for title (required), status (required), priority (required), notes (optional), dueDate (optional), clientId (optional), and projectId (optional). Component follows the established pattern from ProjectFormComponent with modern Angular patterns (standalone, signals, OnPush change detection), FormState for state management, and ValidationErrorComponent for validation errors. Uses TASK_FORM_LABELS and TASK_UI_TEXT constants for UI text. Emits taskSubmitted output event with CreateTaskInput data structure and formCancelled output event. Includes helper methods (resetForm, showSuccess, showError, setSubmitting) for parent component integration. Professional styling with responsive design and form validation indicators.
 
+### Task 22: AddTaskPageComponent
+**Commit**: 2c377c5 - feat(frontend): Add AddTaskPageComponent as container for task creation
+**Files**:
+- apps/frontend/src/app/tasks/add-task-page.component.ts
+**Description**: Created AddTaskPageComponent following the established pattern from AddClientPageComponent. This container component connects TaskFormComponent to NGRX store, dispatches createTask action on form submission, handles loading/error/success states using signals, uses viewChild() to access TaskFormComponent methods (setSubmitting, showError, showSuccess, resetForm), and navigates to /tasks on success or cancel. Uses modern Angular patterns (standalone, signals, OnPush change detection, inject(), effect()) with responsive design and professional styling. Implements effects to react to loading state changes, error state changes, and success state (not loading, no error, form not pristine).
+
 ## Next Task
-Frontend: Create AddTaskPageComponent (container component that integrates TaskFormComponent with NGRX)
+Frontend: Register AddTaskPageComponent route in app.routes.ts
 
 ## Use Case Status
-❌ Not Complete - Still need AddTaskPageComponent and routing configuration
+❌ Not Complete - Still need routing configuration
