@@ -2,7 +2,10 @@ import { createReducer, on } from '@ngrx/store';
 import {
   createTask,
   createTaskSuccess,
-  createTaskFailure
+  createTaskFailure,
+  loadTasks,
+  loadTasksSuccess,
+  loadTasksFailure
 } from './tasks.actions';
 import { Task } from '../task.types';
 
@@ -71,5 +74,17 @@ export const tasksReducer = createReducer(
   })),
 
   // When creating task fails
-  on(createTaskFailure, (state, { error }) => setError(state, error))
+  on(createTaskFailure, (state, { error }) => setError(state, error)),
+
+  // When loading tasks is triggered
+  on(loadTasks, setLoading),
+
+  // When tasks are successfully loaded
+  on(loadTasksSuccess, (state, { tasks }) => ({
+    ...clearLoadingAndError(state),
+    tasks,
+  })),
+
+  // When loading tasks fails
+  on(loadTasksFailure, (state, { error }) => setError(state, error))
 );

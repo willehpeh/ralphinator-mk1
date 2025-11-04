@@ -132,7 +132,7 @@ export class AddTaskPageComponent {
   /**
    * Navigate to the task list page
    */
-  private navigateToTaskList(): void {
+  navigateToTaskList(): void {
     this.router.navigate(['/tasks']);
   }
 }
