@@ -96,3 +96,27 @@ export const loadTasksFailure = createAction(
   '[Tasks] Load Tasks Failure',
   props<{ error: string }>()
 );
+
+/**
+ * Delete a task
+ */
+export const deleteTask = createAction(
+  '[Tasks] Delete Task',
+  props<{ id: string }>()
+);
+
+/**
+ * Successfully deleted task
+ */
+export const deleteTaskSuccess = createAction(
+  '[Tasks] Delete Task Success',
+  props<{ id: string }>()
+);
+
+/**
+ * Failed to delete task
+ */
+export const deleteTaskFailure = createAction(
+  '[Tasks] Delete Task Failure',
+  props<{ error: string }>()
+);

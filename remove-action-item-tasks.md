@@ -30,9 +30,9 @@ Implement the ability to delete action items from the system using CQRS + Event 
 - [ ] Test endpoint with HTTP client (curl/Postman)
 
 ### Frontend - NGRX State Management
-- [ ] Add deleteTask action to tasks.actions.ts
-- [ ] Add deleteTaskSuccess action to tasks.actions.ts
-- [ ] Add deleteTaskFailure action to tasks.actions.ts
+- [x] Add deleteTask action to tasks.actions.ts (Commit: TBD)
+- [x] Add deleteTaskSuccess action to tasks.actions.ts (Commit: TBD)
+- [x] Add deleteTaskFailure action to tasks.actions.ts (Commit: TBD)
 - [ ] Add deleteTask$ effect to tasks.effects.ts
 - [ ] Update tasksReducer to handle deleteTask actions
 - [ ] Add deleteTask() method to TasksService
