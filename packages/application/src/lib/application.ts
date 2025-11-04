@@ -46,6 +46,7 @@ export * from './queries/get-projects-by-client-id.query';
 export * from './queries/get-all-projects.query';
 export * from './queries/get-project-by-id.query';
 export * from './queries/get-task-by-id.query';
+export * from './queries/get-tasks-by-project-id.query';
 
 // Query Handlers
 export * from './queries/handlers/get-client-by-id.handler';
