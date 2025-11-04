@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as TasksActions from './store/tasks.actions';
 import { selectAllTasks, selectTasksLoading, selectTasksError, selectHasTasks } from './store/tasks.selectors';
@@ -581,6 +582,7 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
 export class TaskListComponent implements OnInit {
   // Dependency injection using inject()
   private store = inject(Store);
+  private router = inject(Router);
 
   // Constants for template
   readonly TASK_UI_TEXT = TASK_UI_TEXT;
@@ -694,8 +696,7 @@ export class TaskListComponent implements OnInit {
   }
 
   onViewTask(taskId: string): void {
-    // TODO: Navigate to task detail page
-    console.log('View task:', taskId);
+    this.router.navigate(['/tasks', taskId]);
   }
 
   onRetry(): void {
