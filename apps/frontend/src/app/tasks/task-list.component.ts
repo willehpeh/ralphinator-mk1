@@ -326,8 +326,7 @@ export class TaskListComponent implements OnInit {
   }
 
   onAddTask(): void {
-    // TODO: Navigate to add task page
-    console.log('Navigate to add task page');
+    this.router.navigate(['/tasks/add']);
   }
 
   onViewTask(taskId: string): void {
