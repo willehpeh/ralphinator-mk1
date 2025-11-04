@@ -48,7 +48,7 @@ Use Case 4: Modify Action Item Details (from CURRENT_USE_CASE.md)
 **Description**: Updated TaskProjection to handle TaskDetailsUpdatedDomainEvent. Added event handler registration for TASK_EVENT_TYPES.DETAILS_UPDATED, created transformTaskDataToReadModel() helper method to eliminate duplication between create and update handlers, and implemented onTaskDetailsUpdated() method that uses updateReadModel() to update the read model while preserving the original createdAt timestamp. Follows the established pattern from ProjectProjection.
 
 ### Task 6: PATCH /api/tasks/:id endpoint
-**Commit**: (current - to be committed)
+**Commit**: 798201e - feat(api): Add PATCH endpoint for updating task details
 **Files**:
 - apps/api/src/app/tasks/tasks.controller.ts
 **Description**: Added PATCH /api/tasks/:id endpoint to TasksController that accepts UpdateTaskDto, creates UpdateTaskDetailsCommand, executes it via CommandBus, and returns the updated TaskReadModel using fetchEntityAfterMutation utility. Updated imports to include Patch decorator, UpdateTaskDetailsCommand, and UpdateTaskDto. Updated createTaskDataPayload() helper method to accept both CreateTaskDto and UpdateTaskDto. Follows the established pattern from ProjectsController.
