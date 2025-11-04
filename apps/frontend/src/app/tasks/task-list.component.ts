@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { TasksActions } from './store/tasks.actions';
+import * as TasksActions from './store/tasks.actions';
 import { selectAllTasks, selectTasksLoading, selectTasksError, selectHasTasks } from './store/tasks.selectors';
 import { TASK_UI_TEXT } from './task-display.constants';
 import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
@@ -42,18 +42,18 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
                   <div class="task-badges">
                     <span
                       class="priority-badge"
-                      [class.priority-critical]="task.priority === 'CRITICAL'"
-                      [class.priority-high]="task.priority === 'HIGH'"
-                      [class.priority-medium]="task.priority === 'MEDIUM'"
-                      [class.priority-low]="task.priority === 'LOW'">
+                      [class.priority-urgent]="task.priority === 'Urgent'"
+                      [class.priority-high]="task.priority === 'High'"
+                      [class.priority-medium]="task.priority === 'Medium'"
+                      [class.priority-low]="task.priority === 'Low'">
                       {{ task.priority }}
                     </span>
                     <span
                       class="status-badge"
-                      [class.status-todo]="task.status === 'TODO'"
-                      [class.status-in-progress]="task.status === 'IN_PROGRESS'"
-                      [class.status-blocked]="task.status === 'BLOCKED'"
-                      [class.status-done]="task.status === 'DONE'">
+                      [class.status-todo]="task.status === 'Todo'"
+                      [class.status-in-progress]="task.status === 'InProgress'"
+                      [class.status-completed]="task.status === 'Completed'"
+                      [class.status-cancelled]="task.status === 'Cancelled'">
                       {{ formatStatus(task.status) }}
                     </span>
                   </div>
@@ -220,7 +220,7 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
       color: white;
     }
 
-    .priority-critical {
+    .priority-urgent {
       background-color: #e74c3c;
     }
 
@@ -248,12 +248,12 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
       background-color: #3498db;
     }
 
-    .status-blocked {
-      background-color: #e74c3c;
+    .status-completed {
+      background-color: #27ae60;
     }
 
-    .status-done {
-      background-color: #27ae60;
+    .status-cancelled {
+      background-color: #7f8c8d;
     }
 
     .task-notes {
