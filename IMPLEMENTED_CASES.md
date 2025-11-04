@@ -1035,3 +1035,44 @@
 - Success guarantee met: User has complete context about the action item to make informed decisions
 - Documentation: CURRENT_USE_CASE.md (will be archived)
 - **Note**: Complete visual implementation. Action button functionality (Edit, Complete, Change Status, Delete) will be implemented in future use cases.
+
+## Use Case 4: Modify Action Item Details (2025-11-04) ✅ COMPLETE
+- Complete CQRS + Event Sourcing implementation for updating task details
+- Domain: TaskDetailsUpdatedDomainEvent captures task detail updates with TaskData value object
+- Domain: TaskAggregate.updateDetails() method validates and applies event
+- Domain: TASK_EVENT_TYPES.DETAILS_UPDATED constant for event type identification
+- Application: UpdateTaskDetailsCommand and TaskDataPayload for command processing
+- Application: UpdateTaskDetailsCommandHandler loads aggregate, updates details, persists events
+- Application: UpdateTaskInput interface matches UpdateTaskDetailsCommand payload
+- Infrastructure: TaskProjection handles TaskDetailsUpdatedDomainEvent and updates read model
+- Backend API: PATCH /api/tasks/:id endpoint accepts UpdateTaskDto
+- Backend API: UpdateTaskDto validates title (required), optional fields (notes, priority, status, dueDate, clientId, projectId)
+- Frontend: Task NGRX actions (updateTask, updateTaskSuccess, updateTaskFailure)
+- Frontend: TasksService.updateTask() method for API communication
+- Frontend: TasksEffects with updateTask$ effect for handling async API calls
+- Frontend: tasksReducer handles updateTask actions with array map to replace updated task
+- Frontend: EditTaskPageComponent at /tasks/:id/edit route with reactive forms
+- Frontend: Form pre-populated with current task data using selectTaskById selector
+- Frontend: Comprehensive validation (title required, email format, etc.)
+- Frontend: Signal-based state management with FormState helper for loading/error/success
+- Frontend: Automatic navigation to task detail view after successful save
+- Frontend: "Edit Task" button in TaskDetailComponent navigates to edit page
+- Frontend: Cancel button navigates back to task detail
+- Frontend: Professional styling with modern Angular patterns (standalone, signals, OnPush)
+- Event sourcing: All task updates captured as immutable events in event store
+- Projections: Task read model updated while preserving original createdAt timestamp
+- All main success scenario steps met:
+  - User is reviewing action item (Use Case 3) and clicks Edit button ✅
+  - User requests to modify details (Edit Task button navigation) ✅
+  - System displays current information for editing (form pre-populated) ✅
+  - User changes one or more details (title, notes, priority, deadline, client, project) ✅
+  - System validates changes are complete and consistent (form validation) ✅
+  - System records modifications (event-sourced command handler) ✅
+  - System confirms action item has been updated (success message) ✅
+  - User sees updated action item details (navigation to detail page) ✅
+- All extensions handled:
+  - 5a: Missing required information - form validation highlights missing fields ✅
+  - 5b: Inconsistent changes - validation enforced (future enhancement for client/project mismatch)
+- Success guarantee met: Action item reflects the updated information
+- Documentation: TASK_UC4_MODIFY_TASK_DETAILS.md
+- **Note**: Complete end-to-end implementation with 11 tasks completed. Full CQRS + Event Sourcing pattern with professional UI.
