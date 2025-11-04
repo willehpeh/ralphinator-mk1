@@ -10,6 +10,7 @@ import { ProjectsService } from './projects.service';
 import { FormState } from '../shared/form-state';
 import { ValidationErrorComponent } from '../shared/validation-error.component';
 import { SUCCESS_MESSAGE_DISMISS_DURATION_MS } from '../shared/ui.constants';
+import { formatDateForInput } from '../shared/date-format-utils';
 
 interface ProjectEditFormFields {
   clientId: FormControl<string>;
@@ -277,23 +278,12 @@ export class ProjectEditComponent {
       name: projectData.name,
       status: projectData.status,
       description: projectData.description || '',
-      startDate: projectData.startDate ? this.formatDateForInput(projectData.startDate) : '',
-      expectedEndDate: projectData.expectedEndDate ? this.formatDateForInput(projectData.expectedEndDate) : '',
-      actualEndDate: projectData.actualEndDate ? this.formatDateForInput(projectData.actualEndDate) : '',
+      startDate: projectData.startDate ? formatDateForInput(projectData.startDate) : '',
+      expectedEndDate: projectData.expectedEndDate ? formatDateForInput(projectData.expectedEndDate) : '',
+      actualEndDate: projectData.actualEndDate ? formatDateForInput(projectData.actualEndDate) : '',
       budget: projectData.budget,
       technicalNotes: projectData.technicalNotes || ''
     });
-  }
-
-  /**
-   * Format Date object to YYYY-MM-DD string for input[type="date"]
-   */
-  private formatDateForInput(date: Date | string): string {
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const day = String(dateObj.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
   }
 
   /**

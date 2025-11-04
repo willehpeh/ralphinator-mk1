@@ -14,6 +14,7 @@ import { FormState } from '../shared/form-state';
 import { ValidationErrorComponent } from '../shared/validation-error.component';
 import { TaskStatus, TaskPriority } from '@angular-nest-starter/shared-types';
 import { SUCCESS_MESSAGE_DISMISS_DURATION_MS } from '../shared/ui.constants';
+import { formatDateForInput } from '../shared/date-format-utils';
 
 interface TaskEditFormFields {
   title: FormControl<string>;
@@ -441,21 +442,10 @@ export class EditTaskPageComponent {
       notes: taskData.notes || '',
       status: taskData.status,
       priority: taskData.priority,
-      dueDate: taskData.dueDate ? this.formatDateForInput(taskData.dueDate) : '',
+      dueDate: taskData.dueDate ? formatDateForInput(taskData.dueDate) : '',
       clientId: taskData.clientId || '',
       projectId: taskData.projectId || ''
     });
-  }
-
-  /**
-   * Format Date object to YYYY-MM-DD string for input[type="date"]
-   */
-  private formatDateForInput(date: Date | string): string {
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const day = String(dateObj.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
   }
 
   /**
