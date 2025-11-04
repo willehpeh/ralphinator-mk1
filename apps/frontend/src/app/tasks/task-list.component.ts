@@ -104,7 +104,7 @@ import { extractSelectValue, extractInputValue, extractCheckboxValue } from '../
               class="filter-checkbox"
               [checked]="showOverdueOnly()"
               (change)="onOverdueFilterChange($event)">
-            <span class="checkbox-text">Show Overdue Only</span>
+            <span class="checkbox-text">{{ TASK_UI_TEXT.SHOW_OVERDUE_ONLY }}</span>
           </label>
         </div>
       </div>
@@ -183,7 +183,7 @@ import { extractSelectValue, extractInputValue, extractCheckboxValue } from '../
 
                 <div class="task-actions">
                   <button type="button" class="action-button" (click)="onViewTask(task.id)">
-                    View Details
+                    {{ TASK_UI_TEXT.VIEW_DETAILS }}
                   </button>
                 </div>
               </div>

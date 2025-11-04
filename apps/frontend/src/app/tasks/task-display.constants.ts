@@ -43,6 +43,8 @@ export const TASK_UI_TEXT = {
   // Search and filter
   SEARCH_PLACEHOLDER: 'Search by task title...',
   ALL_TASKS_FILTER: 'All Tasks',
+  SHOW_OVERDUE_ONLY: 'Show Overdue Only',
+  VIEW_DETAILS: 'View Details',
   NO_TASKS_MATCHING_SEARCH: 'No tasks found matching your search',
   NO_TASKS_WITH_STATUS: 'No tasks found with status',
   NO_TASKS_WITH_PRIORITY: 'No tasks found with priority',
