@@ -66,6 +66,20 @@ import { TaskPriority, TaskStatus } from '@angular-nest-starter/shared-types';
             }
           </select>
         </div>
+
+        <div class="filter-group">
+          <label for="project-filter" class="filter-label">Filter by Project:</label>
+          <select
+            id="project-filter"
+            class="filter-select"
+            [value]="selectedProjectId()"
+            (change)="onProjectFilterChange($event)">
+            <option value="">All Projects</option>
+            @for (projectId of uniqueProjectIds(); track projectId) {
+              <option [value]="projectId">{{ projectId }}</option>
+            }
+          </select>
+        </div>
       </div>
 
       @if (loading()) {
@@ -502,6 +516,16 @@ export class TaskListComponent implements OnInit {
   selectedPriority = signal<string>('');
   selectedStatus = signal<string>('');
   selectedClientId = signal<string>('');
+  selectedProjectId = signal<string>('');
+
+  // Computed unique project IDs from all tasks
+  uniqueProjectIds = computed(() => {
+    const allTasks = this.tasks();
+    const projectIds = allTasks
+      .map(task => task.projectId)
+      .filter((id): id is string => id !== null && id !== undefined);
+    return Array.from(new Set(projectIds)).sort();
+  });
 
   // Computed filtered tasks
   filteredTasks = computed(() => {
@@ -509,6 +533,7 @@ export class TaskListComponent implements OnInit {
     const priority = this.selectedPriority();
     const status = this.selectedStatus();
     const clientId = this.selectedClientId();
+    const projectId = this.selectedProjectId();
 
     let filtered = allTasks;
 
@@ -522,6 +547,10 @@ export class TaskListComponent implements OnInit {
 
     if (clientId) {
       filtered = filtered.filter(task => task.clientId === clientId);
+    }
+
+    if (projectId) {
+      filtered = filtered.filter(task => task.projectId === projectId);
     }
 
     return filtered;
@@ -547,6 +576,11 @@ export class TaskListComponent implements OnInit {
   onClientFilterChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedClientId.set(selectElement.value);
+  }
+
+  onProjectFilterChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedProjectId.set(selectElement.value);
   }
 
   onAddTask(): void {

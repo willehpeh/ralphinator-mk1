@@ -94,8 +94,20 @@ Allow users to see all action items with their priority, status, deadline, and c
    - All three filters (priority, status, client) work together to narrow down task list
    - Location: `apps/frontend/src/app/tasks/task-list.component.ts:6-7,56-68,499,504,523-525,530-534,547-550`
 
+10. ✅ Add project filter dropdown to TaskListComponent
+   - Added `selectedProjectId` signal for project filter state management
+   - Added `uniqueProjectIds` computed property that extracts unique project IDs from all loaded tasks
+   - Computed property filters out null/undefined values and sorts alphabetically
+   - Added project filter dropdown after client filter in filter controls section
+   - Dropdown uses `@for` to dynamically render all unique project IDs
+   - Dropdown includes "All Projects" option to reset filter
+   - Updated `filteredTasks` computed to filter by priority, status, clientId, AND projectId
+   - Added `onProjectFilterChange()` method to handle project selection changes
+   - All four filters (priority, status, client, project) work together to narrow down task list
+   - Note: Filter shows project IDs (not names) since projects store doesn't exist yet
+   - Location: `apps/frontend/src/app/tasks/task-list.component.ts:70-82,519,521-528,536,552-554,581-584`
+
 ### Pending Tasks
-10. ⏳ Add project filter dropdown
 11. ⏳ Add overdue filter checkbox
 12. ⏳ Add search functionality
 13. ⏳ Test the complete flow
@@ -103,4 +115,4 @@ Allow users to see all action items with their priority, status, deadline, and c
 ---
 
 **Last Updated:** 2025-11-04
-**Status:** In Progress - Priority, status, and client filters completed; project filter, overdue filter, and search pending
+**Status:** In Progress - Priority, status, client, and project filters completed; overdue filter and search pending
