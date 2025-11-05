@@ -28,10 +28,17 @@
    - Uses Promise.all for parallel data fetching
    - Location: `packages/application/src/lib/queries/handlers/get-dashboard-statistics.handler.ts`
    - Exported from application module
+   - Commit: `c9609f9 feat: Create GetDashboardStatisticsQueryHandler for workload statistics`
+
+4. ✅ **Create DashboardModule**
+   - Created DashboardModule with CqrsModule import
+   - Registered GetDashboardStatisticsQueryHandler
+   - Provided all required read repository implementations (clients, projects, tasks, communications)
+   - Location: `apps/api/src/app/dashboard/dashboard.module.ts`
+   - Registered in AppModule
    - Commit: (current)
 
 ### Pending Backend Tasks
-4. ⏳ Create DashboardModule
 5. ⏳ Create DashboardController
 6. ⏳ Add GET /api/dashboard/statistics endpoint
 7. ⏳ Write tests for query handler
@@ -59,11 +66,13 @@
 - `packages/application/src/lib/read-models/dashboard-statistics.read-model.ts`
 - `packages/application/src/lib/queries/get-dashboard-statistics.query.ts`
 - `packages/application/src/lib/queries/handlers/get-dashboard-statistics.handler.ts`
+- `apps/api/src/app/dashboard/dashboard.module.ts`
 
 ## Files Modified
 
 - `packages/application/src/lib/application.ts` (added query and handler exports)
+- `apps/api/src/app/app.module.ts` (registered DashboardModule)
 
 ## Next Steps
 
-Create `DashboardModule` in `apps/api/src/app/dashboard/`
+Create `DashboardController` with GET /api/dashboard/statistics endpoint
