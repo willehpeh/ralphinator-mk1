@@ -4,6 +4,7 @@ import {
   GetDashboardStatisticsQueryHandler,
   GetUpcomingTasksQueryHandler,
   GetRecentCommunicationsQueryHandler,
+  GetFollowUpCommunicationsQueryHandler,
   INJECTION_TOKENS,
 } from '@angular-nest-starter/application';
 import {
@@ -18,6 +19,7 @@ const QueryHandlers = [
   GetDashboardStatisticsQueryHandler,
   GetUpcomingTasksQueryHandler,
   GetRecentCommunicationsQueryHandler,
+  GetFollowUpCommunicationsQueryHandler,
 ];
 
 @Module({
