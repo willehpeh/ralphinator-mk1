@@ -125,7 +125,7 @@
    - Added styling for upcoming-tasks-container with 2rem top margin
    - Component now displays below statistics grid on dashboard
    - Location: `apps/frontend/src/app/dashboard/dashboard-page.component.ts`
-   - Commit: [pending]
+   - Commit: 45d1a65
 
 ### Pending Tasks
 12. ⬜ Write component tests
