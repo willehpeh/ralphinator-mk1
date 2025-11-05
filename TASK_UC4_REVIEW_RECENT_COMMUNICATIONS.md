@@ -115,6 +115,15 @@ Implementing the "Recent Communications" section on the dashboard to display the
 - `packages/application/src/lib/queries/get-overdue-tasks.query.ts`
 - `packages/application/src/lib/queries/get-upcoming-tasks.query.ts`
 
+### Task 16: Fix blocking compilation error and verify API endpoint
+**Status**: ✅ Completed
+**Commit**: `49feea0`
+**Description**: Added missing findOverdue() method to fix TypeScript compilation error blocking the API build, then verified the recent communications endpoint works correctly
+**Files Modified**:
+- `packages/application/src/lib/ports/task-read-repository.interface.ts`
+- `packages/infrastructure/src/lib/read-models/in-memory-task-read-repository.ts`
+**API Verification**: GET /api/dashboard/communications/recent returns `[]` (empty array as expected)
+
 ---
 
 ## Current Task
@@ -131,7 +140,7 @@ None - Ready for next task
 - [x] Register handler in `DashboardModule`
 - [x] Add endpoint to `DashboardController`
 - [x] Write backend tests
-- [ ] Verify API endpoint works with Postman/curl
+- [x] Verify API endpoint works with curl (Task 16)
 
 ### Frontend (In Progress 🔄)
 - [x] Add NGRX actions for recent communications
@@ -145,11 +154,13 @@ None - Ready for next task
 - [ ] Verify component displays correctly in browser
 
 ### Integration
-- [ ] Test end-to-end flow (API → NGRX → Component)
+- [x] Fix blocking ESLint errors (Task 15)
+- [x] Fix blocking TypeScript compilation error (Task 16 - added findOverdue() method)
+- [x] Verify API endpoint works (Task 16)
+- [ ] Test end-to-end flow (API → NGRX → Component) in browser
 - [ ] Verify empty state displays when no communications
 - [ ] Verify "View All Communications" link navigates correctly
 - [ ] Test responsive layout
-- [ ] Verify no ESLint errors
 
 ---
 
