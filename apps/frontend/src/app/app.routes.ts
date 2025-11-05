@@ -11,6 +11,7 @@ import { AddTaskPageComponent } from './tasks/add-task-page.component';
 import { TaskListComponent } from './tasks/task-list.component';
 import { TaskDetailComponent } from './tasks/task-detail.component';
 import { EditTaskPageComponent } from './tasks/edit-task-page.component';
+import { CommunicationsListComponent } from './communications/communications-list.component';
 
 export const appRoutes: Route[] = [
   {
@@ -60,6 +61,10 @@ export const appRoutes: Route[] = [
   {
     path: 'tasks/:id',
     component: TaskDetailComponent,
+  },
+  {
+    path: 'communications',
+    component: CommunicationsListComponent,
   },
   {
     path: '',

@@ -20,13 +20,17 @@
 - [ ] Tests: Query handler tests
 
 ### Frontend Implementation
-- [ ] CommunicationsListComponent with filtering UI
-- [ ] Type badges, follow-up indicators, overdue highlighting
+- [x] CommunicationsListComponent with basic structure (Task 8)
+- [x] Route /communications (Task 8)
+- [x] Navigation link in main menu (Task 8)
+- [x] CommunicationsService with getAllCommunications method (Task 8)
+- [x] Basic responsive grid layout (Task 8)
+- [x] Type badges with color coding (Task 8)
+- [x] Follow-up indicators (Task 8)
+- [x] Loading, error, and empty states (Task 8)
 - [ ] Search and filter controls
 - [ ] NGRX selectors for filtered communications
-- [ ] Responsive grid/table layout
-- [ ] Route /communications
-- [ ] Navigation link in main menu
+- [ ] Overdue highlighting for follow-ups
 
 ---
 
@@ -159,6 +163,38 @@
 
 **Next Task**: Write tests for query handlers and controller endpoint
 
+### Task 8: Create Basic CommunicationsListComponent with Route (2025-11-05)
+
+**Files Created**:
+- `apps/frontend/src/app/communications/communications-list.component.ts` - Main component for displaying communications list
+- `apps/frontend/src/app/communications/communications-list.component.scss` - Styling for communications list with responsive grid layout
+- `apps/frontend/src/app/communications/communications.service.ts` - Service for API communication with getAllCommunications method
+- `packages/shared-types/src/lib/dtos/communication.dtos.ts` - TypeScript interface for CommunicationReadModel
+
+**Files Modified**:
+- `apps/frontend/src/app/app.routes.ts` - Added /communications route
+- `apps/frontend/src/app/app.html` - Added Communications navigation link in main menu
+- `packages/shared-types/src/index.ts` - Exported communication.dtos module
+
+**Implementation Details**:
+- Created CommunicationsListComponent with modern Angular patterns (standalone, signals, OnPush)
+- Component displays communications in responsive grid layout with cards
+- Each card shows type badge (color-coded: Call=blue, Email=purple, Meeting=green, Chat=orange, Other=gray)
+- Follow-up indicators displayed when followUpRequired is true
+- Loading state with spinner message during data fetch
+- Error state with retry button for failed API calls
+- Empty state with "Add First Communication" call-to-action button
+- Communication count display showing number of communications
+- Cards are clickable for navigation to detail view (route pending)
+- Date formatting with Month Day, Year format (e.g., "Jan 15, 2024")
+- CommunicationsService created with getAllCommunications() method calling GET /api/communications
+- Route /communications configured and accessible from main navigation
+- CommunicationReadModel interface defined with all fields (id, type, subject, dates, client, contact, project, follow-up)
+- Professional styling with hover effects, shadows, and smooth transitions
+- Build verification: Frontend build passes successfully with no TypeScript errors
+
+**Next Task**: Add filter controls (client, contact, project, type, date range, follow-up status) to the component
+
 ---
 
 ## Notes
@@ -168,3 +204,4 @@
 - The repository is suitable for development/testing but should be replaced with a persistent implementation for production
 - Build verification completed successfully - all TypeScript compilation passes
 - Query parameters support single filter at a time (priority: clientId > contactId > projectId > requiresFollowUp)
+- Frontend component uses direct API service calls (NGRX integration is optional for this feature)
