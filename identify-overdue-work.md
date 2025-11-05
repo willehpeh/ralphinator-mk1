@@ -40,4 +40,22 @@ Implement the "Overdue Tasks" section of the dashboard that displays tasks past 
    - Created loadOverdueTasksFailure action with error payload
    - Follows same pattern as upcoming tasks actions
    - Location: `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
+   - Commit: e36c4d7
+
+5. **Add overdue tasks state to dashboard reducer**
+   - Added overdueTasks array to DashboardState interface
+   - Initialized overdueTasks as empty array in initialState
+   - Added reducer handlers for loadOverdueTasks actions
+   - Follows same pattern as upcomingTasks state management
+   - Location: `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts`
+   - Commit: 3a45cc8
+
+6. **Add NGRX effect for loading overdue tasks**
+   - Created loadOverdueTasks$ effect in DashboardEffects
+   - Effect listens for loadOverdueTasks action
+   - Calls dashboardService.getOverdueTasks()
+   - Dispatches loadOverdueTasksSuccess on success
+   - Dispatches loadOverdueTasksFailure on error
+   - Follows same pattern as loadUpcomingTasks$ effect
+   - Location: `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
    - Commit: [pending]

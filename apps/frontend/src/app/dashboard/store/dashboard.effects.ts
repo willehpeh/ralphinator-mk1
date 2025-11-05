@@ -8,7 +8,10 @@ import {
   loadDashboardStatisticsFailure,
   loadUpcomingTasks,
   loadUpcomingTasksSuccess,
-  loadUpcomingTasksFailure
+  loadUpcomingTasksFailure,
+  loadOverdueTasks,
+  loadOverdueTasksSuccess,
+  loadOverdueTasksFailure
 } from './dashboard.actions';
 import { createEffectErrorHandler } from '../../shared/effects-utils';
 
@@ -52,6 +55,25 @@ export class DashboardEffects {
           catchError(createEffectErrorHandler(
             loadUpcomingTasksFailure,
             'Failed to load upcoming tasks'
+          ))
+        )
+      )
+    )
+  );
+
+  /**
+   * Effect to load overdue tasks from the backend
+   * Listens for loadOverdueTasks action, calls the service, and dispatches success/failure
+   */
+  loadOverdueTasks$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadOverdueTasks),
+      switchMap(() =>
+        this.dashboardService.getOverdueTasks().pipe(
+          map((tasks) => loadOverdueTasksSuccess({ tasks })),
+          catchError(createEffectErrorHandler(
+            loadOverdueTasksFailure,
+            'Failed to load overdue tasks'
           ))
         )
       )
