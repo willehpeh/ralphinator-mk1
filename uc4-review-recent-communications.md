@@ -77,7 +77,7 @@
 2. `7343814` - feat: Add GetRecentCommunicationsQueryHandler for dashboard
 3. `b77c4a8` - feat: Add findRecent() method to ICommunicationReadRepository
 4. `8c721f0` - feat: Register GetRecentCommunicationsQueryHandler in DashboardModule
-5. (pending) - feat: Add GET endpoint for recent communications to DashboardController
+5. `b3a4ee8` - feat: Add GET endpoint for recent communications to DashboardController
 
 ---
 
