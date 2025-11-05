@@ -9,6 +9,7 @@ export * from './lib/events/client-created.domain-event';
 export * from './lib/events/client-information-updated.domain-event';
 export * from './lib/events/client-status-changed.domain-event';
 export * from './lib/events/client-deleted.domain-event';
+export * from './lib/events/communication-created.domain-event';
 export * from './lib/events/contact-added-to-client.domain-event';
 export * from './lib/events/contact-updated.domain-event';
 export * from './lib/events/contact-deleted.domain-event';
