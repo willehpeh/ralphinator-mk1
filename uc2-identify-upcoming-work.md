@@ -28,7 +28,7 @@
    - Limits results to requested number
    - Location: `packages/application/src/lib/queries/handlers/get-upcoming-tasks.handler.ts`
    - Exported from application module
-   - Commit: (current)
+   - Commit: 16cd1ae
 
 3. **Register GetUpcomingTasksQueryHandler in DashboardModule**
    - Added import for GetUpcomingTasksQueryHandler from application package
@@ -46,9 +46,17 @@
    - Location: `apps/api/src/app/dashboard/dashboard.controller.ts`
    - Commit: bf2dbfe
 
+5. **Write tests for GetUpcomingTasksQueryHandler**
+   - Created comprehensive test suite with 10 test cases
+   - Tests verify: sorting by due date, default limit, custom limit, empty results
+   - Tests verify: only tasks with deadlines, excluding completed/cancelled tasks
+   - Tests verify: including overdue tasks, error handling, edge cases
+   - All tests pass successfully
+   - Location: `packages/testing/src/tests/get-upcoming-tasks.handler.spec.ts`
+   - Commit: 19c68d0
+
 ### Pending Tasks
 
-5. ⬜ Write tests for GetUpcomingTasksQueryHandler
 6. ⬜ Create dashboard NGRX actions for upcoming tasks
 7. ⬜ Update dashboard effects to load upcoming tasks
 8. ⬜ Update dashboard reducer to store upcoming tasks
@@ -69,6 +77,7 @@
 
 - `packages/application/src/lib/queries/get-upcoming-tasks.query.ts`
 - `packages/application/src/lib/queries/handlers/get-upcoming-tasks.handler.ts`
+- `packages/testing/src/tests/get-upcoming-tasks.handler.spec.ts`
 
 ## Files Modified
 
@@ -80,4 +89,4 @@
 
 ## Next Steps
 
-Next: Write tests for GetUpcomingTasksQueryHandler
+Next: Create dashboard NGRX actions for upcoming tasks
