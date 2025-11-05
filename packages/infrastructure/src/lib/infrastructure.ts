@@ -13,6 +13,7 @@ export * from './repositories/aggregate.repository';
 
 // Projections
 export * from './projections/client.projection';
+export * from './projections/communication.projection';
 export * from './projections/contact.projection';
 export * from './projections/project.projection';
 export * from './projections/task.projection';

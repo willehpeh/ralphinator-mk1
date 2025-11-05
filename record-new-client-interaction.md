@@ -74,7 +74,15 @@ Implementing UC-COMMUNICATION-001-01: Create a New Communication
 **Description**: Created CommunicationReadModel DTO with all fields including denormalized client/contact/project names. Created ICommunicationReadRepository interface with methods for querying communications by id, client, contact, project, type, and follow-up status. Added COMMUNICATION_READ_REPOSITORY injection token. Updated application exports.
 **Commit**: 5501a90
 
+### Task 8: Create CommunicationProjection
+**Date**: 2025-11-05
+**Files Modified**:
+- `packages/infrastructure/src/lib/projections/communication.projection.ts` (created)
+- `packages/infrastructure/src/lib/infrastructure.ts` (updated exports)
+
+**Description**: Created CommunicationProjection event handler that listens to CommunicationCreatedDomainEvent and builds the CommunicationReadModel. The projection transforms domain events into read models and persists them to the read repository. Denormalized fields (clientName, contactName, projectName) are set to empty string/null with a note that they will be populated by the repository when fetching.
+**Commit**: pending
+
 ## Tasks Pending
-- Create CommunicationProjection
 - Create InMemoryCommunicationReadRepository
 - And more...
