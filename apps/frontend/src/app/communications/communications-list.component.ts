@@ -46,6 +46,18 @@ import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } 
             }
           </select>
         </div>
+
+        <div class="filter-group filter-group-checkbox">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              id="follow-up-filter"
+              class="filter-checkbox"
+              [checked]="requiresFollowUp()"
+              (change)="onFollowUpFilterChange($event)">
+            <span class="checkbox-text">Show only items requiring follow-up</span>
+          </label>
+        </div>
       </div>
 
       @if (loading()) {
@@ -119,6 +131,7 @@ export class CommunicationsListComponent implements OnInit {
   // Filter signals
   selectedClientId = signal<string>('');
   selectedType = signal<string>('');
+  requiresFollowUp = signal<boolean>(false);
 
   // Mock client data (TODO: Replace with actual client data from API)
   mockClients = [
@@ -166,6 +179,11 @@ export class CommunicationsListComponent implements OnInit {
   onTypeFilterChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedType.set(selectElement.value);
+  }
+
+  onFollowUpFilterChange(event: Event): void {
+    const checkboxElement = event.target as HTMLInputElement;
+    this.requiresFollowUp.set(checkboxElement.checked);
   }
 
   formatDate(date: string): string {

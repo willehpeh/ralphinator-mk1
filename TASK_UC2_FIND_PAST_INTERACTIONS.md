@@ -21,7 +21,7 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 **Filtering UI:**
 - ✅ Task 1: Add client filter dropdown to CommunicationsListComponent
 - ✅ Task 2: Add communication type filter dropdown
-- ⏹ Task 3: Add follow-up required filter toggle
+- ✅ Task 3: Add follow-up required filter toggle
 - ⏹ Task 4: Add date range filter (from/to date pickers)
 - ⏹ Task 5: Add search input for subject/notes
 - ⏹ Task 6: Implement filter state management with signals
@@ -68,20 +68,38 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Styled consistently with existing client filter
 - Note: Filter does not yet connect to API - this will be Task 7
 
+### Task 3: Add follow-up required filter toggle
+**Status**: ✅ Completed
+**Description**: Add a checkbox or toggle to filter communications by follow-up requirement
+**Files modified**:
+- `apps/frontend/src/app/communications/communications-list.component.ts`
+- `apps/frontend/src/app/communications/communications-list.component.scss`
+
+**Implementation details**:
+- ✅ Added `requiresFollowUp` signal (boolean) for filter state
+- ✅ Added `onFollowUpFilterChange()` method to handle checkbox changes
+- ✅ Added checkbox filter in filters section with professional styling
+- ✅ Used custom checkbox label with text "Show only items requiring follow-up"
+- ✅ Styled with hover effects, scale transitions, and accessible focus states
+- ✅ Used `accent-color` for modern checkbox theming
+- ✅ Added hover state that highlights both checkbox and text
+- ✅ Implemented proper accessibility with focus outlines
+- Note: Filter does not yet connect to API - this will be Task 7
+
 ## Current Task Details
 
-### Task 3: Add follow-up required filter toggle
+### Task 4: Add date range filter (from/to date pickers)
 **Status**: Next
-**Description**: Add a checkbox or toggle to filter communications by follow-up requirement
+**Description**: Add date range filtering with from/to date pickers
 **Files to modify**:
 - `apps/frontend/src/app/communications/communications-list.component.ts`
 - `apps/frontend/src/app/communications/communications-list.component.scss`
 
 **Implementation approach**:
-- Add a signal for follow-up filter state (boolean)
-- Add a checkbox or toggle element in the filters section
+- Add signals for date range (fromDate, toDate)
+- Add two date input elements in the filters section
 - Style consistently with other filters
-- Wire up the checkbox to update the signal
+- Wire up the inputs to update the signals
 - Do NOT yet connect to the API (that will be a separate task)
 
 ---
