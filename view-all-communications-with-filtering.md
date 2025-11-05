@@ -15,7 +15,7 @@
 - [x] GetCommunicationsByClientIdQuery and handler
 - [x] GetCommunicationsByContactIdQuery and handler
 - [x] GetCommunicationsByProjectIdQuery and handler
-- [ ] GetCommunicationsRequiringFollowUpQuery and handler
+- [x] GetCommunicationsRequiringFollowUpQuery and handler
 - [ ] GET /api/communications with query parameters
 - [ ] Tests: Query handler tests
 
@@ -94,6 +94,22 @@
 - Implemented handler using the CommunicationQueryHandler base class pattern
 - Handler calls `readRepository.findByProjectId(query.projectId)` which returns communications for the specific project sorted by most recent first
 - Follows the same pattern as previous query handlers for consistency
+
+### Task 5: Create GetCommunicationsRequiringFollowUpQuery and Handler (2025-11-05)
+
+**Files Created**:
+- `packages/application/src/lib/queries/get-communications-requiring-follow-up.query.ts` - Query class for retrieving communications requiring follow-up
+- `packages/application/src/lib/queries/handlers/get-communications-requiring-follow-up.handler.ts` - Handler that retrieves communications where followUpRequired is true
+
+**Files Modified**:
+- `packages/application/src/lib/application.ts` - Exported new query and handler
+
+**Implementation Details**:
+- Created GetCommunicationsRequiringFollowUpQuery with no parameters (retrieves all communications requiring follow-up)
+- Implemented handler using the CommunicationQueryHandler base class pattern
+- Handler calls `readRepository.findRequiringFollowUp()` which returns communications where followUpRequired is true, sorted by most recent first
+- Follows the same pattern as previous query handlers for consistency
+- Leverages existing interface method in ICommunicationReadRepository
 
 ---
 
