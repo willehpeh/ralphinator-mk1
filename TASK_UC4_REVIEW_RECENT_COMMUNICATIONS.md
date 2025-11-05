@@ -79,7 +79,7 @@ Implementing the "Recent Communications" section on the dashboard to display the
 
 ### Task 11: Add getRecentCommunications() method to DashboardService
 **Status**: ✅ Completed
-**Commit**: `[pending]`
+**Commit**: `11691db`
 **Description**: Added method to retrieve recent communications from the API endpoint
 **Files Modified**:
 - `apps/frontend/src/app/dashboard/dashboard.service.ts`
