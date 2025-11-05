@@ -98,6 +98,15 @@ Implementing the "Recent Communications" section on the dashboard to display the
 **Files Modified**:
 - `apps/frontend/src/app/dashboard/dashboard-page.component.ts`
 
+### Task 14: Fix TypeScript compilation errors for TaskDto imports
+**Status**: ✅ Completed
+**Commit**: `6dc0778`
+**Description**: Replaced incorrect TaskReadModel imports with correct TaskDto type across dashboard files
+**Files Modified**:
+- `apps/frontend/src/app/dashboard/dashboard.service.ts`
+- `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
+- `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts`
+
 ---
 
 ## Current Task
