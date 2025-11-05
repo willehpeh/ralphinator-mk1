@@ -13,7 +13,7 @@
 ### Backend Implementation
 - [x] GetAllCommunicationsQuery and handler
 - [x] GetCommunicationsByClientIdQuery and handler
-- [ ] GetCommunicationsByContactIdQuery and handler
+- [x] GetCommunicationsByContactIdQuery and handler
 - [ ] GetCommunicationsByProjectIdQuery and handler
 - [ ] GetCommunicationsRequiringFollowUpQuery and handler
 - [ ] GET /api/communications with query parameters
@@ -64,6 +64,21 @@
 - Implemented handler using the CommunicationQueryHandler base class pattern
 - Handler calls `readRepository.findByClientId(clientId)` which returns communications for the specific client sorted by most recent first
 - Follows the same pattern as GetAllCommunicationsQuery for consistency
+
+### Task 3: Create GetCommunicationsByContactIdQuery and Handler (2025-11-05)
+
+**Files Created**:
+- `packages/application/src/lib/queries/get-communications-by-contact-id.query.ts` - Query class with contactId parameter
+- `packages/application/src/lib/queries/handlers/get-communications-by-contact-id.handler.ts` - Handler that filters by contact ID
+
+**Files Modified**:
+- `packages/application/src/lib/application.ts` - Exported new query and handler
+
+**Implementation Details**:
+- Created GetCommunicationsByContactIdQuery with contactId parameter
+- Implemented handler using the CommunicationQueryHandler base class pattern
+- Handler calls `readRepository.findByContactId(query.contactId)` which returns communications for the specific contact sorted by most recent first
+- Follows the same pattern as previous query handlers for consistency
 
 ---
 
