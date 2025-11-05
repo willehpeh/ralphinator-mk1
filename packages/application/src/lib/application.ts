@@ -61,6 +61,7 @@ export * from './queries/get-dashboard-statistics.query';
 export * from './queries/get-upcoming-tasks.query';
 export * from './queries/get-overdue-tasks.query';
 export * from './queries/get-recent-communications.query';
+export * from './queries/get-followup-communications.query';
 
 // Query Handlers
 export * from './queries/handlers/get-client-by-id.handler';
