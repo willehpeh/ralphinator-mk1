@@ -122,9 +122,16 @@ None - Backend implementation complete!
    - Removed old redirect from '' to 'clients'
    - Dashboard now displays at application root
    - Location: `apps/frontend/src/app/app.routes.ts`
+   - Commit: `5cfeb95 feat: Configure dashboard route at application root`
+
+13. ✅ **Register dashboard store and effects in app.config**
+   - Imported dashboardReducer and DashboardEffects
+   - Registered dashboard state with provideState({ name: 'dashboard', reducer: dashboardReducer })
+   - Added DashboardEffects to provideEffects array
+   - Dashboard state management now fully integrated with NGRX store
+   - Location: `apps/frontend/src/app/app.config.ts`
    - Commit: (current)
 
-13. ⏳ Register dashboard store and effects in app.config
 14. ⏳ Update navigation with Dashboard link
 15. ⏳ Write component tests
 
@@ -156,8 +163,9 @@ None - Backend implementation complete!
 - `apps/api/src/app/app.module.ts` (registered DashboardModule)
 - `apps/api/src/app/dashboard/dashboard.module.ts` (registered DashboardController)
 - `apps/frontend/src/app/app.routes.ts` (configured dashboard route at '/')
+- `apps/frontend/src/app/app.config.ts` (registered dashboard store and effects)
 - `TASK_UC1_VIEW_WORKLOAD.md` (updated progress)
 
 ## Next Steps
 
-Dashboard route configured at '/'. Next: Register dashboard store and effects in app.config to enable state management.
+Dashboard store and effects registered. Next: Update navigation with Dashboard link to allow users to navigate to the dashboard.
