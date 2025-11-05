@@ -72,7 +72,7 @@ Implementing UC-COMMUNICATION-001-01: Create a New Communication
 - `packages/application/src/lib/application.ts` (updated exports)
 
 **Description**: Created CommunicationReadModel DTO with all fields including denormalized client/contact/project names. Created ICommunicationReadRepository interface with methods for querying communications by id, client, contact, project, type, and follow-up status. Added COMMUNICATION_READ_REPOSITORY injection token. Updated application exports.
-**Commit**: Pending
+**Commit**: 5501a90
 
 ## Tasks Pending
 - Create CommunicationProjection
