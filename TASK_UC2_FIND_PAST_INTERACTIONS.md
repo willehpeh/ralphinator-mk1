@@ -22,7 +22,7 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Task 1: Add client filter dropdown to CommunicationsListComponent
 - ✅ Task 2: Add communication type filter dropdown
 - ✅ Task 3: Add follow-up required filter toggle
-- ⏹ Task 4: Add date range filter (from/to date pickers)
+- ✅ Task 4: Add date range filter (from/to date pickers)
 - ⏹ Task 5: Add search input for subject/notes
 - ⏹ Task 6: Implement filter state management with signals
 - ⏹ Task 7: Connect filters to backend API calls
@@ -86,20 +86,38 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Implemented proper accessibility with focus outlines
 - Note: Filter does not yet connect to API - this will be Task 7
 
+### Task 4: Add date range filter (from/to date pickers)
+**Status**: ✅ Completed
+**Description**: Add date range filtering with from/to date pickers
+**Files modified**:
+- `apps/frontend/src/app/communications/communications-list.component.ts`
+- `apps/frontend/src/app/communications/communications-list.component.scss`
+
+**Implementation details**:
+- ✅ Added `fromDate` and `toDate` signals (string) for filter state
+- ✅ Added `onFromDateChange()` and `onToDateChange()` methods to handle input changes
+- ✅ Added two date input elements in the filters section
+- ✅ Styled date inputs consistently with other filters (matching select styling)
+- ✅ Added hover effects for calendar picker icon (opacity transitions)
+- ✅ Added focus states with blue border and subtle shadow
+- ✅ Updated mobile responsiveness to include date inputs (full width on small screens)
+- ✅ Used modern Angular syntax with signals and event binding
+- Note: Filters do not yet connect to API - this will be Task 7
+
 ## Current Task Details
 
-### Task 4: Add date range filter (from/to date pickers)
+### Task 5: Add search input for subject/notes
 **Status**: Next
-**Description**: Add date range filtering with from/to date pickers
+**Description**: Add a search/text input to filter communications by subject or notes content
 **Files to modify**:
 - `apps/frontend/src/app/communications/communications-list.component.ts`
 - `apps/frontend/src/app/communications/communications-list.component.scss`
 
 **Implementation approach**:
-- Add signals for date range (fromDate, toDate)
-- Add two date input elements in the filters section
+- Add signal for search text
+- Add search input element in the filters section
 - Style consistently with other filters
-- Wire up the inputs to update the signals
+- Wire up the input to update the signal
 - Do NOT yet connect to the API (that will be a separate task)
 
 ---

@@ -58,6 +58,26 @@ import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } 
             <span class="checkbox-text">Show only items requiring follow-up</span>
           </label>
         </div>
+
+        <div class="filter-group">
+          <label for="from-date-filter" class="filter-label">From Date:</label>
+          <input
+            type="date"
+            id="from-date-filter"
+            class="filter-date-input"
+            [value]="fromDate()"
+            (change)="onFromDateChange($event)">
+        </div>
+
+        <div class="filter-group">
+          <label for="to-date-filter" class="filter-label">To Date:</label>
+          <input
+            type="date"
+            id="to-date-filter"
+            class="filter-date-input"
+            [value]="toDate()"
+            (change)="onToDateChange($event)">
+        </div>
       </div>
 
       @if (loading()) {
@@ -132,6 +152,8 @@ export class CommunicationsListComponent implements OnInit {
   selectedClientId = signal<string>('');
   selectedType = signal<string>('');
   requiresFollowUp = signal<boolean>(false);
+  fromDate = signal<string>('');
+  toDate = signal<string>('');
 
   // Mock client data (TODO: Replace with actual client data from API)
   mockClients = [
@@ -184,6 +206,16 @@ export class CommunicationsListComponent implements OnInit {
   onFollowUpFilterChange(event: Event): void {
     const checkboxElement = event.target as HTMLInputElement;
     this.requiresFollowUp.set(checkboxElement.checked);
+  }
+
+  onFromDateChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    this.fromDate.set(inputElement.value);
+  }
+
+  onToDateChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    this.toDate.set(inputElement.value);
   }
 
   formatDate(date: string): string {

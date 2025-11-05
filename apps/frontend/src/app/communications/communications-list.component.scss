@@ -87,6 +87,40 @@
       }
     }
 
+    .filter-date-input {
+      flex: 1;
+      max-width: 300px;
+      padding: 0.625rem 1rem;
+      font-size: 0.95rem;
+      color: #2c3e50;
+      background-color: white;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+
+      &::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        filter: opacity(0.6);
+        transition: filter 0.2s ease;
+      }
+
+      &:hover {
+        border-color: #3498db;
+
+        &::-webkit-calendar-picker-indicator {
+          filter: opacity(1);
+        }
+      }
+
+      &:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      }
+    }
+
     &.filter-group-checkbox {
       .checkbox-label {
         display: flex;
@@ -328,7 +362,8 @@
       align-items: flex-start;
       gap: 0.5rem;
 
-      .filter-select {
+      .filter-select,
+      .filter-date-input {
         max-width: 100%;
         width: 100%;
       }
