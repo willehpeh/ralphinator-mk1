@@ -54,6 +54,14 @@ Implementing UC-COMMUNICATION-001-01: Create a New Communication
 **Description**: Created CommunicationDataPayload to encapsulate communication data for commands (following DRY principle). Created CreateCommunicationCommand that accepts an id and CommunicationDataPayload. Updated application exports to include both new files.
 **Commit**: 10fd37e
 
+### Task 6: Create CreateCommunicationCommandHandler
+**Date**: 2025-11-05
+**Files Modified**:
+- `packages/application/src/lib/commands/handlers/create-communication.handler.ts` (created)
+- `packages/application/src/lib/application.ts` (updated exports)
+
+**Description**: Created CreateCommunicationCommandHandler that validates business rules (client exists, contact belongs to client if specified, project belongs to client if specified), creates CommunicationData value object from payload, invokes CommunicationAggregate.create(), and persists the aggregate via event store. Extends BaseCommandHandler and follows CQRS + event sourcing patterns.
+**Commit**: (pending)
+
 ## Tasks Pending
-- Create CreateCommunicationCommandHandler
 - And more...

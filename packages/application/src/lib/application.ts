@@ -36,6 +36,7 @@ export * from './commands/handlers/create-task.handler';
 export * from './commands/handlers/update-task-details.handler';
 export * from './commands/handlers/change-task-status.handler';
 export * from './commands/handlers/delete-task.handler';
+export * from './commands/handlers/create-communication.handler';
 
 // Queries
 export * from './queries/get-client-by-id.query';
