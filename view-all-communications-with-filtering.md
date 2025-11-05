@@ -12,7 +12,7 @@
 
 ### Backend Implementation
 - [x] GetAllCommunicationsQuery and handler
-- [ ] GetCommunicationsByClientIdQuery and handler
+- [x] GetCommunicationsByClientIdQuery and handler
 - [ ] GetCommunicationsByContactIdQuery and handler
 - [ ] GetCommunicationsByProjectIdQuery and handler
 - [ ] GetCommunicationsRequiringFollowUpQuery and handler
@@ -49,6 +49,21 @@
 - Implemented handler using the CommunicationQueryHandler base class pattern
 - Handler calls `readRepository.findAll()` which returns communications sorted by most recent first
 - Follows existing CQRS patterns in the codebase
+
+### Task 2: Create GetCommunicationsByClientIdQuery and Handler (2025-11-05)
+
+**Files Created**:
+- `packages/application/src/lib/queries/get-communications-by-client-id.query.ts` - Query class with clientId parameter
+- `packages/application/src/lib/queries/handlers/get-communications-by-client-id.handler.ts` - Handler that filters by client ID
+
+**Files Modified**:
+- `packages/application/src/lib/application.ts` - Exported new query and handler
+
+**Implementation Details**:
+- Created GetCommunicationsByClientIdQuery with clientId parameter
+- Implemented handler using the CommunicationQueryHandler base class pattern
+- Handler calls `readRepository.findByClientId(clientId)` which returns communications for the specific client sorted by most recent first
+- Follows the same pattern as GetAllCommunicationsQuery for consistency
 
 ---
 
