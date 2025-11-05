@@ -62,7 +62,7 @@
    - loadUpcomingTasksSuccess: Receives array of TaskReadModel on successful load
    - loadUpcomingTasksFailure: Receives error string on failure
    - Location: `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
-   - Commit: [PENDING]
+   - Commit: 8ea0820
 
 ### Pending Tasks
 
