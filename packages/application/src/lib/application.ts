@@ -99,6 +99,7 @@ export * from './read-models/contact.read-model';
 export * from './read-models/project.read-model';
 export * from './read-models/task.read-model';
 export * from './read-models/communication.read-model';
+export * from './read-models/dashboard-statistics.read-model';
 
 export function application(): string {
   return 'application';
