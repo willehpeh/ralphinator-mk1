@@ -17,11 +17,20 @@
    - Created query class implementing IQuery interface
    - Location: `packages/application/src/lib/queries/get-dashboard-statistics.query.ts`
    - Exported from application module
+   - Commit: `1ff186d feat: Create GetDashboardStatisticsQuery for dashboard workload stats`
+
+3. ✅ **Create GetDashboardStatisticsQueryHandler**
+   - Created handler with injected read repositories for clients, projects, tasks, and communications
+   - Calculates active clients count (status = 'Active')
+   - Calculates active projects count (status = 'Active')
+   - Calculates pending tasks count (status = 'Todo' or 'InProgress')
+   - Fetches follow-ups required count from communications repository
+   - Uses Promise.all for parallel data fetching
+   - Location: `packages/application/src/lib/queries/handlers/get-dashboard-statistics.handler.ts`
+   - Exported from application module
    - Commit: (current)
 
 ### Pending Backend Tasks
-
-3. ⏳ Create GetDashboardStatisticsQueryHandler
 4. ⏳ Create DashboardModule
 5. ⏳ Create DashboardController
 6. ⏳ Add GET /api/dashboard/statistics endpoint
@@ -49,11 +58,12 @@
 
 - `packages/application/src/lib/read-models/dashboard-statistics.read-model.ts`
 - `packages/application/src/lib/queries/get-dashboard-statistics.query.ts`
+- `packages/application/src/lib/queries/handlers/get-dashboard-statistics.handler.ts`
 
 ## Files Modified
 
-- `packages/application/src/lib/application.ts` (added query export)
+- `packages/application/src/lib/application.ts` (added query and handler exports)
 
 ## Next Steps
 
-Create `GetDashboardStatisticsQueryHandler` in `packages/application/src/lib/queries/handlers/`
+Create `DashboardModule` in `apps/api/src/app/dashboard/`
