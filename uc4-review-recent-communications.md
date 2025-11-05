@@ -71,6 +71,42 @@
 
 ---
 
+### Task 6: Write backend tests for GetRecentCommunicationsQueryHandler ✅
+**Status**: Completed
+
+**Files Created**:
+- `packages/testing/src/tests/get-recent-communications.handler.spec.ts`
+
+**Description**: Created comprehensive test suite for GetRecentCommunicationsQueryHandler. Tests cover:
+- Returns recent communications sorted by date descending
+- Uses default limit of 10 when not specified
+- Respects custom limit parameter
+- Returns empty array when no communications exist
+- Validates all required fields are populated
+- Handles communications without optional fields (contactId, projectId, etc.)
+- Handles repository errors gracefully
+- Handles edge cases (limit of 1, large limit parameter)
+- Validates all communication types (Call, Email, Meeting, Chat, Other)
+
+All 10 test cases passing. Follows the established pattern from get-upcoming-tasks.handler.spec.ts for consistency.
+
+---
+
+### Task 7: Add NGRX actions for recent communications ✅
+**Status**: Completed
+
+**Files Modified**:
+- `apps/frontend/src/app/dashboard/store/dashboard.actions.ts` (added loadRecentCommunications, loadRecentCommunicationsSuccess, loadRecentCommunicationsFailure actions)
+
+**Description**: Added three NGRX actions for managing recent communications in the dashboard state. Actions include:
+- `loadRecentCommunications`: Trigger action to load recent communications
+- `loadRecentCommunicationsSuccess`: Success action with communications payload (CommunicationReadModel[])
+- `loadRecentCommunicationsFailure`: Failure action with error payload
+
+Follows the established pattern from loadUpcomingTasks actions for consistency.
+
+---
+
 ## Commits
 
 1. `fa698ae` - feat: Add GetRecentCommunicationsQuery DTO for dashboard
@@ -78,6 +114,8 @@
 3. `b77c4a8` - feat: Add findRecent() method to ICommunicationReadRepository
 4. `8c721f0` - feat: Register GetRecentCommunicationsQueryHandler in DashboardModule
 5. `b3a4ee8` - feat: Add GET endpoint for recent communications to DashboardController
+6. `540b56a` - test: Add comprehensive test suite for GetRecentCommunicationsQueryHandler
+7. `2ecd5a0` - feat: Add NGRX actions for recent communications to dashboard
 
 ---
 
@@ -89,3 +127,4 @@
 - The findRecent() method sorts communications by date descending and returns only the requested limit
 - No linting errors introduced in modified files
 - GetRecentCommunicationsQueryHandler successfully registered in DashboardModule
+- Test suite follows the pattern from get-upcoming-tasks.handler.spec.ts with 10 comprehensive test cases
