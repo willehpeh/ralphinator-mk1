@@ -1356,3 +1356,61 @@
 - Success guarantee met: Complete record of client interaction stored with all relevant details
 - Documentation: CURRENT_USE_CASE.md (archived), CURRENT_STORY.md
 - **Note**: Complete end-to-end implementation. Full CQRS + Event Sourcing pattern with professional UI. Part of US-COMMUNICATION-001 story.
+
+## Use Case 2: Find Past Client Interactions (UC-COMMUNICATION-001-02) (2025-11-05) ✅ COMPLETE
+- Complete communications list view with comprehensive filtering and search capabilities
+- Backend: Multiple query handlers pre-existing (GetAllCommunications, GetByClient, GetByContact, GetByProject, GetRequiringFollowUp)
+- Backend API: GET /api/communications with query parameters (clientId, contactId, projectId, requiresFollowUp, fromDate, toDate, searchText)
+- Frontend: CommunicationsListComponent at /communications route with professional responsive card layout
+- Frontend: Comprehensive filter UI with 6 filter types (client, type, follow-up required, date range, search)
+- Frontend: Client filter dropdown populated with mock client data
+- Frontend: Communication type filter dropdown (Call, Email, Meeting, Chat, Other)
+- Frontend: Follow-up required checkbox filter with professional styling
+- Frontend: Date range filters (from/to) with date picker inputs
+- Frontend: Search input field filters by subject and notes (case-insensitive)
+- Frontend: Signal-based filter state management with activeFilters and hasActiveFilters computed signals
+- Frontend: All filters connected to backend API with automatic reload via effect
+- Frontend: buildQueryParams() method constructs query parameters from filter state
+- Frontend: Visual indicators for overdue follow-ups (red border, gradient background, pulse animation)
+- Frontend: isFollowUpOverdue() method compares follow-up dates with current date
+- Frontend: Overdue badges with conditional text and styling
+- Frontend: Sort functionality with 4 options (date-desc, date-asc, client, type)
+- Frontend: sortedCommunications computed signal applies client-side sorting
+- Frontend: Results header showing count and sort controls
+- Frontend: Clear Filters button appears conditionally when filters are active
+- Frontend: clearFilters() method resets all filter signals to default values
+- Frontend: Context-aware empty state messaging based on filter state
+- Frontend: "No communications match your filters" with inline clear filters link when filters active
+- Frontend: "No communications recorded yet" with Add First Communication button when no filters
+- Frontend: Professional styling with hover effects, shadows, responsive design
+- Frontend: Modern Angular patterns (standalone, signals, computed, OnPush, modern control flow @if/@for)
+- All main success scenario steps met:
+  - User navigates to communications history section ✅
+  - System displays all recorded interactions sorted by most recent first ✅
+  - User sees key details (type, topic, client, date, follow-up needed) ✅
+  - User can narrow down by client (filter dropdown) ✅
+  - User can narrow down by interaction type (type dropdown) ✅
+  - User can narrow down by date range (from/to date pickers) ✅
+  - User can search for specific words in topics or notes (search input) ✅
+  - User can filter to see only interactions requiring follow-up (checkbox) ✅
+  - System updates displayed list based on user's criteria (reactive filtering) ✅
+  - User selects an interaction to see full details (click card navigation) ✅
+- All extensions handled:
+  - 3a1: No interactions exist - context-aware empty state message ✅
+  - 8a1: Overdue follow-ups highlighted with red styling, pulse animation, conditional badge text ✅
+- Success guarantee met: User has located the interaction information they were seeking
+- All acceptance criteria met:
+  - View all communications with key details ✅
+  - Filter by client with dropdown ✅
+  - Filter by type with dropdown ✅
+  - Filter by follow-up required with checkbox ✅
+  - Filter by date range with from/to pickers ✅
+  - Search by subject/notes with text input ✅
+  - All filters work independently and together ✅
+  - Clear filters button resets all filters ✅
+  - Sort by date (newest/oldest), client, or type ✅
+  - Visual indicators for overdue follow-ups ✅
+  - Empty state adapts to filter state ✅
+  - Professional, modern UI with responsive design ✅
+- Documentation: TASK_UC2_FIND_PAST_INTERACTIONS.md
+- **Note**: Complete implementation with 11 tasks (all frontend filtering UI). Backend queries pre-existing from Use Case 1.

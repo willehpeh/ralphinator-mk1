@@ -223,15 +223,15 @@
 **Story**: As a software developer or agency owner, I want to create, update, view, and manage communication records (calls, emails, meetings, etc.) associated with clients, contacts, and projects so that I can maintain a complete history of all interactions, track follow-up requirements, and ensure nothing falls through the cracks.
 
 **Completed Use Cases**:
-1. ✅ UC-COMMUNICATION-001-01: Create a New Communication
-2. ✅ UC-COMMUNICATION-001-02: View All Communications with Filtering
-3. ✅ UC-COMMUNICATION-001-03: View Communication Detail
-4. ✅ UC-COMMUNICATION-001-04: Update Communication Details
-5. ✅ UC-COMMUNICATION-001-05: Mark Follow-up as Complete
-6. ✅ UC-COMMUNICATION-001-06: Delete a Communication
-7. ✅ UC-COMMUNICATION-001-07: View Client Communications
-8. ✅ UC-COMMUNICATION-001-08: View Contact Communications
-9. ✅ UC-COMMUNICATION-001-09: View Project Communications
+1. ✅ UC-COMMUNICATION-001-01: Create a New Communication (2025-11-05)
+2. ✅ UC-COMMUNICATION-001-02: View All Communications with Filtering (2025-11-05)
+3. ⏸️ UC-COMMUNICATION-001-03: View Communication Detail (pending)
+4. ⏸️ UC-COMMUNICATION-001-04: Update Communication Details (pending)
+5. ⏸️ UC-COMMUNICATION-001-05: Mark Follow-up as Complete (pending)
+6. ⏸️ UC-COMMUNICATION-001-06: Delete a Communication (pending)
+7. ⏸️ UC-COMMUNICATION-001-07: View Client Communications (pending)
+8. ⏸️ UC-COMMUNICATION-001-08: View Contact Communications (pending)
+9. ⏸️ UC-COMMUNICATION-001-09: View Project Communications (pending)
 
 **Implementation Summary**:
 - Complete CQRS + Event Sourcing architecture for communications domain
@@ -265,4 +265,4 @@
 - Complete audit trail via event sourcing for compliance and relationship management
 - Foundation for Dashboard "Recent Communications" and "Follow-ups Required" sections
 
-**Documentation**: CURRENT_USE_CASE.md (archived), CURRENT_STORY.md, IMPLEMENTED_CASES.md (Use Case 1)
+**Documentation**: TASK_UC2_FIND_PAST_INTERACTIONS.md, CURRENT_STORY.md, IMPLEMENTED_CASES.md (Use Cases 1-2)

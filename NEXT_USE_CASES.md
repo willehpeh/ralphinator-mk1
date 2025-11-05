@@ -1,35 +1,5 @@
 # Use Cases: Communication Management (Alistair Cockburn Style)
 
-## Use Case 2: Find Past Client Interactions
-
-**Primary Actor**: Developer/Agency Owner
-
-**Goal**: Locate specific past interactions or review interaction history to refresh memory before a meeting or to understand the communication history
-
-**Preconditions**: User is authenticated
-
-**Main Success Scenario**:
-1. User navigates to the communications history section
-2. System displays all recorded interactions sorted by most recent first
-3. User sees key details for each interaction: type, topic, client, date, and whether follow-up is needed
-4. User can narrow down the list by selecting a specific client
-5. User can narrow down by interaction type
-6. User can narrow down by date range
-7. User can search for specific words in topics or notes
-8. User can filter to see only interactions requiring follow-up
-9. System updates the displayed list based on user's criteria
-10. User selects an interaction to see full details
-
-**Extensions**:
-- 3a. If no interactions exist:
-  - 3a1. System displays a message indicating no interactions have been recorded yet
-- 8a. User can specifically view overdue follow-ups:
-  - 8a1. System highlights interactions where follow-up date has passed
-
-**Success Guarantee**: User has located the interaction information they were seeking
-
----
-
 ## Use Case 3: Review Interaction Details
 
 **Primary Actor**: Developer/Agency Owner
