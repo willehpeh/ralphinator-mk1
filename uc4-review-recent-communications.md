@@ -38,9 +38,22 @@
 
 ---
 
+### Task 3: Add findRecent() method to ICommunicationReadRepository ✅
+**Status**: Completed
+
+**Files Modified**:
+- `packages/application/src/lib/ports/communication-read-repository.interface.ts` (added findRecent method signature)
+- `packages/infrastructure/src/lib/read-models/in-memory-communication-read-repository.ts` (added findRecent implementation)
+
+**Description**: Added the `findRecent(limit: number)` method to the ICommunicationReadRepository interface and implemented it in the InMemoryCommunicationReadRepository. The method retrieves the most recent N communications sorted by date descending. Implementation follows the established pattern from other query methods in the repository.
+
+---
+
 ## Commits
 
 1. `fa698ae` - feat: Add GetRecentCommunicationsQuery DTO for dashboard
+2. `7343814` - feat: Add GetRecentCommunicationsQueryHandler for dashboard
+3. (pending) - feat: Add findRecent() method to ICommunicationReadRepository
 
 ---
 
@@ -49,4 +62,5 @@
 - Following the established pattern from GetUpcomingTasksQuery for consistency
 - Query accepts a limit parameter that defaults to 10 communications
 - Fixed linting error: removed unnecessary type annotation on limit parameter
-- Handler assumes `findRecent()` method will be added to repository interface (next task)
+- The findRecent() method sorts communications by date descending and returns only the requested limit
+- No linting errors introduced in modified files

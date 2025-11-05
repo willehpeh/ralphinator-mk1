@@ -35,6 +35,20 @@ export class InMemoryCommunicationReadRepository
   }
 
   /**
+   * Find the most recent N communications
+   *
+   * @param limit - Maximum number of communications to return
+   * @returns Promise resolving to array of most recent communications, sorted by date descending
+   */
+  async findRecent(limit: number): Promise<CommunicationReadModel[]> {
+    const communications = Array.from(this.items.values());
+    const sorted = communications.sort((a, b) =>
+      new Date(b.communicationDate).getTime() - new Date(a.communicationDate).getTime()
+    );
+    return sorted.slice(0, limit);
+  }
+
+  /**
    * Find all communications associated with a specific client
    *
    * @param clientId - The unique identifier of the client
