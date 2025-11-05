@@ -47,27 +47,28 @@ Ensure no client communication falls through the cracks by tracking required fol
 **Files**:
 - `packages/infrastructure/src/read-models/in-memory-communication-read-repository.ts`
 
+### Task 6: Add NGRX actions for follow-up communications ✅
+**Commit**: 7d49fe7
+**Date**: 2025-11-05
+**Description**: Created actions for loading follow-up communications (load, success, failure)
+**Files**:
+- `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
+
 ---
 
 ## Pending Tasks
 
-### Task 6: Add NGRX actions for follow-up communications (NEXT)
-**Status**: Pending
-**Description**: Create actions for loading follow-up communications (load, success, failure)
-**Files to create/modify**:
-- `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
-
-### Task 7: Add NGRX effects for follow-up communications
-**Status**: Pending
-**Description**: Create effect that calls dashboard service to load follow-up communications
-**Files to create/modify**:
-- `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
-
-### Task 8: Update dashboard service with getFollowUpCommunications()
+### Task 7: Update dashboard service with getFollowUpCommunications() (NEXT)
 **Status**: Pending
 **Description**: Add method to dashboard service that calls the follow-ups endpoint
 **Files to create/modify**:
 - `apps/frontend/src/app/dashboard/dashboard.service.ts`
+
+### Task 8: Add NGRX effects for follow-up communications
+**Status**: Pending
+**Description**: Create effect that calls dashboard service to load follow-up communications
+**Files to create/modify**:
+- `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
 
 ### Task 9: Update NGRX reducer for follow-up communications
 **Status**: Pending
