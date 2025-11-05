@@ -266,3 +266,48 @@
 - Foundation for Dashboard "Recent Communications" and "Follow-ups Required" sections
 
 **Documentation**: TASK_UC2_FIND_PAST_INTERACTIONS.md, CURRENT_STORY.md, IMPLEMENTED_CASES.md (Use Cases 1-2)
+
+---
+
+## US-DASHBOARD-001: Business Overview Dashboard (2025-11-05) - IN PROGRESS
+
+**Story**: As a software developer or agency owner, I want to see a comprehensive overview dashboard when I open the CRM so that I can quickly understand my current workload, identify urgent items, and track business health without navigating through multiple pages.
+
+**Completed Use Cases**:
+1. ✅ UC-DASHBOARD-001-01: View Current Workload at a Glance (2025-11-05)
+
+**Pending Use Cases**:
+2. ⏳ UC-DASHBOARD-001-02: Identify Upcoming Work
+3. ⏳ UC-DASHBOARD-001-03: Identify Overdue Work
+4. ⏳ UC-DASHBOARD-001-04: Review Recent Client Communications
+5. ⏳ UC-DASHBOARD-001-05: Track Required Follow-Ups
+
+**Implementation Summary (Completed)**:
+- Complete CQRS query implementation for dashboard statistics
+- Backend: GetDashboardStatisticsQuery and handler with parallel data fetching
+- Backend: DashboardStatisticsReadModel with all 4 metrics (clients, projects, tasks, follow-ups)
+- Backend: DashboardModule, DashboardController, GET /api/dashboard/statistics endpoint
+- Backend: Comprehensive test suite with 7 test cases
+- Frontend: NGRX state management (actions, effects, reducer, selectors)
+- Frontend: DashboardService for API communication
+- Frontend: DashboardPageComponent with professional responsive grid layout
+- Frontend: 4 color-coded statistics cards with icons and hover effects
+- Frontend: Loading, error, and empty states
+- Frontend: Dashboard route configured at root path (/)
+- Frontend: Dashboard navigation link in main navigation bar
+- Modern Angular patterns (standalone, signals, OnPush, computed selectors)
+
+**Business Value Delivered (So Far)**:
+- Users see current workload summary immediately upon opening CRM
+- Users understand business health at a glance (active clients, projects, pending tasks, follow-ups)
+- Professional, modern UI provides overview without overwhelming detail
+- Dashboard sets default landing page for work session start
+- Foundation established for additional dashboard widgets (upcoming/overdue tasks, recent communications, follow-ups)
+
+**Next Steps**:
+- Implement UC-DASHBOARD-001-02: Identify Upcoming Work (show next 10 incomplete tasks sorted by due date)
+- Implement UC-DASHBOARD-001-03: Identify Overdue Work (show overdue tasks with visual warnings)
+- Implement UC-DASHBOARD-001-04: Review Recent Client Communications (show last 10 communications)
+- Implement UC-DASHBOARD-001-05: Track Required Follow-Ups (show communications requiring follow-up)
+
+**Documentation**: TASK_UC1_VIEW_WORKLOAD.md, NEXT_USE_CASES.md, IMPLEMENTED_CASES.md (Use Case 1)

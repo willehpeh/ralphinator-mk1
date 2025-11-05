@@ -1414,3 +1414,43 @@
   - Professional, modern UI with responsive design ✅
 - Documentation: TASK_UC2_FIND_PAST_INTERACTIONS.md
 - **Note**: Complete implementation with 11 tasks (all frontend filtering UI). Backend queries pre-existing from Use Case 1.
+
+## Use Case 1: View Current Workload at a Glance (UC-DASHBOARD-001-01) (2025-11-05) ✅ COMPLETE
+- Complete CQRS query implementation for dashboard statistics
+- Application: GetDashboardStatisticsQuery and GetDashboardStatisticsQueryHandler query multiple read repositories
+- Application: DashboardStatisticsReadModel DTO with activeClientsCount, activeProjectsCount, pendingTasksCount, followUpsRequiredCount
+- Application: Handler uses Promise.all for parallel data fetching from clients, projects, tasks, communications repositories
+- Application: Active clients counted by status = 'Active'
+- Application: Active projects counted by status = 'Active'
+- Application: Pending tasks counted by status = 'Todo' or 'InProgress'
+- Application: Follow-ups required counted from communications repository
+- Backend: DashboardModule with CQRS handlers and read repository providers
+- Backend: DashboardController with GET /api/dashboard/statistics endpoint
+- Backend: Comprehensive tests with 7 test cases covering all scenarios
+- Frontend: NGRX actions (loadDashboardStatistics, loadDashboardStatisticsSuccess, loadDashboardStatisticsFailure)
+- Frontend: DashboardService with getDashboardStatistics() method for API communication
+- Frontend: DashboardEffects with loadDashboardStatistics$ effect for async API calls
+- Frontend: dashboardReducer with DashboardState interface (statistics, loading, error)
+- Frontend: Dashboard selectors for state access (selectDashboardStatistics, selectDashboardLoading, selectDashboardError, selectHasStatistics)
+- Frontend: Individual selectors for each statistic value with safe default values (0)
+- Frontend: DashboardPageComponent at root route (/) with comprehensive statistics display
+- Frontend: Statistics grid with 4 color-coded cards (clients=blue, projects=purple, tasks=green, follow-ups=orange)
+- Frontend: Professional card UI with icons, hover effects, and responsive grid layout
+- Frontend: Loading state with spinner animation
+- Frontend: Error state with retry button
+- Frontend: Empty state with guidance when no data exists
+- Frontend: Modern Angular patterns (standalone, signals, OnPush, inject(), store.selectSignal())
+- Frontend: Dashboard navigation link added to main navigation bar (first item, exact route matching)
+- Frontend: Route configuration for '/' displays DashboardPageComponent
+- All main success scenario steps met:
+  - User opens the CRM application (route to /) ✅
+  - System displays dashboard with summary statistics (4 stat cards) ✅
+  - Statistics show active clients, active projects, pending tasks, follow-ups required ✅
+  - User reviews statistics to understand current workload (all visible at a glance) ✅
+  - User sees overall business health at a glance (comprehensive overview) ✅
+- All extensions handled:
+  - 2a: No data exists - empty state message "No data yet. Start by adding your first clients..." ✅
+  - 3a: User clicks on metric - navigation links can be added in future iterations (not required for MVP) ✅
+- Success guarantee met: User understands their current business status and workload volume without navigating to other pages
+- Documentation: TASK_UC1_VIEW_WORKLOAD.md
+- **Note**: Complete end-to-end implementation from backend query to frontend UI. All 14 tasks completed. Foundation for future dashboard enhancements (upcoming tasks, recent communications, follow-ups).
