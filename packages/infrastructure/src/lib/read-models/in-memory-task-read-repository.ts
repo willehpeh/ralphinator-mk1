@@ -69,4 +69,28 @@ export class InMemoryTaskReadRepository
       })
       .slice(0, limit);
   }
+
+  /**
+   * Find overdue tasks sorted by due date (oldest first).
+   * Returns only incomplete tasks with deadlines in the past.
+   *
+   * @returns Promise resolving to array of overdue tasks
+   */
+  async findOverdue(): Promise<TaskReadModel[]> {
+    const now = new Date();
+    return Array.from(this.items.values())
+      .filter(
+        (task) =>
+          task.status !== 'Completed' &&
+          task.status !== 'Cancelled' &&
+          task.deadline !== null &&
+          new Date(task.deadline) < now
+      )
+      .sort((a, b) => {
+        // Sort by deadline (oldest first)
+        const dateA = a.deadline ? new Date(a.deadline).getTime() : 0;
+        const dateB = b.deadline ? new Date(b.deadline).getTime() : 0;
+        return dateA - dateB;
+      });
+  }
 }

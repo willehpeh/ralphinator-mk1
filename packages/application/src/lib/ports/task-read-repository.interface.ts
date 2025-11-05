@@ -6,6 +6,7 @@ export interface ITaskReadRepository {
   findByProjectId(projectId: string): Promise<TaskReadModel[]>;
   findByClientId(clientId: string): Promise<TaskReadModel[]>;
   findUpcoming(limit: number): Promise<TaskReadModel[]>;
+  findOverdue(): Promise<TaskReadModel[]>;
   save(task: TaskReadModel): Promise<void>;
   delete(id: string): Promise<void>;
 }
