@@ -25,7 +25,7 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Task 4: Add date range filter (from/to date pickers)
 - ✅ Task 5: Add search input for subject/notes
 - ✅ Task 6: Implement filter state management with signals
-- ⏹ Task 7: Connect filters to backend API calls
+- ✅ Task 7: Connect filters to backend API calls
 - ⏹ Task 8: Add visual indicators for overdue follow-ups
 - ⏹ Task 9: Add sort options (date, client, type)
 - ⏹ Task 10: Add filter reset/clear functionality
@@ -147,20 +147,37 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Added JSDoc documentation for clarity
 - Note: Filter parameters are ready but NOT yet connected to API (that will be Task 7)
 
-## Current Task Details
-
 ### Task 7: Connect filters to backend API calls
-**Status**: Next
+**Status**: ✅ Completed
 **Description**: Wire up all filter state to actually call the backend API with the appropriate query parameters
-**Files to modify**:
+**Files modified**:
 - `apps/frontend/src/app/communications/communications-list.component.ts`
 - `apps/frontend/src/app/communications/communications.service.ts`
 
+**Implementation details**:
+- ✅ Updated `CommunicationsService.getAllCommunications()` to accept a single `queryParams` object instead of individual parameters
+- ✅ Simplified service method to directly pass query params to HTTP client
+- ✅ Modified component's `loadCommunications()` method to use `buildQueryParams()` method
+- ✅ Consolidated effects into a single effect that triggers on any filter change via `activeFilters()` computed signal
+- ✅ All filters (clientId, type, requiresFollowUp, fromDate, toDate, searchText) now properly connected to backend
+- ✅ Reactive behavior ensures API is called whenever any filter changes
+- ✅ Used modern Angular signals and computed signals for optimal reactivity
+- Note: Backend API already supports all these parameters, so filters are now fully functional
+
+## Current Task Details
+
+### Task 8: Add visual indicators for overdue follow-ups
+**Status**: Next
+**Description**: Add visual styling to highlight communications with overdue follow-ups
+**Files to modify**:
+- `apps/frontend/src/app/communications/communications-list.component.ts`
+- `apps/frontend/src/app/communications/communications-list.component.scss`
+
 **Implementation approach**:
-- Update `CommunicationsService.getAllCommunications()` to accept all filter parameters
-- Modify `loadCommunications()` to use `buildQueryParams()` method
-- Update effects to trigger on all filter changes (not just client and type)
-- Ensure proper reactive behavior when filters change
+- Add computed method to determine if a follow-up is overdue
+- Add conditional styling to communication cards with overdue follow-ups
+- Use distinct color (e.g., red/orange) to highlight overdue items
+- Update follow-up badge styling to show overdue status
 
 ---
 

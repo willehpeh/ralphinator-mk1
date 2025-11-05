@@ -10,17 +10,7 @@ export class CommunicationsService {
   private http = inject(HttpClient);
   private readonly apiUrl = '/api/communications';
 
-  getAllCommunications(clientId?: string, type?: string): Observable<CommunicationReadModel[]> {
-    const params: { [key: string]: string } = {};
-
-    if (clientId) {
-      params['clientId'] = clientId;
-    }
-
-    if (type) {
-      params['type'] = type;
-    }
-
-    return this.http.get<CommunicationReadModel[]>(this.apiUrl, { params });
+  getAllCommunications(queryParams?: { [key: string]: string }): Observable<CommunicationReadModel[]> {
+    return this.http.get<CommunicationReadModel[]>(this.apiUrl, { params: queryParams || {} });
   }
 }

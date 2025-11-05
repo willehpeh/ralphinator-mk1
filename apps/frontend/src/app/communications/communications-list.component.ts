@@ -201,15 +201,9 @@ export class CommunicationsListComponent implements OnInit {
   });
 
   constructor() {
-    // Automatically reload communications when client filter changes
+    // Automatically reload communications when any filter changes
     effect(() => {
-      const clientId = this.selectedClientId();
-      this.loadCommunications();
-    });
-
-    // Automatically reload communications when type filter changes
-    effect(() => {
-      const type = this.selectedType();
+      const filters = this.activeFilters();
       this.loadCommunications();
     });
   }
@@ -257,10 +251,9 @@ export class CommunicationsListComponent implements OnInit {
     this.loading.set(true);
     this.error.set(null);
 
-    const clientId = this.selectedClientId() || undefined;
-    const type = this.selectedType() || undefined;
+    const queryParams = this.buildQueryParams();
 
-    this.communicationsService.getAllCommunications(clientId, type).subscribe({
+    this.communicationsService.getAllCommunications(queryParams).subscribe({
       next: (data) => {
         this.communications.set(data);
         this.loading.set(false);
