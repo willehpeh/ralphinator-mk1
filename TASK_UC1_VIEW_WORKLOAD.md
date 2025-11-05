@@ -130,9 +130,16 @@ None - Backend implementation complete!
    - Added DashboardEffects to provideEffects array
    - Dashboard state management now fully integrated with NGRX store
    - Location: `apps/frontend/src/app/app.config.ts`
+   - Commit: `9ab6693 feat: Register dashboard store and effects in app configuration`
+
+14. ✅ **Update navigation with Dashboard link**
+   - Added Dashboard navigation link as first item in navigation
+   - Uses routerLink="/" to navigate to root route (dashboard)
+   - Uses routerLinkActive="active" with exact: true option to highlight only when on dashboard route
+   - Consistent styling with existing navigation links
+   - Location: `apps/frontend/src/app/app.html`
    - Commit: (current)
 
-14. ⏳ Update navigation with Dashboard link
 15. ⏳ Write component tests
 
 ## Technical Notes
@@ -164,8 +171,9 @@ None - Backend implementation complete!
 - `apps/api/src/app/dashboard/dashboard.module.ts` (registered DashboardController)
 - `apps/frontend/src/app/app.routes.ts` (configured dashboard route at '/')
 - `apps/frontend/src/app/app.config.ts` (registered dashboard store and effects)
+- `apps/frontend/src/app/app.html` (added Dashboard navigation link)
 - `TASK_UC1_VIEW_WORKLOAD.md` (updated progress)
 
 ## Next Steps
 
-Dashboard store and effects registered. Next: Update navigation with Dashboard link to allow users to navigate to the dashboard.
+Dashboard navigation link added. Next: Write component tests for DashboardPageComponent (optional, could be considered complete for MVP).
