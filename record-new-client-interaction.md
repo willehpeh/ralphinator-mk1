@@ -81,7 +81,7 @@ Implementing UC-COMMUNICATION-001-01: Create a New Communication
 - `packages/infrastructure/src/lib/infrastructure.ts` (updated exports)
 
 **Description**: Created CommunicationProjection event handler that listens to CommunicationCreatedDomainEvent and builds the CommunicationReadModel. The projection transforms domain events into read models and persists them to the read repository. Denormalized fields (clientName, contactName, projectName) are set to empty string/null with a note that they will be populated by the repository when fetching.
-**Commit**: pending
+**Commit**: 27385df
 
 ## Tasks Pending
 - Create InMemoryCommunicationReadRepository
