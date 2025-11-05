@@ -1,0 +1,106 @@
+# Use Case 4: Review Recent Client Communications - Task Documentation
+
+## Overview
+Implementing the "Recent Communications" section on the dashboard to display the last 10 client communications.
+
+## Completed Tasks
+
+### Task 1: Create GetRecentCommunicationsQuery DTO
+**Status**: ✅ Completed
+**Commit**: `fa698ae`
+**Description**: Created query DTO for retrieving recent communications
+**Files Modified**:
+- `packages/application/src/queries/dashboard/get-recent-communications.query.ts`
+
+### Task 2: Add GetRecentCommunicationsQueryHandler
+**Status**: ✅ Completed
+**Commit**: `7343814`
+**Description**: Implemented query handler to retrieve last 10 communications sorted by date
+**Files Modified**:
+- `packages/application/src/queries/dashboard/handlers/get-recent-communications.handler.ts`
+
+### Task 3: Add findRecent() method to ICommunicationReadRepository
+**Status**: ✅ Completed
+**Commit**: `b77c4a8`
+**Description**: Added repository method to query recent communications
+**Files Modified**:
+- `packages/application/src/ports/communication-read.repository.interface.ts`
+- `packages/infrastructure/src/read-models/communication.repository.ts`
+
+### Task 4: Register GetRecentCommunicationsQueryHandler in DashboardModule
+**Status**: ✅ Completed
+**Commit**: `8c721f0`
+**Description**: Registered query handler in NestJS module
+**Files Modified**:
+- `apps/api/src/app/dashboard/dashboard.module.ts`
+
+### Task 5: Add GET endpoint for recent communications to DashboardController
+**Status**: ✅ Completed
+**Commit**: `b3a4ee8`
+**Description**: Created API endpoint `/api/dashboard/communications/recent`
+**Files Modified**:
+- `apps/api/src/app/dashboard/dashboard.controller.ts`
+
+### Task 6: Write comprehensive test suite for GetRecentCommunicationsQueryHandler
+**Status**: ✅ Completed
+**Commit**: `540b56a`
+**Description**: Added tests for query handler
+**Files Modified**:
+- `packages/testing/src/tests/dashboard/queries/get-recent-communications.handler.spec.ts`
+
+### Task 7: Add NGRX actions for recent communications to dashboard
+**Status**: ✅ Completed
+**Commit**: `2ecd5a0`
+**Description**: Created loadRecentCommunications, loadRecentCommunicationsSuccess, and loadRecentCommunicationsFailure actions
+**Files Modified**:
+- `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
+
+### Task 8: Update dashboard reducer to handle recent communications state
+**Status**: ✅ Completed
+**Commit**: (pending)
+**Description**: Added recentCommunications array to dashboard state and wired up reducer handlers for the new actions
+**Files Modified**:
+- `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts`
+
+---
+
+## Current Task
+
+None - Ready for next task
+
+---
+
+## Remaining Tasks
+
+### Backend (Completed ✅)
+- [x] Create `GetRecentCommunicationsQuery` DTO
+- [x] Create `GetRecentCommunicationsQueryHandler`
+- [x] Register handler in `DashboardModule`
+- [x] Add endpoint to `DashboardController`
+- [x] Write backend tests
+- [ ] Verify API endpoint works with Postman/curl
+
+### Frontend (In Progress 🔄)
+- [x] Add NGRX actions for recent communications
+- [x] Update reducer to store recent communications
+- [ ] Add effect to load recent communications
+- [ ] Add selectors for recent communications
+- [ ] Add `getRecentCommunications()` to `DashboardService`
+- [ ] Create `RecentCommunicationsComponent`
+- [ ] Add component to `DashboardPageComponent` template
+- [ ] Write frontend tests
+- [ ] Verify component displays correctly in browser
+
+### Integration
+- [ ] Test end-to-end flow (API → NGRX → Component)
+- [ ] Verify empty state displays when no communications
+- [ ] Verify "View All Communications" link navigates correctly
+- [ ] Test responsive layout
+- [ ] Verify no ESLint errors
+
+---
+
+## Notes
+- Following Clean Architecture + CQRS + Event Sourcing principles
+- Using modern Angular with standalone components, signals, and @if/@for syntax
+- Implementing OnPush change detection for optimal performance

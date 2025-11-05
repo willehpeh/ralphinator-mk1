@@ -9,9 +9,12 @@ import {
   loadOverdueTasks,
   loadOverdueTasksSuccess,
   loadOverdueTasksFailure,
+  loadRecentCommunications,
+  loadRecentCommunicationsSuccess,
+  loadRecentCommunicationsFailure,
 } from './dashboard.actions';
 import { DashboardStatistics } from '../dashboard.types';
-import { TaskReadModel } from '@angular-nest-starter/shared-types';
+import { TaskReadModel, CommunicationReadModel } from '@angular-nest-starter/shared-types';
 
 /**
  * Dashboard state interface
@@ -20,6 +23,7 @@ export interface DashboardState {
   statistics: DashboardStatistics | null;
   upcomingTasks: TaskReadModel[];
   overdueTasks: TaskReadModel[];
+  recentCommunications: CommunicationReadModel[];
   loading: boolean;
   error: string | null;
 }
@@ -31,6 +35,7 @@ export const initialState: DashboardState = {
   statistics: null,
   upcomingTasks: [],
   overdueTasks: [],
+  recentCommunications: [],
   loading: false,
   error: null,
 };
@@ -106,5 +111,17 @@ export const dashboardReducer = createReducer(
   })),
 
   // When loading overdue tasks fails
-  on(loadOverdueTasksFailure, (state, { error }) => setError(state, error))
+  on(loadOverdueTasksFailure, (state, { error }) => setError(state, error)),
+
+  // When loading recent communications is triggered
+  on(loadRecentCommunications, setLoading),
+
+  // When recent communications are successfully loaded
+  on(loadRecentCommunicationsSuccess, (state, { communications }) => ({
+    ...clearLoadingAndError(state),
+    recentCommunications: communications,
+  })),
+
+  // When loading recent communications fails
+  on(loadRecentCommunicationsFailure, (state, { error }) => setError(state, error))
 );
