@@ -93,3 +93,26 @@ export const loadRecentCommunicationsFailure = createAction(
   '[Dashboard] Load Recent Communications Failure',
   props<{ error: string }>()
 );
+
+/**
+ * Load follow-up communications from the backend
+ */
+export const loadFollowUpCommunications = createAction(
+  '[Dashboard] Load Follow-Up Communications'
+);
+
+/**
+ * Successfully loaded follow-up communications from the backend
+ */
+export const loadFollowUpCommunicationsSuccess = createAction(
+  '[Dashboard] Load Follow-Up Communications Success',
+  props<{ communications: CommunicationReadModel[] }>()
+);
+
+/**
+ * Failed to load follow-up communications from the backend
+ */
+export const loadFollowUpCommunicationsFailure = createAction(
+  '[Dashboard] Load Follow-Up Communications Failure',
+  props<{ error: string }>()
+);
