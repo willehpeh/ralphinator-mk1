@@ -93,7 +93,7 @@ Implementing the "Recent Communications" section on the dashboard to display the
 
 ### Task 13: Add RecentCommunicationsComponent to DashboardPageComponent template
 **Status**: ✅ Completed
-**Commit**: (pending)
+**Commit**: `6d33d7c`
 **Description**: Integrated the RecentCommunicationsComponent into the dashboard page with NGRX selector and action dispatch
 **Files Modified**:
 - `apps/frontend/src/app/dashboard/dashboard-page.component.ts`
