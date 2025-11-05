@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { DashboardStatistics } from '../dashboard.types';
-import { TaskReadModel } from '@angular-nest-starter/shared-types';
+import { TaskReadModel, CommunicationReadModel } from '@angular-nest-starter/shared-types';
 
 /**
  * Load dashboard statistics from the backend
@@ -68,5 +68,28 @@ export const loadOverdueTasksSuccess = createAction(
  */
 export const loadOverdueTasksFailure = createAction(
   '[Dashboard] Load Overdue Tasks Failure',
+  props<{ error: string }>()
+);
+
+/**
+ * Load recent communications from the backend
+ */
+export const loadRecentCommunications = createAction(
+  '[Dashboard] Load Recent Communications'
+);
+
+/**
+ * Successfully loaded recent communications from the backend
+ */
+export const loadRecentCommunicationsSuccess = createAction(
+  '[Dashboard] Load Recent Communications Success',
+  props<{ communications: CommunicationReadModel[] }>()
+);
+
+/**
+ * Failed to load recent communications from the backend
+ */
+export const loadRecentCommunicationsFailure = createAction(
+  '[Dashboard] Load Recent Communications Failure',
   props<{ error: string }>()
 );
