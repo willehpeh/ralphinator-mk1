@@ -274,6 +274,17 @@
     border-color: #3498db;
   }
 
+  // Overdue follow-up styling
+  &.overdue-follow-up {
+    border-left: 4px solid #e74c3c;
+    background: linear-gradient(to right, #fef5f5 0%, white 20%);
+
+    &:hover {
+      border-left-color: #c0392b;
+      box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+    }
+  }
+
   .card-header {
     display: flex;
     justify-content: space-between;
@@ -330,11 +341,24 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       width: fit-content;
+      transition: all 0.2s ease;
+
+      &.overdue {
+        background-color: #fee;
+        color: #c0392b;
+        border: 1px solid #e74c3c;
+        animation: pulse-red 2s ease-in-out infinite;
+      }
     }
 
     .follow-up-date {
       font-size: 0.875rem;
       color: #7f8c8d;
+
+      &.overdue {
+        color: #e74c3c;
+        font-weight: 600;
+      }
     }
   }
 }
@@ -371,6 +395,16 @@
   &.type-other {
     background-color: #f5f5f5;
     color: #616161;
+  }
+}
+
+// Pulse animation for overdue follow-ups
+@keyframes pulse-red {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(231, 76, 60, 0);
   }
 }
 

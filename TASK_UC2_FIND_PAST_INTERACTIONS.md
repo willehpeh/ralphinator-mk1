@@ -26,7 +26,7 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Task 5: Add search input for subject/notes
 - ✅ Task 6: Implement filter state management with signals
 - ✅ Task 7: Connect filters to backend API calls
-- ⏹ Task 8: Add visual indicators for overdue follow-ups
+- ✅ Task 8: Add visual indicators for overdue follow-ups
 - ⏹ Task 9: Add sort options (date, client, type)
 - ⏹ Task 10: Add filter reset/clear functionality
 - ⏹ Task 11: Update empty state messaging based on active filters
@@ -164,20 +164,42 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Used modern Angular signals and computed signals for optimal reactivity
 - Note: Backend API already supports all these parameters, so filters are now fully functional
 
+### Task 8: Add visual indicators for overdue follow-ups
+**Status**: ✅ Completed
+**Description**: Add visual styling to highlight communications with overdue follow-ups
+**Files modified**:
+- `apps/frontend/src/app/communications/communications-list.component.ts`
+- `apps/frontend/src/app/communications/communications-list.component.scss`
+
+**Implementation details**:
+- ✅ Added `isFollowUpOverdue()` method that checks if a follow-up date is in the past
+- ✅ Method compares follow-up date with current date (both normalized to start of day)
+- ✅ Added conditional class binding `[class.overdue-follow-up]` to communication cards
+- ✅ Cards with overdue follow-ups get a red left border (4px solid #e74c3c)
+- ✅ Cards with overdue follow-ups get a subtle red gradient background (left to right fade)
+- ✅ Updated follow-up badge to conditionally display "Overdue Follow-up" text
+- ✅ Added `.overdue` styling to badge with red background (#fee), red border, and red text
+- ✅ Added pulse animation to overdue badges for attention-grabbing effect
+- ✅ Made overdue follow-up dates bold and red for emphasis
+- ✅ Used modern Angular @if control flow syntax for conditional text
+- ✅ Applied professional color scheme (red tones) for visual urgency
+- ✅ Enhanced hover states for overdue cards with red shadow
+
 ## Current Task Details
 
-### Task 8: Add visual indicators for overdue follow-ups
+### Task 9: Add sort options (date, client, type)
 **Status**: Next
-**Description**: Add visual styling to highlight communications with overdue follow-ups
+**Description**: Add UI controls to sort communications by different criteria
 **Files to modify**:
 - `apps/frontend/src/app/communications/communications-list.component.ts`
 - `apps/frontend/src/app/communications/communications-list.component.scss`
 
 **Implementation approach**:
-- Add computed method to determine if a follow-up is overdue
-- Add conditional styling to communication cards with overdue follow-ups
-- Use distinct color (e.g., red/orange) to highlight overdue items
-- Update follow-up badge styling to show overdue status
+- Add sort dropdown with options (date descending, date ascending, client, type)
+- Add signal to track current sort option
+- Implement local sorting logic to sort communications array
+- Update template to display sorted results
+- Add visual indicator for current sort order
 
 ---
 

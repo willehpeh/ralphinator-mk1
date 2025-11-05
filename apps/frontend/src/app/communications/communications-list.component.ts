@@ -115,7 +115,9 @@ import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } 
 
           <div class="communications-grid">
             @for (comm of communications(); track comm.id) {
-              <div class="communication-card" (click)="viewCommunication(comm.id)">
+              <div class="communication-card"
+                   [class.overdue-follow-up]="comm.followUpRequired && isFollowUpOverdue(comm.followUpDate)"
+                   (click)="viewCommunication(comm.id)">
                 <div class="card-header">
                   <span class="type-badge" [class]="getTypeBadgeClass(comm.type)">
                     {{ comm.type }}
@@ -135,9 +137,19 @@ import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } 
 
                   @if (comm.followUpRequired) {
                     <div class="follow-up-indicator">
-                      <span class="follow-up-badge">Follow-up Required</span>
+                      <span class="follow-up-badge"
+                            [class.overdue]="isFollowUpOverdue(comm.followUpDate)">
+                        @if (isFollowUpOverdue(comm.followUpDate)) {
+                          Overdue Follow-up
+                        } @else {
+                          Follow-up Required
+                        }
+                      </span>
                       @if (comm.followUpDate) {
-                        <span class="follow-up-date">{{ formatDate(comm.followUpDate) }}</span>
+                        <span class="follow-up-date"
+                              [class.overdue]="isFollowUpOverdue(comm.followUpDate)">
+                          {{ formatDate(comm.followUpDate) }}
+                        </span>
                       }
                     </div>
                   }
@@ -327,5 +339,23 @@ export class CommunicationsListComponent implements OnInit {
       default:
         return baseClass + 'default';
     }
+  }
+
+  /**
+   * Checks if a follow-up is overdue
+   * Returns true if the follow-up date is in the past
+   */
+  isFollowUpOverdue(followUpDate: string | undefined): boolean {
+    if (!followUpDate) {
+      return false;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
+
+    const followUp = new Date(followUpDate);
+    followUp.setHours(0, 0, 0, 0);
+
+    return followUp < today;
   }
 }
