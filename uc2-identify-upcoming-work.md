@@ -64,11 +64,25 @@
    - Location: `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
    - Commit: 8ea0820
 
-### Pending Tasks
+7. ✅ **Update dashboard effects to load upcoming tasks**
+   - Added `getUpcomingTasks()` method to DashboardService
+   - Method calls `GET /api/dashboard/tasks/upcoming` endpoint
+   - Added `loadUpcomingTasks$` effect to DashboardEffects
+   - Effect listens for `loadUpcomingTasks` action
+   - Effect calls `dashboardService.getUpcomingTasks()` via switchMap
+   - On success: dispatches `loadUpcomingTasksSuccess` with tasks array
+   - On error: dispatches `loadUpcomingTasksFailure` with error message
+   - Uses shared `createEffectErrorHandler` utility for error handling
+   - Updated imports in actions to use `@angular-nest-starter/shared-types` (scope-compliant)
+   - Locations:
+     - `apps/frontend/src/app/dashboard/dashboard.service.ts`
+     - `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
+     - `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
+   - Commit: [pending]
 
-7. ⬜ Update dashboard effects to load upcoming tasks
-8. ⬜ Update dashboard reducer to store upcoming tasks
-9. ⬜ Update dashboard selectors to select upcoming tasks
+### Pending Tasks
+8.  ⬜ Update dashboard reducer to store upcoming tasks
+9.  ⬜ Update dashboard selectors to select upcoming tasks
 10. ⬜ Create UpcomingTasksComponent
 11. ⬜ Add UpcomingTasksComponent to DashboardPageComponent
 12. ⬜ Write component tests
@@ -94,7 +108,10 @@
 - `packages/infrastructure/src/lib/read-models/in-memory-task-read-repository.ts` (implemented findUpcoming)
 - `apps/api/src/app/dashboard/dashboard.module.ts` (registered GetUpcomingTasksQueryHandler)
 - `apps/api/src/app/dashboard/dashboard.controller.ts` (added GET /api/dashboard/tasks/upcoming endpoint)
+- `apps/frontend/src/app/dashboard/dashboard.service.ts` (added getUpcomingTasks method)
+- `apps/frontend/src/app/dashboard/store/dashboard.effects.ts` (added loadUpcomingTasks$ effect)
+- `apps/frontend/src/app/dashboard/store/dashboard.actions.ts` (updated imports to use shared-types)
 
 ## Next Steps
 
-Next: Update dashboard effects to load upcoming tasks
+Next: Update dashboard reducer to store upcoming tasks

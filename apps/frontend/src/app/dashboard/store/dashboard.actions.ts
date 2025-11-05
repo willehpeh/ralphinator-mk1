@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { DashboardStatistics } from '../dashboard.types';
-import { TaskReadModel } from '@angular-nest-starter/application';
+import { TaskReadModel } from '@angular-nest-starter/shared-types';
 
 /**
  * Load dashboard statistics from the backend
