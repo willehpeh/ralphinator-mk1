@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 import { UpdateTaskInput } from './task.types';
 import { updateTask } from './store/tasks.actions';
 import { selectTaskById, selectTasksError, selectTasksLoading } from './store/tasks.selectors';
-import { TASK_STATUSES, TASK_PRIORITIES } from './task.constants';
+import { TASK_STATUSES, TASK_PRIORITIES, DEFAULT_TASK_STATUS, DEFAULT_TASK_PRIORITY } from './task.constants';
 import { TASK_FORM_LABELS, TASK_UI_TEXT } from './task-display.constants';
 import { FormState } from '../shared/form-state';
 import { ValidationErrorComponent } from '../shared/validation-error.component';
@@ -218,8 +218,8 @@ export class EditTaskPageComponent {
   form = new FormGroup<TaskEditFormFields>({
     title: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     notes: new FormControl('', { nonNullable: true }),
-    status: new FormControl<TaskStatus>('Todo', { nonNullable: true, validators: [Validators.required] }),
-    priority: new FormControl<TaskPriority>('Medium', { nonNullable: true, validators: [Validators.required] }),
+    status: new FormControl<TaskStatus>(DEFAULT_TASK_STATUS, { nonNullable: true, validators: [Validators.required] }),
+    priority: new FormControl<TaskPriority>(DEFAULT_TASK_PRIORITY, { nonNullable: true, validators: [Validators.required] }),
     dueDate: new FormControl('', { nonNullable: true }),
     clientId: new FormControl('', { nonNullable: true }),
     projectId: new FormControl('', { nonNullable: true })
