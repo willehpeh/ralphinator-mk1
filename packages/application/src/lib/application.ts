@@ -51,6 +51,7 @@ export * from './queries/get-project-by-id.query';
 export * from './queries/get-task-by-id.query';
 export * from './queries/get-tasks-by-project-id.query';
 export * from './queries/get-tasks-by-client-id.query';
+export * from './queries/get-all-communications.query';
 
 // Query Handlers
 export * from './queries/handlers/get-client-by-id.handler';
@@ -65,6 +66,7 @@ export * from './queries/handlers/get-project-by-id.handler';
 export * from './queries/handlers/get-task-by-id.handler';
 export * from './queries/handlers/get-tasks-by-project-id.handler';
 export * from './queries/handlers/get-tasks-by-client-id.handler';
+export * from './queries/handlers/get-all-communications.handler';
 
 // Integration Events
 export * from './events/client-created.event';
