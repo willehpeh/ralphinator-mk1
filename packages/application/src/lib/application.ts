@@ -59,6 +59,7 @@ export * from './queries/get-communications-by-type.query';
 export * from './queries/get-communications-requiring-follow-up.query';
 export * from './queries/get-dashboard-statistics.query';
 export * from './queries/get-upcoming-tasks.query';
+export * from './queries/get-overdue-tasks.query';
 
 // Query Handlers
 export * from './queries/handlers/get-client-by-id.handler';
