@@ -35,19 +35,27 @@
    - Added handler to QueryHandlers array in DashboardModule
    - Handler now registered with CQRS and will be available for dependency injection
    - Location: `apps/api/src/app/dashboard/dashboard.module.ts`
+   - Commit: 4fd01e4
+
+4. **Add GET /api/dashboard/tasks/upcoming endpoint in DashboardController**
+   - Added import for GetUpcomingTasksQuery and TaskReadModel from application package
+   - Created `getUpcomingTasks()` method decorated with `@Get('tasks/upcoming')`
+   - Method creates GetUpcomingTasksQuery and executes via QueryBus
+   - Returns Promise<TaskReadModel[]> with upcoming tasks
+   - Endpoint: GET /api/dashboard/tasks/upcoming
+   - Location: `apps/api/src/app/dashboard/dashboard.controller.ts`
    - Commit: (current)
 
 ### Pending Tasks
 
-4. ⬜ Add GET /api/dashboard/tasks/upcoming endpoint in DashboardController
-5. � Write tests for GetUpcomingTasksQueryHandler
-6. � Create dashboard NGRX actions for upcoming tasks
-7. � Update dashboard effects to load upcoming tasks
-8. � Update dashboard reducer to store upcoming tasks
-9. � Update dashboard selectors to select upcoming tasks
-10. � Create UpcomingTasksComponent
-11. � Add UpcomingTasksComponent to DashboardPageComponent
-12. � Write component tests
+5. ⬜ Write tests for GetUpcomingTasksQueryHandler
+6. ⬜ Create dashboard NGRX actions for upcoming tasks
+7. ⬜ Update dashboard effects to load upcoming tasks
+8. ⬜ Update dashboard reducer to store upcoming tasks
+9. ⬜ Update dashboard selectors to select upcoming tasks
+10. ⬜ Create UpcomingTasksComponent
+11. ⬜ Add UpcomingTasksComponent to DashboardPageComponent
+12. ⬜ Write component tests
 
 ## Technical Notes
 
@@ -68,7 +76,8 @@
 - `packages/application/src/lib/ports/task-read-repository.interface.ts` (added findUpcoming method)
 - `packages/infrastructure/src/lib/read-models/in-memory-task-read-repository.ts` (implemented findUpcoming)
 - `apps/api/src/app/dashboard/dashboard.module.ts` (registered GetUpcomingTasksQueryHandler)
+- `apps/api/src/app/dashboard/dashboard.controller.ts` (added GET /api/dashboard/tasks/upcoming endpoint)
 
 ## Next Steps
 
-Next: Add GET /api/dashboard/tasks/upcoming endpoint in DashboardController
+Next: Write tests for GetUpcomingTasksQueryHandler
