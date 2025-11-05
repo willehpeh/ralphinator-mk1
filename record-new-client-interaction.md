@@ -22,7 +22,7 @@ Implementing UC-COMMUNICATION-001-01: Create a New Communication
 - `packages/domain/src/index.ts` (updated exports)
 
 **Description**: Created CommunicationData value object to encapsulate communication information with fields: type, subject, communicationDate, notes, clientId, contactId, projectId, followUpRequired, followUpDate. Includes fromPayload factory method for creating instances from command payloads.
-**Commit**: Next
+**Commit**: 3ed5226
 
 ## Tasks Pending
 - Create CommunicationCreatedDomainEvent
