@@ -44,7 +44,7 @@
    - Returns Promise<TaskReadModel[]> with upcoming tasks
    - Endpoint: GET /api/dashboard/tasks/upcoming
    - Location: `apps/api/src/app/dashboard/dashboard.controller.ts`
-   - Commit: (current)
+   - Commit: bf2dbfe
 
 ### Pending Tasks
 
