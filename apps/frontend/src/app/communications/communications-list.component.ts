@@ -109,12 +109,28 @@ import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } 
             <button type="button" (click)="onAddCommunication()">Add First Communication</button>
           </div>
         } @else {
-          <div class="communications-count">
-            {{ communications().length }} {{ communications().length === 1 ? 'communication' : 'communications' }}
+          <div class="results-header">
+            <div class="communications-count">
+              {{ communications().length }} {{ communications().length === 1 ? 'communication' : 'communications' }}
+            </div>
+
+            <div class="sort-controls">
+              <label for="sort-select" class="sort-label">Sort by:</label>
+              <select
+                id="sort-select"
+                class="sort-select"
+                [value]="sortBy()"
+                (change)="onSortChange($event)">
+                <option value="date-desc">Date (Newest First)</option>
+                <option value="date-asc">Date (Oldest First)</option>
+                <option value="client">Client (A-Z)</option>
+                <option value="type">Type (A-Z)</option>
+              </select>
+            </div>
           </div>
 
           <div class="communications-grid">
-            @for (comm of communications(); track comm.id) {
+            @for (comm of sortedCommunications(); track comm.id) {
               <div class="communication-card"
                    [class.overdue-follow-up]="comm.followUpRequired && isFollowUpOverdue(comm.followUpDate)"
                    (click)="viewCommunication(comm.id)">
@@ -179,6 +195,9 @@ export class CommunicationsListComponent implements OnInit {
   toDate = signal<string>('');
   searchText = signal<string>('');
 
+  // Sort signal
+  sortBy = signal<string>('date-desc');
+
   // Mock client data (TODO: Replace with actual client data from API)
   mockClients = [
     { id: '1', name: 'Acme Corporation' },
@@ -210,6 +229,33 @@ export class CommunicationsListComponent implements OnInit {
       filters.toDate ||
       filters.searchText
     );
+  });
+
+  // Computed signal for sorted communications
+  sortedCommunications = computed(() => {
+    const comms = [...this.communications()];
+    const sortOption = this.sortBy();
+
+    switch (sortOption) {
+      case 'date-asc':
+        return comms.sort((a, b) =>
+          new Date(a.communicationDate).getTime() - new Date(b.communicationDate).getTime()
+        );
+      case 'date-desc':
+        return comms.sort((a, b) =>
+          new Date(b.communicationDate).getTime() - new Date(a.communicationDate).getTime()
+        );
+      case 'client':
+        return comms.sort((a, b) => {
+          const clientA = a.clientId || '';
+          const clientB = b.clientId || '';
+          return clientA.localeCompare(clientB);
+        });
+      case 'type':
+        return comms.sort((a, b) => a.type.localeCompare(b.type));
+      default:
+        return comms;
+    }
   });
 
   constructor() {
@@ -315,6 +361,11 @@ export class CommunicationsListComponent implements OnInit {
     this.searchText.set(inputElement.value);
   }
 
+  onSortChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.sortBy.set(selectElement.value);
+  }
+
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -345,7 +396,7 @@ export class CommunicationsListComponent implements OnInit {
    * Checks if a follow-up is overdue
    * Returns true if the follow-up date is in the past
    */
-  isFollowUpOverdue(followUpDate: string | undefined): boolean {
+  isFollowUpOverdue(followUpDate: string | null | undefined): boolean {
     if (!followUpDate) {
       return false;
     }

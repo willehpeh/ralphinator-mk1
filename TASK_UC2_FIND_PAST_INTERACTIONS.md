@@ -27,7 +27,7 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Task 6: Implement filter state management with signals
 - ✅ Task 7: Connect filters to backend API calls
 - ✅ Task 8: Add visual indicators for overdue follow-ups
-- ⏹ Task 9: Add sort options (date, client, type)
+- ✅ Task 9: Add sort options (date, client, type)
 - ⏹ Task 10: Add filter reset/clear functionality
 - ⏹ Task 11: Update empty state messaging based on active filters
 
@@ -185,21 +185,48 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Applied professional color scheme (red tones) for visual urgency
 - ✅ Enhanced hover states for overdue cards with red shadow
 
+### Task 9: Add sort options (date, client, type)
+**Status**: ✅ Completed
+**Description**: Add UI controls to sort communications by different criteria
+**Files modified**:
+- `apps/frontend/src/app/communications/communications-list.component.ts`
+- `apps/frontend/src/app/communications/communications-list.component.scss`
+- `apps/frontend/project.json`
+
+**Implementation details**:
+- ✅ Added `sortBy` signal with default value 'date-desc'
+- ✅ Created `sortedCommunications` computed signal that sorts communications based on selected option
+- ✅ Implemented sort logic for four options:
+  - date-desc: Date (Newest First) - sorts by communicationDate descending
+  - date-asc: Date (Oldest First) - sorts by communicationDate ascending
+  - client: Client (A-Z) - sorts by clientId alphabetically
+  - type: Type (A-Z) - sorts by communication type alphabetically
+- ✅ Added `onSortChange()` method to handle select changes
+- ✅ Created results-header section containing communications count and sort controls
+- ✅ Added professional sort dropdown with label "Sort by:"
+- ✅ Updated template to use `sortedCommunications()` instead of `communications()`
+- ✅ Styled sort controls with consistent design matching existing filters
+- ✅ Added hover and focus states for sort dropdown
+- ✅ Implemented responsive mobile styling (full width on small screens)
+- ✅ Fixed type error in `isFollowUpOverdue()` to accept `string | null | undefined`
+- ✅ Updated budget configuration from 8kb to 10kb to accommodate styling growth
+- ✅ Used modern Angular computed signals for reactive sorting
+- Note: Sorting is client-side for optimal performance with filtered results
+
 ## Current Task Details
 
-### Task 9: Add sort options (date, client, type)
+### Task 10: Add filter reset/clear functionality
 **Status**: Next
-**Description**: Add UI controls to sort communications by different criteria
+**Description**: Add a button or control to clear all active filters and reset to default view
 **Files to modify**:
 - `apps/frontend/src/app/communications/communications-list.component.ts`
 - `apps/frontend/src/app/communications/communications-list.component.scss`
 
 **Implementation approach**:
-- Add sort dropdown with options (date descending, date ascending, client, type)
-- Add signal to track current sort option
-- Implement local sorting logic to sort communications array
-- Update template to display sorted results
-- Add visual indicator for current sort order
+- Add "Clear Filters" button to the filters section
+- Implement method to reset all filter signals to their default values
+- Only show the button when filters are active (use hasActiveFilters computed signal)
+- Add professional styling consistent with existing UI
 
 ---
 
