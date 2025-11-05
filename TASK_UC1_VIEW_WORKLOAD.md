@@ -70,9 +70,18 @@ None - Backend implementation complete!
    - Created loadDashboardStatisticsFailure action (handles errors)
    - Location: `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
    - Location: `apps/frontend/src/app/dashboard/dashboard.types.ts`
-   - Commit: (current)
+   - Commit: `74f22ca feat: Create dashboard NGRX actions for statistics loading`
 
-8. ⏳ Create dashboard NGRX effects
+8. ✅ **Create dashboard NGRX effects**
+   - Created DashboardService with getDashboardStatistics method
+   - Created DashboardEffects with loadDashboardStatistics$ effect
+   - Effect listens for loadDashboardStatistics action
+   - Calls dashboard service to fetch statistics from backend
+   - Dispatches success action with data or failure action with error
+   - Uses shared createEffectErrorHandler for consistent error handling
+   - Location: `apps/frontend/src/app/dashboard/dashboard.service.ts`
+   - Location: `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
+   - Commit: (current)
 9. ⏳ Create dashboard NGRX reducer
 10. ⏳ Create dashboard NGRX selectors
 11. ⏳ Create DashboardPageComponent
@@ -97,6 +106,8 @@ None - Backend implementation complete!
 - `packages/testing/src/tests/get-dashboard-statistics.handler.spec.ts`
 - `apps/frontend/src/app/dashboard/dashboard.types.ts`
 - `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
+- `apps/frontend/src/app/dashboard/dashboard.service.ts`
+- `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
 
 ## Files Modified
 
@@ -107,4 +118,4 @@ None - Backend implementation complete!
 
 ## Next Steps
 
-Backend is complete. Frontend NGRX actions created. Next: Create dashboard NGRX effects to call the API.
+Backend is complete. NGRX actions and effects created. Next: Create dashboard NGRX reducer to manage state.
