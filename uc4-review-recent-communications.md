@@ -59,12 +59,25 @@
 
 ---
 
+### Task 5: Add GET endpoint to DashboardController ✅
+**Status**: Completed
+
+**Files Modified**:
+- `apps/api/src/app/dashboard/dashboard.controller.ts` (added getRecentCommunications endpoint)
+
+**Description**: Added the `GET /api/dashboard/communications/recent` endpoint to the DashboardController. The endpoint creates a GetRecentCommunicationsQuery, executes it via the QueryBus, and returns an array of CommunicationReadModel objects. Follows the established pattern from the getUpcomingTasks endpoint for consistency.
+
+**API Endpoint**: `GET /api/dashboard/communications/recent` → Returns `CommunicationReadModel[]`
+
+---
+
 ## Commits
 
 1. `fa698ae` - feat: Add GetRecentCommunicationsQuery DTO for dashboard
 2. `7343814` - feat: Add GetRecentCommunicationsQueryHandler for dashboard
 3. `b77c4a8` - feat: Add findRecent() method to ICommunicationReadRepository
-4. (pending) - feat: Register GetRecentCommunicationsQueryHandler in DashboardModule
+4. `8c721f0` - feat: Register GetRecentCommunicationsQueryHandler in DashboardModule
+5. (pending) - feat: Add GET endpoint for recent communications to DashboardController
 
 ---
 

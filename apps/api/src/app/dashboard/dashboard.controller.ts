@@ -5,6 +5,8 @@ import {
   DashboardStatisticsReadModel,
   GetUpcomingTasksQuery,
   TaskReadModel,
+  GetRecentCommunicationsQuery,
+  CommunicationReadModel,
 } from '@angular-nest-starter/application';
 
 @Controller('dashboard')
@@ -29,5 +31,15 @@ export class DashboardController {
       TaskReadModel[]
     >(query);
     return tasks;
+  }
+
+  @Get('communications/recent')
+  async getRecentCommunications(): Promise<CommunicationReadModel[]> {
+    const query = new GetRecentCommunicationsQuery();
+    const communications = await this.queryBus.execute<
+      GetRecentCommunicationsQuery,
+      CommunicationReadModel[]
+    >(query);
+    return communications;
   }
 }
