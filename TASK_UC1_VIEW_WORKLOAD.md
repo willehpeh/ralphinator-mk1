@@ -114,11 +114,19 @@ None - Backend implementation complete!
    - Modern, professional UI with hover effects and color-coded cards
    - Fully responsive grid layout
    - Location: `apps/frontend/src/app/dashboard/dashboard-page.component.ts`
+   - Commit: `a03fa1a feat: Create DashboardPageComponent with modern Angular patterns`
+
+12. ✅ **Configure dashboard route**
+   - Added DashboardPageComponent import to app.routes.ts
+   - Configured root path ('') to display DashboardPageComponent
+   - Removed old redirect from '' to 'clients'
+   - Dashboard now displays at application root
+   - Location: `apps/frontend/src/app/app.routes.ts`
    - Commit: (current)
 
-12. ⏳ Configure dashboard route
-13. ⏳ Update navigation with Dashboard link
-14. ⏳ Write component tests
+13. ⏳ Register dashboard store and effects in app.config
+14. ⏳ Update navigation with Dashboard link
+15. ⏳ Write component tests
 
 ## Technical Notes
 
@@ -147,8 +155,9 @@ None - Backend implementation complete!
 - `packages/application/src/lib/application.ts` (added query and handler exports)
 - `apps/api/src/app/app.module.ts` (registered DashboardModule)
 - `apps/api/src/app/dashboard/dashboard.module.ts` (registered DashboardController)
+- `apps/frontend/src/app/app.routes.ts` (configured dashboard route at '/')
 - `TASK_UC1_VIEW_WORKLOAD.md` (updated progress)
 
 ## Next Steps
 
-Backend, NGRX state management, and DashboardPageComponent complete. Next: Configure dashboard route to display the page at '/'.
+Dashboard route configured at '/'. Next: Register dashboard store and effects in app.config to enable state management.

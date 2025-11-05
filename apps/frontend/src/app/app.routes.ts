@@ -12,8 +12,13 @@ import { TaskListComponent } from './tasks/task-list.component';
 import { TaskDetailComponent } from './tasks/task-detail.component';
 import { EditTaskPageComponent } from './tasks/edit-task-page.component';
 import { CommunicationsListComponent } from './communications/communications-list.component';
+import { DashboardPageComponent } from './dashboard/dashboard-page.component';
 
 export const appRoutes: Route[] = [
+  {
+    path: '',
+    component: DashboardPageComponent,
+  },
   {
     path: 'clients',
     component: ClientListComponent,
@@ -65,10 +70,5 @@ export const appRoutes: Route[] = [
   {
     path: 'communications',
     component: CommunicationsListComponent,
-  },
-  {
-    path: '',
-    redirectTo: 'clients',
-    pathMatch: 'full',
   },
 ];
