@@ -111,8 +111,33 @@
 - Follows the same pattern as previous query handlers for consistency
 - Leverages existing interface method in ICommunicationReadRepository
 
+### Task 6: Create InMemoryCommunicationReadRepository and CommunicationsModule (2025-11-05)
+
+**Files Created**:
+- `packages/infrastructure/src/lib/read-models/in-memory-communication-read-repository.ts` - In-memory implementation of ICommunicationReadRepository
+- `apps/api/src/app/communications/communications.controller.ts` - Controller with GET /api/communications endpoint
+- `apps/api/src/app/communications/communications.module.ts` - NestJS module registering query handlers and repository
+
+**Files Modified**:
+- `packages/infrastructure/src/lib/infrastructure.ts` - Exported InMemoryCommunicationReadRepository
+- `apps/api/src/app/app.module.ts` - Imported CommunicationsModule
+
+**Implementation Details**:
+- Implemented InMemoryCommunicationReadRepository with all required methods from ICommunicationReadRepository interface
+- All query methods (findAll, findByClientId, findByContactId, findByProjectId, findRequiringFollowUp) sort results by date descending (most recent first)
+- findRequiringFollowUp filters communications where followUpRequired is true AND followUpCompleted is false
+- Created CommunicationsController with GET /api/communications endpoint that uses GetAllCommunicationsQuery
+- Registered all five query handlers in CommunicationsModule providers
+- Provided InMemoryCommunicationReadRepository via INJECTION_TOKENS.COMMUNICATION_READ_REPOSITORY
+- API build passes successfully with all dependencies resolved
+
+**Next Task**: The controller currently only has GET /api/communications endpoint. Next tasks will add query parameters for filtering (by client, contact, project, type, follow-up status, date range).
+
 ---
 
 ## Notes
 
-<!-- Implementation notes, decisions, and challenges will be documented here -->
+- The InMemoryCommunicationReadRepository uses the same pattern as other in-memory repositories (inherits from BaseInMemoryReadRepository)
+- All communications are sorted by communicationDate descending by default (most recent first)
+- The repository is suitable for development/testing but should be replaced with a persistent implementation for production
+- Build verification completed successfully - all TypeScript compilation passes

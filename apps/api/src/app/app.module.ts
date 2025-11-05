@@ -4,9 +4,10 @@ import { ClientsModule } from './clients/clients.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { ProjectsModule } from './projects/projects.module';
 import { TasksModule } from './tasks/tasks.module';
+import { CommunicationsModule } from './communications/communications.module';
 
 @Module({
-  imports: [ClientsModule, ContactsModule, ProjectsModule, TasksModule],
+  imports: [ClientsModule, ContactsModule, ProjectsModule, TasksModule, CommunicationsModule],
   controllers: [HealthController],
   providers: [],
 })
