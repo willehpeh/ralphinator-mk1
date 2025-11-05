@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { TasksService } from '../tasks.service';
 import { createTask, createTaskSuccess, createTaskFailure, updateTask, updateTaskSuccess, updateTaskFailure, changeTaskStatus, changeTaskStatusSuccess, changeTaskStatusFailure, loadTasks, loadTasksSuccess, loadTasksFailure, deleteTask, deleteTaskSuccess, deleteTaskFailure, loadProjectTasks, loadProjectTasksSuccess, loadProjectTasksFailure } from './tasks.actions';
+import { createEffectErrorHandler } from '../../shared/effects-utils';
 
 /**
  * NGRX Effects for task-related side effects
@@ -12,20 +12,6 @@ import { createTask, createTaskSuccess, createTaskFailure, updateTask, updateTas
 export class TasksEffects {
   private actions$ = inject(Actions);
   private tasksService = inject(TasksService);
-
-  /**
-   * Creates a reusable error handler for effects
-   * @param failureAction - The action creator to dispatch on error
-   * @param defaultMessage - The default error message to use
-   * @returns An observable of the failure action
-   */
-  private handleError<T>(
-    failureAction: (payload: { error: string }) => T,
-    defaultMessage: string
-  ) {
-    return (error: unknown) =>
-      of(failureAction({ error: (error as Error)?.message || defaultMessage }));
-  }
 
   /**
    * Effect to create a task in the backend
@@ -49,7 +35,7 @@ export class TasksEffects {
               createdAt: new Date()
             }
           })),
-          catchError(this.handleError(createTaskFailure, 'Failed to create task'))
+          catchError(createEffectErrorHandler(createTaskFailure, 'Failed to create task'))
         )
       )
     )
@@ -65,7 +51,7 @@ export class TasksEffects {
       switchMap((action) =>
         this.tasksService.updateTask(action.id, action.task).pipe(
           map((task) => updateTaskSuccess({ task })),
-          catchError(this.handleError(updateTaskFailure, 'Failed to update task'))
+          catchError(createEffectErrorHandler(updateTaskFailure, 'Failed to update task'))
         )
       )
     )
@@ -81,7 +67,7 @@ export class TasksEffects {
       switchMap((action) =>
         this.tasksService.changeTaskStatus(action.id, { status: action.status }).pipe(
           map((task) => changeTaskStatusSuccess({ task })),
-          catchError(this.handleError(changeTaskStatusFailure, 'Failed to change task status'))
+          catchError(createEffectErrorHandler(changeTaskStatusFailure, 'Failed to change task status'))
         )
       )
     )
@@ -97,7 +83,7 @@ export class TasksEffects {
       switchMap(() =>
         this.tasksService.getAllTasks().pipe(
           map((tasks) => loadTasksSuccess({ tasks })),
-          catchError(this.handleError(loadTasksFailure, 'Failed to load tasks'))
+          catchError(createEffectErrorHandler(loadTasksFailure, 'Failed to load tasks'))
         )
       )
     )
@@ -113,7 +99,7 @@ export class TasksEffects {
       switchMap((action) =>
         this.tasksService.deleteTask(action.id).pipe(
           map(() => deleteTaskSuccess({ id: action.id })),
-          catchError(this.handleError(deleteTaskFailure, 'Failed to delete task'))
+          catchError(createEffectErrorHandler(deleteTaskFailure, 'Failed to delete task'))
         )
       )
     )
@@ -129,7 +115,7 @@ export class TasksEffects {
       switchMap((action) =>
         this.tasksService.getTasksByProjectId(action.projectId).pipe(
           map((tasks) => loadProjectTasksSuccess({ tasks })),
-          catchError(this.handleError(loadProjectTasksFailure, 'Failed to load project tasks'))
+          catchError(createEffectErrorHandler(loadProjectTasksFailure, 'Failed to load project tasks'))
         )
       )
     )

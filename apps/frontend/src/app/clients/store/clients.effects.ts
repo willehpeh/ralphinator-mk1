@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { ClientsService } from '../clients.service';
 import { loadClients, loadClientsSuccess, loadClientsFailure, updateClient, updateClientSuccess, updateClientFailure, changeClientStatus, changeClientStatusSuccess, changeClientStatusFailure, filterClientsByStatus, filterClientsByStatusSuccess, filterClientsByStatusFailure, deleteClient, deleteClientSuccess, deleteClientFailure } from './clients.actions';
 import { ClientNavigationService } from '../client-navigation.service';
 import { CLIENT_ERROR_MESSAGES } from '../client-display.constants';
+import { createEffectErrorHandler } from '../../shared/effects-utils';
 
 /**
  * NGRX Effects for client-related side effects
@@ -17,20 +17,6 @@ export class ClientsEffects {
   private navigation = inject(ClientNavigationService);
 
   /**
-   * Creates a reusable error handler for effects
-   * @param failureAction - The action creator to dispatch on error
-   * @param defaultMessage - The default error message to use
-   * @returns An observable of the failure action
-   */
-  private handleError<T>(
-    failureAction: (payload: { error: string }) => T,
-    defaultMessage: string
-  ) {
-    return (error: unknown) =>
-      of(failureAction({ error: (error as Error)?.message || defaultMessage }));
-  }
-
-  /**
    * Effect to load all clients from the backend
    * Listens for loadClients action, calls the service, and dispatches success/failure
    */
@@ -40,7 +26,7 @@ export class ClientsEffects {
       switchMap(() =>
         this.clientsService.getAllClients().pipe(
           map((clients) => loadClientsSuccess({ clients })),
-          catchError(this.handleError(loadClientsFailure, CLIENT_ERROR_MESSAGES.LOAD_CLIENTS_FAILED))
+          catchError(createEffectErrorHandler(loadClientsFailure, CLIENT_ERROR_MESSAGES.LOAD_CLIENTS_FAILED))
         )
       )
     )
@@ -63,7 +49,7 @@ export class ClientsEffects {
           notes: action.notes,
         }).pipe(
           map((client) => updateClientSuccess({ client })),
-          catchError(this.handleError(updateClientFailure, CLIENT_ERROR_MESSAGES.UPDATE_CLIENT_FAILED))
+          catchError(createEffectErrorHandler(updateClientFailure, CLIENT_ERROR_MESSAGES.UPDATE_CLIENT_FAILED))
         )
       )
     )
@@ -81,7 +67,7 @@ export class ClientsEffects {
           status: action.status,
         }).pipe(
           map((client) => changeClientStatusSuccess({ client })),
-          catchError(this.handleError(changeClientStatusFailure, CLIENT_ERROR_MESSAGES.CHANGE_STATUS_FAILED))
+          catchError(createEffectErrorHandler(changeClientStatusFailure, CLIENT_ERROR_MESSAGES.CHANGE_STATUS_FAILED))
         )
       )
     )
@@ -97,7 +83,7 @@ export class ClientsEffects {
       switchMap((action) =>
         this.clientsService.getClientsByStatus(action.status).pipe(
           map((clients) => filterClientsByStatusSuccess({ clients })),
-          catchError(this.handleError(filterClientsByStatusFailure, CLIENT_ERROR_MESSAGES.FILTER_BY_STATUS_FAILED))
+          catchError(createEffectErrorHandler(filterClientsByStatusFailure, CLIENT_ERROR_MESSAGES.FILTER_BY_STATUS_FAILED))
         )
       )
     )
@@ -113,7 +99,7 @@ export class ClientsEffects {
       switchMap((action) =>
         this.clientsService.deleteClient(action.id).pipe(
           map((response) => deleteClientSuccess({ id: response.id })),
-          catchError(this.handleError(deleteClientFailure, CLIENT_ERROR_MESSAGES.DELETE_CLIENT_FAILED))
+          catchError(createEffectErrorHandler(deleteClientFailure, CLIENT_ERROR_MESSAGES.DELETE_CLIENT_FAILED))
         )
       )
     )
