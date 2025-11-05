@@ -89,6 +89,14 @@ import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } 
             [value]="toDate()"
             (change)="onToDateChange($event)">
         </div>
+
+        @if (hasActiveFilters()) {
+          <div class="filter-group filter-group-clear">
+            <button type="button" class="clear-filters-button" (click)="clearFilters()">
+              Clear Filters
+            </button>
+          </div>
+        }
       </div>
 
       @if (loading()) {
@@ -364,6 +372,18 @@ export class CommunicationsListComponent implements OnInit {
   onSortChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.sortBy.set(selectElement.value);
+  }
+
+  /**
+   * Clears all active filters and resets to default state
+   */
+  clearFilters(): void {
+    this.selectedClientId.set('');
+    this.selectedType.set('');
+    this.requiresFollowUp.set(false);
+    this.fromDate.set('');
+    this.toDate.set('');
+    this.searchText.set('');
   }
 
   formatDate(date: string): string {

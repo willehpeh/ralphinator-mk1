@@ -190,6 +190,41 @@
         }
       }
     }
+
+    &.filter-group-clear {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: auto;
+
+      .clear-filters-button {
+        padding: 0.625rem 1.25rem;
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+
+        &:hover {
+          background-color: #c0392b;
+          transform: translateY(-1px);
+          box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        }
+      }
+    }
   }
 }
 

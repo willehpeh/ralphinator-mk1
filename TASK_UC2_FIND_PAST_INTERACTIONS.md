@@ -28,7 +28,7 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Task 7: Connect filters to backend API calls
 - ✅ Task 8: Add visual indicators for overdue follow-ups
 - ✅ Task 9: Add sort options (date, client, type)
-- ⏹ Task 10: Add filter reset/clear functionality
+- ✅ Task 10: Add filter reset/clear functionality
 - ⏹ Task 11: Update empty state messaging based on active filters
 
 ## Completed Task Details
@@ -213,20 +213,45 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Used modern Angular computed signals for reactive sorting
 - Note: Sorting is client-side for optimal performance with filtered results
 
+### Task 10: Add filter reset/clear functionality
+**Status**: ✅ Completed
+**Description**: Add a button or control to clear all active filters and reset to default view
+**Files modified**:
+- `apps/frontend/src/app/communications/communications-list.component.ts`
+- `apps/frontend/src/app/communications/communications-list.component.scss`
+
+**Implementation details**:
+- ✅ Added `clearFilters()` method that resets all filter signals to their default values
+- ✅ Method resets: selectedClientId, selectedType, requiresFollowUp, fromDate, toDate, searchText
+- ✅ Added "Clear Filters" button in filters section that calls `clearFilters()` on click
+- ✅ Button conditionally renders using `@if (hasActiveFilters())` - only shows when filters are active
+- ✅ Wrapped button in `filter-group-clear` container for consistent layout
+- ✅ Styled button with red color scheme (#e74c3c) to differentiate from other controls
+- ✅ Added professional styling with hover effects (darker red, translateY animation, shadow)
+- ✅ Added active state (removes translateY on click for tactile feedback)
+- ✅ Added focus state with custom outline (red shadow box)
+- ✅ Used white text on red background for high contrast and visibility
+- ✅ Set min-width: auto and centered alignment for clean layout
+- ✅ Applied consistent border-radius (6px) and font sizing (0.95rem) with other filters
+- ✅ Ensured button text doesn't wrap with white-space: nowrap
+- ✅ Used modern Angular @if control flow syntax for conditional rendering
+- Note: Filter changes automatically trigger API reload via effect watching activeFilters()
+
 ## Current Task Details
 
-### Task 10: Add filter reset/clear functionality
+### Task 11: Update empty state messaging based on active filters
 **Status**: Next
-**Description**: Add a button or control to clear all active filters and reset to default view
+**Description**: Improve empty state messaging to reflect when no results are found due to filtering versus no communications existing
 **Files to modify**:
 - `apps/frontend/src/app/communications/communications-list.component.ts`
 - `apps/frontend/src/app/communications/communications-list.component.scss`
 
 **Implementation approach**:
-- Add "Clear Filters" button to the filters section
-- Implement method to reset all filter signals to their default values
-- Only show the button when filters are active (use hasActiveFilters computed signal)
-- Add professional styling consistent with existing UI
+- Update empty state to show different messages based on whether filters are active
+- If no filters: "No communications recorded yet."
+- If filters active: "No communications match your filters. Try adjusting your search criteria."
+- Use `hasActiveFilters()` computed signal to determine which message to show
+- Keep styling consistent with existing empty state
 
 ---
 
