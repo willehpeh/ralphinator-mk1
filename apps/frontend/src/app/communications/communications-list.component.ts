@@ -19,6 +19,17 @@ import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } 
       </div>
 
       <div class="filters-section">
+        <div class="filter-group filter-group-search">
+          <label for="search-filter" class="filter-label">Search:</label>
+          <input
+            type="text"
+            id="search-filter"
+            class="filter-search-input"
+            placeholder="Search by subject or notes..."
+            [value]="searchText()"
+            (input)="onSearchTextChange($event)">
+        </div>
+
         <div class="filter-group">
           <label for="client-filter" class="filter-label">Filter by Client:</label>
           <select
@@ -154,6 +165,7 @@ export class CommunicationsListComponent implements OnInit {
   requiresFollowUp = signal<boolean>(false);
   fromDate = signal<string>('');
   toDate = signal<string>('');
+  searchText = signal<string>('');
 
   // Mock client data (TODO: Replace with actual client data from API)
   mockClients = [
@@ -216,6 +228,11 @@ export class CommunicationsListComponent implements OnInit {
   onToDateChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     this.toDate.set(inputElement.value);
+  }
+
+  onSearchTextChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    this.searchText.set(inputElement.value);
   }
 
   formatDate(date: string): string {

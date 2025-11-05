@@ -23,7 +23,7 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Task 2: Add communication type filter dropdown
 - ✅ Task 3: Add follow-up required filter toggle
 - ✅ Task 4: Add date range filter (from/to date pickers)
-- ⏹ Task 5: Add search input for subject/notes
+- ✅ Task 5: Add search input for subject/notes
 - ⏹ Task 6: Implement filter state management with signals
 - ⏹ Task 7: Connect filters to backend API calls
 - ⏹ Task 8: Add visual indicators for overdue follow-ups
@@ -104,21 +104,39 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Used modern Angular syntax with signals and event binding
 - Note: Filters do not yet connect to API - this will be Task 7
 
-## Current Task Details
-
 ### Task 5: Add search input for subject/notes
-**Status**: Next
+**Status**: ✅ Completed
 **Description**: Add a search/text input to filter communications by subject or notes content
-**Files to modify**:
+**Files modified**:
 - `apps/frontend/src/app/communications/communications-list.component.ts`
 - `apps/frontend/src/app/communications/communications-list.component.scss`
 
+**Implementation details**:
+- ✅ Added `searchText` signal (string) for filter state
+- ✅ Added `onSearchTextChange()` method to handle input changes
+- ✅ Added text input element at the top of the filters section
+- ✅ Set placeholder text: "Search by subject or notes..."
+- ✅ Styled search input with professional, modern appearance
+- ✅ Applied hover effects (blue border) and focus states (blue border + shadow)
+- ✅ Styled placeholder text with italics and lighter color
+- ✅ Made search input wider (flex: 2, max-width: 400px) compared to other filters
+- ✅ Updated mobile responsiveness to include search input (full width on small screens)
+- ✅ Used modern Angular syntax with signals and (input) event binding
+- Note: Search does not yet connect to API - this will be Task 7
+
+## Current Task Details
+
+### Task 6: Implement filter state management with signals
+**Status**: Next
+**Description**: Consolidate filter state management and prepare for connecting to backend API
+**Files to modify**:
+- `apps/frontend/src/app/communications/communications-list.component.ts`
+
 **Implementation approach**:
-- Add signal for search text
-- Add search input element in the filters section
-- Style consistently with other filters
-- Wire up the input to update the signal
-- Do NOT yet connect to the API (that will be a separate task)
+- Create computed signals for active filters
+- Add method to build query parameters from filter state
+- Prepare filter state for API integration
+- Do NOT yet connect to the API (that will be Task 7)
 
 ---
 

@@ -64,6 +64,39 @@
       white-space: nowrap;
     }
 
+    .filter-search-input {
+      flex: 1;
+      max-width: 400px;
+      padding: 0.625rem 1rem;
+      font-size: 0.95rem;
+      color: #2c3e50;
+      background-color: white;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+
+      &::placeholder {
+        color: #a0aec0;
+        font-style: italic;
+      }
+
+      &:hover {
+        border-color: #3498db;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      }
+    }
+
+    &.filter-group-search {
+      flex: 2;
+      min-width: 300px;
+    }
+
     .filter-select {
       flex: 1;
       max-width: 300px;
@@ -363,7 +396,8 @@
       gap: 0.5rem;
 
       .filter-select,
-      .filter-date-input {
+      .filter-date-input,
+      .filter-search-input {
         max-width: 100%;
         width: 100%;
       }
