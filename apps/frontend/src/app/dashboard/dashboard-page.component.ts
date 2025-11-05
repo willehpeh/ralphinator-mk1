@@ -1,17 +1,19 @@
 import { Component, ChangeDetectionStrategy, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { loadDashboardStatistics } from './store/dashboard.actions';
+import { loadDashboardStatistics, loadUpcomingTasks } from './store/dashboard.actions';
 import {
   selectDashboardStatistics,
   selectDashboardLoading,
   selectDashboardError,
   selectHasStatistics,
+  selectUpcomingTasks,
 } from './store/dashboard.selectors';
+import { UpcomingTasksComponent } from './upcoming-tasks.component';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [CommonModule],
+  imports: [CommonModule, UpcomingTasksComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="dashboard-container">
@@ -105,6 +107,10 @@ import {
           <p>Start by adding your first clients, projects, and tasks to see your dashboard statistics.</p>
         </div>
       }
+
+      <div class="upcoming-tasks-container">
+        <app-upcoming-tasks [tasks]="upcomingTasks()" />
+      </div>
     </div>
   `,
   styles: [`
@@ -287,6 +293,10 @@ import {
     .retry-button:active {
       transform: scale(0.98);
     }
+
+    .upcoming-tasks-container {
+      margin-top: 2rem;
+    }
   `],
 })
 export class DashboardPageComponent implements OnInit {
@@ -297,12 +307,18 @@ export class DashboardPageComponent implements OnInit {
   loading = this.store.selectSignal(selectDashboardLoading);
   error = this.store.selectSignal(selectDashboardError);
   hasStatistics = this.store.selectSignal(selectHasStatistics);
+  upcomingTasks = this.store.selectSignal(selectUpcomingTasks);
 
   ngOnInit(): void {
     this.loadStatistics();
+    this.loadUpcomingTasks();
   }
 
   loadStatistics(): void {
     this.store.dispatch(loadDashboardStatistics());
+  }
+
+  loadUpcomingTasks(): void {
+    this.store.dispatch(loadUpcomingTasks());
   }
 }

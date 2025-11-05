@@ -112,10 +112,22 @@
    - Follows OnPush change detection strategy
    - Uses modern control flow (@if, @for) and signals pattern
    - Location: `apps/frontend/src/app/dashboard/upcoming-tasks.component.ts`
+   - Commit: 2639b5e
+
+11. ✅ **Add UpcomingTasksComponent to DashboardPageComponent**
+   - Added UpcomingTasksComponent to imports array in DashboardPageComponent
+   - Added loadUpcomingTasks import from dashboard actions
+   - Added selectUpcomingTasks import from dashboard selectors
+   - Added upcomingTasks signal using store.selectSignal(selectUpcomingTasks)
+   - Added loadUpcomingTasks() method to dispatch loadUpcomingTasks action
+   - Called loadUpcomingTasks() in ngOnInit() lifecycle hook
+   - Added <app-upcoming-tasks> to template with [tasks]="upcomingTasks()" binding
+   - Added styling for upcoming-tasks-container with 2rem top margin
+   - Component now displays below statistics grid on dashboard
+   - Location: `apps/frontend/src/app/dashboard/dashboard-page.component.ts`
    - Commit: [pending]
 
 ### Pending Tasks
-11. ⬜ Add UpcomingTasksComponent to DashboardPageComponent
 12. ⬜ Write component tests
 
 ## Technical Notes
@@ -145,7 +157,10 @@
 - `apps/frontend/src/app/dashboard/store/dashboard.actions.ts` (updated imports to use shared-types)
 - `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts` (added upcomingTasks state and handlers)
 - `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts` (added selectUpcomingTasks selector)
+- `apps/frontend/src/app/dashboard/dashboard-page.component.ts` (integrated UpcomingTasksComponent)
 
 ## Next Steps
 
-Next: Add UpcomingTasksComponent to DashboardPageComponent
+Next: Write component tests
+
+**Note**: The core feature is complete and functional. Tests are the final task before UC2 is fully complete.
