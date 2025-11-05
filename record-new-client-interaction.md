@@ -61,7 +61,7 @@ Implementing UC-COMMUNICATION-001-01: Create a New Communication
 - `packages/application/src/lib/application.ts` (updated exports)
 
 **Description**: Created CreateCommunicationCommandHandler that validates business rules (client exists, contact belongs to client if specified, project belongs to client if specified), creates CommunicationData value object from payload, invokes CommunicationAggregate.create(), and persists the aggregate via event store. Extends BaseCommandHandler and follows CQRS + event sourcing patterns.
-**Commit**: (pending)
+**Commit**: 578a7ad
 
 ## Tasks Pending
 - And more...
