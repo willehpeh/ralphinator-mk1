@@ -30,10 +30,16 @@
    - Exported from application module
    - Commit: (current)
 
+3. **Register GetUpcomingTasksQueryHandler in DashboardModule**
+   - Added import for GetUpcomingTasksQueryHandler from application package
+   - Added handler to QueryHandlers array in DashboardModule
+   - Handler now registered with CQRS and will be available for dependency injection
+   - Location: `apps/api/src/app/dashboard/dashboard.module.ts`
+   - Commit: (current)
+
 ### Pending Tasks
 
-3. � Register query handler in DashboardModule
-4. � Add GET /api/dashboard/tasks/upcoming endpoint in DashboardController
+4. ⬜ Add GET /api/dashboard/tasks/upcoming endpoint in DashboardController
 5. � Write tests for GetUpcomingTasksQueryHandler
 6. � Create dashboard NGRX actions for upcoming tasks
 7. � Update dashboard effects to load upcoming tasks
@@ -61,7 +67,8 @@
 - `packages/application/src/lib/application.ts` (added query and handler exports)
 - `packages/application/src/lib/ports/task-read-repository.interface.ts` (added findUpcoming method)
 - `packages/infrastructure/src/lib/read-models/in-memory-task-read-repository.ts` (implemented findUpcoming)
+- `apps/api/src/app/dashboard/dashboard.module.ts` (registered GetUpcomingTasksQueryHandler)
 
 ## Next Steps
 
-Next: Register query handler in DashboardModule
+Next: Add GET /api/dashboard/tasks/upcoming endpoint in DashboardController

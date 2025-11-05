@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import {
   GetDashboardStatisticsQueryHandler,
+  GetUpcomingTasksQueryHandler,
   INJECTION_TOKENS,
 } from '@angular-nest-starter/application';
 import {
@@ -12,7 +13,10 @@ import {
 } from '@angular-nest-starter/infrastructure';
 import { DashboardController } from './dashboard.controller';
 
-const QueryHandlers = [GetDashboardStatisticsQueryHandler];
+const QueryHandlers = [
+  GetDashboardStatisticsQueryHandler,
+  GetUpcomingTasksQueryHandler,
+];
 
 @Module({
   imports: [CqrsModule],
