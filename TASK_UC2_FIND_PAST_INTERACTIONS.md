@@ -29,7 +29,7 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Task 8: Add visual indicators for overdue follow-ups
 - ✅ Task 9: Add sort options (date, client, type)
 - ✅ Task 10: Add filter reset/clear functionality
-- ⏹ Task 11: Update empty state messaging based on active filters
+- ✅ Task 11: Update empty state messaging based on active filters
 
 ## Completed Task Details
 
@@ -237,21 +237,32 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Used modern Angular @if control flow syntax for conditional rendering
 - Note: Filter changes automatically trigger API reload via effect watching activeFilters()
 
-## Current Task Details
-
 ### Task 11: Update empty state messaging based on active filters
-**Status**: Next
+**Status**: ✅ Completed
 **Description**: Improve empty state messaging to reflect when no results are found due to filtering versus no communications existing
-**Files to modify**:
+**Files modified**:
 - `apps/frontend/src/app/communications/communications-list.component.ts`
 - `apps/frontend/src/app/communications/communications-list.component.scss`
 
-**Implementation approach**:
-- Update empty state to show different messages based on whether filters are active
-- If no filters: "No communications recorded yet."
-- If filters active: "No communications match your filters. Try adjusting your search criteria."
-- Use `hasActiveFilters()` computed signal to determine which message to show
-- Keep styling consistent with existing empty state
+**Implementation details**:
+- ✅ Updated empty state template to conditionally render different messages using `@if (hasActiveFilters())`
+- ✅ When filters are active:
+  - Primary message: "No communications match your filters."
+  - Secondary hint message: "Try adjusting your search criteria or [clear all filters]."
+  - Added clickable inline link button to clear filters directly from empty state
+- ✅ When no filters are active (default state):
+  - Message: "No communications recorded yet."
+  - Shows "Add First Communication" button
+- ✅ Added `.empty-state-hint` class for secondary text with lighter gray color (#95a5a6)
+- ✅ Added `.inline-link-button` class for text-link style button with:
+  - No background, blue underlined text (#3498db)
+  - Hover effect (darker blue #2980b9)
+  - Focus outline for accessibility
+  - Removes all padding and transform effects (inline appearance)
+- ✅ Enhanced existing button styles with transitions (translateY, box-shadow)
+- ✅ Used modern Angular @if control flow syntax for conditional rendering
+- ✅ Improved user experience by providing clear feedback and quick action (clear filters)
+- Note: Empty state now intelligently adapts to user context (no data vs. no matches)
 
 ---
 

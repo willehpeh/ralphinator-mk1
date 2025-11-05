@@ -113,8 +113,13 @@ import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } 
       @if (!loading() && !error()) {
         @if (communications().length === 0) {
           <div class="empty-state">
-            <p>No communications recorded yet.</p>
-            <button type="button" (click)="onAddCommunication()">Add First Communication</button>
+            @if (hasActiveFilters()) {
+              <p>No communications match your filters.</p>
+              <p class="empty-state-hint">Try adjusting your search criteria or <button type="button" class="inline-link-button" (click)="clearFilters()">clear all filters</button>.</p>
+            } @else {
+              <p>No communications recorded yet.</p>
+              <button type="button" (click)="onAddCommunication()">Add First Communication</button>
+            }
           </div>
         } @else {
           <div class="results-header">
