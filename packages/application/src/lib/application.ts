@@ -84,6 +84,7 @@ export * from './queries/handlers/get-communications-requiring-follow-up.handler
 export * from './queries/handlers/get-dashboard-statistics.handler';
 export * from './queries/handlers/get-upcoming-tasks.handler';
 export * from './queries/handlers/get-overdue-tasks.handler';
+export * from './queries/handlers/get-recent-communications.handler';
 
 // Integration Events
 export * from './events/client-created.event';
