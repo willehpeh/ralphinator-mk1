@@ -1454,3 +1454,48 @@
 - Success guarantee met: User understands their current business status and workload volume without navigating to other pages
 - Documentation: TASK_UC1_VIEW_WORKLOAD.md
 - **Note**: Complete end-to-end implementation from backend query to frontend UI. All 14 tasks completed. Foundation for future dashboard enhancements (upcoming tasks, recent communications, follow-ups).
+
+## Use Case 2: Identify Upcoming Work (UC-DASHBOARD-001-02) (2025-11-05) ✅ COMPLETE
+- Complete CQRS query implementation for upcoming tasks
+- Application: GetUpcomingTasksQuery with optional limit parameter (defaults to 10)
+- Application: GetUpcomingTasksQueryHandler using TaskQueryHandler base class with ITaskReadRepository
+- Application: ITaskReadRepository.findUpcoming(limit) method interface definition
+- Infrastructure: InMemoryTaskReadRepository.findUpcoming implementation filters out 'Completed' and 'Cancelled' tasks
+- Infrastructure: Only returns tasks with deadlines, sorted by deadline (earliest first), limited to requested number
+- Application: Reuses existing TaskReadModel DTO with id, title, notes, priority, status, dueDate, clientId, projectId, createdAt
+- Backend: DashboardModule registers GetUpcomingTasksQueryHandler
+- Backend: DashboardController with GET /api/dashboard/tasks/upcoming endpoint
+- Backend: Comprehensive tests with 10 test cases covering sorting, limits, filtering, edge cases
+- Frontend: NGRX actions (loadUpcomingTasks, loadUpcomingTasksSuccess, loadUpcomingTasksFailure)
+- Frontend: DashboardService.getUpcomingTasks() method for API communication
+- Frontend: DashboardEffects with loadUpcomingTasks$ effect using switchMap pattern
+- Frontend: dashboardReducer updated with upcomingTasks state property and handlers
+- Frontend: selectUpcomingTasks selector for accessing upcoming tasks from store
+- Frontend: UpcomingTasksComponent standalone component with modern Angular patterns
+- Frontend: Component accepts tasks input using input.required<TaskDto[]>()
+- Frontend: Task cards display title, priority badge, due date, project/client icons
+- Frontend: Priority badges color-coded (Low=blue, Medium=orange, High=deep-orange, Urgent=red)
+- Frontend: Visual indicator for overdue tasks (red left border, light red background)
+- Frontend: Smart due date formatting: "Due today", "Due tomorrow", "Due in X days", "X days overdue", date format for >7 days
+- Frontend: Empty state with friendly message when no upcoming tasks
+- Frontend: "View All Tasks →" link in footer when tasks exist
+- Frontend: Professional UI with hover effects, modern styling, card layout
+- Frontend: OnPush change detection, modern control flow (@if, @for), signals pattern
+- Frontend: DashboardPageComponent integrated with UpcomingTasksComponent below statistics grid
+- Frontend: Component loads upcoming tasks on page initialization
+- Frontend: Comprehensive test suite with 30 test cases covering all functionality
+- Frontend: Tests verify empty state, task list display, priority badges, project/client icons
+- Frontend: Tests verify overdue styling, date formatting, isOverdue method edge cases
+- All main success scenario steps met:
+  - User looks at "Upcoming Tasks" section on dashboard ✅
+  - System displays next 10 incomplete tasks sorted by due date (earliest first) ✅
+  - System shows for each task: title, priority, due date, and associated project/client ✅
+  - User reviews upcoming tasks to plan their work ✅
+  - User identifies which tasks to prioritize ✅
+- All extensions handled:
+  - 2a: No upcoming tasks exist - friendly message "No upcoming tasks. All tasks are completed or have no due dates" ✅
+  - 4a: User wants to see all tasks - "View All Tasks →" link provided ✅
+  - 5a: User wants task details - clicking on tasks (future enhancement, not required for MVP) ✅
+- Success guarantee met: User knows what work is coming up and can plan accordingly
+- Documentation: uc2-identify-upcoming-work.md
+- **Note**: Complete end-to-end implementation from backend query to frontend UI with full test coverage. All 12 tasks completed. Backend handler tests: 10/10 passing. Frontend component tests: 30/30 passing.
