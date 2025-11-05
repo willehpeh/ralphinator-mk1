@@ -47,4 +47,10 @@ export const DOMAIN_ERRORS = {
    * that has not been initialized (created) yet
    */
   TASK_NOT_INITIALIZED: 'Cannot perform operation on a task that has not been created',
+
+  /**
+   * Error message when attempting to perform an operation on an aggregate
+   * that has not been initialized (created) yet
+   */
+  COMMUNICATION_NOT_INITIALIZED: 'Cannot perform operation on a communication that has not been created',
 } as const;
