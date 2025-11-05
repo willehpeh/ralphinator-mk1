@@ -1,19 +1,21 @@
 import { Component, ChangeDetectionStrategy, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { loadDashboardStatistics, loadUpcomingTasks } from './store/dashboard.actions';
+import { loadDashboardStatistics, loadUpcomingTasks, loadOverdueTasks } from './store/dashboard.actions';
 import {
   selectDashboardStatistics,
   selectDashboardLoading,
   selectDashboardError,
   selectHasStatistics,
   selectUpcomingTasks,
+  selectOverdueTasks,
 } from './store/dashboard.selectors';
 import { UpcomingTasksComponent } from './upcoming-tasks.component';
+import { OverdueTasksComponent } from './overdue-tasks.component';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [CommonModule, UpcomingTasksComponent],
+  imports: [CommonModule, UpcomingTasksComponent, OverdueTasksComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="dashboard-container">
@@ -108,8 +110,14 @@ import { UpcomingTasksComponent } from './upcoming-tasks.component';
         </div>
       }
 
-      <div class="upcoming-tasks-container">
-        <app-upcoming-tasks [tasks]="upcomingTasks()" />
+      <div class="tasks-sections">
+        <div class="overdue-tasks-container">
+          <app-overdue-tasks [tasks]="overdueTasks()" />
+        </div>
+
+        <div class="upcoming-tasks-container">
+          <app-upcoming-tasks [tasks]="upcomingTasks()" />
+        </div>
       </div>
     </div>
   `,
@@ -294,8 +302,19 @@ import { UpcomingTasksComponent } from './upcoming-tasks.component';
       transform: scale(0.98);
     }
 
-    .upcoming-tasks-container {
+    .tasks-sections {
       margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .overdue-tasks-container {
+      width: 100%;
+    }
+
+    .upcoming-tasks-container {
+      width: 100%;
     }
   `],
 })
@@ -308,10 +327,12 @@ export class DashboardPageComponent implements OnInit {
   error = this.store.selectSignal(selectDashboardError);
   hasStatistics = this.store.selectSignal(selectHasStatistics);
   upcomingTasks = this.store.selectSignal(selectUpcomingTasks);
+  overdueTasks = this.store.selectSignal(selectOverdueTasks);
 
   ngOnInit(): void {
     this.loadStatistics();
     this.loadUpcomingTasks();
+    this.loadOverdueTasks();
   }
 
   loadStatistics(): void {
@@ -320,5 +341,9 @@ export class DashboardPageComponent implements OnInit {
 
   loadUpcomingTasks(): void {
     this.store.dispatch(loadUpcomingTasks());
+  }
+
+  loadOverdueTasks(): void {
+    this.store.dispatch(loadOverdueTasks());
   }
 }

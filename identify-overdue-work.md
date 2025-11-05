@@ -78,4 +78,17 @@ Implement the "Overdue Tasks" section of the dashboard that displays tasks past 
    - Empty state showing positive message when no overdue tasks
    - "View All Tasks" link in footer
    - Location: `apps/frontend/src/app/dashboard/overdue-tasks.component.ts`
-   - Commit: pending
+   - Commit: 6fd093b
+
+9. **Integrate OverdueTasksComponent into dashboard page**
+   - Imported OverdueTasksComponent and loadOverdueTasks action
+   - Added selectOverdueTasks selector import
+   - Added OverdueTasksComponent to component imports array
+   - Created overdueTasks signal from store selector
+   - Added loadOverdueTasks() method that dispatches action
+   - Called loadOverdueTasks() in ngOnInit lifecycle hook
+   - Added component to template with tasks input binding
+   - Created tasks-sections container with flexbox layout
+   - Positioned overdue tasks above upcoming tasks section
+   - Added responsive styling with 2rem gap between sections
+   - Location: `apps/frontend/src/app/dashboard/dashboard-page.component.ts`
