@@ -60,3 +60,11 @@ export const selectFollowUpsRequiredCount = createSelector(
   selectDashboardStatistics,
   (statistics) => statistics?.followUpsRequiredCount ?? 0
 );
+
+/**
+ * Select upcoming tasks from the state
+ */
+export const selectUpcomingTasks = createSelector(
+  selectDashboardState,
+  (state: DashboardState) => state.upcomingTasks
+);
