@@ -11,7 +11,10 @@ import {
   loadUpcomingTasksFailure,
   loadOverdueTasks,
   loadOverdueTasksSuccess,
-  loadOverdueTasksFailure
+  loadOverdueTasksFailure,
+  loadRecentCommunications,
+  loadRecentCommunicationsSuccess,
+  loadRecentCommunicationsFailure
 } from './dashboard.actions';
 import { createEffectErrorHandler } from '../../shared/effects-utils';
 
@@ -74,6 +77,25 @@ export class DashboardEffects {
           catchError(createEffectErrorHandler(
             loadOverdueTasksFailure,
             'Failed to load overdue tasks'
+          ))
+        )
+      )
+    )
+  );
+
+  /**
+   * Effect to load recent communications from the backend
+   * Listens for loadRecentCommunications action, calls the service, and dispatches success/failure
+   */
+  loadRecentCommunications$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadRecentCommunications),
+      switchMap(() =>
+        this.dashboardService.getRecentCommunications().pipe(
+          map((communications) => loadRecentCommunicationsSuccess({ communications })),
+          catchError(createEffectErrorHandler(
+            loadRecentCommunicationsFailure,
+            'Failed to load recent communications'
           ))
         )
       )

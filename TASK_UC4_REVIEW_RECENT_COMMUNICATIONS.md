@@ -70,6 +70,13 @@ Implementing the "Recent Communications" section on the dashboard to display the
 **Files Modified**:
 - `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts`
 
+### Task 10: Add effect to load recent communications
+**Status**: ✅ Completed
+**Commit**: Pending
+**Description**: Added loadRecentCommunications$ effect to dispatch service call and handle success/failure
+**Files Modified**:
+- `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
+
 ---
 
 ## Current Task
@@ -92,7 +99,7 @@ None - Ready for next task
 - [x] Add NGRX actions for recent communications
 - [x] Update reducer to store recent communications
 - [x] Add selectors for recent communications
-- [ ] Add effect to load recent communications
+- [x] Add effect to load recent communications
 - [ ] Add `getRecentCommunications()` to `DashboardService`
 - [ ] Create `RecentCommunicationsComponent`
 - [ ] Add component to `DashboardPageComponent` template
