@@ -278,7 +278,7 @@ export class CommunicationsListComponent implements OnInit {
   constructor() {
     // Automatically reload communications when any filter changes
     effect(() => {
-      const _filters = this.activeFilters();
+      this.activeFilters(); // Trigger effect on filter changes
       this.loadCommunications();
     });
   }
