@@ -20,7 +20,7 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 
 **Filtering UI:**
 - ✅ Task 1: Add client filter dropdown to CommunicationsListComponent
-- ⏹ Task 2: Add communication type filter dropdown
+- ✅ Task 2: Add communication type filter dropdown
 - ⏹ Task 3: Add follow-up required filter toggle
 - ⏹ Task 4: Add date range filter (from/to date pickers)
 - ⏹ Task 5: Add search input for subject/notes
@@ -50,21 +50,38 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Used modern Angular control flow syntax (@for)
 - Note: Filter does not yet connect to API - this will be Task 7
 
+### Task 2: Add communication type filter dropdown
+**Status**: ✅ Completed
+**Description**: Add a dropdown/select element to filter communications by type (Call, Email, Meeting, Chat, Other)
+**Files modified**:
+- `apps/frontend/src/app/communications/communications-list.component.ts`
+- `apps/frontend/src/app/communications/communications-list.component.scss`
+
+**Implementation details**:
+- ✅ Imported `COMMUNICATION_TYPE_VALUES` from shared-types
+- ✅ Added `selectedType` signal for filter state
+- ✅ Added `communicationTypes` property referencing `COMMUNICATION_TYPE_VALUES`
+- ✅ Added `onTypeFilterChange()` method to handle select changes
+- ✅ Added type filter dropdown in filters section next to client filter
+- ✅ Updated filters-section to use flexbox layout with wrap for responsive behavior
+- ✅ Used modern Angular control flow syntax (@for) to iterate over types
+- ✅ Styled consistently with existing client filter
+- Note: Filter does not yet connect to API - this will be Task 7
+
 ## Current Task Details
 
-### Task 2: Add communication type filter dropdown
+### Task 3: Add follow-up required filter toggle
 **Status**: Next
-**Description**: Add a dropdown/select element to filter communications by type (Call, Email, Meeting, Chat, Other)
+**Description**: Add a checkbox or toggle to filter communications by follow-up requirement
 **Files to modify**:
 - `apps/frontend/src/app/communications/communications-list.component.ts`
 - `apps/frontend/src/app/communications/communications-list.component.scss`
 
 **Implementation approach**:
-- Add a signal for selected communication type filter
-- Use the CommunicationType enum from shared-types
-- Add HTML select element in the filters section next to client filter
-- Style consistently with the client filter
-- Wire up the select to update the signal
+- Add a signal for follow-up filter state (boolean)
+- Add a checkbox or toggle element in the filters section
+- Style consistently with other filters
+- Wire up the checkbox to update the signal
 - Do NOT yet connect to the API (that will be a separate task)
 
 ---

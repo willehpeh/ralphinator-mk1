@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@ang
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CommunicationsService } from './communications.service';
-import { CommunicationReadModel, CommunicationType } from '@angular-nest-starter/shared-types';
+import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } from '@angular-nest-starter/shared-types';
 
 @Component({
   selector: 'app-communications-list',
@@ -29,6 +29,20 @@ import { CommunicationReadModel, CommunicationType } from '@angular-nest-starter
             <option value="">All Clients</option>
             @for (client of mockClients; track client.id) {
               <option [value]="client.id">{{ client.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="type-filter" class="filter-label">Filter by Type:</label>
+          <select
+            id="type-filter"
+            class="filter-select"
+            [value]="selectedType()"
+            (change)="onTypeFilterChange($event)">
+            <option value="">All Types</option>
+            @for (type of communicationTypes; track type) {
+              <option [value]="type">{{ type }}</option>
             }
           </select>
         </div>
@@ -104,6 +118,7 @@ export class CommunicationsListComponent implements OnInit {
 
   // Filter signals
   selectedClientId = signal<string>('');
+  selectedType = signal<string>('');
 
   // Mock client data (TODO: Replace with actual client data from API)
   mockClients = [
@@ -111,6 +126,9 @@ export class CommunicationsListComponent implements OnInit {
     { id: '2', name: 'TechStart Inc' },
     { id: '3', name: 'Global Solutions LLC' },
   ];
+
+  // Communication types for filter dropdown
+  communicationTypes = COMMUNICATION_TYPE_VALUES;
 
   ngOnInit(): void {
     this.loadCommunications();
@@ -143,6 +161,11 @@ export class CommunicationsListComponent implements OnInit {
   onClientFilterChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedClientId.set(selectElement.value);
+  }
+
+  onTypeFilterChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedType.set(selectElement.value);
   }
 
   formatDate(date: string): string {
