@@ -5,5 +5,5 @@ import { IQuery } from '@nestjs/cqrs';
  * Returns the next 10 non-completed tasks sorted by due date (earliest first).
  */
 export class GetUpcomingTasksQuery implements IQuery {
-  constructor(public readonly limit: number = 10) {}
+  constructor(public readonly limit = 10) {}
 }
