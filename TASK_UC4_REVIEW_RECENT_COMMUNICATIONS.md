@@ -126,7 +126,7 @@ Implementing the "Recent Communications" section on the dashboard to display the
 
 ### Task 17: Write comprehensive test suite for RecentCommunicationsComponent
 **Status**: ✅ Completed
-**Commit**: (pending)
+**Commit**: `07b9438`
 **Description**: Created comprehensive test suite with 31 tests covering empty state, communication list display, type badges, date formatting, optional fields (contact/project), and component structure
 **Files Modified**:
 - `apps/frontend/src/app/dashboard/recent-communications.component.spec.ts`
