@@ -55,9 +55,17 @@
    - Location: `packages/testing/src/tests/get-upcoming-tasks.handler.spec.ts`
    - Commit: 19c68d0
 
+6. **Create dashboard NGRX actions for upcoming tasks**
+   - Added three actions following existing pattern: loadUpcomingTasks, loadUpcomingTasksSuccess, loadUpcomingTasksFailure
+   - Added import for TaskReadModel from application package
+   - loadUpcomingTasks: Triggers loading of upcoming tasks from backend
+   - loadUpcomingTasksSuccess: Receives array of TaskReadModel on successful load
+   - loadUpcomingTasksFailure: Receives error string on failure
+   - Location: `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
+   - Commit: [PENDING]
+
 ### Pending Tasks
 
-6. ⬜ Create dashboard NGRX actions for upcoming tasks
 7. ⬜ Update dashboard effects to load upcoming tasks
 8. ⬜ Update dashboard reducer to store upcoming tasks
 9. ⬜ Update dashboard selectors to select upcoming tasks
@@ -89,4 +97,4 @@
 
 ## Next Steps
 
-Next: Create dashboard NGRX actions for upcoming tasks
+Next: Update dashboard effects to load upcoming tasks
