@@ -14,15 +14,15 @@ import {
   loadRecentCommunicationsFailure,
 } from './dashboard.actions';
 import { DashboardStatistics } from '../dashboard.types';
-import { TaskReadModel, CommunicationReadModel } from '@angular-nest-starter/shared-types';
+import { TaskDto, CommunicationReadModel } from '@angular-nest-starter/shared-types';
 
 /**
  * Dashboard state interface
  */
 export interface DashboardState {
   statistics: DashboardStatistics | null;
-  upcomingTasks: TaskReadModel[];
-  overdueTasks: TaskReadModel[];
+  upcomingTasks: TaskDto[];
+  overdueTasks: TaskDto[];
   recentCommunications: CommunicationReadModel[];
   loading: boolean;
   error: string | null;

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DashboardStatistics } from './dashboard.types';
-import { TaskReadModel, CommunicationReadModel } from '@angular-nest-starter/shared-types';
+import { TaskDto, CommunicationReadModel } from '@angular-nest-starter/shared-types';
 
 /**
  * Service for dashboard-related API calls
@@ -26,16 +26,16 @@ export class DashboardService {
    * Get upcoming tasks from the backend
    * Returns next 10 incomplete tasks sorted by due date (earliest first)
    */
-  getUpcomingTasks(): Observable<TaskReadModel[]> {
-    return this.http.get<TaskReadModel[]>(`${this.apiUrl}/tasks/upcoming`);
+  getUpcomingTasks(): Observable<TaskDto[]> {
+    return this.http.get<TaskDto[]>(`${this.apiUrl}/tasks/upcoming`);
   }
 
   /**
    * Get overdue tasks from the backend
    * Returns all incomplete tasks with due dates in the past, sorted by due date (oldest first)
    */
-  getOverdueTasks(): Observable<TaskReadModel[]> {
-    return this.http.get<TaskReadModel[]>(`${this.apiUrl}/tasks/overdue`);
+  getOverdueTasks(): Observable<TaskDto[]> {
+    return this.http.get<TaskDto[]>(`${this.apiUrl}/tasks/overdue`);
   }
 
   /**

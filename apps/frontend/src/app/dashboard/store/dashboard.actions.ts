@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { DashboardStatistics } from '../dashboard.types';
-import { TaskReadModel, CommunicationReadModel } from '@angular-nest-starter/shared-types';
+import { TaskDto, CommunicationReadModel } from '@angular-nest-starter/shared-types';
 
 /**
  * Load dashboard statistics from the backend
@@ -37,7 +37,7 @@ export const loadUpcomingTasks = createAction(
  */
 export const loadUpcomingTasksSuccess = createAction(
   '[Dashboard] Load Upcoming Tasks Success',
-  props<{ tasks: TaskReadModel[] }>()
+  props<{ tasks: TaskDto[] }>()
 );
 
 /**
@@ -60,7 +60,7 @@ export const loadOverdueTasks = createAction(
  */
 export const loadOverdueTasksSuccess = createAction(
   '[Dashboard] Load Overdue Tasks Success',
-  props<{ tasks: TaskReadModel[] }>()
+  props<{ tasks: TaskDto[] }>()
 );
 
 /**
