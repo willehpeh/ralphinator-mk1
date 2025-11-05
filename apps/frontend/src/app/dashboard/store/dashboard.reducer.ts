@@ -3,14 +3,19 @@ import {
   loadDashboardStatistics,
   loadDashboardStatisticsSuccess,
   loadDashboardStatisticsFailure,
+  loadUpcomingTasks,
+  loadUpcomingTasksSuccess,
+  loadUpcomingTasksFailure,
 } from './dashboard.actions';
 import { DashboardStatistics } from '../dashboard.types';
+import { TaskReadModel } from '@angular-nest-starter/shared-types';
 
 /**
  * Dashboard state interface
  */
 export interface DashboardState {
   statistics: DashboardStatistics | null;
+  upcomingTasks: TaskReadModel[];
   loading: boolean;
   error: string | null;
 }
@@ -20,6 +25,7 @@ export interface DashboardState {
  */
 export const initialState: DashboardState = {
   statistics: null,
+  upcomingTasks: [],
   loading: false,
   error: null,
 };
@@ -71,5 +77,17 @@ export const dashboardReducer = createReducer(
   })),
 
   // When loading dashboard statistics fails
-  on(loadDashboardStatisticsFailure, (state, { error }) => setError(state, error))
+  on(loadDashboardStatisticsFailure, (state, { error }) => setError(state, error)),
+
+  // When loading upcoming tasks is triggered
+  on(loadUpcomingTasks, setLoading),
+
+  // When upcoming tasks are successfully loaded
+  on(loadUpcomingTasksSuccess, (state, { tasks }) => ({
+    ...clearLoadingAndError(state),
+    upcomingTasks: tasks,
+  })),
+
+  // When loading upcoming tasks fails
+  on(loadUpcomingTasksFailure, (state, { error }) => setError(state, error))
 );

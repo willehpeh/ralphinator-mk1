@@ -78,10 +78,20 @@
      - `apps/frontend/src/app/dashboard/dashboard.service.ts`
      - `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
      - `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
-   - Commit: [pending]
+   - Commit: 5105664
+
+8. ✅ **Update dashboard reducer to store upcoming tasks**
+   - Added `upcomingTasks: TaskReadModel[]` to DashboardState interface
+   - Imported TaskReadModel from `@angular-nest-starter/shared-types`
+   - Updated initialState to include `upcomingTasks: []`
+   - Added reducer handlers for loadUpcomingTasks, loadUpcomingTasksSuccess, loadUpcomingTasksFailure
+   - loadUpcomingTasks: Sets loading state using shared setLoading helper
+   - loadUpcomingTasksSuccess: Clears loading/error, stores tasks array
+   - loadUpcomingTasksFailure: Sets error state using shared setError helper
+   - Location: `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts`
+   - Commit: [PENDING]
 
 ### Pending Tasks
-8.  ⬜ Update dashboard reducer to store upcoming tasks
 9.  ⬜ Update dashboard selectors to select upcoming tasks
 10. ⬜ Create UpcomingTasksComponent
 11. ⬜ Add UpcomingTasksComponent to DashboardPageComponent
@@ -111,7 +121,8 @@
 - `apps/frontend/src/app/dashboard/dashboard.service.ts` (added getUpcomingTasks method)
 - `apps/frontend/src/app/dashboard/store/dashboard.effects.ts` (added loadUpcomingTasks$ effect)
 - `apps/frontend/src/app/dashboard/store/dashboard.actions.ts` (updated imports to use shared-types)
+- `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts` (added upcomingTasks state and handlers)
 
 ## Next Steps
 
-Next: Update dashboard reducer to store upcoming tasks
+Next: Update dashboard selectors to select upcoming tasks
