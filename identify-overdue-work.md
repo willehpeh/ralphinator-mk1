@@ -25,4 +25,19 @@ Implement the "Overdue Tasks" section of the dashboard that displays tasks past 
    - Follows CQRS pattern with proper error handling
    - Location: `packages/application/src/lib/queries/handlers/get-overdue-tasks.handler.ts`
    - Exported from application module
+   - Commit: 1898ddf
+
+3. **Add getOverdueTasks method to DashboardService**
+   - Added service method to fetch overdue tasks from backend
+   - HTTP GET to `/api/dashboard/tasks/overdue` endpoint
+   - Returns Observable<TaskReadModel[]>
+   - Location: `apps/frontend/src/app/dashboard/dashboard.service.ts`
+   - Commit: 709a701
+
+4. **Add NGRX actions for loading overdue tasks**
+   - Created loadOverdueTasks action to trigger loading
+   - Created loadOverdueTasksSuccess action with tasks payload
+   - Created loadOverdueTasksFailure action with error payload
+   - Follows same pattern as upcoming tasks actions
+   - Location: `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
    - Commit: [pending]

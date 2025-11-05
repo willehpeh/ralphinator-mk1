@@ -47,3 +47,26 @@ export const loadUpcomingTasksFailure = createAction(
   '[Dashboard] Load Upcoming Tasks Failure',
   props<{ error: string }>()
 );
+
+/**
+ * Load overdue tasks from the backend
+ */
+export const loadOverdueTasks = createAction(
+  '[Dashboard] Load Overdue Tasks'
+);
+
+/**
+ * Successfully loaded overdue tasks from the backend
+ */
+export const loadOverdueTasksSuccess = createAction(
+  '[Dashboard] Load Overdue Tasks Success',
+  props<{ tasks: TaskReadModel[] }>()
+);
+
+/**
+ * Failed to load overdue tasks from the backend
+ */
+export const loadOverdueTasksFailure = createAction(
+  '[Dashboard] Load Overdue Tasks Failure',
+  props<{ error: string }>()
+);
