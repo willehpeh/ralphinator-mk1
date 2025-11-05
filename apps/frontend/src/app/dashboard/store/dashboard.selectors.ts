@@ -76,3 +76,19 @@ export const selectOverdueTasks = createSelector(
   selectDashboardState,
   (state: DashboardState) => state.overdueTasks
 );
+
+/**
+ * Select recent communications from the state
+ */
+export const selectRecentCommunications = createSelector(
+  selectDashboardState,
+  (state: DashboardState) => state.recentCommunications
+);
+
+/**
+ * Select whether there are any recent communications
+ */
+export const selectHasRecentCommunications = createSelector(
+  selectRecentCommunications,
+  (communications) => communications.length > 0
+);

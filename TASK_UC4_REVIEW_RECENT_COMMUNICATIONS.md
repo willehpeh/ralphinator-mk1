@@ -57,10 +57,18 @@ Implementing the "Recent Communications" section on the dashboard to display the
 
 ### Task 8: Update dashboard reducer to handle recent communications state
 **Status**: ✅ Completed
-**Commit**: (pending)
+**Commit**: `4cb7b54`
 **Description**: Added recentCommunications array to dashboard state and wired up reducer handlers for the new actions
 **Files Modified**:
 - `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts`
+- `TASK_UC4_REVIEW_RECENT_COMMUNICATIONS.md` (created)
+
+### Task 9: Add selectors for recent communications
+**Status**: ✅ Completed
+**Commit**: (pending)
+**Description**: Added selectRecentCommunications and selectHasRecentCommunications selectors to dashboard store
+**Files Modified**:
+- `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts`
 
 ---
 
@@ -83,8 +91,8 @@ None - Ready for next task
 ### Frontend (In Progress 🔄)
 - [x] Add NGRX actions for recent communications
 - [x] Update reducer to store recent communications
+- [x] Add selectors for recent communications
 - [ ] Add effect to load recent communications
-- [ ] Add selectors for recent communications
 - [ ] Add `getRecentCommunications()` to `DashboardService`
 - [ ] Create `RecentCommunicationsComponent`
 - [ ] Add component to `DashboardPageComponent` template
