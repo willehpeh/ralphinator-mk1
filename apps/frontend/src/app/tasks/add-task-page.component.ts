@@ -15,52 +15,8 @@ import { SUCCESS_MESSAGE_DISMISS_DURATION_MS } from '../shared/ui.constants';
   selector: 'app-add-task-page',
   imports: [TaskFormComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div class="add-task-page">
-      <div class="page-header">
-        <button class="back-button" (click)="navigateToTaskList()">
-          ← Back to Tasks
-        </button>
-      </div>
-
-      <app-task-form
-        (taskSubmitted)="handleTaskSubmit($event)"
-        (formCancelled)="handleCancel()"
-      />
-    </div>
-  `,
-  styles: [`
-    .add-task-page {
-      padding: 2rem;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .page-header {
-      margin-bottom: 1.5rem;
-    }
-
-    .back-button {
-      background: none;
-      border: none;
-      color: #3498db;
-      cursor: pointer;
-      font-size: 1rem;
-      padding: 0.5rem 0;
-      transition: color 0.2s;
-    }
-
-    .back-button:hover {
-      color: #2980b9;
-      text-decoration: underline;
-    }
-
-    @media (max-width: 768px) {
-      .add-task-page {
-        padding: 1rem;
-      }
-    }
-  `]
+  templateUrl: './add-task-page.component.html',
+  styleUrl: './add-task-page.component.scss'
 })
 export class AddTaskPageComponent {
   private store = inject(Store);

@@ -1,0 +1,12 @@
+<div class="add-task-page">
+  <div class="page-header">
+    <button class="back-button" (click)="navigateToTaskList()">
+      ← Back to Tasks
+    </button>
+  </div>
+
+  <app-task-form
+    (taskSubmitted)="handleTaskSubmit($event)"
+    (formCancelled)="handleCancel()"
+  />
+</div>
