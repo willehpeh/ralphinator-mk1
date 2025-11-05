@@ -24,7 +24,7 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Task 3: Add follow-up required filter toggle
 - ✅ Task 4: Add date range filter (from/to date pickers)
 - ✅ Task 5: Add search input for subject/notes
-- ⏹ Task 6: Implement filter state management with signals
+- ✅ Task 6: Implement filter state management with signals
 - ⏹ Task 7: Connect filters to backend API calls
 - ⏹ Task 8: Add visual indicators for overdue follow-ups
 - ⏹ Task 9: Add sort options (date, client, type)
@@ -124,19 +124,43 @@ UC-COMMUNICATION-001-02: View All Communications with Filtering
 - ✅ Used modern Angular syntax with signals and (input) event binding
 - Note: Search does not yet connect to API - this will be Task 7
 
-## Current Task Details
-
 ### Task 6: Implement filter state management with signals
-**Status**: Next
+**Status**: ✅ Completed
 **Description**: Consolidate filter state management and prepare for connecting to backend API
-**Files to modify**:
+**Files modified**:
 - `apps/frontend/src/app/communications/communications-list.component.ts`
 
+**Implementation details**:
+- ✅ Imported `computed` from '@angular/core'
+- ✅ Created `activeFilters` computed signal that consolidates all filter state
+- ✅ Created `hasActiveFilters` computed signal to check if any filters are active
+- ✅ Added `buildQueryParams()` private method that builds query parameters from filter state
+- ✅ Method returns object with only filters that have values (excludes empty strings, false booleans)
+- ✅ Prepared comprehensive parameter mapping for all filter types:
+  - clientId (string)
+  - type (string)
+  - requiresFollowUp (boolean → 'true' string)
+  - fromDate (string)
+  - toDate (string)
+  - searchText (string)
+- ✅ Used modern Angular computed signals for reactive state management
+- ✅ Added JSDoc documentation for clarity
+- Note: Filter parameters are ready but NOT yet connected to API (that will be Task 7)
+
+## Current Task Details
+
+### Task 7: Connect filters to backend API calls
+**Status**: Next
+**Description**: Wire up all filter state to actually call the backend API with the appropriate query parameters
+**Files to modify**:
+- `apps/frontend/src/app/communications/communications-list.component.ts`
+- `apps/frontend/src/app/communications/communications.service.ts`
+
 **Implementation approach**:
-- Create computed signals for active filters
-- Add method to build query parameters from filter state
-- Prepare filter state for API integration
-- Do NOT yet connect to the API (that will be Task 7)
+- Update `CommunicationsService.getAllCommunications()` to accept all filter parameters
+- Modify `loadCommunications()` to use `buildQueryParams()` method
+- Update effects to trigger on all filter changes (not just client and type)
+- Ensure proper reactive behavior when filters change
 
 ---
 

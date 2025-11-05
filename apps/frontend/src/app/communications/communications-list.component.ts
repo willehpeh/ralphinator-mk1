@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, signal, effect } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, signal, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CommunicationsService } from './communications.service';
@@ -177,6 +177,29 @@ export class CommunicationsListComponent implements OnInit {
   // Communication types for filter dropdown
   communicationTypes = COMMUNICATION_TYPE_VALUES;
 
+  // Computed signal that consolidates all filter state
+  activeFilters = computed(() => ({
+    clientId: this.selectedClientId(),
+    type: this.selectedType(),
+    requiresFollowUp: this.requiresFollowUp(),
+    fromDate: this.fromDate(),
+    toDate: this.toDate(),
+    searchText: this.searchText()
+  }));
+
+  // Computed signal to check if any filters are active
+  hasActiveFilters = computed(() => {
+    const filters = this.activeFilters();
+    return !!(
+      filters.clientId ||
+      filters.type ||
+      filters.requiresFollowUp ||
+      filters.fromDate ||
+      filters.toDate ||
+      filters.searchText
+    );
+  });
+
   constructor() {
     // Automatically reload communications when client filter changes
     effect(() => {
@@ -193,6 +216,41 @@ export class CommunicationsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCommunications();
+  }
+
+  /**
+   * Builds query parameters from current filter state
+   * Returns an object with only the filters that have values
+   */
+  private buildQueryParams(): { [key: string]: string } {
+    const filters = this.activeFilters();
+    const params: { [key: string]: string } = {};
+
+    if (filters.clientId) {
+      params['clientId'] = filters.clientId;
+    }
+
+    if (filters.type) {
+      params['type'] = filters.type;
+    }
+
+    if (filters.requiresFollowUp) {
+      params['requiresFollowUp'] = 'true';
+    }
+
+    if (filters.fromDate) {
+      params['fromDate'] = filters.fromDate;
+    }
+
+    if (filters.toDate) {
+      params['toDate'] = filters.toDate;
+    }
+
+    if (filters.searchText) {
+      params['searchText'] = filters.searchText;
+    }
+
+    return params;
   }
 
   loadCommunications(): void {
