@@ -68,3 +68,11 @@ export const selectUpcomingTasks = createSelector(
   selectDashboardState,
   (state: DashboardState) => state.upcomingTasks
 );
+
+/**
+ * Select overdue tasks from the state
+ */
+export const selectOverdueTasks = createSelector(
+  selectDashboardState,
+  (state: DashboardState) => state.overdueTasks
+);

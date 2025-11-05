@@ -59,3 +59,10 @@ Implement the "Overdue Tasks" section of the dashboard that displays tasks past 
    - Follows same pattern as loadUpcomingTasks$ effect
    - Location: `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
    - Commit: 3bb135a
+
+7. **Add NGRX selector for overdue tasks**
+   - Created selectOverdueTasks selector in dashboard selectors
+   - Selector retrieves overdueTasks array from DashboardState
+   - Follows same pattern as selectUpcomingTasks
+   - Location: `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts`
+   - Commit: [pending]
