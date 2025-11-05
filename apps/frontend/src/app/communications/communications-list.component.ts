@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CommunicationsService } from './communications.service';
@@ -177,6 +177,14 @@ export class CommunicationsListComponent implements OnInit {
   // Communication types for filter dropdown
   communicationTypes = COMMUNICATION_TYPE_VALUES;
 
+  constructor() {
+    // Automatically reload communications when client filter changes
+    effect(() => {
+      const clientId = this.selectedClientId();
+      this.loadCommunications();
+    });
+  }
+
   ngOnInit(): void {
     this.loadCommunications();
   }
@@ -185,7 +193,9 @@ export class CommunicationsListComponent implements OnInit {
     this.loading.set(true);
     this.error.set(null);
 
-    this.communicationsService.getAllCommunications().subscribe({
+    const clientId = this.selectedClientId() || undefined;
+
+    this.communicationsService.getAllCommunications(clientId).subscribe({
       next: (data) => {
         this.communications.set(data);
         this.loading.set(false);

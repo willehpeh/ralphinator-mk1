@@ -28,8 +28,11 @@
 - [x] Type badges with color coding (Task 8)
 - [x] Follow-up indicators (Task 8)
 - [x] Loading, error, and empty states (Task 8)
-- [ ] Search and filter controls
-- [ ] NGRX selectors for filtered communications
+- [x] Client filter wired to backend API (Task 9)
+- [ ] Type filter wired to backend API
+- [ ] Follow-up filter wired to backend API
+- [ ] Date range filter implementation
+- [ ] Search filter implementation (client-side or backend)
 - [ ] Overdue highlighting for follow-ups
 
 ---
@@ -194,6 +197,32 @@
 - Build verification: Frontend build passes successfully with no TypeScript errors
 
 **Next Task**: Add filter controls (client, contact, project, type, date range, follow-up status) to the component
+
+### Task 9: Wire Up Client Filter to Backend API (2025-11-05)
+
+**Files Modified**:
+- `apps/frontend/src/app/communications/communications.service.ts` - Added optional clientId parameter to getAllCommunications method
+- `apps/frontend/src/app/communications/communications-list.component.ts` - Added effect to automatically reload when client filter changes
+
+**Implementation Details**:
+- Updated CommunicationsService.getAllCommunications() to accept optional clientId parameter
+- Service now constructs query parameters object and passes it to HttpClient.get()
+- Added constructor with effect() in CommunicationsListComponent to track selectedClientId signal
+- When selectedClientId changes, the effect automatically calls loadCommunications()
+- loadCommunications() passes the clientId to the service, which sends it as a query parameter to the API
+- When user selects a client from the dropdown, communications are automatically filtered by that client
+- When "All Clients" is selected (empty string), all communications are shown
+- Build verified successfully - TypeScript compilation passes
+
+**How It Works**:
+1. User selects a client from the "Filter by Client" dropdown
+2. onClientFilterChange() updates the selectedClientId signal
+3. The effect() detects the signal change and calls loadCommunications()
+4. loadCommunications() calls API with ?clientId=<id> query parameter
+5. Backend returns filtered communications for that client
+6. UI updates automatically with the filtered results
+
+**Next Task**: Wire up type filter to backend API with similar pattern
 
 ---
 
