@@ -99,8 +99,22 @@
    - Location: `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts`
    - Commit: 89eb68a
 
+10. ✅ **Create UpcomingTasksComponent**
+   - Created standalone component using modern Angular patterns
+   - Component accepts tasks input using `input.required<TaskDto[]>()`
+   - Displays tasks in card layout with title, priority badge, due date
+   - Shows project/client icons when associated
+   - Visual indicator for overdue tasks (red border, background highlight)
+   - Smart due date formatting: "Due today", "Due tomorrow", "X days overdue", etc.
+   - Empty state with friendly message when no upcoming tasks
+   - "View All Tasks" link in footer
+   - Hover effects and modern, professional styling
+   - Follows OnPush change detection strategy
+   - Uses modern control flow (@if, @for) and signals pattern
+   - Location: `apps/frontend/src/app/dashboard/upcoming-tasks.component.ts`
+   - Commit: [pending]
+
 ### Pending Tasks
-10. ⬜ Create UpcomingTasksComponent
 11. ⬜ Add UpcomingTasksComponent to DashboardPageComponent
 12. ⬜ Write component tests
 
@@ -117,6 +131,7 @@
 - `packages/application/src/lib/queries/get-upcoming-tasks.query.ts`
 - `packages/application/src/lib/queries/handlers/get-upcoming-tasks.handler.ts`
 - `packages/testing/src/tests/get-upcoming-tasks.handler.spec.ts`
+- `apps/frontend/src/app/dashboard/upcoming-tasks.component.ts`
 
 ## Files Modified
 
@@ -133,4 +148,4 @@
 
 ## Next Steps
 
-Next: Create UpcomingTasksComponent
+Next: Add UpcomingTasksComponent to DashboardPageComponent
