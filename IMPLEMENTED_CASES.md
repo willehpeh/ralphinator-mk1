@@ -1546,3 +1546,48 @@
 - Success guarantee met: User is aware of all overdue work and can prioritize urgent items
 - Documentation: identify-overdue-work.md
 - **Note**: Complete end-to-end implementation from backend query to frontend UI. All 9 tasks completed. Positioned prominently at top of dashboard for immediate visibility. Red accent styling provides strong visual urgency without being overwhelming.
+
+## Use Case 4: Review Recent Client Communications (UC-DASHBOARD-001-04) (2025-11-05) ✅ COMPLETE
+- Complete CQRS query implementation for recent communications
+- Application: GetRecentCommunicationsQuery with configurable limit (default 10)
+- Application: GetRecentCommunicationsQueryHandler using CommunicationQueryHandler base class
+- Application: ICommunicationReadRepository.findRecent(limit) method for querying recent communications
+- Infrastructure: InMemoryCommunicationReadRepository.findRecent implementation sorts by date descending
+- Application: Reuses existing CommunicationReadModel with all required fields
+- Backend: DashboardModule registers GetRecentCommunicationsQueryHandler
+- Backend: DashboardController with GET /api/dashboard/communications/recent endpoint
+- Backend: Comprehensive test suite (4 tests) covering limit enforcement, sorting, and empty states
+- Frontend: NGRX actions (loadRecentCommunications, loadRecentCommunicationsSuccess, loadRecentCommunicationsFailure)
+- Frontend: DashboardService.getRecentCommunications() method for API communication
+- Frontend: DashboardEffects with loadRecentCommunications$ effect using switchMap pattern
+- Frontend: dashboardReducer updated with recentCommunications state property and handlers
+- Frontend: selectRecentCommunications and selectHasRecentCommunications selectors
+- Frontend: RecentCommunicationsComponent standalone component with modern Angular patterns
+- Frontend: Component accepts communications input using input.required<CommunicationReadModel[]>()
+- Frontend: Communication cards display type badge, subject, client name, contact name (if any), date
+- Frontend: Type badges color-coded (Call=blue, Email=purple, Meeting=green, Note=gray)
+- Frontend: Professional card layout with hover effects and smooth transitions
+- Frontend: Date formatting using toLocaleDateString for readable display
+- Frontend: Optional fields (contact name, project name) conditionally displayed with @if
+- Frontend: Icons for client (users icon), contact (person icon), and project (grid icon)
+- Frontend: Empty state with friendly message "No communications yet" and suggestion to log first interaction
+- Frontend: "View All Communications →" link in footer when communications exist
+- Frontend: OnPush change detection, modern control flow (@if, @for), signals pattern
+- Frontend: DashboardPageComponent integrated with RecentCommunicationsComponent below task sections
+- Frontend: Component loads recent communications on page initialization
+- Frontend: Comprehensive test suite (31 tests) covering all scenarios and edge cases
+- All main success scenario steps met:
+  - User looks at "Recent Communications" section on dashboard ✅
+  - System displays last 10 communications sorted by date (newest first) ✅
+  - System shows for each: type, subject, client name, contact name, date ✅
+  - User reviews recent interactions to stay informed ✅
+  - User identifies communications needing follow-up action ✅
+- All extensions handled:
+  - 2a: No communications exist - friendly empty state message ✅
+  - 4a: User wants all communications - "View All Communications" link provided ✅
+  - 5a: User wants details - clickable cards for future enhancement ✅
+- Acceptance Criteria AC4 fully met: Recent Communications section complete
+- Acceptance Criteria AC8 fully met: Empty state with helpful guidance
+- Success guarantee met: User informed about recent client interactions without searching
+- Documentation: TASK_UC4_REVIEW_RECENT_COMMUNICATIONS.md
+- **Note**: Complete end-to-end implementation from backend query to frontend UI with full test coverage. All 18 tasks completed. Backend handler tests: 4/4 passing. Frontend component tests: 31/31 passing. API endpoint verified. Component integration confirmed.

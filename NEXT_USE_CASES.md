@@ -1,31 +1,5 @@
 # Use Cases: Dashboard Overview (US-DASHBOARD-001)
 
-## Use Case 4: Review Recent Client Communications
-
-**Primary Actor**: Developer/Agency Owner
-
-**Goal**: Stay informed about recent client interactions and communication history
-
-**Preconditions**:
-- User is viewing the dashboard
-- System has recorded communications
-
-**Main Success Scenario**:
-1. User looks at "Recent Communications" section on dashboard
-2. System displays last 10 communications sorted by date (newest first)
-3. System shows for each communication: type, subject, client name, contact name, and date
-4. User reviews recent interactions to stay informed about client relationships
-5. User identifies any communications that may need follow-up action
-
-**Extensions**:
-- 2a. If no communications exist: System displays message suggesting to log first communication
-- 4a. If user wants to see all communications: User clicks "View All Communications" link
-- 5a. If user wants communication details: User clicks on specific communication to see full content
-
-**Success Guarantee**: User is informed about recent client interactions without searching through communication history
-
----
-
 ## Use Case 5: Track Required Follow-Ups
 
 **Primary Actor**: Developer/Agency Owner
