@@ -8,7 +8,7 @@ import { selectAllClients } from '../clients/store/clients.selectors';
 import * as ClientsActions from '../clients/store/clients.actions';
 import { TASK_UI_TEXT } from './task-display.constants';
 import { TaskStatus } from '@angular-nest-starter/shared-types';
-import { formatDate, isOverdue, daysOverdue } from '../shared/date-utils';
+import { formatDate, isOverdue, daysOverdue, formatDeadlineText } from '../shared/date-utils';
 import { formatTaskStatus } from './utils/task-display-utils';
 import { extractSelectValue, extractInputValue, extractCheckboxValue } from '../shared/form-event-utils';
 import { getPriorityBadgeClass, getStatusBadgeClass } from '../shared/badge-utils';
@@ -151,7 +151,7 @@ import { getPriorityBadgeClass, getStatusBadgeClass } from '../shared/badge-util
                       <span class="metadata-value">{{ formatDate(task.dueDate) }}</span>
                       @if (isOverdue(task.dueDate)) {
                         <span class="overdue-indicator">
-                          {{ daysOverdue(task.dueDate) === 1 ? 'overdue by 1 day' : 'overdue by ' + daysOverdue(task.dueDate) + ' days' }}
+                          {{ formatDeadlineText(task.dueDate) }}
                         </span>
                       }
                     </div>
@@ -342,6 +342,10 @@ export class TaskListComponent implements OnInit {
 
   daysOverdue(dueDate: Date | null): number {
     return daysOverdue(dueDate);
+  }
+
+  formatDeadlineText(dueDate: Date | null): string {
+    return formatDeadlineText(dueDate);
   }
 
   getPriorityClass(priority: string): string {
