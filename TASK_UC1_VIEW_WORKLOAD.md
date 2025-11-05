@@ -56,22 +56,30 @@
    - Tests parallel data fetching with Promise.all
    - All tests passing
    - Location: `packages/testing/src/tests/get-dashboard-statistics.handler.spec.ts`
-   - Commit: (current)
+   - Commit: `8b43c35 test: Add comprehensive tests for GetDashboardStatisticsQueryHandler`
 
 ### Pending Backend Tasks
 None - Backend implementation complete!
 
 ### Pending Frontend Tasks
 
-8. ⏳ Create dashboard NGRX actions
-9. ⏳ Create dashboard NGRX effects
-10. ⏳ Create dashboard NGRX reducer
-11. ⏳ Create dashboard NGRX selectors
-12. ⏳ Create DashboardPageComponent
-13. ⏳ Create StatisticsCardsComponent
-14. ⏳ Configure dashboard route
-15. ⏳ Update navigation with Dashboard link
-16. ⏳ Write component tests
+7. ✅ **Create dashboard NGRX actions**
+   - Created DashboardStatistics interface type
+   - Created loadDashboardStatistics action (triggers API call)
+   - Created loadDashboardStatisticsSuccess action (stores data)
+   - Created loadDashboardStatisticsFailure action (handles errors)
+   - Location: `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
+   - Location: `apps/frontend/src/app/dashboard/dashboard.types.ts`
+   - Commit: (current)
+
+8. ⏳ Create dashboard NGRX effects
+9. ⏳ Create dashboard NGRX reducer
+10. ⏳ Create dashboard NGRX selectors
+11. ⏳ Create DashboardPageComponent
+12. ⏳ Create StatisticsCardsComponent
+13. ⏳ Configure dashboard route
+14. ⏳ Update navigation with Dashboard link
+15. ⏳ Write component tests
 
 ## Technical Notes
 
@@ -87,13 +95,16 @@ None - Backend implementation complete!
 - `apps/api/src/app/dashboard/dashboard.module.ts`
 - `apps/api/src/app/dashboard/dashboard.controller.ts`
 - `packages/testing/src/tests/get-dashboard-statistics.handler.spec.ts`
+- `apps/frontend/src/app/dashboard/dashboard.types.ts`
+- `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
 
 ## Files Modified
 
 - `packages/application/src/lib/application.ts` (added query and handler exports)
 - `apps/api/src/app/app.module.ts` (registered DashboardModule)
 - `apps/api/src/app/dashboard/dashboard.module.ts` (registered DashboardController)
+- `TASK_UC1_VIEW_WORKLOAD.md` (updated progress)
 
 ## Next Steps
 
-Backend is complete. Next: Create dashboard NGRX actions for frontend state management.
+Backend is complete. Frontend NGRX actions created. Next: Create dashboard NGRX effects to call the API.
