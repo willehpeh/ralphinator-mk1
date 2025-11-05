@@ -146,7 +146,11 @@ import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } 
             @for (comm of sortedCommunications(); track comm.id) {
               <div class="communication-card"
                    [class.overdue-follow-up]="comm.followUpRequired && isFollowUpOverdue(comm.followUpDate)"
-                   (click)="viewCommunication(comm.id)">
+                   tabindex="0"
+                   role="button"
+                   (click)="viewCommunication(comm.id)"
+                   (keydown.enter)="viewCommunication(comm.id)"
+                   (keydown.space)="viewCommunication(comm.id)">
                 <div class="card-header">
                   <span class="type-badge" [class]="getTypeBadgeClass(comm.type)">
                     {{ comm.type }}
@@ -274,7 +278,7 @@ export class CommunicationsListComponent implements OnInit {
   constructor() {
     // Automatically reload communications when any filter changes
     effect(() => {
-      const filters = this.activeFilters();
+      const _filters = this.activeFilters();
       this.loadCommunications();
     });
   }

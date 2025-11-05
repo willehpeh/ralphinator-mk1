@@ -9,10 +9,6 @@ h2 {
   @include heading-primary;
 }
 
-label {
-  @include label-text;
-}
-
 input,
 textarea,
 select {
