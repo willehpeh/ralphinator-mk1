@@ -36,12 +36,17 @@
    - Provided all required read repository implementations (clients, projects, tasks, communications)
    - Location: `apps/api/src/app/dashboard/dashboard.module.ts`
    - Registered in AppModule
+   - Commit: `1a800f5 feat: Create DashboardModule for dashboard statistics`
+
+5. ✅ **Create DashboardController with GET /api/dashboard/statistics endpoint**
+   - Created DashboardController with QueryBus injection
+   - Added GET /api/dashboard/statistics endpoint that executes GetDashboardStatisticsQuery
+   - Registered controller in DashboardModule
+   - Location: `apps/api/src/app/dashboard/dashboard.controller.ts`
    - Commit: (current)
 
 ### Pending Backend Tasks
-5. ⏳ Create DashboardController
-6. ⏳ Add GET /api/dashboard/statistics endpoint
-7. ⏳ Write tests for query handler
+6. ⏳ Write tests for query handler
 
 ### Pending Frontend Tasks
 
@@ -67,12 +72,14 @@
 - `packages/application/src/lib/queries/get-dashboard-statistics.query.ts`
 - `packages/application/src/lib/queries/handlers/get-dashboard-statistics.handler.ts`
 - `apps/api/src/app/dashboard/dashboard.module.ts`
+- `apps/api/src/app/dashboard/dashboard.controller.ts`
 
 ## Files Modified
 
 - `packages/application/src/lib/application.ts` (added query and handler exports)
 - `apps/api/src/app/app.module.ts` (registered DashboardModule)
+- `apps/api/src/app/dashboard/dashboard.module.ts` (registered DashboardController)
 
 ## Next Steps
 
-Create `DashboardController` with GET /api/dashboard/statistics endpoint
+Write tests for GetDashboardStatisticsQueryHandler

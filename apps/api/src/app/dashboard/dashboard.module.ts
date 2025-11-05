@@ -10,11 +10,13 @@ import {
   InMemoryTaskReadRepository,
   InMemoryCommunicationReadRepository,
 } from '@angular-nest-starter/infrastructure';
+import { DashboardController } from './dashboard.controller';
 
 const QueryHandlers = [GetDashboardStatisticsQueryHandler];
 
 @Module({
   imports: [CqrsModule],
+  controllers: [DashboardController],
   providers: [
     ...QueryHandlers,
     // Infrastructure implementations
