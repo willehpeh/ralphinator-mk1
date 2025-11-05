@@ -31,7 +31,7 @@ Implementing UC-COMMUNICATION-001-01: Create a New Communication
 - `packages/domain/src/index.ts` (updated exports)
 
 **Description**: Created CommunicationCreatedDomainEvent domain event that extends DomainEvent and accepts aggregateId, communicationData, and eventVersion. This event will be stored in the event store and used to rebuild the Communication aggregate.
-**Commit**: [pending]
+**Commit**: b41a207
 
 ## Tasks Pending
 - Create CommunicationAggregate
