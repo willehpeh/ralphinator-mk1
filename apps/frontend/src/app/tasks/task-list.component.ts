@@ -11,6 +11,7 @@ import { TaskStatus } from '@angular-nest-starter/shared-types';
 import { formatDate, isOverdue, daysOverdue } from '../shared/date-utils';
 import { formatTaskStatus } from './utils/task-display-utils';
 import { extractSelectValue, extractInputValue, extractCheckboxValue } from '../shared/form-event-utils';
+import { getPriorityBadgeClass, getStatusBadgeClass } from '../shared/badge-utils';
 
 @Component({
   selector: 'app-task-list',
@@ -130,20 +131,10 @@ import { extractSelectValue, extractInputValue, extractCheckboxValue } from '../
                 <div class="task-header">
                   <h3 class="task-title">{{ task.title }}</h3>
                   <div class="task-badges">
-                    <span
-                      class="priority-badge"
-                      [class.priority-urgent]="task.priority === 'Urgent'"
-                      [class.priority-high]="task.priority === 'High'"
-                      [class.priority-medium]="task.priority === 'Medium'"
-                      [class.priority-low]="task.priority === 'Low'">
+                    <span [ngClass]="['priority-badge', getPriorityClass(task.priority)]">
                       {{ task.priority }}
                     </span>
-                    <span
-                      class="status-badge"
-                      [class.status-todo]="task.status === 'Todo'"
-                      [class.status-in-progress]="task.status === 'InProgress'"
-                      [class.status-completed]="task.status === 'Completed'"
-                      [class.status-cancelled]="task.status === 'Cancelled'">
+                    <span [ngClass]="['status-badge', getStatusClass(task.status)]">
                       {{ formatStatus(task.status) }}
                     </span>
                   </div>
@@ -351,5 +342,13 @@ export class TaskListComponent implements OnInit {
 
   daysOverdue(dueDate: Date | null): number {
     return daysOverdue(dueDate);
+  }
+
+  getPriorityClass(priority: string): string {
+    return getPriorityBadgeClass(priority);
+  }
+
+  getStatusClass(status: string): string {
+    return getStatusBadgeClass(status);
   }
 }

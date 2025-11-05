@@ -25,6 +25,7 @@ import { TasksService } from '../tasks/tasks.service';
 import { Task } from '../tasks/task.types';
 import { formatTaskStatus, isTaskOverdue } from '../tasks/utils/task-display-utils';
 import { formatDate } from '../shared/date-utils';
+import { getPriorityBadgeClass, getStatusBadgeClass } from '../shared/badge-utils';
 
 @Component({
   selector: 'app-client-detail',
@@ -206,20 +207,10 @@ import { formatDate } from '../shared/date-utils';
                       <div class="task-header">
                         <h5 class="task-title">{{ task.title }}</h5>
                         <div class="task-badges">
-                          <span
-                            class="priority-badge"
-                            [class.priority-urgent]="task.priority === 'Urgent'"
-                            [class.priority-high]="task.priority === 'High'"
-                            [class.priority-medium]="task.priority === 'Medium'"
-                            [class.priority-low]="task.priority === 'Low'">
+                          <span [ngClass]="['priority-badge', getPriorityClass(task.priority)]">
                             {{ task.priority }}
                           </span>
-                          <span
-                            class="status-badge"
-                            [class.status-todo]="task.status === 'Todo'"
-                            [class.status-in-progress]="task.status === 'InProgress'"
-                            [class.status-completed]="task.status === 'Completed'"
-                            [class.status-cancelled]="task.status === 'Cancelled'">
+                          <span [ngClass]="['status-badge', getStatusClass(task.status)]">
                             {{ formatTaskStatus(task.status) }}
                           </span>
                         </div>
@@ -502,5 +493,13 @@ export class ClientDetailComponent {
 
   viewTaskDetails(taskId: string): void {
     this.router.navigate(['/tasks', taskId]);
+  }
+
+  getPriorityClass(priority: string): string {
+    return getPriorityBadgeClass(priority);
+  }
+
+  getStatusClass(status: string): string {
+    return getStatusBadgeClass(status);
   }
 }
