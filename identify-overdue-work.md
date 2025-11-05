@@ -58,4 +58,4 @@ Implement the "Overdue Tasks" section of the dashboard that displays tasks past 
    - Dispatches loadOverdueTasksFailure on error
    - Follows same pattern as loadUpcomingTasks$ effect
    - Location: `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
-   - Commit: [pending]
+   - Commit: 3bb135a
