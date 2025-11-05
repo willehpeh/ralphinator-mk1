@@ -107,6 +107,14 @@ Implementing the "Recent Communications" section on the dashboard to display the
 - `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
 - `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts`
 
+### Task 15: Fix ESLint errors in application query DTOs
+**Status**: ✅ Completed
+**Commit**: `2047af1`
+**Description**: Removed ESLint errors from query DTOs to ensure clean builds
+**Files Modified**:
+- `packages/application/src/lib/queries/get-overdue-tasks.query.ts`
+- `packages/application/src/lib/queries/get-upcoming-tasks.query.ts`
+
 ---
 
 ## Current Task
