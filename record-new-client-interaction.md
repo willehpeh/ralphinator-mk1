@@ -42,7 +42,7 @@ Implementing UC-COMMUNICATION-001-01: Create a New Communication
 - `packages/domain/src/index.ts` (updated exports)
 
 **Description**: Created CommunicationAggregate following event sourcing pattern with create() factory method, event handler for CommunicationCreatedDomainEvent, state fields for all communication data, and getters for accessing aggregate state. Added COMMUNICATION_EVENT_TYPES constants and COMMUNICATION_NOT_INITIALIZED error message.
-**Commit**: [pending]
+**Commit**: 9b2ca58
 
 ## Tasks Pending
 - Create CreateCommunicationCommand
