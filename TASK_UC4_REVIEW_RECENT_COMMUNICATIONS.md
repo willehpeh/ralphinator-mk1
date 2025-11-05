@@ -77,6 +77,13 @@ Implementing the "Recent Communications" section on the dashboard to display the
 **Files Modified**:
 - `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
 
+### Task 11: Add getRecentCommunications() method to DashboardService
+**Status**: ✅ Completed
+**Commit**: `[pending]`
+**Description**: Added method to retrieve recent communications from the API endpoint
+**Files Modified**:
+- `apps/frontend/src/app/dashboard/dashboard.service.ts`
+
 ---
 
 ## Current Task
@@ -100,7 +107,7 @@ None - Ready for next task
 - [x] Update reducer to store recent communications
 - [x] Add selectors for recent communications
 - [x] Add effect to load recent communications
-- [ ] Add `getRecentCommunications()` to `DashboardService`
+- [x] Add `getRecentCommunications()` to `DashboardService`
 - [ ] Create `RecentCommunicationsComponent`
 - [ ] Add component to `DashboardPageComponent` template
 - [ ] Write frontend tests

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DashboardStatistics } from './dashboard.types';
-import { TaskReadModel } from '@angular-nest-starter/shared-types';
+import { TaskReadModel, CommunicationReadModel } from '@angular-nest-starter/shared-types';
 
 /**
  * Service for dashboard-related API calls
@@ -36,5 +36,13 @@ export class DashboardService {
    */
   getOverdueTasks(): Observable<TaskReadModel[]> {
     return this.http.get<TaskReadModel[]>(`${this.apiUrl}/tasks/overdue`);
+  }
+
+  /**
+   * Get recent communications from the backend
+   * Returns last 10 communications sorted by date (newest first)
+   */
+  getRecentCommunications(): Observable<CommunicationReadModel[]> {
+    return this.http.get<CommunicationReadModel[]>(`${this.apiUrl}/communications/recent`);
   }
 }
