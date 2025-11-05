@@ -49,11 +49,22 @@
 
 ---
 
+### Task 4: Register GetRecentCommunicationsQueryHandler in DashboardModule ✅
+**Status**: Completed
+
+**Files Modified**:
+- `apps/api/src/app/dashboard/dashboard.module.ts` (added GetRecentCommunicationsQueryHandler to imports and QueryHandlers array)
+
+**Description**: Registered the GetRecentCommunicationsQueryHandler in the DashboardModule so it can be properly injected and used by the CQRS infrastructure. Follows the established pattern from GetUpcomingTasksQueryHandler registration.
+
+---
+
 ## Commits
 
 1. `fa698ae` - feat: Add GetRecentCommunicationsQuery DTO for dashboard
 2. `7343814` - feat: Add GetRecentCommunicationsQueryHandler for dashboard
-3. (pending) - feat: Add findRecent() method to ICommunicationReadRepository
+3. `b77c4a8` - feat: Add findRecent() method to ICommunicationReadRepository
+4. (pending) - feat: Register GetRecentCommunicationsQueryHandler in DashboardModule
 
 ---
 
@@ -64,3 +75,4 @@
 - Fixed linting error: removed unnecessary type annotation on limit parameter
 - The findRecent() method sorts communications by date descending and returns only the requested limit
 - No linting errors introduced in modified files
+- GetRecentCommunicationsQueryHandler successfully registered in DashboardModule

@@ -3,6 +3,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import {
   GetDashboardStatisticsQueryHandler,
   GetUpcomingTasksQueryHandler,
+  GetRecentCommunicationsQueryHandler,
   INJECTION_TOKENS,
 } from '@angular-nest-starter/application';
 import {
@@ -16,6 +17,7 @@ import { DashboardController } from './dashboard.controller';
 const QueryHandlers = [
   GetDashboardStatisticsQueryHandler,
   GetUpcomingTasksQueryHandler,
+  GetRecentCommunicationsQueryHandler,
 ];
 
 @Module({
