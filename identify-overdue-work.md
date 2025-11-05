@@ -65,4 +65,17 @@ Implement the "Overdue Tasks" section of the dashboard that displays tasks past 
    - Selector retrieves overdueTasks array from DashboardState
    - Follows same pattern as selectUpcomingTasks
    - Location: `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts`
-   - Commit: [pending]
+   - Commit: ebff28e
+
+8. **Create OverdueTasksComponent**
+   - Created standalone component following modern Angular conventions
+   - Displays overdue tasks with warning visual indicators (red/orange styling)
+   - Shows count of overdue tasks in section header
+   - Calculates and displays days overdue for each task
+   - Includes warning icon in header
+   - Gradient background on task cards (red accent)
+   - Hover effects for better UX
+   - Empty state showing positive message when no overdue tasks
+   - "View All Tasks" link in footer
+   - Location: `apps/frontend/src/app/dashboard/overdue-tasks.component.ts`
+   - Commit: pending
