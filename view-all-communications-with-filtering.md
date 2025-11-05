@@ -29,7 +29,7 @@
 - [x] Follow-up indicators (Task 8)
 - [x] Loading, error, and empty states (Task 8)
 - [x] Client filter wired to backend API (Task 9)
-- [ ] Type filter wired to backend API
+- [x] Type filter wired to backend API (Task 10)
 - [ ] Follow-up filter wired to backend API
 - [ ] Date range filter implementation
 - [ ] Search filter implementation (client-side or backend)
@@ -224,6 +224,43 @@
 
 **Next Task**: Wire up type filter to backend API with similar pattern
 
+### Task 10: Wire Up Type Filter to Backend API (2025-11-05)
+
+**Files Created**:
+- `packages/application/src/lib/queries/get-communications-by-type.query.ts` - Query class with type parameter
+- `packages/application/src/lib/queries/handlers/get-communications-by-type.handler.ts` - Handler that filters by communication type
+
+**Files Modified**:
+- `packages/application/src/lib/application.ts` - Exported new query and handler
+- `apps/api/src/app/communications/communications.module.ts` - Registered GetCommunicationsByTypeQueryHandler
+- `apps/api/src/app/communications/communications.controller.ts` - Added type query parameter to endpoint
+- `apps/frontend/src/app/communications/communications.service.ts` - Added type parameter to getAllCommunications method
+- `apps/frontend/src/app/communications/communications-list.component.ts` - Added effect to reload when type changes and pass type to service
+
+**Implementation Details**:
+- Created GetCommunicationsByTypeQuery with type parameter (CommunicationType)
+- Implemented handler using the CommunicationQueryHandler base class pattern
+- Handler calls `readRepository.findByType(query.type)` which returns communications of the specified type sorted by most recent first
+- Added type query parameter to controller with priority: clientId → contactId → projectId → type → requiresFollowUp → all
+- Updated CommunicationsService.getAllCommunications() to accept optional type parameter
+- Service constructs query parameters object and passes type to HttpClient.get()
+- Added effect() in CommunicationsListComponent to track selectedType signal
+- When selectedType changes, the effect automatically calls loadCommunications()
+- loadCommunications() passes the type to the service, which sends it as a query parameter to the API
+- When user selects a type from the dropdown, communications are automatically filtered by that type
+- When "All Types" is selected (empty string), all communications are shown
+- Both backend and frontend builds verified successfully - TypeScript compilation passes
+
+**How It Works**:
+1. User selects a type from the "Filter by Type" dropdown
+2. onTypeFilterChange() updates the selectedType signal
+3. The effect() detects the signal change and calls loadCommunications()
+4. loadCommunications() calls API with ?type=<type> query parameter
+5. Backend returns filtered communications of that type
+6. UI updates automatically with the filtered results
+
+**Next Task**: Wire up follow-up filter to backend API with similar pattern
+
 ---
 
 ## Notes
@@ -232,5 +269,5 @@
 - All communications are sorted by communicationDate descending by default (most recent first)
 - The repository is suitable for development/testing but should be replaced with a persistent implementation for production
 - Build verification completed successfully - all TypeScript compilation passes
-- Query parameters support single filter at a time (priority: clientId > contactId > projectId > requiresFollowUp)
+- Query parameters support single filter at a time (priority: clientId > contactId > projectId > type > requiresFollowUp)
 - Frontend component uses direct API service calls (NGRX integration is optional for this feature)

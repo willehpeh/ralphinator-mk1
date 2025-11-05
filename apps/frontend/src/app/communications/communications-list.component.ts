@@ -183,6 +183,12 @@ export class CommunicationsListComponent implements OnInit {
       const clientId = this.selectedClientId();
       this.loadCommunications();
     });
+
+    // Automatically reload communications when type filter changes
+    effect(() => {
+      const type = this.selectedType();
+      this.loadCommunications();
+    });
   }
 
   ngOnInit(): void {
@@ -194,8 +200,9 @@ export class CommunicationsListComponent implements OnInit {
     this.error.set(null);
 
     const clientId = this.selectedClientId() || undefined;
+    const type = this.selectedType() || undefined;
 
-    this.communicationsService.getAllCommunications(clientId).subscribe({
+    this.communicationsService.getAllCommunications(clientId, type).subscribe({
       next: (data) => {
         this.communications.set(data);
         this.loading.set(false);

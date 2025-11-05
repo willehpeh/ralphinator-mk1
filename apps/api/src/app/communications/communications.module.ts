@@ -5,6 +5,7 @@ import {
   GetCommunicationsByClientIdQueryHandler,
   GetCommunicationsByContactIdQueryHandler,
   GetCommunicationsByProjectIdQueryHandler,
+  GetCommunicationsByTypeQueryHandler,
   GetCommunicationsRequiringFollowUpQueryHandler,
   INJECTION_TOKENS,
 } from '@angular-nest-starter/application';
@@ -19,6 +20,7 @@ const QueryHandlers = [
   GetCommunicationsByClientIdQueryHandler,
   GetCommunicationsByContactIdQueryHandler,
   GetCommunicationsByProjectIdQueryHandler,
+  GetCommunicationsByTypeQueryHandler,
   GetCommunicationsRequiringFollowUpQueryHandler,
 ];
 const EventHandlers: never[] = [];

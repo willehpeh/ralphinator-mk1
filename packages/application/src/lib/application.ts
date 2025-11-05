@@ -55,6 +55,7 @@ export * from './queries/get-all-communications.query';
 export * from './queries/get-communications-by-client-id.query';
 export * from './queries/get-communications-by-contact-id.query';
 export * from './queries/get-communications-by-project-id.query';
+export * from './queries/get-communications-by-type.query';
 export * from './queries/get-communications-requiring-follow-up.query';
 
 // Query Handlers
@@ -74,6 +75,7 @@ export * from './queries/handlers/get-all-communications.handler';
 export * from './queries/handlers/get-communications-by-client-id.handler';
 export * from './queries/handlers/get-communications-by-contact-id.handler';
 export * from './queries/handlers/get-communications-by-project-id.handler';
+export * from './queries/handlers/get-communications-by-type.handler';
 export * from './queries/handlers/get-communications-requiring-follow-up.handler';
 
 // Integration Events
