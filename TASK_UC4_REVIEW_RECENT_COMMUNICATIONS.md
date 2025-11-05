@@ -65,7 +65,7 @@ Implementing the "Recent Communications" section on the dashboard to display the
 
 ### Task 9: Add selectors for recent communications
 **Status**: ✅ Completed
-**Commit**: (pending)
+**Commit**: `2ae43e6`
 **Description**: Added selectRecentCommunications and selectHasRecentCommunications selectors to dashboard store
 **Files Modified**:
 - `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts`
