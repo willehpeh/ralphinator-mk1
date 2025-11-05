@@ -80,6 +80,7 @@ export * from './queries/handlers/get-communications-by-project-id.handler';
 export * from './queries/handlers/get-communications-by-type.handler';
 export * from './queries/handlers/get-communications-requiring-follow-up.handler';
 export * from './queries/handlers/get-dashboard-statistics.handler';
+export * from './queries/handlers/get-upcoming-tasks.handler';
 
 // Integration Events
 export * from './events/client-created.event';

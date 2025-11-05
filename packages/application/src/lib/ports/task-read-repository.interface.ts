@@ -5,6 +5,7 @@ export interface ITaskReadRepository {
   findAll(): Promise<TaskReadModel[]>;
   findByProjectId(projectId: string): Promise<TaskReadModel[]>;
   findByClientId(clientId: string): Promise<TaskReadModel[]>;
+  findUpcoming(limit: number): Promise<TaskReadModel[]>;
   save(task: TaskReadModel): Promise<void>;
   delete(id: string): Promise<void>;
 }

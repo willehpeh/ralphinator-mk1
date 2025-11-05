@@ -45,4 +45,28 @@ export class InMemoryTaskReadRepository
       (task) => task.clientId === clientId
     );
   }
+
+  /**
+   * Find upcoming tasks sorted by due date (earliest first).
+   * Returns only incomplete tasks (excludes 'Completed' and 'Cancelled').
+   *
+   * @param limit - Maximum number of tasks to return
+   * @returns Promise resolving to array of upcoming tasks
+   */
+  async findUpcoming(limit: number): Promise<TaskReadModel[]> {
+    return Array.from(this.items.values())
+      .filter(
+        (task) =>
+          task.status !== 'Completed' &&
+          task.status !== 'Cancelled' &&
+          task.deadline !== null
+      )
+      .sort((a, b) => {
+        // Sort by deadline (earliest first)
+        const dateA = a.deadline ? new Date(a.deadline).getTime() : Infinity;
+        const dateB = b.deadline ? new Date(b.deadline).getTime() : Infinity;
+        return dateA - dateB;
+      })
+      .slice(0, limit);
+  }
 }

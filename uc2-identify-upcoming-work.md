@@ -8,27 +8,40 @@
 
 ### Completed Tasks
 
-1.  **Create GetUpcomingTasksQuery**
+1.  **Create GetUpcomingTasksQuery**
    - Created query class implementing IQuery interface
    - Query accepts optional limit parameter (defaults to 10)
    - Will retrieve next 10 non-completed tasks sorted by due date (earliest first)
    - Location: `packages/application/src/lib/queries/get-upcoming-tasks.query.ts`
    - Exported from application module
+   - Commit: 6434ebd
+
+2. **Create GetUpcomingTasksQueryHandler**
+   - Created query handler implementing IQueryHandler interface
+   - Handler uses TaskQueryHandler base class with ITaskReadRepository
+   - Calls `readRepository.findUpcoming(query.limit)` to retrieve tasks
+   - Added `findUpcoming` method to ITaskReadRepository interface
+   - Implemented `findUpcoming` in InMemoryTaskReadRepository
+   - Implementation filters out 'Completed' and 'Cancelled' tasks
+   - Only returns tasks with deadlines
+   - Sorts by deadline (earliest first)
+   - Limits results to requested number
+   - Location: `packages/application/src/lib/queries/handlers/get-upcoming-tasks.handler.ts`
+   - Exported from application module
    - Commit: (current)
 
 ### Pending Tasks
 
-2. ó Create GetUpcomingTasksQueryHandler
-3. ó Register query handler in DashboardModule
-4. ó Add GET /api/dashboard/tasks/upcoming endpoint in DashboardController
-5. ó Write tests for GetUpcomingTasksQueryHandler
-6. ó Create dashboard NGRX actions for upcoming tasks
-7. ó Update dashboard effects to load upcoming tasks
-8. ó Update dashboard reducer to store upcoming tasks
-9. ó Update dashboard selectors to select upcoming tasks
-10. ó Create UpcomingTasksComponent
-11. ó Add UpcomingTasksComponent to DashboardPageComponent
-12. ó Write component tests
+3. ï¿½ Register query handler in DashboardModule
+4. ï¿½ Add GET /api/dashboard/tasks/upcoming endpoint in DashboardController
+5. ï¿½ Write tests for GetUpcomingTasksQueryHandler
+6. ï¿½ Create dashboard NGRX actions for upcoming tasks
+7. ï¿½ Update dashboard effects to load upcoming tasks
+8. ï¿½ Update dashboard reducer to store upcoming tasks
+9. ï¿½ Update dashboard selectors to select upcoming tasks
+10. ï¿½ Create UpcomingTasksComponent
+11. ï¿½ Add UpcomingTasksComponent to DashboardPageComponent
+12. ï¿½ Write component tests
 
 ## Technical Notes
 
@@ -41,11 +54,14 @@
 ## Files Created
 
 - `packages/application/src/lib/queries/get-upcoming-tasks.query.ts`
+- `packages/application/src/lib/queries/handlers/get-upcoming-tasks.handler.ts`
 
 ## Files Modified
 
-- `packages/application/src/lib/application.ts` (added query export)
+- `packages/application/src/lib/application.ts` (added query and handler exports)
+- `packages/application/src/lib/ports/task-read-repository.interface.ts` (added findUpcoming method)
+- `packages/infrastructure/src/lib/read-models/in-memory-task-read-repository.ts` (implemented findUpcoming)
 
 ## Next Steps
 
-Next: Create GetUpcomingTasksQueryHandler to implement the query logic.
+Next: Register query handler in DashboardModule
