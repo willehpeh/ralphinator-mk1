@@ -86,10 +86,17 @@ Implementing the "Recent Communications" section on the dashboard to display the
 
 ### Task 12: Create RecentCommunicationsComponent
 **Status**: ✅ Completed
-**Commit**: (pending)
+**Commit**: `dc27c17`
 **Description**: Created component to display recent communications with type badges and empty state
 **Files Modified**:
 - `apps/frontend/src/app/dashboard/recent-communications.component.ts`
+
+### Task 13: Add RecentCommunicationsComponent to DashboardPageComponent template
+**Status**: ✅ Completed
+**Commit**: (pending)
+**Description**: Integrated the RecentCommunicationsComponent into the dashboard page with NGRX selector and action dispatch
+**Files Modified**:
+- `apps/frontend/src/app/dashboard/dashboard-page.component.ts`
 
 ---
 
@@ -116,7 +123,7 @@ None - Ready for next task
 - [x] Add effect to load recent communications
 - [x] Add `getRecentCommunications()` to `DashboardService`
 - [x] Create `RecentCommunicationsComponent`
-- [ ] Add component to `DashboardPageComponent` template
+- [x] Add component to `DashboardPageComponent` template
 - [ ] Write frontend tests
 - [ ] Verify component displays correctly in browser
 

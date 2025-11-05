@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { loadDashboardStatistics, loadUpcomingTasks, loadOverdueTasks } from './store/dashboard.actions';
+import { loadDashboardStatistics, loadUpcomingTasks, loadOverdueTasks, loadRecentCommunications } from './store/dashboard.actions';
 import {
   selectDashboardStatistics,
   selectDashboardLoading,
@@ -9,13 +9,15 @@ import {
   selectHasStatistics,
   selectUpcomingTasks,
   selectOverdueTasks,
+  selectRecentCommunications,
 } from './store/dashboard.selectors';
 import { UpcomingTasksComponent } from './upcoming-tasks.component';
 import { OverdueTasksComponent } from './overdue-tasks.component';
+import { RecentCommunicationsComponent } from './recent-communications.component';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [CommonModule, UpcomingTasksComponent, OverdueTasksComponent],
+  imports: [CommonModule, UpcomingTasksComponent, OverdueTasksComponent, RecentCommunicationsComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="dashboard-container">
@@ -118,6 +120,10 @@ import { OverdueTasksComponent } from './overdue-tasks.component';
         <div class="upcoming-tasks-container">
           <app-upcoming-tasks [tasks]="upcomingTasks()" />
         </div>
+      </div>
+
+      <div class="communications-section">
+        <app-recent-communications [communications]="recentCommunications()" />
       </div>
     </div>
   `,
@@ -316,6 +322,11 @@ import { OverdueTasksComponent } from './overdue-tasks.component';
     .upcoming-tasks-container {
       width: 100%;
     }
+
+    .communications-section {
+      margin-top: 2rem;
+      width: 100%;
+    }
   `],
 })
 export class DashboardPageComponent implements OnInit {
@@ -328,11 +339,13 @@ export class DashboardPageComponent implements OnInit {
   hasStatistics = this.store.selectSignal(selectHasStatistics);
   upcomingTasks = this.store.selectSignal(selectUpcomingTasks);
   overdueTasks = this.store.selectSignal(selectOverdueTasks);
+  recentCommunications = this.store.selectSignal(selectRecentCommunications);
 
   ngOnInit(): void {
     this.loadStatistics();
     this.loadUpcomingTasks();
     this.loadOverdueTasks();
+    this.loadRecentCommunications();
   }
 
   loadStatistics(): void {
@@ -345,5 +358,9 @@ export class DashboardPageComponent implements OnInit {
 
   loadOverdueTasks(): void {
     this.store.dispatch(loadOverdueTasks());
+  }
+
+  loadRecentCommunications(): void {
+    this.store.dispatch(loadRecentCommunications());
   }
 }
