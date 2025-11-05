@@ -44,7 +44,16 @@ Implementing UC-COMMUNICATION-001-01: Create a New Communication
 **Description**: Created CommunicationAggregate following event sourcing pattern with create() factory method, event handler for CommunicationCreatedDomainEvent, state fields for all communication data, and getters for accessing aggregate state. Added COMMUNICATION_EVENT_TYPES constants and COMMUNICATION_NOT_INITIALIZED error message.
 **Commit**: 9b2ca58
 
+### Task 5: Create CreateCommunicationCommand
+**Date**: 2025-11-05
+**Files Modified**:
+- `packages/application/src/lib/commands/communication-data.payload.ts` (created)
+- `packages/application/src/lib/commands/create-communication.command.ts` (created)
+- `packages/application/src/lib/application.ts` (updated exports)
+
+**Description**: Created CommunicationDataPayload to encapsulate communication data for commands (following DRY principle). Created CreateCommunicationCommand that accepts an id and CommunicationDataPayload. Updated application exports to include both new files.
+**Commit**: (pending)
+
 ## Tasks Pending
-- Create CreateCommunicationCommand
 - Create CreateCommunicationCommandHandler
 - And more...

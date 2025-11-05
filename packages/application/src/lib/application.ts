@@ -17,6 +17,8 @@ export * from './commands/create-task.command';
 export * from './commands/update-task-details.command';
 export * from './commands/change-task-status.command';
 export * from './commands/delete-task.command';
+export * from './commands/communication-data.payload';
+export * from './commands/create-communication.command';
 
 // Command Handlers
 export * from './commands/handlers/create-client.handler';
