@@ -18,6 +18,22 @@ import { CommunicationReadModel, CommunicationType } from '@angular-nest-starter
         </button>
       </div>
 
+      <div class="filters-section">
+        <div class="filter-group">
+          <label for="client-filter" class="filter-label">Filter by Client:</label>
+          <select
+            id="client-filter"
+            class="filter-select"
+            [value]="selectedClientId()"
+            (change)="onClientFilterChange($event)">
+            <option value="">All Clients</option>
+            @for (client of mockClients; track client.id) {
+              <option [value]="client.id">{{ client.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
       @if (loading()) {
         <div class="loading">Loading communications...</div>
       }
@@ -86,6 +102,16 @@ export class CommunicationsListComponent implements OnInit {
   loading = signal(false);
   error = signal<string | null>(null);
 
+  // Filter signals
+  selectedClientId = signal<string>('');
+
+  // Mock client data (TODO: Replace with actual client data from API)
+  mockClients = [
+    { id: '1', name: 'Acme Corporation' },
+    { id: '2', name: 'TechStart Inc' },
+    { id: '3', name: 'Global Solutions LLC' },
+  ];
+
   ngOnInit(): void {
     this.loadCommunications();
   }
@@ -112,6 +138,11 @@ export class CommunicationsListComponent implements OnInit {
 
   viewCommunication(id: string): void {
     this.router.navigate(['/communications', id]);
+  }
+
+  onClientFilterChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedClientId.set(selectElement.value);
   }
 
   formatDate(date: string): string {
