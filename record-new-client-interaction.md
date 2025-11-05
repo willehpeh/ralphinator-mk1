@@ -52,7 +52,7 @@ Implementing UC-COMMUNICATION-001-01: Create a New Communication
 - `packages/application/src/lib/application.ts` (updated exports)
 
 **Description**: Created CommunicationDataPayload to encapsulate communication data for commands (following DRY principle). Created CreateCommunicationCommand that accepts an id and CommunicationDataPayload. Updated application exports to include both new files.
-**Commit**: (pending)
+**Commit**: 10fd37e
 
 ## Tasks Pending
 - Create CreateCommunicationCommandHandler
