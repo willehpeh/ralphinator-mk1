@@ -121,4 +121,26 @@ export class InMemoryCommunicationReadRepository
       new Date(b.communicationDate).getTime() - new Date(a.communicationDate).getTime()
     );
   }
+
+  /**
+   * Find all communications requiring follow-up, sorted by follow-up date
+   * This method is specifically for the "Follow-Ups Required" dashboard section.
+   * Filters for communications with requiresFollowUp=true where follow-up is not completed,
+   * and sorts by followUpDate (earliest first) to prioritize urgent follow-ups.
+   *
+   * @returns Promise resolving to array of communications requiring follow-up, sorted by followUpDate ascending
+   */
+  async findFollowUps(): Promise<CommunicationReadModel[]> {
+    const communications = Array.from(this.items.values()).filter(
+      (communication) =>
+        communication.followUpRequired &&
+        !communication.followUpCompleted &&
+        communication.followUpDate !== undefined
+    );
+    return communications.sort((a, b) => {
+      const dateA = a.followUpDate ? new Date(a.followUpDate).getTime() : Number.MAX_SAFE_INTEGER;
+      const dateB = b.followUpDate ? new Date(b.followUpDate).getTime() : Number.MAX_SAFE_INTEGER;
+      return dateA - dateB; // Ascending order (earliest first)
+    });
+  }
 }
