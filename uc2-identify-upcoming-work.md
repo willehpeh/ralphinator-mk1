@@ -91,8 +91,15 @@
    - Location: `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts`
    - Commit: cb6098e
 
+9. ✅ **Update dashboard selectors to select upcoming tasks**
+   - Added `selectUpcomingTasks` selector using createSelector
+   - Selector follows existing pattern for selecting state slices
+   - Accesses `state.upcomingTasks` from DashboardState
+   - Returns TaskReadModel[] array of upcoming tasks
+   - Location: `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts`
+   - Commit: 89eb68a
+
 ### Pending Tasks
-9.  ⬜ Update dashboard selectors to select upcoming tasks
 10. ⬜ Create UpcomingTasksComponent
 11. ⬜ Add UpcomingTasksComponent to DashboardPageComponent
 12. ⬜ Write component tests
@@ -122,7 +129,8 @@
 - `apps/frontend/src/app/dashboard/store/dashboard.effects.ts` (added loadUpcomingTasks$ effect)
 - `apps/frontend/src/app/dashboard/store/dashboard.actions.ts` (updated imports to use shared-types)
 - `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts` (added upcomingTasks state and handlers)
+- `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts` (added selectUpcomingTasks selector)
 
 ## Next Steps
 
-Next: Update dashboard selectors to select upcoming tasks
+Next: Create UpcomingTasksComponent
