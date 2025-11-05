@@ -6,6 +6,9 @@ import {
   loadUpcomingTasks,
   loadUpcomingTasksSuccess,
   loadUpcomingTasksFailure,
+  loadOverdueTasks,
+  loadOverdueTasksSuccess,
+  loadOverdueTasksFailure,
 } from './dashboard.actions';
 import { DashboardStatistics } from '../dashboard.types';
 import { TaskReadModel } from '@angular-nest-starter/shared-types';
@@ -16,6 +19,7 @@ import { TaskReadModel } from '@angular-nest-starter/shared-types';
 export interface DashboardState {
   statistics: DashboardStatistics | null;
   upcomingTasks: TaskReadModel[];
+  overdueTasks: TaskReadModel[];
   loading: boolean;
   error: string | null;
 }
@@ -26,6 +30,7 @@ export interface DashboardState {
 export const initialState: DashboardState = {
   statistics: null,
   upcomingTasks: [],
+  overdueTasks: [],
   loading: false,
   error: null,
 };
@@ -89,5 +94,17 @@ export const dashboardReducer = createReducer(
   })),
 
   // When loading upcoming tasks fails
-  on(loadUpcomingTasksFailure, (state, { error }) => setError(state, error))
+  on(loadUpcomingTasksFailure, (state, { error }) => setError(state, error)),
+
+  // When loading overdue tasks is triggered
+  on(loadOverdueTasks, setLoading),
+
+  // When overdue tasks are successfully loaded
+  on(loadOverdueTasksSuccess, (state, { tasks }) => ({
+    ...clearLoadingAndError(state),
+    overdueTasks: tasks,
+  })),
+
+  // When loading overdue tasks fails
+  on(loadOverdueTasksFailure, (state, { error }) => setError(state, error))
 );
