@@ -16,4 +16,13 @@ Implement the "Overdue Tasks" section of the dashboard that displays tasks past 
    - Will return tasks sorted by due date (oldest first)
    - Location: `packages/application/src/lib/queries/get-overdue-tasks.query.ts`
    - Exported from application module
+   - Commit: a90f09b
+
+2. **Create GetOverdueTasksQueryHandler**
+   - Implemented query handler extending TaskQueryHandler
+   - Calls readRepository.findOverdue() method
+   - Returns array of TaskReadModel sorted by due date (oldest first)
+   - Follows CQRS pattern with proper error handling
+   - Location: `packages/application/src/lib/queries/handlers/get-overdue-tasks.handler.ts`
+   - Exported from application module
    - Commit: [pending]
