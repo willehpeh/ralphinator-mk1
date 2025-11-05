@@ -9,6 +9,7 @@ export const INJECTION_TOKENS = {
   CONTACT_READ_REPOSITORY: 'IContactReadRepository',
   PROJECT_READ_REPOSITORY: 'IProjectReadRepository',
   TASK_READ_REPOSITORY: 'ITaskReadRepository',
+  COMMUNICATION_READ_REPOSITORY: 'ICommunicationReadRepository',
   EVENT_STORE: 'IEventStore',
 } as const;
 

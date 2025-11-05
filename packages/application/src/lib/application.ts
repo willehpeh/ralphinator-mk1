@@ -77,6 +77,7 @@ export * from './ports/client-read-repository.interface';
 export * from './ports/contact-read-repository.interface';
 export * from './ports/project-read-repository.interface';
 export * from './ports/task-read-repository.interface';
+export * from './ports/communication-read-repository.interface';
 export * from './ports/aggregate-repository.interface';
 export * from './ports/injection-tokens';
 
@@ -85,6 +86,7 @@ export * from './read-models/client.read-model';
 export * from './read-models/contact.read-model';
 export * from './read-models/project.read-model';
 export * from './read-models/task.read-model';
+export * from './read-models/communication.read-model';
 
 export function application(): string {
   return 'application';
