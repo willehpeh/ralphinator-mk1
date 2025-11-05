@@ -134,7 +134,7 @@
    - Tests verify header and subtitle display
    - All tests pass successfully using Vitest and @analogjs/vitest-angular
    - Location: `apps/frontend/src/app/dashboard/upcoming-tasks.component.spec.ts`
-   - Commit: [pending]
+   - Commit: 6fe61b4
 
 ## Technical Notes
 
