@@ -10,6 +10,7 @@ export interface ICommunicationReadRepository {
   findByProjectId(projectId: string): Promise<CommunicationReadModel[]>;
   findByType(type: CommunicationType): Promise<CommunicationReadModel[]>;
   findRequiringFollowUp(): Promise<CommunicationReadModel[]>;
+  findFollowUps(): Promise<CommunicationReadModel[]>;
   save(communication: CommunicationReadModel): Promise<void>;
   delete(id: string): Promise<void>;
 }

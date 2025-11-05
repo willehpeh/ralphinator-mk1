@@ -14,7 +14,7 @@ Implement the "Follow-Ups Required" section on the dashboard to help users track
 
 **Task 1**: [x] Create GetFollowUpCommunicationsQuery (2025-11-05)
 **Task 2**: [x] Create GetFollowUpCommunicationsQueryHandler (2025-11-05)
-**Task 3**: [ ] Add findFollowUps() method to ICommunicationReadRepository
+**Task 3**: [x] Add findFollowUps() method to ICommunicationReadRepository (2025-11-05)
 **Task 4**: [ ] Implement findFollowUps() in InMemoryCommunicationReadRepository
 **Task 5**: [ ] Register query handler in DashboardModule
 **Task 6**: [ ] Add GET /api/dashboard/communications/followups endpoint to DashboardController
