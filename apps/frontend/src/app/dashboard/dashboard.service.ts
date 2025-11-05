@@ -29,4 +29,12 @@ export class DashboardService {
   getUpcomingTasks(): Observable<TaskReadModel[]> {
     return this.http.get<TaskReadModel[]>(`${this.apiUrl}/tasks/upcoming`);
   }
+
+  /**
+   * Get overdue tasks from the backend
+   * Returns all incomplete tasks with due dates in the past, sorted by due date (oldest first)
+   */
+  getOverdueTasks(): Observable<TaskReadModel[]> {
+    return this.http.get<TaskReadModel[]>(`${this.apiUrl}/tasks/overdue`);
+  }
 }
