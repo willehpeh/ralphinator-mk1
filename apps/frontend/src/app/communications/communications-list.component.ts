@@ -1,8 +1,11 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit, signal, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { CommunicationsService } from './communications.service';
 import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } from '@angular-nest-starter/shared-types';
+import { selectAllClients } from '../clients/store/clients.selectors';
+import { loadClients } from '../clients/store/clients.actions';
 
 @Component({
   selector: 'app-communications-list',
@@ -38,8 +41,8 @@ import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } 
             [value]="selectedClientId()"
             (change)="onClientFilterChange($event)">
             <option value="">All Clients</option>
-            @for (client of mockClients; track client.id) {
-              <option [value]="client.id">{{ client.name }}</option>
+            @for (client of clients(); track client.id) {
+              <option [value]="client.id">{{ client.companyName }}</option>
             }
           </select>
         </div>
@@ -198,6 +201,7 @@ import { CommunicationReadModel, CommunicationType, COMMUNICATION_TYPE_VALUES } 
 export class CommunicationsListComponent implements OnInit {
   private router = inject(Router);
   private communicationsService = inject(CommunicationsService);
+  private store = inject(Store);
 
   // State signals
   communications = signal<CommunicationReadModel[]>([]);
@@ -215,12 +219,8 @@ export class CommunicationsListComponent implements OnInit {
   // Sort signal
   sortBy = signal<string>('date-desc');
 
-  // Mock client data (TODO: Replace with actual client data from API)
-  mockClients = [
-    { id: '1', name: 'Acme Corporation' },
-    { id: '2', name: 'TechStart Inc' },
-    { id: '3', name: 'Global Solutions LLC' },
-  ];
+  // Clients from NGRX store
+  clients = this.store.selectSignal(selectAllClients);
 
   // Communication types for filter dropdown
   communicationTypes = COMMUNICATION_TYPE_VALUES;
@@ -284,6 +284,10 @@ export class CommunicationsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Load clients from the store
+    this.store.dispatch(loadClients());
+
+    // Load communications with current filters
     this.loadCommunications();
   }
 
