@@ -57,6 +57,7 @@ export * from './queries/get-communications-by-contact-id.query';
 export * from './queries/get-communications-by-project-id.query';
 export * from './queries/get-communications-by-type.query';
 export * from './queries/get-communications-requiring-follow-up.query';
+export * from './queries/get-dashboard-statistics.query';
 
 // Query Handlers
 export * from './queries/handlers/get-client-by-id.handler';
