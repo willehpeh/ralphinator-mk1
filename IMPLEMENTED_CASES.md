@@ -1499,3 +1499,50 @@
 - Success guarantee met: User knows what work is coming up and can plan accordingly
 - Documentation: uc2-identify-upcoming-work.md
 - **Note**: Complete end-to-end implementation from backend query to frontend UI with full test coverage. All 12 tasks completed. Backend handler tests: 10/10 passing. Frontend component tests: 30/30 passing.
+
+## Use Case 3: Identify Overdue Work (UC-DASHBOARD-001-03) (2025-11-05) ✅ COMPLETE
+- Complete CQRS query implementation for overdue tasks
+- Application: GetOverdueTasksQuery that retrieves all overdue tasks
+- Application: GetOverdueTasksQueryHandler using TaskQueryHandler base class with ITaskReadRepository
+- Application: ITaskReadRepository.findOverdue() method interface definition
+- Infrastructure: InMemoryTaskReadRepository.findOverdue implementation filters tasks with due date in past
+- Infrastructure: Only returns tasks with status 'Todo' or 'InProgress', sorted by due date (oldest first)
+- Application: Reuses existing TaskReadModel DTO with id, title, notes, priority, status, dueDate, clientId, projectId, createdAt
+- Backend: DashboardModule registers GetOverdueTasksQueryHandler
+- Backend: DashboardController with GET /api/dashboard/tasks/overdue endpoint
+- Frontend: NGRX actions (loadOverdueTasks, loadOverdueTasksSuccess, loadOverdueTasksFailure)
+- Frontend: DashboardService.getOverdueTasks() method for API communication
+- Frontend: DashboardEffects with loadOverdueTasks$ effect using switchMap pattern
+- Frontend: dashboardReducer updated with overdueTasks state property and handlers
+- Frontend: selectOverdueTasks selector for accessing overdue tasks from store
+- Frontend: OverdueTasksComponent standalone component with modern Angular patterns
+- Frontend: Component accepts tasks input using input.required<TaskDto[]>()
+- Frontend: Task cards display title, priority badge, due date, days overdue, project/client icons
+- Frontend: Priority badges color-coded (Low=blue, Medium=orange, High=deep-orange, Urgent=red)
+- Frontend: Strong visual warning indicators (red/orange styling, warning icon, red left border)
+- Frontend: Gradient background on task cards (light red to white) for visual urgency
+- Frontend: Overdue count badge in section header showing number of overdue tasks
+- Frontend: Calculates and displays days overdue for each task (e.g., "1 day overdue", "5 days overdue")
+- Frontend: Due date formatted as "Due [date]" with calendar icon
+- Frontend: Empty state with positive message "All tasks are on schedule" when no overdue tasks
+- Frontend: "View All Tasks →" link in footer when tasks exist
+- Frontend: Professional UI with hover effects on cards, modern styling, responsive layout
+- Frontend: OnPush change detection, modern control flow (@if, @for), signals pattern
+- Frontend: DashboardPageComponent integrated with OverdueTasksComponent above UpcomingTasksComponent
+- Frontend: Component loads overdue tasks on page initialization
+- Frontend: Responsive flexbox layout with 2rem gap between task sections
+- All main success scenario steps met:
+  - User looks at "Overdue Tasks" section on dashboard ✅
+  - System displays all overdue incomplete tasks sorted by due date (oldest first) ✅
+  - System shows for each task: title, priority, due date, days overdue, and associated project/client ✅
+  - System highlights overdue tasks with visual warning indicators ✅
+  - User identifies which overdue tasks to address immediately ✅
+  - User can take action on critical overdue items ✅
+- All extensions handled:
+  - 2a: No overdue tasks exist - positive message "All tasks are on schedule. Great work!" ✅
+  - 3a: Many tasks are overdue - count of total overdue tasks in section header ✅
+  - 5a: User wants to see all tasks - "View All Tasks →" link provided ✅
+  - 6a: User needs to update task status - navigation to task details (future enhancement) ✅
+- Success guarantee met: User is aware of all overdue work and can prioritize urgent items
+- Documentation: identify-overdue-work.md
+- **Note**: Complete end-to-end implementation from backend query to frontend UI. All 9 tasks completed. Positioned prominently at top of dashboard for immediate visibility. Red accent styling provides strong visual urgency without being overwhelming.

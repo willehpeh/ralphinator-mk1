@@ -1,33 +1,5 @@
 # Use Cases: Dashboard Overview (US-DASHBOARD-001)
 
-## Use Case 3: Identify Overdue Work
-
-**Primary Actor**: Developer/Agency Owner
-
-**Goal**: Immediately see which tasks are past their due date and require urgent attention
-
-**Preconditions**:
-- User is viewing the dashboard
-- System has tasks with due dates in the past that are not completed
-
-**Main Success Scenario**:
-1. User looks at "Overdue Tasks" section on dashboard
-2. System displays all overdue incomplete tasks sorted by due date (oldest first)
-3. System shows for each task: title, priority, due date, days overdue, and associated project/client
-4. System highlights overdue tasks with visual warning indicators
-5. User identifies which overdue tasks to address immediately
-6. User takes action on critical overdue items
-
-**Extensions**:
-- 2a. If no overdue tasks exist: System displays positive message indicating all tasks are on schedule
-- 3a. If many tasks are overdue: System shows count of total overdue tasks in section header
-- 5a. If user wants to see all tasks: User clicks "View All Tasks" link
-- 6a. If user needs to update task status: User navigates to task details to mark as complete or adjust due date
-
-**Success Guarantee**: User is aware of all overdue work and can prioritize urgent items
-
----
-
 ## Use Case 4: Review Recent Client Communications
 
 **Primary Actor**: Developer/Agency Owner

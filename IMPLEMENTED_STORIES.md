@@ -276,9 +276,9 @@
 **Completed Use Cases**:
 1. ✅ UC-DASHBOARD-001-01: View Current Workload at a Glance (2025-11-05)
 2. ✅ UC-DASHBOARD-001-02: Identify Upcoming Work (2025-11-05)
+3. ✅ UC-DASHBOARD-001-03: Identify Overdue Work (2025-11-05)
 
 **Pending Use Cases**:
-3. ⏳ UC-DASHBOARD-001-03: Identify Overdue Work
 4. ⏳ UC-DASHBOARD-001-04: Review Recent Client Communications
 5. ⏳ UC-DASHBOARD-001-05: Track Required Follow-Ups
 
@@ -314,19 +314,38 @@
 - Integration with NGRX dashboard state and effects
 - Complete test coverage: Backend (10/10), Frontend (30/30) all passing
 
+**UC-DASHBOARD-001-03: Identify Overdue Work**
+- Complete CQRS query implementation for overdue tasks
+- Backend: GetOverdueTasksQuery and handler with ITaskReadRepository.findOverdue()
+- Backend: InMemoryTaskReadRepository filters tasks with past due dates and 'Todo'/'InProgress' status
+- Backend: GET /api/dashboard/tasks/overdue endpoint
+- Frontend: OverdueTasksComponent with modern Angular patterns
+- Frontend: Strong visual warning indicators (red/orange styling, warning icon, red left border)
+- Frontend: Gradient background on task cards (light red to white) for visual urgency
+- Frontend: Overdue count badge in section header showing number of overdue tasks
+- Frontend: Calculates and displays days overdue for each task
+- Frontend: Task cards with title, priority badges, due date, project/client icons
+- Frontend: Empty state with positive message "All tasks are on schedule"
+- Frontend: "View All Tasks" link for navigation
+- Frontend: Positioned above upcoming tasks section for immediate visibility
+- Integration with NGRX dashboard state (actions, effects, reducer, selectors)
+- Professional responsive layout with hover effects
+
 **Business Value Delivered (So Far)**:
 - Users see current workload summary immediately upon opening CRM
 - Users understand business health at a glance (active clients, projects, pending tasks, follow-ups)
 - Users know what work is coming up and can plan accordingly (next 10 tasks by due date)
-- Users can identify overdue tasks with visual warnings
+- Users can immediately identify all overdue tasks with strong visual warnings
+- Users can prioritize urgent overdue work with days overdue calculation
 - Users can see task priorities and associated projects/clients at a glance
 - Professional, modern UI provides overview without overwhelming detail
 - Dashboard sets default landing page for work session start
-- Foundation established for additional dashboard widgets (overdue tasks, recent communications, follow-ups)
+- Red/orange warning indicators draw attention to urgent overdue items
+- Positive reinforcement when no overdue tasks exist
+- Foundation established for additional dashboard widgets (recent communications, follow-ups)
 
 **Next Steps**:
-- Implement UC-DASHBOARD-001-03: Identify Overdue Work (show overdue tasks with visual warnings)
 - Implement UC-DASHBOARD-001-04: Review Recent Client Communications (show last 10 communications)
 - Implement UC-DASHBOARD-001-05: Track Required Follow-Ups (show communications requiring follow-up)
 
-**Documentation**: TASK_UC1_VIEW_WORKLOAD.md, uc2-identify-upcoming-work.md, NEXT_USE_CASES.md, IMPLEMENTED_CASES.md (Use Cases 1, 2)
+**Documentation**: TASK_UC1_VIEW_WORKLOAD.md, uc2-identify-upcoming-work.md, identify-overdue-work.md, NEXT_USE_CASES.md, IMPLEMENTED_CASES.md (Use Cases 1, 2, 3)
