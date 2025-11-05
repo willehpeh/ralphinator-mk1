@@ -91,8 +91,16 @@ None - Backend implementation complete!
    - Reducer handles loadDashboardStatisticsSuccess (stores statistics)
    - Reducer handles loadDashboardStatisticsFailure (sets error)
    - Location: `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts`
+   - Commit: `98d46c1 feat: Create dashboard NGRX reducer for statistics state management`
+
+10. ✅ **Create dashboard NGRX selectors**
+   - Created feature selector for dashboard state
+   - Created selectors for statistics, loading, and error
+   - Created selector for hasStatistics flag
+   - Created individual selectors for each statistic value (activeClientsCount, activeProjectsCount, pendingTasksCount, followUpsRequiredCount)
+   - All selectors provide safe default values (0 for counts when statistics is null)
+   - Location: `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts`
    - Commit: (current)
-10. ⏳ Create dashboard NGRX selectors
 11. ⏳ Create DashboardPageComponent
 12. ⏳ Create StatisticsCardsComponent
 13. ⏳ Configure dashboard route
@@ -118,6 +126,7 @@ None - Backend implementation complete!
 - `apps/frontend/src/app/dashboard/dashboard.service.ts`
 - `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
 - `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts`
+- `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts`
 
 ## Files Modified
 
@@ -128,4 +137,4 @@ None - Backend implementation complete!
 
 ## Next Steps
 
-Backend is complete. NGRX actions, effects, and reducer created. Next: Create dashboard NGRX selectors to access state.
+Backend and NGRX state management (actions, effects, reducer, selectors) complete. Next: Create DashboardPageComponent to connect to the store and display statistics.
