@@ -89,7 +89,7 @@
    - loadUpcomingTasksSuccess: Clears loading/error, stores tasks array
    - loadUpcomingTasksFailure: Sets error state using shared setError helper
    - Location: `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts`
-   - Commit: [PENDING]
+   - Commit: cb6098e
 
 ### Pending Tasks
 9.  ⬜ Update dashboard selectors to select upcoming tasks
