@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
     <section class="quick-actions">
       <h2>Quick Actions</h2>
       <div class="actions-grid">
-        <button class="action-btn action-btn--client" [routerLink]="['/clients/new']">
+        <button class="action-btn action-btn--client" [routerLink]="['/clients/add']">
           <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="9" cy="7" r="4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -20,25 +20,25 @@ import { RouterModule } from '@angular/router';
           <span>Add Client</span>
         </button>
 
-        <button class="action-btn action-btn--contact" [routerLink]="['/contacts/new']">
+        <button class="action-btn action-btn--contact" [routerLink]="['/contacts']">
           <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="12" cy="7" r="4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>Add Contact</span>
+          <span>View Contacts</span>
         </button>
 
-        <button class="action-btn action-btn--project" [routerLink]="['/projects/new']">
+        <button class="action-btn action-btn--project" [routerLink]="['/projects']">
           <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <rect x="3" y="3" width="7" height="7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <rect x="14" y="3" width="7" height="7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <rect x="14" y="14" width="7" height="7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <rect x="3" y="14" width="7" height="7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>Add Project</span>
+          <span>View Projects</span>
         </button>
 
-        <button class="action-btn action-btn--task" [routerLink]="['/tasks/new']">
+        <button class="action-btn action-btn--task" [routerLink]="['/tasks/add']">
           <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M9 11l3 3L22 4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -46,11 +46,11 @@ import { RouterModule } from '@angular/router';
           <span>Add Task</span>
         </button>
 
-        <button class="action-btn action-btn--communication" [routerLink]="['/communications/new']">
+        <button class="action-btn action-btn--communication" [routerLink]="['/communications']">
           <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>Log Communication</span>
+          <span>View Communications</span>
         </button>
       </div>
     </section>

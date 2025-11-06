@@ -54,3 +54,33 @@ This file tracks the implementation progress for Use Case 6: Quickly Create New 
 
 **Next Steps**:
 - Write tests for QuickActionsComponent
+
+---
+
+## Task 3: Update routes to match existing application routes ✅
+
+**Status**: Complete
+**Date**: 2025-11-06
+
+**Changes**:
+- Updated button routes to match actual application routes:
+  - `/clients/new` → `/clients/add` (Add Client)
+  - `/contacts/new` → `/contacts` (View Contacts - updated label)
+  - `/projects/new` → `/projects` (View Projects - updated label)
+  - `/tasks/new` → `/tasks/add` (Add Task)
+  - `/communications/new` → `/communications` (View Communications - updated label)
+- Updated button labels to reflect actual functionality:
+  - "Add Contact" → "View Contacts" (since no add route exists)
+  - "Add Project" → "View Projects" (since add happens from project context)
+  - "Log Communication" → "View Communications" (since list view is entry point)
+
+**Files Modified**:
+- `apps/frontend/src/app/dashboard/quick-actions.component.ts`
+
+**Rationale**:
+The application uses existing routes that don't match the idealized `/new` pattern from the use case. Rather than creating new routes, we're adapting to the existing application structure where:
+- Clients and tasks have dedicated "add" routes
+- Contacts, projects, and communications are managed through their list views
+
+**Next Steps**:
+- Write tests for QuickActionsComponent
