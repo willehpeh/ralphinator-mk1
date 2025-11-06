@@ -92,3 +92,19 @@ export const selectHasRecentCommunications = createSelector(
   selectRecentCommunications,
   (communications) => communications.length > 0
 );
+
+/**
+ * Select follow-up communications from the state
+ */
+export const selectFollowUpCommunications = createSelector(
+  selectDashboardState,
+  (state: DashboardState) => state.followUpCommunications
+);
+
+/**
+ * Select whether there are any follow-up communications
+ */
+export const selectHasFollowUpCommunications = createSelector(
+  selectFollowUpCommunications,
+  (communications) => communications.length > 0
+);
