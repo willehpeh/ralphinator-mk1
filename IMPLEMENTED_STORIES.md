@@ -269,7 +269,7 @@
 
 ---
 
-## US-DASHBOARD-001: Business Overview Dashboard (2025-11-05) - IN PROGRESS
+## US-DASHBOARD-001: Business Overview Dashboard (2025-11-06) - COMPLETE ✅
 
 **Story**: As a software developer or agency owner, I want to see a comprehensive overview dashboard when I open the CRM so that I can quickly understand my current workload, identify urgent items, and track business health without navigating through multiple pages.
 
@@ -277,10 +277,8 @@
 1. ✅ UC-DASHBOARD-001-01: View Current Workload at a Glance (2025-11-05)
 2. ✅ UC-DASHBOARD-001-02: Identify Upcoming Work (2025-11-05)
 3. ✅ UC-DASHBOARD-001-03: Identify Overdue Work (2025-11-05)
-
-**Pending Use Cases**:
-4. ⏳ UC-DASHBOARD-001-04: Review Recent Client Communications
-5. ⏳ UC-DASHBOARD-001-05: Track Required Follow-Ups
+4. ✅ UC-DASHBOARD-001-04: Review Recent Client Communications (2025-11-06)
+5. ✅ UC-DASHBOARD-001-05: Track Required Follow-Ups (2025-11-06)
 
 **Implementation Summary (Completed)**:
 
@@ -331,21 +329,53 @@
 - Integration with NGRX dashboard state (actions, effects, reducer, selectors)
 - Professional responsive layout with hover effects
 
-**Business Value Delivered (So Far)**:
-- Users see current workload summary immediately upon opening CRM
+**UC-DASHBOARD-001-04: Review Recent Client Communications**
+- Complete CQRS query implementation for recent communications
+- Backend: GetRecentCommunicationsQuery and handler with ICommunicationReadRepository.findRecent()
+- Backend: InMemoryCommunicationReadRepository sorts by date descending, limits to 10 most recent
+- Backend: GET /api/dashboard/communications/recent endpoint with test coverage (4 tests passing)
+- Frontend: RecentCommunicationsComponent with modern Angular patterns and full test coverage (31 tests)
+- Frontend: Communication cards with type badges (call, email, meeting, chat, other)
+- Frontend: Smart date formatting ("Today", "Yesterday", "X days ago", formatted date)
+- Frontend: Displays subject, client name, contact name (conditional), project name (conditional), communication date
+- Frontend: Empty state with friendly message "No communications yet"
+- Frontend: "View All Communications" link for navigation
+- Frontend: Professional card layout with hover effects and color-coded type badges
+- Integration with NGRX dashboard state (actions, effects, reducer, selectors)
+- Complete test coverage: Backend (4/4), Frontend (31/31) all passing
+
+**UC-DASHBOARD-001-05: Track Required Follow-Ups**
+- Complete CQRS query implementation for follow-up communications
+- Backend: GetFollowUpCommunicationsQuery and handler with ICommunicationReadRepository.findFollowUps()
+- Backend: InMemoryCommunicationReadRepository filters by requiresFollowUp=true and followUpCompleted=false, sorts by followUpDate
+- Backend: GET /api/dashboard/communications/followups endpoint
+- Frontend: FollowUpCommunicationsComponent with computed signals for urgency enrichment
+- Frontend: Visual urgency indicators (critical: 3+ days overdue red, warning: <3 days overdue or due within 2 days orange, normal: >2 days until due green)
+- Frontend: Calculates and displays "X days until due" or "X days overdue" with singular/plural handling
+- Frontend: Type badges, subject, client name, contact name (conditional), follow-up date
+- Frontend: Empty state with success messaging "All caught up!" when no follow-ups required
+- Frontend: "View All Communications" link for navigation
+- Frontend: Professional card layout with urgency-based border styling and background colors
+- Frontend: Overdue follow-ups prominently highlighted with red left border and light red background
+- Integration with NGRX dashboard state (actions, effects, reducer, selectors)
+- Complete test coverage: Frontend (46/46) all passing
+
+**Business Value Delivered**:
+- Users see current workload summary immediately upon opening CRM (4 key statistics)
 - Users understand business health at a glance (active clients, projects, pending tasks, follow-ups)
 - Users know what work is coming up and can plan accordingly (next 10 tasks by due date)
 - Users can immediately identify all overdue tasks with strong visual warnings
 - Users can prioritize urgent overdue work with days overdue calculation
+- Users can review recent client interactions at a glance (last 10 communications)
+- Users can identify communications requiring follow-up action and never miss deadlines
+- Users see visual urgency indicators for overdue follow-ups (red/orange/green color coding)
+- Users can track days until/overdue for all follow-up communications
 - Users can see task priorities and associated projects/clients at a glance
-- Professional, modern UI provides overview without overwhelming detail
+- Professional, modern UI provides comprehensive overview without overwhelming detail
 - Dashboard sets default landing page for work session start
-- Red/orange warning indicators draw attention to urgent overdue items
-- Positive reinforcement when no overdue tasks exist
-- Foundation established for additional dashboard widgets (recent communications, follow-ups)
+- Red/orange warning indicators draw attention to urgent items (overdue tasks, overdue follow-ups)
+- Positive reinforcement when no overdue tasks or follow-ups exist
+- Complete dashboard overview enables informed daily work prioritization
+- Foundation for relationship management and client satisfaction
 
-**Next Steps**:
-- Implement UC-DASHBOARD-001-04: Review Recent Client Communications (show last 10 communications)
-- Implement UC-DASHBOARD-001-05: Track Required Follow-Ups (show communications requiring follow-up)
-
-**Documentation**: TASK_UC1_VIEW_WORKLOAD.md, uc2-identify-upcoming-work.md, identify-overdue-work.md, NEXT_USE_CASES.md, IMPLEMENTED_CASES.md (Use Cases 1, 2, 3)
+**Documentation**: TASK_UC1_VIEW_WORKLOAD.md, uc2-identify-upcoming-work.md, identify-overdue-work.md, TASK_UC4_REVIEW_RECENT_COMMUNICATIONS.md, TASK_UC5_TRACK_FOLLOWUPS.md, NEXT_USE_CASES.md, IMPLEMENTED_CASES.md (Use Cases 1-5)

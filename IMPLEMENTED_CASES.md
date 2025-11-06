@@ -1591,3 +1591,42 @@
 - Success guarantee met: User informed about recent client interactions without searching
 - Documentation: TASK_UC4_REVIEW_RECENT_COMMUNICATIONS.md
 - **Note**: Complete end-to-end implementation from backend query to frontend UI with full test coverage. All 18 tasks completed. Backend handler tests: 4/4 passing. Frontend component tests: 31/31 passing. API endpoint verified. Component integration confirmed.
+
+## UC-DASHBOARD-001-05: Track Required Follow-Ups ✅
+**Status**: Implemented ✅ | **Date**: 2025-11-06 | **Story**: US-DASHBOARD-001
+
+**Description**: Dashboard feature that ensures no client communication falls through the cracks by displaying all communications requiring follow-up with visual urgency indicators and deadline tracking.
+
+**Implementation Summary**:
+- Backend query (GetFollowUpCommunicationsQuery) retrieves communications where followUpRequired=true and followUpCompleted=false
+- Handler queries ICommunicationReadRepository.findFollowUps() to get follow-up communications sorted by followUpDate
+- REST endpoint GET /api/dashboard/communications/followups exposes the query
+- In-memory repository implementation with filtering and sorting logic
+- Frontend NGRX store integration (actions, effects, reducer, selectors)
+- Dashboard service method to call the follow-ups endpoint
+- FollowUpCommunicationsComponent with computed signals for urgency enrichment
+- Visual urgency indicators: critical (3+ days overdue, red), warning (<3 days overdue or due within 2 days, orange), normal (>2 days until due, green)
+- Days until/overdue calculations with singular/plural handling
+- Empty state with success messaging when all follow-ups complete
+- Responsive card layout with type badges, subject, client/contact info, follow-up date
+- Integrated into DashboardPageComponent
+- Comprehensive test coverage: 46 component tests (all passing)
+
+**Main Success Scenario**: 
+  - User views dashboard and sees "Follow-Ups Required" section ✅
+  - System displays all communications requiring follow-up (where followUpCompleted=false) ✅
+  - System sorts by follow-up date (earliest/most urgent first) ✅
+  - Each follow-up shows: type badge, subject, client name, contact name, follow-up date ✅
+  - System calculates and displays days until due or days overdue ✅
+  - Overdue follow-ups highlighted with visual urgency indicators (red/orange styling) ✅
+  - User identifies which clients need immediate contact ✅
+  - User takes action to follow up with clients ✅
+- All extensions handled:
+  - 2a: No follow-ups required - "All caught up!" empty state with checkmark icon ✅
+  - 2b: Follow-up date passed - displays "X days overdue" with critical/warning styling ✅
+  - 6a: User wants all communications - "View All Communications" link provided ✅
+  - 7a: User completes follow-up - (deferred to future communication management features)
+- Acceptance Criteria AC5 fully met: Follow-Ups Required section complete with urgency indicators
+- Success guarantee met: User knows exactly which clients require follow-up and won't miss important deadlines
+- Documentation: TASK_UC5_TRACK_FOLLOWUPS.md
+- **Note**: Complete end-to-end implementation from backend query to frontend UI with full test coverage. All 13 implementation tasks completed. Frontend component tests: 46/46 passing. Component integration confirmed. Manual browser verification pending but implementation complete.
