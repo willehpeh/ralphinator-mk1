@@ -281,7 +281,8 @@
 5. ✅ UC-DASHBOARD-001-05: Track Required Follow-Ups (2025-11-06)
 6. ✅ UC-DASHBOARD-001-06: Quickly Create New Items (2025-11-06)
 7. ✅ UC-DASHBOARD-001-07: Monitor Business Activity Across Devices (2025-11-06)
-8. ✅ UC-DASHBOARD-001-09: Start Work Session with Business Overview (2025-11-06)
+8. ✅ UC-DASHBOARD-001-08: See Updated Information After Making Changes (2025-11-06)
+9. ✅ UC-DASHBOARD-001-09: Start Work Session with Business Overview (2025-11-06)
 
 **Implementation Summary (Completed)**:
 
@@ -393,6 +394,22 @@
 - Manual testing checklist provided for human verification at 375px, 768px, 1440px viewports
 - Implementation complete; awaiting manual browser testing for final verification
 
+**UC-DASHBOARD-001-08: See Updated Information After Making Changes**
+- Complete automatic dashboard reload implementation using NGRX action listeners
+- Backend: No changes required - existing query handlers already return current state
+- Frontend: reloadDashboardOnTaskMutation$ effect listens for task mutation success actions
+- Frontend: reloadDashboardOnClientMutation$ effect listens for client mutation success actions
+- Frontend: Task mutations (create, update, status change, delete) trigger reload of statistics, upcoming tasks, and overdue tasks
+- Frontend: Client mutations (update, status change, delete) trigger reload of dashboard statistics
+- Frontend: 300ms debounce on all mutation listeners to batch rapid changes and prevent excessive API calls
+- Frontend: mergeMap used for parallel dispatch of multiple reload actions for efficiency
+- Architecture: Action Listener Pattern provides loose coupling between feature modules and dashboard
+- Dashboard automatically updates without manual page refresh after any entity mutation
+- Loading indicators handled by existing infrastructure
+- User experience: Seamless updates, no flickering during debounce period
+- Future-proof: Pattern easily extends to projects and communications when migrated to NGRX stores
+- All acceptance criteria met: dashboard updates automatically after create/update/delete operations
+
 **UC-DASHBOARD-001-09: Start Work Session with Business Overview**
 - Configure dashboard as default landing page with proper navigation
 - Frontend: Dashboard route configured at root path ('') in app.routes.ts
@@ -430,5 +447,10 @@
 - Responsive layout automatically adapts to device orientation changes
 - Dashboard remains professional and functional across all screen sizes
 - On-the-go users can monitor business activity from phones during meetings or commutes
+- Users see immediate feedback when making changes - dashboard updates automatically
+- Users don't need to manually refresh page to see latest statistics and task lists
+- Users can trust dashboard data is current and accurate at all times
+- Users experience seamless workflow when creating/updating clients or tasks - effects visible immediately
+- Dashboard always reflects latest state of business without user intervention
 
-**Documentation**: TASK_UC1_VIEW_WORKLOAD.md, uc2-identify-upcoming-work.md, identify-overdue-work.md, TASK_UC4_REVIEW_RECENT_COMMUNICATIONS.md, TASK_UC5_TRACK_FOLLOWUPS.md, dashboard-default-landing-page.md, USE_CASE_7_TASKS.md, IMPLEMENTED_CASES.md (Use Cases 1-7, 9)
+**Documentation**: TASK_UC1_VIEW_WORKLOAD.md, uc2-identify-upcoming-work.md, identify-overdue-work.md, TASK_UC4_REVIEW_RECENT_COMMUNICATIONS.md, TASK_UC5_TRACK_FOLLOWUPS.md, dashboard-default-landing-page.md, USE_CASE_7_TASKS.md, USE_CASE_8_IMPLEMENTATION.md, IMPLEMENTED_CASES.md (Use Cases 1-9)

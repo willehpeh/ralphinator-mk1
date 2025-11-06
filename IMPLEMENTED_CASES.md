@@ -1735,3 +1735,34 @@
 - Manual Testing: Checklist provided for human verification (see USE_CASE_7_TASKS.md)
 - Documentation: CURRENT_USE_CASE.md, USE_CASE_7_TASKS.md
 - **Status**: Implementation complete; manual testing required for final verification
+
+## Use Case 8: See Updated Information After Making Changes (2025-11-06) ✅ COMPLETE
+- Complete automatic dashboard reload implementation for entity mutations
+- Dashboard effects: Listen for task mutation success actions (already implemented in Use Case 7)
+- Dashboard effects: Listen for client mutation success actions (newly implemented)
+- Backend: No changes required - existing query handlers already return current state
+- Frontend: reloadDashboardOnTaskMutation$ effect reloads dashboard when tasks are created, updated, status changed, or deleted
+- Frontend: reloadDashboardOnClientMutation$ effect reloads dashboard statistics when clients are updated, status changed, or deleted
+- Debouncing: 300ms debounce on all mutation listeners to batch rapid changes and reduce API load
+- Effect composition: mergeMap dispatches multiple reload actions in parallel for efficiency
+- Dashboard automatically reflects current state after any mutation without manual page refresh
+- User experience: Seamless updates with existing loading indicators, no flickering during debounce
+- All main success scenario steps met:
+  - User performs action that affects dashboard data (creates, updates, or deletes an item) ✅
+  - System automatically updates dashboard statistics and lists ✅
+  - User sees updated information without manually refreshing the page ✅
+  - User confirms their action had the expected effect on business metrics ✅
+- All extensions handled:
+  - 2a: System shows loading indicators while refreshing data (existing infrastructure) ✅
+  - 4a: User can navigate to detail views to investigate if needed ✅
+- All acceptance criteria met:
+  - AC9: Dashboard statistics and lists update automatically after create/update/delete operations ✅
+  - No page refresh required ✅
+  - Client mutations trigger dashboard statistics reload ✅
+  - Task mutations trigger dashboard statistics and lists reload ✅
+  - Debouncing prevents excessive API calls during bulk operations ✅
+- Success guarantee met: Dashboard always displays current, accurate information reflecting latest changes
+- Architecture: Action Listener Pattern provides loose coupling between features and dashboard
+- Future extensibility: Pattern easily extends to projects and communications when they migrate to NGRX stores
+- Documentation: CURRENT_USE_CASE.md, USE_CASE_8_IMPLEMENTATION.md
+- **Status**: Implementation complete; dashboard now auto-updates on all entity mutations
