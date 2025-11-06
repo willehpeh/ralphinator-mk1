@@ -1,31 +1,5 @@
 # Use Cases: Dashboard Overview (US-DASHBOARD-001)
 
-## Use Case 6: Quickly Create New Items
-
-**Primary Actor**: Developer/Agency Owner
-
-**Goal**: Rapidly add new clients, projects, tasks, or communications without navigating through menus
-
-**Preconditions**:
-- User is viewing the dashboard
-- User needs to create a new item
-
-**Main Success Scenario**:
-1. User sees quick action buttons on dashboard
-2. User identifies the type of item they want to create (client, contact, project, task, or communication)
-3. User clicks the corresponding quick action button
-4. System navigates to the appropriate creation form
-5. User completes the form and saves the new item
-6. System returns user to dashboard with updated information
-
-**Extensions**:
-- 2a. If user is unsure which item to create: User can browse available actions and select appropriate one
-- 5a. If user cancels creation: System returns to dashboard without saving
-
-**Success Guarantee**: User can create new items quickly without navigating through multiple menus
-
----
-
 ## Use Case 7: Monitor Business Activity Across Devices
 
 **Primary Actor**: Developer/Agency Owner
