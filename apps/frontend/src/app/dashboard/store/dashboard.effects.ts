@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, mergeMap, debounceTime } from 'rxjs/operators';
 import { DashboardService } from '../dashboard.service';
 import {
   loadDashboardStatistics,
@@ -20,6 +20,12 @@ import {
   loadFollowUpCommunicationsFailure
 } from './dashboard.actions';
 import { createEffectErrorHandler } from '../../shared/effects-utils';
+import {
+  createTaskSuccess,
+  updateTaskSuccess,
+  changeTaskStatusSuccess,
+  deleteTaskSuccess
+} from '../../tasks/store/tasks.actions';
 
 /**
  * NGRX Effects for dashboard-related side effects
@@ -121,6 +127,28 @@ export class DashboardEffects {
           ))
         )
       )
+    )
+  );
+
+  /**
+   * Effect to reload dashboard data when tasks are created, updated, or deleted
+   * Listens for task mutation success actions and triggers dashboard data refresh
+   * Uses debounceTime to avoid excessive API calls when multiple mutations occur rapidly
+   */
+  reloadDashboardOnTaskMutation$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(
+        createTaskSuccess,
+        updateTaskSuccess,
+        changeTaskStatusSuccess,
+        deleteTaskSuccess
+      ),
+      debounceTime(300), // Wait 300ms to batch multiple rapid mutations
+      mergeMap(() => [
+        loadDashboardStatistics(),
+        loadUpcomingTasks(),
+        loadOverdueTasks()
+      ])
     )
   );
 }
