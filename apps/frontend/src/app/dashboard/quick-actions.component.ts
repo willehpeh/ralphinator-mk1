@@ -105,6 +105,8 @@ import { RouterModule } from '@angular/router';
       font-size: 0.875rem;
       font-weight: 500;
       color: #1a1a1a;
+      min-height: 88px;
+      min-width: 88px;
     }
 
     .action-btn:hover {
