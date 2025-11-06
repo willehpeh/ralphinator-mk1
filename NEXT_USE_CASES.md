@@ -1,33 +1,5 @@
 # Use Cases: Dashboard Overview (US-DASHBOARD-001)
 
-## Use Case 7: Monitor Business Activity Across Devices
-
-**Primary Actor**: Developer/Agency Owner
-
-**Goal**: Access dashboard overview from any device (desktop, tablet, mobile) while maintaining usability
-
-**Preconditions**:
-- User is authenticated
-- User accesses dashboard from various screen sizes
-
-**Main Success Scenario**:
-1. User opens dashboard on their device
-2. System detects viewport size
-3. System arranges dashboard sections appropriately for screen size:
-   - Desktop: 4-column grid for statistics, side-by-side sections
-   - Tablet: 2-column grid for statistics, stacked sections
-   - Mobile: Single column layout for all content
-4. User can read and interact with all dashboard content on their device
-5. User can perform all dashboard actions regardless of screen size
-
-**Extensions**:
-- 1a. If user rotates device: System adjusts layout to new orientation
-- 4a. If content is difficult to read: System maintains readable text sizes and touch-friendly buttons
-
-**Success Guarantee**: User can effectively use the dashboard on any device size
-
----
-
 ## Use Case 8: See Updated Information After Making Changes
 
 **Primary Actor**: Developer/Agency Owner
