@@ -89,8 +89,14 @@ import { CommunicationReadModel } from '@angular-nest-starter/shared-types';
     .recent-communications-section {
       background: white;
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 1rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (min-width: 640px) {
+      .recent-communications-section {
+        padding: 1.5rem;
+      }
     }
 
     .section-header {
@@ -98,10 +104,16 @@ import { CommunicationReadModel } from '@angular-nest-starter/shared-types';
     }
 
     .section-header h2 {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 600;
       color: #1a1a1a;
       margin: 0 0 0.25rem 0;
+    }
+
+    @media (min-width: 640px) {
+      .section-header h2 {
+        font-size: 1.5rem;
+      }
     }
 
     .section-subtitle {
@@ -115,8 +127,14 @@ import { CommunicationReadModel } from '@angular-nest-starter/shared-types';
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 3rem 1rem;
+      padding: 2rem 1rem;
       text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      .empty-state {
+        padding: 3rem 1rem;
+      }
     }
 
     .empty-icon {
@@ -144,6 +162,7 @@ import { CommunicationReadModel } from '@angular-nest-starter/shared-types';
       align-items: center;
       gap: 0.5rem;
       padding: 0.75rem 1.5rem;
+      min-height: 44px;
       background: #1976d2;
       color: white;
       text-decoration: none;
@@ -173,8 +192,14 @@ import { CommunicationReadModel } from '@angular-nest-starter/shared-types';
     .communication-card {
       border: 1px solid #e0e0e0;
       border-radius: 8px;
-      padding: 1rem;
+      padding: 0.875rem;
       transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    @media (min-width: 640px) {
+      .communication-card {
+        padding: 1rem;
+      }
     }
 
     .communication-card:hover {
@@ -266,6 +291,9 @@ import { CommunicationReadModel } from '@angular-nest-starter/shared-types';
     }
 
     .view-all-link {
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
       color: #1976d2;
       text-decoration: none;
       font-weight: 500;
