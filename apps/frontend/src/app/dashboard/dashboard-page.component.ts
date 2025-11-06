@@ -16,10 +16,11 @@ import { UpcomingTasksComponent } from './upcoming-tasks.component';
 import { OverdueTasksComponent } from './overdue-tasks.component';
 import { RecentCommunicationsComponent } from './recent-communications.component';
 import { FollowUpCommunicationsComponent } from './follow-up-communications.component';
+import { QuickActionsComponent } from './quick-actions.component';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [CommonModule, UpcomingTasksComponent, OverdueTasksComponent, RecentCommunicationsComponent, FollowUpCommunicationsComponent],
+  imports: [CommonModule, UpcomingTasksComponent, OverdueTasksComponent, RecentCommunicationsComponent, FollowUpCommunicationsComponent, QuickActionsComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="dashboard-container">
@@ -113,6 +114,8 @@ import { FollowUpCommunicationsComponent } from './follow-up-communications.comp
           <p>Start by adding your first clients, projects, and tasks to see your dashboard statistics.</p>
         </div>
       }
+
+      <app-quick-actions />
 
       <div class="tasks-sections">
         <div class="overdue-tasks-container">
