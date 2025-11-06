@@ -55,7 +55,7 @@ Ensure no client communication falls through the cracks by tracking required fol
 - `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
 
 ### Task 7: Update dashboard service with getFollowUpCommunications() ✅
-**Commit**: [To be added]
+**Commit**: d3eaf01
 **Date**: 2025-11-06
 **Description**: Added getFollowUpCommunications() method to dashboard service that calls the follow-ups endpoint
 **Files**:
