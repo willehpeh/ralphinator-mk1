@@ -62,7 +62,7 @@ Ensure no client communication falls through the cracks by tracking required fol
 - `apps/frontend/src/app/dashboard/dashboard.service.ts`
 
 ### Task 8: Add NGRX effects for follow-up communications ✅
-**Commit**: [To be committed]
+**Commit**: 9baadf6
 **Date**: 2025-11-06
 **Description**: Created effect that calls dashboard service to load follow-up communications
 **Files**:
