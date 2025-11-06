@@ -107,8 +107,14 @@ interface FollowUpWithUrgency extends CommunicationReadModel {
     .follow-up-section {
       background: white;
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 1rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (min-width: 640px) {
+      .follow-up-section {
+        padding: 1.5rem;
+      }
     }
 
     .section-header {
@@ -116,10 +122,16 @@ interface FollowUpWithUrgency extends CommunicationReadModel {
     }
 
     .section-header h2 {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 600;
       color: #1a1a1a;
       margin: 0 0 0.25rem 0;
+    }
+
+    @media (min-width: 640px) {
+      .section-header h2 {
+        font-size: 1.5rem;
+      }
     }
 
     .section-subtitle {
@@ -133,8 +145,14 @@ interface FollowUpWithUrgency extends CommunicationReadModel {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 3rem 1rem;
+      padding: 2rem 1rem;
       text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      .empty-state {
+        padding: 3rem 1rem;
+      }
     }
 
     .empty-icon {
@@ -166,8 +184,14 @@ interface FollowUpWithUrgency extends CommunicationReadModel {
     .follow-up-card {
       border: 1px solid #e0e0e0;
       border-radius: 8px;
-      padding: 1rem;
+      padding: 0.875rem;
       transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    @media (min-width: 640px) {
+      .follow-up-card {
+        padding: 1rem;
+      }
     }
 
     .follow-up-card:hover {
@@ -308,6 +332,9 @@ interface FollowUpWithUrgency extends CommunicationReadModel {
       font-weight: 500;
       font-size: 0.875rem;
       transition: color 0.2s;
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
     }
 
     .view-all-link:hover {
