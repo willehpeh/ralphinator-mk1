@@ -69,7 +69,7 @@ Ensure no client communication falls through the cracks by tracking required fol
 - `apps/frontend/src/app/dashboard/store/dashboard.effects.ts`
 
 ### Task 9: Update NGRX reducer for follow-up communications ✅
-**Commit**: [pending]
+**Commit**: c312317
 **Date**: 2025-11-06
 **Description**: Added followUpCommunications to state interface and handled load/success/failure actions in dashboard reducer
 **Files**:
