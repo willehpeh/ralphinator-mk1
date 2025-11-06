@@ -138,9 +138,21 @@ import { QuickActionsComponent } from './quick-actions.component';
   `,
   styles: [`
     .dashboard-container {
-      padding: 2rem;
+      padding: 1rem;
       max-width: 1400px;
       margin: 0 auto;
+    }
+
+    @media (min-width: 640px) {
+      .dashboard-container {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .dashboard-container {
+        padding: 2rem;
+      }
     }
 
     .dashboard-header {
@@ -148,33 +160,65 @@ import { QuickActionsComponent } from './quick-actions.component';
     }
 
     .dashboard-header h1 {
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 600;
       color: #1a1a1a;
       margin: 0 0 0.5rem 0;
     }
 
+    @media (min-width: 640px) {
+      .dashboard-header h1 {
+        font-size: 2rem;
+      }
+    }
+
     .subtitle {
-      font-size: 1rem;
+      font-size: 0.875rem;
       color: #666;
       margin: 0;
     }
 
+    @media (min-width: 640px) {
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+
     .statistics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .statistics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .statistics-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
 
     .stat-card {
       background: white;
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 1rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       display: flex;
       gap: 1rem;
       align-items: flex-start;
       transition: transform 0.2s, box-shadow 0.2s;
+      min-height: 88px;
+    }
+
+    @media (min-width: 640px) {
+      .stat-card {
+        padding: 1.5rem;
+      }
     }
 
     .stat-card:hover {
@@ -222,10 +266,16 @@ import { QuickActionsComponent } from './quick-actions.component';
     }
 
     .stat-value {
-      font-size: 2rem;
+      font-size: 1.75rem;
       font-weight: 700;
       color: #1a1a1a;
       line-height: 1.2;
+    }
+
+    @media (min-width: 640px) {
+      .stat-value {
+        font-size: 2rem;
+      }
     }
 
     .stat-label {
@@ -307,6 +357,8 @@ import { QuickActionsComponent } from './quick-actions.component';
       font-weight: 500;
       cursor: pointer;
       transition: background 0.2s;
+      min-height: 44px;
+      min-width: 120px;
     }
 
     .retry-button:hover {
