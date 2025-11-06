@@ -1,10 +1,11 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { TaskDto } from '@angular-nest-starter/shared-types';
 
 @Component({
   selector: 'app-upcoming-tasks',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="upcoming-tasks-section">
@@ -20,7 +21,14 @@ import { TaskDto } from '@angular-nest-starter/shared-types';
             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <p class="empty-message">No upcoming tasks</p>
-          <p class="empty-submessage">All tasks are completed or have no due dates</p>
+          <p class="empty-submessage">Add your first task to get started</p>
+          <a routerLink="/tasks" class="empty-action-btn">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Add Task
+          </a>
         </div>
       } @else {
         <div class="tasks-list">
@@ -131,7 +139,32 @@ import { TaskDto } from '@angular-nest-starter/shared-types';
     .empty-submessage {
       font-size: 0.875rem;
       color: #666;
-      margin: 0;
+      margin: 0 0 1.5rem 0;
+    }
+
+    .empty-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: #1976d2;
+      color: white;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .empty-action-btn:hover {
+      background: #1565c0;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+    }
+
+    .empty-action-btn .btn-icon {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2.5;
     }
 
     .tasks-list {
