@@ -52,37 +52,6 @@
 
 ---
 
-## Use Case 9: Start Work Session with Business Overview
-
-**Primary Actor**: Developer/Agency Owner
-
-**Goal**: Begin work day with comprehensive overview of business status and priorities
-
-**Preconditions**:
-- User has authenticated to the CRM
-- It is the beginning of a work session
-
-**Main Success Scenario**:
-1. User navigates to CRM application (root URL)
-2. System displays dashboard as the default landing page
-3. System highlights "Dashboard" in main navigation
-4. User reviews all dashboard sections to understand:
-   - Current business health (active clients and projects)
-   - Urgent items (overdue tasks and follow-ups)
-   - Upcoming work (tasks due soon)
-   - Recent activity (communications)
-5. User identifies priorities for the work session
-6. User uses quick actions or navigation to begin work on priority items
-
-**Extensions**:
-- 3a. If user navigates away and returns: User clicks "Dashboard" link to return to overview
-- 5a. If no urgent items exist: User can proactively plan future work or create new items
-- 6a. If user wants to focus on specific area: User navigates to detailed views (tasks, projects, etc.)
-
-**Success Guarantee**: User starts work session fully informed about business status and knows what to prioritize
-
----
-
 ## Use Case 10: Understand Empty or New System
 
 **Primary Actor**: Developer/Agency Owner (New User)
