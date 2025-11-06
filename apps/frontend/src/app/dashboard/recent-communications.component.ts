@@ -1,10 +1,11 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { CommunicationReadModel } from '@angular-nest-starter/shared-types';
 
 @Component({
   selector: 'app-recent-communications',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="recent-communications-section">
@@ -20,6 +21,13 @@ import { CommunicationReadModel } from '@angular-nest-starter/shared-types';
           </svg>
           <p class="empty-message">No communications yet</p>
           <p class="empty-submessage">Log your first client interaction to see it here</p>
+          <a routerLink="/communications" class="empty-action-btn">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Log Communication
+          </a>
         </div>
       } @else {
         <div class="communications-list">
@@ -128,7 +136,32 @@ import { CommunicationReadModel } from '@angular-nest-starter/shared-types';
     .empty-submessage {
       font-size: 0.875rem;
       color: #666;
-      margin: 0;
+      margin: 0 0 1.5rem 0;
+    }
+
+    .empty-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: #1976d2;
+      color: white;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .empty-action-btn:hover {
+      background: #1565c0;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+    }
+
+    .empty-action-btn .btn-icon {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2.5;
     }
 
     .communications-list {
