@@ -12,6 +12,9 @@ import {
   loadRecentCommunications,
   loadRecentCommunicationsSuccess,
   loadRecentCommunicationsFailure,
+  loadFollowUpCommunications,
+  loadFollowUpCommunicationsSuccess,
+  loadFollowUpCommunicationsFailure,
 } from './dashboard.actions';
 import { DashboardStatistics } from '../dashboard.types';
 import { TaskDto, CommunicationReadModel } from '@angular-nest-starter/shared-types';
@@ -24,6 +27,7 @@ export interface DashboardState {
   upcomingTasks: TaskDto[];
   overdueTasks: TaskDto[];
   recentCommunications: CommunicationReadModel[];
+  followUpCommunications: CommunicationReadModel[];
   loading: boolean;
   error: string | null;
 }
@@ -36,6 +40,7 @@ export const initialState: DashboardState = {
   upcomingTasks: [],
   overdueTasks: [],
   recentCommunications: [],
+  followUpCommunications: [],
   loading: false,
   error: null,
 };
@@ -123,5 +128,17 @@ export const dashboardReducer = createReducer(
   })),
 
   // When loading recent communications fails
-  on(loadRecentCommunicationsFailure, (state, { error }) => setError(state, error))
+  on(loadRecentCommunicationsFailure, (state, { error }) => setError(state, error)),
+
+  // When loading follow-up communications is triggered
+  on(loadFollowUpCommunications, setLoading),
+
+  // When follow-up communications are successfully loaded
+  on(loadFollowUpCommunicationsSuccess, (state, { communications }) => ({
+    ...clearLoadingAndError(state),
+    followUpCommunications: communications,
+  })),
+
+  // When loading follow-up communications fails
+  on(loadFollowUpCommunicationsFailure, (state, { error }) => setError(state, error))
 );
