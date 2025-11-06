@@ -26,6 +26,11 @@ import {
   changeTaskStatusSuccess,
   deleteTaskSuccess
 } from '../../tasks/store/tasks.actions';
+import {
+  updateClientSuccess,
+  changeClientStatusSuccess,
+  deleteClientSuccess
+} from '../../clients/store/clients.actions';
 
 /**
  * NGRX Effects for dashboard-related side effects
@@ -148,6 +153,25 @@ export class DashboardEffects {
         loadDashboardStatistics(),
         loadUpcomingTasks(),
         loadOverdueTasks()
+      ])
+    )
+  );
+
+  /**
+   * Effect to reload dashboard data when clients are updated or deleted
+   * Listens for client mutation success actions and triggers dashboard statistics refresh
+   * Uses debounceTime to avoid excessive API calls when multiple mutations occur rapidly
+   */
+  reloadDashboardOnClientMutation$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(
+        updateClientSuccess,
+        changeClientStatusSuccess,
+        deleteClientSuccess
+      ),
+      debounceTime(300), // Wait 300ms to batch multiple rapid mutations
+      mergeMap(() => [
+        loadDashboardStatistics()
       ])
     )
   );
