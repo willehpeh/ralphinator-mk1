@@ -82,27 +82,28 @@ Ensure no client communication falls through the cracks by tracking required fol
 **Files**:
 - `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts`
 
+### Task 11: Create FollowUpCommunicationsComponent ✅
+**Commit**: 6defa44
+**Date**: 2025-11-06
+**Description**: Created component to display follow-up communications with visual urgency indicators
+**Files**:
+- `apps/frontend/src/app/dashboard/follow-up-communications.component.ts`
+
+### Task 12: Integrate FollowUpCommunicationsComponent into DashboardPageComponent ✅
+**Commit**: ebd1601
+**Date**: 2025-11-06
+**Description**: Added follow-up communications component to dashboard page template and wired up data loading
+**Files**:
+- `apps/frontend/src/app/dashboard/dashboard-page.component.ts`
+
 ---
 
 ## Pending Tasks
 
-### Task 11: Create FollowUpCommunicationsComponent (NEXT)
-**Status**: Pending
-**Description**: Create component to display follow-up communications with visual urgency indicators
-**Files to create**:
-- `apps/frontend/src/app/dashboard/follow-up-communications.component.ts`
-- `apps/frontend/src/app/dashboard/follow-up-communications.component.spec.ts`
-
-### Task 12: Integrate FollowUpCommunicationsComponent into DashboardPageComponent
-**Status**: Pending
-**Description**: Add follow-up communications component to dashboard page template
-**Files to modify**:
-- `apps/frontend/src/app/dashboard/dashboard-page.component.ts`
-
-### Task 13: Test FollowUpCommunicationsComponent
+### Task 13: Test FollowUpCommunicationsComponent (NEXT)
 **Status**: Pending
 **Description**: Write comprehensive tests for follow-up communications component
-**Files to modify**:
+**Files to create/modify**:
 - `apps/frontend/src/app/dashboard/follow-up-communications.component.spec.ts`
 
 ### Task 14: Verify follow-ups integration in browser
