@@ -50,32 +50,3 @@
 
 **Success Guarantee**: Dashboard always displays current, accurate information reflecting latest changes
 
----
-
-## Use Case 10: Understand Empty or New System
-
-**Primary Actor**: Developer/Agency Owner (New User)
-
-**Goal**: Understand what dashboard sections are for and how to populate them when starting with empty system
-
-**Preconditions**:
-- User is viewing dashboard
-- System has little or no data in one or more sections
-
-**Main Success Scenario**:
-1. User views dashboard section with no data
-2. System displays friendly empty state message explaining:
-   - What the section normally displays
-   - Suggestion to create the first item
-3. System provides link to appropriate creation form
-4. User understands what the section is for
-5. User clicks link to create their first item
-6. System navigates to creation form
-7. User creates item and returns to dashboard
-8. System displays the newly created item in appropriate section
-
-**Extensions**:
-- 4a. If user doesn't want to create item yet: User continues reviewing other dashboard sections
-- 7a. If user cancels creation: User returns to dashboard with empty state still showing
-
-**Success Guarantee**: User understands what each dashboard section displays and knows how to populate it with data
