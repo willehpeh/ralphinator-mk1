@@ -102,9 +102,15 @@ import { TaskDto } from '@angular-nest-starter/shared-types';
     .overdue-tasks-section {
       background: white;
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 1rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       border-left: 4px solid #d32f2f;
+    }
+
+    @media (min-width: 640px) {
+      .overdue-tasks-section {
+        padding: 1.5rem;
+      }
     }
 
     .section-header {
@@ -112,13 +118,19 @@ import { TaskDto } from '@angular-nest-starter/shared-types';
     }
 
     .section-header h2 {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 600;
       color: #1a1a1a;
       margin: 0 0 0.25rem 0;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .section-header h2 {
+        font-size: 1.5rem;
+      }
     }
 
     .warning-icon {
@@ -154,8 +166,14 @@ import { TaskDto } from '@angular-nest-starter/shared-types';
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 3rem 1rem;
+      padding: 2rem 1rem;
       text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      .empty-state {
+        padding: 3rem 1rem;
+      }
     }
 
     .empty-icon {
@@ -188,9 +206,15 @@ import { TaskDto } from '@angular-nest-starter/shared-types';
       border: 2px solid #ffcdd2;
       border-left: 4px solid #d32f2f;
       border-radius: 8px;
-      padding: 1rem;
+      padding: 0.875rem;
       background: linear-gradient(to right, #ffebee 0%, white 50%);
       transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    @media (min-width: 640px) {
+      .task-card {
+        padding: 1rem;
+      }
     }
 
     .task-card:hover {
@@ -296,6 +320,10 @@ import { TaskDto } from '@angular-nest-starter/shared-types';
       font-weight: 500;
       font-size: 0.875rem;
       transition: color 0.2s;
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
+      padding: 0 0.5rem;
     }
 
     .view-all-link:hover {
