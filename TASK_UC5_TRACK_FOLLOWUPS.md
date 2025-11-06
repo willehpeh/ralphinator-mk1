@@ -96,17 +96,18 @@ Ensure no client communication falls through the cracks by tracking required fol
 **Files**:
 - `apps/frontend/src/app/dashboard/dashboard-page.component.ts`
 
+### Task 13: Test FollowUpCommunicationsComponent ✅
+**Commit**: [PENDING]
+**Date**: 2025-11-06
+**Description**: Wrote comprehensive tests for follow-up communications component (46 tests covering all functionality)
+**Files**:
+- `apps/frontend/src/app/dashboard/follow-up-communications.component.spec.ts`
+
 ---
 
 ## Pending Tasks
 
-### Task 13: Test FollowUpCommunicationsComponent (NEXT)
-**Status**: Pending
-**Description**: Write comprehensive tests for follow-up communications component
-**Files to create/modify**:
-- `apps/frontend/src/app/dashboard/follow-up-communications.component.spec.ts`
-
-### Task 14: Verify follow-ups integration in browser
+### Task 14: Verify follow-ups integration in browser (NEXT)
 **Status**: Pending
 **Description**: Manual browser test to verify follow-ups section displays correctly with proper styling and urgency indicators
 
