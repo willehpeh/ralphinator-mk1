@@ -75,17 +75,18 @@ Ensure no client communication falls through the cracks by tracking required fol
 **Files**:
 - `apps/frontend/src/app/dashboard/store/dashboard.reducer.ts`
 
+### Task 10: Add NGRX selectors for follow-up communications ✅
+**Commit**: 6c11549
+**Date**: 2025-11-06
+**Description**: Created selectors for follow-up communications state
+**Files**:
+- `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts`
+
 ---
 
 ## Pending Tasks
 
-### Task 10: Add NGRX selectors for follow-up communications (NEXT)
-**Status**: Pending
-**Description**: Create selectors for follow-up communications state
-**Files to create/modify**:
-- `apps/frontend/src/app/dashboard/store/dashboard.selectors.ts`
-
-### Task 11: Create FollowUpCommunicationsComponent
+### Task 11: Create FollowUpCommunicationsComponent (NEXT)
 **Status**: Pending
 **Description**: Create component to display follow-up communications with visual urgency indicators
 **Files to create**:
