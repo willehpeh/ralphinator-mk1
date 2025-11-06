@@ -54,17 +54,18 @@ Ensure no client communication falls through the cracks by tracking required fol
 **Files**:
 - `apps/frontend/src/app/dashboard/store/dashboard.actions.ts`
 
+### Task 7: Update dashboard service with getFollowUpCommunications() ✅
+**Commit**: [To be added]
+**Date**: 2025-11-06
+**Description**: Added getFollowUpCommunications() method to dashboard service that calls the follow-ups endpoint
+**Files**:
+- `apps/frontend/src/app/dashboard/dashboard.service.ts`
+
 ---
 
 ## Pending Tasks
 
-### Task 7: Update dashboard service with getFollowUpCommunications() (NEXT)
-**Status**: Pending
-**Description**: Add method to dashboard service that calls the follow-ups endpoint
-**Files to create/modify**:
-- `apps/frontend/src/app/dashboard/dashboard.service.ts`
-
-### Task 8: Add NGRX effects for follow-up communications
+### Task 8: Add NGRX effects for follow-up communications (NEXT)
 **Status**: Pending
 **Description**: Create effect that calls dashboard service to load follow-up communications
 **Files to create/modify**:

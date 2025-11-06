@@ -45,4 +45,12 @@ export class DashboardService {
   getRecentCommunications(): Observable<CommunicationReadModel[]> {
     return this.http.get<CommunicationReadModel[]>(`${this.apiUrl}/communications/recent`);
   }
+
+  /**
+   * Get follow-up communications from the backend
+   * Returns communications requiring follow-up sorted by follow-up date (earliest first)
+   */
+  getFollowUpCommunications(): Observable<CommunicationReadModel[]> {
+    return this.http.get<CommunicationReadModel[]>(`${this.apiUrl}/communications/followups`);
+  }
 }
