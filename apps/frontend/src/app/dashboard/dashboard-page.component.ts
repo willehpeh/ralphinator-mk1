@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy, inject, signal, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { loadDashboardStatistics, loadUpcomingTasks, loadOverdueTasks, loadRecentCommunications } from './store/dashboard.actions';
+import { loadDashboardStatistics, loadUpcomingTasks, loadOverdueTasks, loadRecentCommunications, loadFollowUpCommunications } from './store/dashboard.actions';
 import {
   selectDashboardStatistics,
   selectDashboardLoading,
@@ -10,14 +10,16 @@ import {
   selectUpcomingTasks,
   selectOverdueTasks,
   selectRecentCommunications,
+  selectFollowUpCommunications,
 } from './store/dashboard.selectors';
 import { UpcomingTasksComponent } from './upcoming-tasks.component';
 import { OverdueTasksComponent } from './overdue-tasks.component';
 import { RecentCommunicationsComponent } from './recent-communications.component';
+import { FollowUpCommunicationsComponent } from './follow-up-communications.component';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [CommonModule, UpcomingTasksComponent, OverdueTasksComponent, RecentCommunicationsComponent],
+  imports: [CommonModule, UpcomingTasksComponent, OverdueTasksComponent, RecentCommunicationsComponent, FollowUpCommunicationsComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="dashboard-container">
@@ -124,6 +126,10 @@ import { RecentCommunicationsComponent } from './recent-communications.component
 
       <div class="communications-section">
         <app-recent-communications [communications]="recentCommunications()" />
+      </div>
+
+      <div class="follow-ups-section">
+        <app-follow-up-communications [followUps]="followUpCommunications()" />
       </div>
     </div>
   `,
@@ -327,6 +333,11 @@ import { RecentCommunicationsComponent } from './recent-communications.component
       margin-top: 2rem;
       width: 100%;
     }
+
+    .follow-ups-section {
+      margin-top: 2rem;
+      width: 100%;
+    }
   `],
 })
 export class DashboardPageComponent implements OnInit {
@@ -340,12 +351,14 @@ export class DashboardPageComponent implements OnInit {
   upcomingTasks = this.store.selectSignal(selectUpcomingTasks);
   overdueTasks = this.store.selectSignal(selectOverdueTasks);
   recentCommunications = this.store.selectSignal(selectRecentCommunications);
+  followUpCommunications = this.store.selectSignal(selectFollowUpCommunications);
 
   ngOnInit(): void {
     this.loadStatistics();
     this.loadUpcomingTasks();
     this.loadOverdueTasks();
     this.loadRecentCommunications();
+    this.loadFollowUpCommunications();
   }
 
   loadStatistics(): void {
@@ -362,5 +375,9 @@ export class DashboardPageComponent implements OnInit {
 
   loadRecentCommunications(): void {
     this.store.dispatch(loadRecentCommunications());
+  }
+
+  loadFollowUpCommunications(): void {
+    this.store.dispatch(loadFollowUpCommunications());
   }
 }

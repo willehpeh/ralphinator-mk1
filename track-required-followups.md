@@ -31,7 +31,7 @@ Implement the "Follow-Ups Required" section on the dashboard to help users track
 **Task 14**: [x] Implement visual urgency indicators (overdue highlighting) (2025-11-06) - Included in Task 13
 **Task 15**: [x] Implement days until/overdue calculation (2025-11-06) - Included in Task 13
 **Task 16**: [x] Add empty state for when no follow-ups are required (2025-11-06) - Included in Task 13
-**Task 17**: [ ] Integrate FollowUpCommunicationsComponent into DashboardPageComponent
+**Task 17**: [x] Integrate FollowUpCommunicationsComponent into DashboardPageComponent (2025-11-06) - Added component import, selector, dispatch action, and template integration
 **Task 18**: [ ] Write comprehensive frontend component tests
 **Task 19**: [ ] Verify API endpoint with manual testing
 **Task 20**: [ ] Verify component integration in browser
